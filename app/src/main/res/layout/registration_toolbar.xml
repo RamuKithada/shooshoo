@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp">
+    <RelativeLayout
+        android:id="@+id/rl_custom_tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/edit_icon"
+            android:layout_height="@dimen/edit_icon"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/app_name"
+            />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:visibility="gone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_close_black_24dp"
+            android:padding="5dp"
+
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="10dp"
+        >
+        <ImageView
+            android:id="@+id/iv_help"
+            android:layout_width="@dimen/edit_icon"
+            android:layout_height="@dimen/edit_icon"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/ic_help_notification_icon"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/iv_help"
+            android:layout_toLeftOf="@+id/tv_skip"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:text="@string/app_name"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            >
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                >
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="@dimen/stage_button"
+                    android:layout_height="@dimen/stage_button"
+                    android:background="@drawable/unselected"
+                    android:layout_centerInParent="true"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cccccc"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/button1"
+                    />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="@dimen/stage_button"
+                    android:layout_height="@dimen/stage_button"
+                    android:background="@drawable/selected"
+                    android:layout_centerInParent="true"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cccccc"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="@dimen/stage_button"
+                    android:layout_height="@dimen/stage_button"
+                    android:background="@drawable/selected"
+                    android:layout_centerInParent="true"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cccccc"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="@dimen/stage_button"
+                    android:layout_height="@dimen/stage_button"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/selected" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#cccccc"
+                    android:layout_marginRight="-5dp"
+                    android:layout_toLeftOf="@id/button4"
+                    android:layout_centerVertical="true"
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:text="Skip"
+            android:layout_centerVertical="true"
+            android:textColor="#FFFFFF"
+            />
+
+
+    </RelativeLayout>
+
+</LinearLayout>

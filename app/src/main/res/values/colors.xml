@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D2308A</color>
+    <color name="colorPrimaryDark">#232323</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="pink_drak">#D2308A</color>
+    <color name="pink_lite">#D2308A</color>
+    <color name="gray_text">#cccccc</color>
+    <color name="color_gray">#99dfdfdf</color>
+    <color name="white_text">#FFFFFF</color>
+</resources>

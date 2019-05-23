@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.ChallengersFragment"
+    android:background="@drawable/gradiant_home">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Challenge Creator"
+        android:textSize="22sp"
+        android:textColor="#FFF"
+        android:padding="10dp"
+
+        />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Create your own Challenge for millioins of People"
+            android:textColor="#FFFFFF"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_sponsor_challenge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + Sponsor Challenge"
+                android:background="@drawable/submit_button"
+                android:textColor="#FFFFFF"
+                android:padding="6dp"
+                android:layout_margin="5dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_jackpot_challenge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" + Jackpot Challenge"
+                android:background="@drawable/submit_btn_shape"
+                android:textColor="#FFFFFF"
+                android:padding="6dp"
+                android:layout_margin="5dp"
+                />
+
+
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabTextColor="@color/colorAccent"
+            style="@style/MyCustomTextAppearance"
+            android:layout_gravity="center_horizontal"
+            >
+
+
+
+        </android.support.design.widget.TabLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v4.view.ViewPager>
+
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

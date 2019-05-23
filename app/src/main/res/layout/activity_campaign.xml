@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_home"
+    tools:context=".activity.CampaignActivity"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    >
+<include layout="@layout/stagebar_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="#393738"
+        app:cardElevation="5dp"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp"
+            >
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/audience_size_lable"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="18sp"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/audience_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ca 1.121.132"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                />
+
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/define_your_budget"
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="10dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        ><ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:src="@drawable/streetno_normal"
+        />
+    <TextView
+        android:id="@+id/budget_per_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="€ 135,27 Average/Day"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="#FFF"
+        android:layout_margin="5dp"
+        />
+
+    </LinearLayout>
+    <android.support.v7.widget.AppCompatSeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="50"
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:padding="5dp"
+        android:layout_marginLeft="10dp"
+        android:text="for the time of your challenge 01.01-0.1020.2.700E( Maximum )"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/estimate_outreach"
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/futura_medium_bt"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca.247.000 impressions"
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_gray"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="between 01.01-01.20."
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca.25.000 Entries"
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_gray"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="between 01.01-01.20."
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_margin="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ca.64.000 Profile Views"
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="10dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_gray"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="between 01.01-01.20."
+        android:padding="5dp"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_margin="10dp"
+        />
+
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/next"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/submit_btn_shape"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

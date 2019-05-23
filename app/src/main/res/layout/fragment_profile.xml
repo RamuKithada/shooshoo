@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.ProfileFragment"
+    android:background="@drawable/gradiant_home"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+ <RelativeLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
+     <de.hdodenhof.circleimageview.CircleImageView
+         android:id="@+id/iv_profile_pic"
+         android:layout_width="80dp"
+         android:layout_height="80dp"
+         android:src="@drawable/rose"
+         app:civ_border_width="1dp"
+         app:civ_border_overlay="true"
+         app:civ_border_color="#FFF"
+         android:layout_marginTop="10dp"
+         android:layout_marginRight="15dp"
+         android:layout_marginBottom="10dp"
+         android:layout_marginLeft="15dp"
+         />
+     <LinearLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:orientation="vertical"
+         android:layout_centerVertical="true"
+         android:layout_toRightOf="@+id/iv_profile_pic"
+         >
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Maxmary"
+             android:fontFamily="@font/futura_medium_bt"
+             android:textColor="#FFF"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="23yrs old"
+             android:fontFamily="@font/futura_book_font"
+             android:textColor="@color/gray_text"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+
+             />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Single"
+             android:fontFamily="@font/futura_book_font"
+             android:textColor="@color/gray_text"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+
+             />
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Always wearing a smile :)"
+             android:fontFamily="@font/futura_book_font"
+             android:textColor="@color/gray_text"
+             android:textAppearance="?android:attr/textAppearanceSmall"
+             />
+
+
+     </LinearLayout>
+
+     <ImageButton
+         android:id="@+id/toggle_btn"
+         android:layout_width="30dp"
+         android:layout_height="30dp"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:layout_margin="10dp"
+         />
+
+
+ </RelativeLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/color_gray"
+    />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="5dp"
+      android:layout_marginBottom="5dp"
+      >
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/our_brands"
+          android:textColor="@color/white_text"
+          android:layout_margin="15dp"
+          android:fontFamily="@font/futura_book_font"
+          android:layout_gravity="center_vertical"
+          android:gravity="center"
+          />
+ <android.support.v7.widget.RecyclerView
+     android:id="@+id/rv_list_brand"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="horizontal"
+     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+     tools:listitem="@layout/circle_image_item"
+     >
+
+
+
+ </android.support.v7.widget.RecyclerView>
+
+  </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+
+
+            <LinearLayout
+                android:id="@+id/show_hide_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:text="Won Challenges"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="50"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        />
+                    <ProgressBar
+                        android:id="@+id/challenges_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:indeterminate="false"
+                        android:maxHeight="10dip"
+                        android:minHeight="10dip"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/pink_progress"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="249,41E"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:text="Tropies"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:maxLines="2"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="82"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        />
+                    <ProgressBar
+                        android:id="@+id/tropies_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="false"
+                        android:maxHeight="10dip"
+                        android:minHeight="10dip"
+                        android:progress="82"
+                        android:progressDrawable="@drawable/tropies_progress"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="Gool 450E"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center_vertical|left"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/support_now"
+                    android:layout_toRightOf="@+id/side_lay"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/rose"
+                    android:layout_gravity="bottom"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+
+ <android.support.design.widget.TabLayout
+     android:id="@+id/tab_layout"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     app:tabSelectedTextColor="#FFF"
+     app:tabTextColor="@color/color_gray"
+     style="@style/MyCustomTextAppearance"
+     app:tabMode="fixed"
+     >
+     <android.support.design.widget.TabItem
+         android:text="@string/title_challengers"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         />
+
+     <android.support.design.widget.TabItem
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/private_text"
+
+         />
+ </android.support.design.widget.TabLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/profile_feed_list_item"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_home"
+    tools:context=".activity.ChallengePaymentActivity"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+
+    >
+    <include layout="@layout/stagebar_layout"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/summary"
+                android:padding="5dp"
+                android:textColor="#FFF"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_margin="10dp"
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                >
+                <EditText
+                    android:id="@+id/edt_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    android:textColorHint="@color/gray_text"
+                    android:hint="Enter Summary Here"
+                    android:background="#00FFFFFF"
+
+                    />
+
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="@color/color_gray"
+                />
+            <TextView
+                android:id="@+id/budget_per_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="135,27 Average/Day"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:textColor="#FFF"
+                android:paddingLeft="5dp"
+                android:layout_margin="5dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:padding="5dp"
+                android:layout_marginLeft="10dp"
+                android:text="for the time of your challenge 01.01-0.1020.2.700E ( Maximum )"
+
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="5dp"
+                android:background="@color/color_gray"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Challenge Name :"
+                android:padding="5dp"
+                android:textColor="@color/gray_text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_margin="10dp"
+                />
+            <TextView
+                android:id="@+id/tv_challenge_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="XYZ Winner Games"
+                android:padding="5dp"
+                android:textColor="#FFF"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_margin="10dp"
+                />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_gray"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Date and Time :"
+                    android:padding="5dp"
+                    android:textColor="@color/gray_text"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_margin="10dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25 Apr 19,20:00AM"
+                    android:padding="5dp"
+                    android:textColor="#FFF"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_margin="10dp"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_gray"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End Date and Time :"
+                    android:padding="5dp"
+                    android:textColor="@color/gray_text"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_margin="10dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="25 Apr 19,20:00AM"
+                    android:padding="5dp"
+                    android:textColor="#FFF"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_margin="10dp"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_gray"
+                />
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
+                android:text="Accept Terms and Conditions"
+                android:textColor="#FFFFFF"
+                android:layout_margin="10dp"
+                android:padding="5dp"
+                />
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/pay"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/submit_btn_shape"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
