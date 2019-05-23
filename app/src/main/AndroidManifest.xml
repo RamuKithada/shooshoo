@@ -16,13 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.FeedsActivity"></activity>
         <activity
             android:name=".activity.DrawerActivity"
             android:label="@string/title_activity_drawer"
-            android:theme="@style/AppTheme.NoActionBar">
-
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.SupportNowActivity" />
         <activity android:name=".activity.JackpotOverviewActivity" />

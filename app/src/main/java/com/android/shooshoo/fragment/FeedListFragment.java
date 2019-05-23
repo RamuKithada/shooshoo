@@ -1,15 +1,28 @@
 package com.android.shooshoo.fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.android.shooshoo.R;
-public class FeedListFragment extends Fragment {
+import com.android.shooshoo.activity.FeedsActivity;
+import com.android.shooshoo.adapter.FeedsImagesAdapter;
+public class FeedListFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    RecyclerView list;
+    FeedsImagesAdapter adapter;
+    LinearLayoutManager layoutManager;
+
 
     // TODO: Rename and change types of parameters
     private int mParam1;
@@ -49,5 +62,23 @@ public class FeedListFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_feed_list, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        list = view.findViewById(R.id.list);
+        layoutManager = new LinearLayoutManager(getActivity());
+        SnapHelper snapHelper = new PagerSnapHelper();
+        list.setLayoutManager(layoutManager);
+        snapHelper.attachToRecyclerView(list);
+        adapter = new FeedsImagesAdapter();
+        adapter.setListener(this);
+        list.setAdapter(adapter);
+    }
 
+
+    @Override
+    public void onClick(View v) {
+        Intent intent=new Intent(getActivity(), FeedsActivity.class);
+        startActivity(intent);
+    }
 }

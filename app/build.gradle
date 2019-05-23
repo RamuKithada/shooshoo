@@ -37,4 +37,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.0.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+    implementation "com.google.android.exoplayer:exoplayer:r2.4.3"
+    implementation "im.ene.toro3:toro:3.0.0-beta1"
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import com.android.shooshoo.fragment.FeedListFragment;
 
@@ -39,4 +40,5 @@ public class FeedViewPagerAdapter extends FragmentPagerAdapter {
 
         return names[position];
     }
+
 }
