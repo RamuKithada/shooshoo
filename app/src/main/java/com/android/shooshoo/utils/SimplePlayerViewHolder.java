@@ -5,6 +5,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.android.shooshoo.R;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
@@ -22,10 +24,12 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public ImageView iv_pauseresume;
     public Uri mediaUri;
     public boolean isPlay=true;
+    public LinearLayout comment_view;
     public SimplePlayerViewHolder(View itemView) {
         super(itemView);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
         card=(CardView)itemView.findViewById(R.id.card);
+        comment_view=itemView.findViewById(R.id.comment_view);
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
         card.setOnClickListener(new View.OnClickListener() {
             @Override

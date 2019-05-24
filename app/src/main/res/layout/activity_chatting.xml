@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_home"
+    tools:context=".activity.ChattingActivity">
+    <LinearLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/portrait"
+            android:layout_margin="5dp"
+            app:civ_border_color="@color/white_text"
+            app:civ_border_width="1dp"
+            />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center"
+               android:gravity="center"
+               android:textColor="@color/white_text"
+               android:fontFamily="@font/futura_book_font"
+               android:text="Lisa Marie"
+               android:layout_margin="5dp"
+               />
+
+
+
+
+
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_history_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        tools:listitem="@layout/chat_text_right"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_gray"
+        />
+    <LinearLayout
+        android:id="@+id/message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/gradiant_home_bottom_navi"
+        >
+<EditText
+    android:id="@+id/edt_message"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:minLines="1"
+    android:maxLines="2"
+    android:textColorHint="@color/gray_text"
+    android:textColor="@color/white_text"
+    android:hint="Type your message here"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:padding="5dp"
+    android:layout_gravity="center_vertical"
+    android:background="#d0454444"
+    android:layout_margin="10dp"
+    />
+  <ImageView
+      android:id="@+id/iv_send_msg"
+      android:layout_width="35dp"
+      android:layout_height="35dp"
+      app:srcCompat="@drawable/ic_send_white_24dp"
+      android:padding="8dp"
+      android:layout_marginRight="5dp"
+      android:background="@drawable/search_view_bg"
+      android:layout_gravity="center_vertical|right"
+
+      />
+
+    </LinearLayout>
+</LinearLayout>

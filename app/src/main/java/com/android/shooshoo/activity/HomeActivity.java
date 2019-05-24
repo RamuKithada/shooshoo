@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.fragment.ChallengersFragment;
+import com.android.shooshoo.fragment.ChatsFragment;
 import com.android.shooshoo.fragment.FeedFragment;
 import com.android.shooshoo.fragment.HomeFragment;
 import com.android.shooshoo.fragment.ProfileFragment;
@@ -126,6 +127,8 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
         fragmentManager.beginTransaction().add(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
         iv_profile.setOnClickListener(this);
         iv_edit_profile.setOnClickListener(this);
+        iv_chat.setOnClickListener(this);
+        iv_search.setOnClickListener(this);
     }
 
     @Override
@@ -152,6 +155,20 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
             case R.id.iv_edit_profile:
                 Intent intent=new Intent(this,EditProfileActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.iv_chat:
+                mTextMessage.setText("Chats");
+                iv_chat.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                iv_help.setVisibility(View.GONE);
+                iv_search.setVisibility(View.VISIBLE);
+                iv_wallet.setVisibility(View.GONE);
+                iv_filters.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram")).commit();
+                break;
+            case R.id.iv_search:
+                Intent intentsearch=new Intent(this,ChatSearchActivity.class);
+                startActivity(intentsearch);
                 break;
         }
 
