@@ -17,6 +17,7 @@ import com.android.shooshoo.fragment.ChatsFragment;
 import com.android.shooshoo.fragment.FeedFragment;
 import com.android.shooshoo.fragment.HomeFragment;
 import com.android.shooshoo.fragment.ProfileFragment;
+import com.android.shooshoo.fragment.RadarFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
 
 import butterknife.BindView;
@@ -104,6 +105,7 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
                     iv_filters.setVisibility(View.GONE);
                     iv_edit_profile.setVisibility(View.GONE);
                     iv_profile.setVisibility(View.VISIBLE);
+                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, RadarFragment.newInstance("Hi","Ram")).commit();
                     return true;
             }
             return false;
