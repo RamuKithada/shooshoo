@@ -76,4 +76,6 @@
     <string name="write_msg">Write message here</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="winners_list">Winners List</string>
+    <string name="winners_title"><![CDATA[H & M Hamburg Reopening]]></string>
 </resources>

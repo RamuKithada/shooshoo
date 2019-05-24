@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_home"
+    tools:context=".fragment.WinnersFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Challenges"
+        android:padding="5dp"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="@color/white_text"
+
+        />
+    <android.support.v7.widget.RecyclerView
+        android:layout_gravity="center"
+         android:id="@+id/my_challenges_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        tools:listitem="@layout/challengers_item"
+        app:spanCount="2"
+
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

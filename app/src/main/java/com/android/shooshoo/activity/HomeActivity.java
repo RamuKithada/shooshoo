@@ -17,6 +17,7 @@ import com.android.shooshoo.fragment.ChatsFragment;
 import com.android.shooshoo.fragment.FeedFragment;
 import com.android.shooshoo.fragment.HomeFragment;
 import com.android.shooshoo.fragment.ProfileFragment;
+import com.android.shooshoo.fragment.WinnersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,6 +93,7 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
                     iv_filters.setVisibility(View.GONE);
                     iv_edit_profile.setVisibility(View.GONE);
                     iv_profile.setVisibility(View.VISIBLE);
+                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, WinnersFragment.newInstance("Hi","Ram")).commit();
                     return true;
                 case R.id.navigation_radar:
                     mTextMessage.setText(R.string.title_radar);
