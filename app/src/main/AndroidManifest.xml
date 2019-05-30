@@ -16,18 +16,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.ChangePasswordActivity"></activity>
+        <activity android:name=".activity.CameraActivity"></activity>
+        <activity android:name=".activity.MyChallengesActivity" />
+        <activity android:name=".activity.ChangePasswordActivity" />
         <activity android:name=".activity.FeedsActivity" />
         <activity
             android:name=".activity.DrawerActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-         <activity android:name=".activity.EditProfileActivity" />
-        <activity android:name=".activity.SupportNowActivity" />
-        <activity android:name=".activity.JackpotOverviewActivity" />
-        <activity android:name=".activity.AudienceInstructionActivity" />
-        <activity android:name=".activity.InviteFriendActivity" />
-        <activity android:name=".activity.GameMasterActivity" />
+        <activity android:name=".activity.EditProfileActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.SupportNowActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.JackpotOverviewActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.AudienceInstructionActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.InviteFriendActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.GameMasterActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.ChallengePaymentActivity"
             android:screenOrientation="portrait" />
@@ -97,10 +111,18 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".activity.ChattingActivity" />
-        <activity android:name=".activity.FeedCommentsActivity" />
-        <activity android:name=".activity.WinnersListActivity" />
+            android:theme="@style/Base.Theme.AppCompat"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ChattingActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.FeedCommentsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.WinnersListActivity"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

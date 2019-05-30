@@ -12,6 +12,18 @@ import com.android.shooshoo.R;
 
 public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChallengersAdapter.CatViewHolder> {
 
+
+    View.OnClickListener onClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+        }
+    };
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -20,11 +32,12 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
         return new CatViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
 
 
-
+catViewHolder.itemView.setOnClickListener(onClickListener);
 
     }
 

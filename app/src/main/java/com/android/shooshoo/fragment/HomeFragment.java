@@ -1,6 +1,7 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
@@ -26,7 +28,7 @@ import com.android.shooshoo.adapter.SponsorChallengersAdapter;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -99,7 +101,9 @@ public class HomeFragment extends Fragment {
         setLayoutManager(catList);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);
+        sponsorChallengersAdapter.setOnClickListener(this);
         jackpotList.setAdapter(jackpotChallengersAdapter);
+        jackpotChallengersAdapter.setOnClickListener(this);
         catList.setAdapter(homeCategoryAdapter);
 
     }
@@ -131,6 +135,12 @@ public class HomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+        startActivity(intent);
     }
 
     /**
