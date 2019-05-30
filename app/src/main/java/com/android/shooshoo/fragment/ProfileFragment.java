@@ -110,8 +110,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             case R.id.toggle_btn:
                 if(show_hide.getVisibility()==View.VISIBLE){
                     show_hide.setVisibility(View.GONE);
+                    toggleBtn.setImageResource(R.drawable.plus_collaps);
                 }else {
                     show_hide.setVisibility(View.VISIBLE);
+                    toggleBtn.setImageResource(R.drawable.minus_add);
                 }
                 break;
             case R.id.support_now:

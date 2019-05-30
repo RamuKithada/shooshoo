@@ -2,26 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_icon"
-        android:title="@string/title_home" />
+        android:id="@+id/navigation_legal"
+        android:icon="@drawable/ic_legal"
+        android:title="@string/title_legal" />
 
     <item
-        android:id="@+id/navigation_challengers"
-        android:icon="@drawable/ic_challenger_icon"
-        android:title="@string/title_challengers"
+        android:id="@+id/navigation_Licenses"
+        android:icon="@drawable/ic_license"
+        android:title="@string/title_Licenses"
         />
 
     <item
-        android:id="@+id/navigation_feed"
-        android:icon="@drawable/ic_feed_icon"
-        android:title="@string/title_feed" />
+        android:id="@+id/navigation_user_agreement"
+        android:icon="@drawable/ic_user_agreement"
+        android:title="@string/title_user_agreement" />
     <item
-        android:id="@+id/navigation_winners"
-        android:icon="@drawable/ic_winner_icon"
-        android:title="@string/title_winners" />
+        android:id="@+id/navigation_tc"
+        android:icon="@drawable/ic_terms_use"
+        android:title="@string/title_tc" />
     <item
-        android:id="@+id/navigation_radar"
-        android:icon="@drawable/ic_radar_icon"
-        android:title="@string/title_radar" />
+        android:id="@+id/navigation_pws"
+        android:icon="@drawable/password_active"
+        android:title="@string/title_chpws" />
+    <item
+        android:id="@+id/navigation_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="@string/title_logout" />
 </menu>

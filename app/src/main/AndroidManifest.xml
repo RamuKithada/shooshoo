@@ -16,12 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activity.ChangePasswordActivity"></activity>
         <activity android:name=".activity.FeedsActivity" />
         <activity
             android:name=".activity.DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.EditProfileActivity" />
+         <activity android:name=".activity.EditProfileActivity" />
         <activity android:name=".activity.SupportNowActivity" />
         <activity android:name=".activity.JackpotOverviewActivity" />
         <activity android:name=".activity.AudienceInstructionActivity" />
@@ -51,7 +52,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.SplashActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait" />
         <activity
@@ -74,7 +75,7 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.HomeActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -99,7 +100,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".activity.ChattingActivity" />
         <activity android:name=".activity.FeedCommentsActivity" />
-        <activity android:name=".activity.WinnersListActivity"></activity>
+        <activity android:name=".activity.WinnersListActivity" />
     </application>
 
 </manifest>

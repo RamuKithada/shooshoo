@@ -78,4 +78,22 @@
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="winners_list">Winners List</string>
     <string name="winners_title"><![CDATA[H & M Hamburg Reopening]]></string>
+    <string name="save">Save</string>
+    <string name="trophies">Trophies</string>
+    <string name="coins">Coins</string>
+    <string name="winning_challenges">Winning Challenges</string>
+    <string name="sponser_brands">Sponser Brands</string>
+    <string name="friends">Friends</string>
+    <string name="macth_req">Others can send me match requests</string>
+    <string name="title_legal">Legal</string>
+    <string name="title_Licenses">Licenses</string>
+    <string name="title_user_agreement">User Agreement</string>
+    <string name="title_tc">Terms of Use</string>
+    <string name="title_chpws">Change Password</string>
+    <string name="title_logout">Logout</string>
+    <string name="change_pws">Change Password</string>
+    <string name="old_pws">Old Password</string>
+    <string name="new_pws">New Password</string>
+    <string name="cnf_pws">Conform Password</string>
+    <string name="change">Change</string>
 </resources>

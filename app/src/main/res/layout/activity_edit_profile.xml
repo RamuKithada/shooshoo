@@ -20,9 +20,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:fitsSystemWindows="true"
-        app:itemTextColor="@color/gray_text"
+        app:itemTextColor="#FFFFFF"
         app:menu="@menu/menu_drawer"
+        app:itemIconTint="@color/white_text"
         app:headerLayout="@layout/dawar_header"
+        app:itemBackground="@drawable/drawer_item_bg"
+        android:background="#111111"
         />
 
 </android.support.v4.widget.DrawerLayout>

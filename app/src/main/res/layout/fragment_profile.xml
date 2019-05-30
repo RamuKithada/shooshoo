@@ -73,10 +73,12 @@
 
      </LinearLayout>
 
-     <ImageButton
+     <ImageView
          android:id="@+id/toggle_btn"
          android:layout_width="30dp"
          android:layout_height="30dp"
+         android:padding="5dp"
+         android:src="@drawable/plus_collaps"
          android:layout_alignParentRight="true"
          android:layout_centerVertical="true"
          android:layout_margin="10dp"
@@ -131,6 +133,7 @@
                 android:id="@+id/show_hide_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 >
                 <LinearLayout

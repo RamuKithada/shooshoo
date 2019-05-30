@@ -51,7 +51,7 @@
             android:background="#00FFFFFF"
             android:padding="5dp"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_chat_notification_icon"
+            app:srcCompat="@drawable/menu_icon"
             />
     </LinearLayout>
     <View
