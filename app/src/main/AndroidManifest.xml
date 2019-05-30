@@ -17,9 +17,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.CameraActivity"></activity>
-        <activity android:name=".activity.MyChallengesActivity" />
-        <activity android:name=".activity.ChangePasswordActivity" />
-        <activity android:name=".activity.FeedsActivity" />
+        <activity android:name=".activity.MyChallengesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.FeedsActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".activity.DrawerActivity"
             android:screenOrientation="portrait"
