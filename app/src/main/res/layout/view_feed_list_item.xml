@@ -44,7 +44,8 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_chat_notification_icon"
+                android:src="@drawable/donations"
+                android:padding="5dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"/>
             <TextView
@@ -68,8 +69,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_radar_notification_icon"
+                android:src="@drawable/comments"
                 android:layout_gravity="center"
+                android:padding="5dp"
                 android:layout_margin="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -93,8 +95,9 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_radar_notification_icon"
+                android:src="@drawable/like_normal"
                 android:layout_gravity="center"
+                android:padding="5dp"
                 android:layout_margin="5dp"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -121,7 +124,8 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_chat_notification_icon"
+                android:src="@drawable/share_icon"
+                android:padding="5dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"/>
             <TextView
@@ -210,17 +214,14 @@
             android:src="@drawable/portrait"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
             android:layout_alignTop="@+id/profile_pic"
             android:layout_marginLeft="-13dp"
             android:layout_toRightOf="@+id/profile_pic"
-            android:background="@drawable/gradiant"
-            android:fontFamily="@font/futura_medium_bt"
-            android:gravity="center"
-            android:text="+"
-            android:textColor="#FFFFFF" />
+            android:src="@drawable/add_plus_icon"
+             />
 
         <TextView
             android:layout_width="wrap_content"

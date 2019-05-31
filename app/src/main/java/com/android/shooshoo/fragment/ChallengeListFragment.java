@@ -89,6 +89,8 @@ public class ChallengeListFragment extends Fragment {
        endpoint="latest";
    }else if(mColumnCount==1){
        endpoint="past";
+   }else if(mColumnCount==2){
+       endpoint="past";
    }
 
             Log.e("mColumnCount",""+mColumnCount);

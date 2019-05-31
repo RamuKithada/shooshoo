@@ -96,4 +96,5 @@
     <string name="new_pws">New Password</string>
     <string name="cnf_pws">Conform Password</string>
     <string name="change">Change</string>
+    <string name="post_video">Post Video</string>
 </resources>

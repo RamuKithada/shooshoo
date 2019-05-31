@@ -33,6 +33,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         ButterKnife.bind(this);
         brand.setOnClickListener(this);
         camera.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
         rv_recnet_posts.setAdapter(new ProfileFeedsAdapter());
     }
 
@@ -40,9 +41,13 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
     switch (v.getId()){
         case R.id.camera:
-startActivity(new Intent(this,CameraActivity.class));
+            startActivity(new Intent(this,CameraActivity.class));
+            break;
+        case R.id.iv_back:
+            finish();
             break;
         case R.id.brand:
+            startActivity(new Intent(this,BrandProfileActivity.class));
             break;
     }
     }

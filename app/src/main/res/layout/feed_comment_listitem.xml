@@ -54,7 +54,7 @@
             android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textSize="12sp"
-            android:drawableLeft="@drawable/ic_send_white_24dp"
+            android:drawableLeft="@drawable/ic_like_gray"
             />
 
     </LinearLayout>
@@ -64,21 +64,20 @@
         android:orientation="vertical"
         android:layout_margin="2dp"
         >
-       <ImageView
-           android:layout_gravity="center"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="5dp"
-        android:src="@drawable/rose"
-        />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/reply" />
         <ImageView
             android:layout_gravity="center"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:padding="5dp"
             android:layout_marginTop="10dp"
-
-            android:src="@drawable/rose"
+            android:src="@drawable/report_abus"
             />
 
     </LinearLayout>
