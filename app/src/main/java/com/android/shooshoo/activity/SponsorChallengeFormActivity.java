@@ -192,6 +192,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             }
 
                         }
+                        if(builder.toString().trim().length()==0){
+                            showMessage("Please save a company");
+                            return;
+                        }
+
                         sponcerChallengePresenter.createChallenge(userSession.getUserId(),builder.toString(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,

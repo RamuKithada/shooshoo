@@ -47,7 +47,7 @@ public class CreateSponsorChallengeActivity extends BaseActivity implements View
 
 
         setStage(0);
-        title.setText("Create a challenge");
+        title.setText("Create a Challenge");
       challengeType=getIntent().getIntExtra("challenge_type",0);
       if(challengeType==1){
             sponsor_challenge_guide.setVisibility(View.VISIBLE);

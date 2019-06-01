@@ -283,13 +283,13 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         if(country_pos==0)
         {
             spinner_country.requestFocus();
-            showMessage("Please select Your Country");
+            showMessage("Please select your Country");
             return false;
         }
         if(city_pos==0)
         {
             spinner_city.requestFocus();
-            showMessage("Please select Your City");
+            showMessage("Please select your City");
             return false;
         }
         if(!ApiUrls.validateString(edt_zipcode.getText().toString()))
@@ -638,6 +638,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 View view=null;
     @Override
     public void onCompanyRegister(Company company) {
+
         userSession.addSponsor(company.getCompanyId());
         if(view!=null){
             if(view.getId()==R.id.btn_more_companies){

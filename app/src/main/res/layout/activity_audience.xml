@@ -43,7 +43,7 @@
                     android:background="#00FFFFFF"
                     android:layout_margin="5dp"
                     android:textColor="#FFFFFF"
-                    android:inputType="textPersonName"
+                    android:inputType="numberDecimal"
                     android:textColorHint="#CCCCCC"
                     android:hint=""
                     />
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
-                    android:text="Price Total"
+                    android:text="Prize Total"
                     android:textSize="14sp"
                     />
 
@@ -204,7 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
-                    android:text="Winner Constallation"
+                    android:text="Winner Constellation"
                     android:textSize="14sp"
                     />
 
@@ -339,7 +339,7 @@
                         android:textColor="#FFFFFF"
                         android:inputType="textPersonName"
                         android:textColorHint="#CCCCCC"
-                        android:hint="ZipCode"
+                        android:hint="Zip Code"
                         />
                         <View
                             android:layout_width="match_parent"

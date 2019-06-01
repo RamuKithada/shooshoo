@@ -30,6 +30,7 @@ public class UserSession {
     private static final String CAT_IDS="cat_ids";
     private static final String SPONSOR_CHALLENGE_ID="sponsor_challenge_id";
     private static final String SPONSOR_BY="sponsor_by";
+    private static final String AUD_SIZE="aud_size";
 
 
     public UserSession(Context context) {
@@ -176,5 +177,13 @@ public  void logout(){
 
     public GameMaster getGameMaster() {
         return (GameMaster) new Gson().fromJson(getString("jackpot_challenge"), GameMaster.class);
+    }
+
+    public void setAudSize(String audienceSize) {
+        putString(AUD_SIZE,audienceSize);
+    }
+
+    public  String getAudSize() {
+        return getString(AUD_SIZE) ;
     }
 }

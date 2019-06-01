@@ -26,7 +26,7 @@
     <string name="s_challengers_result">Total Prizes  2.234.3215 - - Biggest JackPot</string>
     <string name="view_more_challenger">View More Challengers</string>
     <string name="quote1">Great! Now it\'s time to describe \n your Challenge</string>
-    <string name="quote2">Think about a way, that most \n can represent your brand</string>
+    <string name="quote2">Think about a way, that most \n people can represent your brand</string>
     <string name="quote3">Don\'t forget that your Challenge is \n the arena!</string>
     <string name="quote4">Leave enough space for the creativity \n of all competitors</string>
     <string name="photo_entries"> Photo entries</string>
@@ -45,8 +45,8 @@
     <string name="target_audience">Target Audience</string>
     <string name="sponsor_quote1">Welcome to Sponsor Challenge \n creator</string>
     <string name="jackpot_quote1">Welcome to Jackpot Challenge \n creator</string>
-    <string name="sponsor_quote2">Sponsor challengers are perfectly \n made  for companies to advertise \n their brands and their products!</string>
-    <string name="jackpot_quote2">Jackpot challengers are perfectly \n made  for big competition</string>
+    <string name="sponsor_quote2">Sponsor Challengers are perfectly \n made  for companies to advertise \n their brands or their products!</string>
+    <string name="jackpot_quote2">Jackpot Challengers are perfectly \n made  for big competition</string>
     <string name="sponsor_quote3">To begin with the walkthrough \n we will ask you about your companies \ninformation first</string>
     <string name="jackpot_quote3">To begin with the walkthrough \n we will ask you about your companies \ninformation first</string>
     <string name="male">Male</string>

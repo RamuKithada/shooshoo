@@ -535,6 +535,7 @@ sponcerChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
 
                            JSONObject size=object.getJSONObject("size");
                           String audienceSize=size.optString("size");
+                          userSession.setAudSize(audienceSize);
                           audience_size.setText(audienceSize);
                           showMessage(object.optString("message"));
 

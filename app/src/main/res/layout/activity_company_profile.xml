@@ -33,7 +33,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:src="@drawable/photo_upload"
-                    android:padding="2dp"
+                    android:padding="10dp"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -135,7 +135,41 @@
                 android:layout_height="1dp"
                 android:background="@color/color_gray"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
+                <ImageView
+                    android:id="@+id/iv_city"
+                    android:layout_width="@dimen/edit_icon"
+                    android:layout_height="@dimen/edit_icon"
+                    android:layout_gravity="center_vertical"
+                    android:padding="8dp"
+                    android:src="@drawable/city_normal" />
+
+                <Spinner
+                    android:id="@+id/spinner_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="#00FFFFFF"
+                    android:hint="City"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#CCCCCC" />
+
+
+                <ImageView
+                    android:id="@+id/iv_dropdown_city"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:padding="8dp"
+                    android:src="@drawable/down_angel" />
+            </LinearLayout>
             <View
                 android:id="@+id/city_line"
                 android:layout_width="match_parent"
@@ -277,7 +311,7 @@
                             android:textColorHint="#CCCCCC"
                             android:layout_margin="6dp"
                             android:enabled="false"
-                            android:hint="+91"
+                            android:hint=""
                             />
                     </LinearLayout>
 
@@ -362,41 +396,7 @@
                 android:background="@color/color_gray"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/iv_city"
-                    android:layout_width="@dimen/edit_icon"
-                    android:layout_height="@dimen/edit_icon"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:src="@drawable/city_normal" />
-
-                <Spinner
-                    android:id="@+id/spinner_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:hint="City"
-                    android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC" />
-
-
-                <ImageView
-                    android:id="@+id/iv_dropdown_city"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:padding="8dp"
-                    android:src="@drawable/down_angel" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

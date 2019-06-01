@@ -24,6 +24,6 @@ Runnable runnable=new Runnable() {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_msplash);
-        new Handler().postDelayed(runnable,500);
+        new Handler().postDelayed(runnable,2000);
     }
 }

@@ -518,8 +518,21 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
             return false;
         }
 
+        if(country_pos==0)
+        {
+            spinner_country.requestFocus();
+            showMessage("Please select your Country");
+            return false;
+        }
+        if(city_pos==0)
+        {
+            spinner_city.requestFocus();
+            showMessage("Please select your City");
+            return false;
+        }
+
         if(!ApiUrls.validateString(edt_zipcode.getText().toString())){
-            edt_zipcode.setError("Enter Zipcode Name");
+            edt_zipcode.setError("Enter Zipcode");
             edt_zipcode.requestFocus();
             return false;
         }

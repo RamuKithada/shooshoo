@@ -22,8 +22,8 @@ public class ApiUrls {
     public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
-    public static final String IMAGE_URL = "http://www.testingmadesimple.org/shooshoo/uploads/";
-    public static final String SPONSOR_BANNER_IMAGE_URL="http://www.testingmadesimple.org/shooshoo/uploads/sponsors/banners/";
+    public static final String IMAGE_URL = "http://165.22.94.168/uploads/";
+    public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
 
 
 

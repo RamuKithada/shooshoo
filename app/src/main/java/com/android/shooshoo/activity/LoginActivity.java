@@ -69,7 +69,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
-
         edt_user_name.setOnFocusChangeListener( new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -130,6 +129,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             public void onClick(View v) {
                 Intent signupIntent=new Intent(LoginActivity.this,SignupActivity.class);
                 startActivity(signupIntent);
+                finish();
 
             }
         });
@@ -158,7 +158,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
           String pws=edt_pws.getText().toString();
           if(!ApiUrls.validateString(name)){
               edt_user_name.requestFocus();
-              edt_user_name.setError("Enter user name");
+              edt_user_name.setError("Enter User name");
               return false;
           }
         if(!ApiUrls.validateString(pws)){

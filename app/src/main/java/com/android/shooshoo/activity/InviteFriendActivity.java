@@ -60,7 +60,7 @@ public class InviteFriendActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friend);
         ButterKnife.bind(this);
-        title.setText("The Challenge");
+        title.setText("Invite Friends");
         setStage(3);
         friends_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         findContactsAdapter=new FindContactsAdapter(this,contactsModelArrayList);

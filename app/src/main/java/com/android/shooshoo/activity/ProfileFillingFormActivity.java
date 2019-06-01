@@ -341,6 +341,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
                 }else showMessage("Please check internet connection");
                 break;
             case R.id.tv_skip:
+                tv_skip.setOnClickListener(null);
                 Intent homeIntent=new Intent(this,HomeActivity.class);
                 startActivity(homeIntent);
                 break;
@@ -400,7 +401,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
 
     private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
+        button1.setBackgroundResource(R.drawable.unselected);
         button2.setBackgroundResource(R.drawable.selected);
         button3.setBackgroundResource(R.drawable.unselected);
         button4.setBackgroundResource(R.drawable.unselected);
@@ -594,7 +595,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
 
        if(!ApiUrls.validateString(edt_zipcode.getText().toString())){
-           edt_zipcode.setError("Enter Zipcode Name");
+           edt_zipcode.setError("Enter Zipcode");
            edt_zipcode.requestFocus();
            return false;
        }
@@ -635,6 +636,16 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
            edt_Street.requestFocus();
            return false;
 
+       }
+       if(ApiUrls.validateString(edt_number.getText().toString())){
+
+           if(edt_number.getText().toString().length()>5){
+
+               edt_number.setError(" Street number have maximum 5 digits");
+               edt_number.requestFocus();
+               return false;
+
+           }
        }
 
 

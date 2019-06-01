@@ -115,7 +115,7 @@
         android:textColor="#FFFFFF"
         android:padding="5dp"
         android:layout_marginLeft="10dp"
-        android:text="for the time of your challenge 01.01-0.1020.2.700E( Maximum )"
+        android:text="For the time of your challenge 01.01-0.1020.2.700E( Maximum )"
 
         />
     <TextView
@@ -146,7 +146,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="between 01.01-01.20."
+        android:text="Between 01.01-01.20."
         android:padding="5dp"
         android:textColor="#FFF"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -170,7 +170,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="between 01.01-01.20."
+        android:text="Between 01.01-01.20."
         android:padding="5dp"
         android:textColor="#FFF"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -194,7 +194,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="between 01.01-01.20."
+        android:text="Between 01.01-01.20."
         android:padding="5dp"
         android:textColor="#FFF"
         android:textAppearance="?android:attr/textAppearanceSmall"

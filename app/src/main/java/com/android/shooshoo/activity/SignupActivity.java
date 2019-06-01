@@ -93,7 +93,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
         loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
            setState();
-
+        iv_back.setVisibility(View.INVISIBLE);
         iv_back.setOnClickListener(this);
         iv_close.setOnClickListener(this);
         iv_red_eye.setOnClickListener(new View.OnClickListener() {

@@ -170,7 +170,7 @@
                     android:padding="8dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    app:srcCompat="@drawable/ic_remove_red_eye_black_24dp"
+                    app:srcCompat="@drawable/ic_visibility_off_black_24dp"
                     />
 
 
@@ -230,7 +230,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Not have an account ?"
+                    android:text="Don't have an account ?"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="#CCCCCC"

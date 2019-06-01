@@ -106,17 +106,17 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next_lay:
-//                if(chooseAdapter.getItemCount()>=3) {
-//                    if (chooseAdapter.selectedSize() >= 3) {
+                if(chooseAdapter.getItemCount()>=3) {
+                    if (chooseAdapter.selectedSize() >= 3) {
                         if(connectionDetector.isConnectingToInternet())
                         {
                           presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
                         }
                         else showMessage("please check internet connection");
-//                    } else {
-//                        showMessage("Please select at least 3 Brands or skip ");
-//                    }
-//                }
+                    } else {
+                        showMessage("Please select at least 3 Brands or skip ");
+                    }
+                }
 
                 break;
             case R.id.tv_skip:
@@ -133,10 +133,10 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
 
 
     private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
-        button2.setBackgroundResource(R.drawable.selected);
-        button3.setBackgroundResource(R.drawable.selected);
-        button4.setBackgroundResource(R.drawable.selected);
+        button1.setBackgroundResource(R.drawable.unselected);
+        button2.setBackgroundResource(R.drawable.unselected);
+        button3.setBackgroundResource(R.drawable.unselected);
+        button4.setBackgroundResource(R.drawable. selected);
 
 
     }

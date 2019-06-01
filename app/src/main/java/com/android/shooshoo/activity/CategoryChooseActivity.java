@@ -111,13 +111,13 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next_lay:
-                   if(connectionDetector.isConnectingToInternet())
-                   {
-                       presenter.updateUserCat(userSession.getUserId(),chooseAdapter.getCats());
-                       userSession.setCats(chooseAdapter.getCats());
-                   }
-                   else showMessage("please check internet connection");
+                if(chooseAdapter.selectedSize()>=3) {
+                    if (connectionDetector.isConnectingToInternet()) {
 
+                        presenter.updateUserCat(userSession.getUserId(), chooseAdapter.getCats());
+                        userSession.setCats(chooseAdapter.getCats());
+                    } else showMessage("please check internet connection");
+                }else showMessage("Please select at least 3 categories ");
                 break;
             case R.id.tv_skip:
                 Intent homeIntent=new Intent(this,HomeActivity.class);
@@ -131,8 +131,8 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
 
     }
     private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
-        button2.setBackgroundResource(R.drawable.selected);
+        button1.setBackgroundResource(R.drawable.unselected);
+        button2.setBackgroundResource(R.drawable.unselected);
         button3.setBackgroundResource(R.drawable.selected);
         button4.setBackgroundResource(R.drawable.unselected);
 

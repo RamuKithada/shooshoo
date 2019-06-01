@@ -387,7 +387,7 @@
                                 android:textColor="#FFFFFF"
                                 android:textColorHint="#CCCCCC"
                                 android:layout_margin="6dp"
-                                android:hint="+91"
+                                android:hint=""
                                 />
                         </LinearLayout>
 

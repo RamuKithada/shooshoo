@@ -89,6 +89,7 @@ switch (menuItem.getItemId()){
         Intent intent=new Intent(this,SplashActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finishAffinity();
         break;
     case R.id.navigation_pws:
         startActivity(new Intent(this,ChangePasswordActivity.class));

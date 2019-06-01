@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +38,10 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
 
     @BindView(R.id.budget_per_day)
     TextView budget_per_day;
+
+    @BindView(R.id.audience_size)
+    TextView audience_size;
+
 
 
 
@@ -65,6 +71,9 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         setStage(3);
         this.appCompatSeekBar.setOnSeekBarChangeListener(this   );
         appCompatSeekBar.setProgress(5);
+        String audienceSize= userSession.getAudSize();
+        audience_size.setText(audienceSize);
+
     }
 
     @Override
@@ -96,3 +105,4 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         }
     }
 }
+

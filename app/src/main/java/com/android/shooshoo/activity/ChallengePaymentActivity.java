@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +47,8 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
     TextView tv_end_time;
     @BindView(R.id.tv_start_time)
     TextView tv_start_time;
+    @BindView(R.id.tc_checkbox)
+    CheckBox tc_checkbox;
 
 
     ConnectionDetector connectionDetector;
@@ -118,6 +121,11 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
     }
 
     private boolean validate() {
+        if(!tc_checkbox.isChecked()){
+         showMessage("Please accept Terms and Conditions");
+         return false;
+        }
+
         if (!ApiUrls.validateString(this.edt_summary.getText().toString())) {
             this.edt_summary.requestFocus();
             this.edt_summary.setError("enter summary for your challenge");
@@ -128,6 +136,8 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             showMessage("Please set your budget per day");
             return false;
         }
+
+
     }
 
     @Override
