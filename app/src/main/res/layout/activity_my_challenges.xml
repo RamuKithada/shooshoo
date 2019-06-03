@@ -168,6 +168,8 @@
                         android:layout_height="wrap_content"
                         android:text="Alles was du brauchst"
                         android:textColor="@color/white_text"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/participants"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         />
                     <TextView
@@ -178,8 +180,10 @@
                         android:textColor="@color/white_text"
                         android:layout_alignParentLeft="true"
 
+
                         />
                     <TextView
+                        android:id="@+id/participants"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4373 participants "

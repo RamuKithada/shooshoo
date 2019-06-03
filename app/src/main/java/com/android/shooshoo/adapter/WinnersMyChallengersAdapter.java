@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.WinnersListActivity;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +22,9 @@ import java.util.List;
 
 public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyChallengersAdapter.CatViewHolder> {
     Context context;
-    List<Challenge> challenges=new ArrayList<Challenge>();
+    List<ChallengeModel> challenges=new ArrayList<ChallengeModel>();
 
-    public WinnersMyChallengersAdapter(Context context, List<Challenge> challenges) {
+    public WinnersMyChallengersAdapter(Context context, List<ChallengeModel> challenges) {
         this.challenges=challenges;
         this.context=context;
     }
@@ -39,14 +40,16 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
           if(challenges!=null){
-               Challenge challenge=challenges.get(i);
-               catViewHolder.title.setText(challenge.getChallengeName());
-              Picasso.with(context)
-                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+challenge.getBannerImage())
-                      .error(R.drawable.rose)
-                      .placeholder(R.drawable.rose)
-                      .into(catViewHolder.imageView);
-              catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+               ChallengeModel challenge=challenges.get(i);
+               catViewHolder.title.setText(challenge.getTitle());
+               catViewHolder.imageView.setImageResource(challenge.getImage());
+               catViewHolder.subtitle.setText(challenge.getDescription());
+//              Picasso.with(context)
+//                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+challenge.getBannerImage())
+//                      .error(R.drawable.rose)
+//                      .placeholder(R.drawable.rose)
+//                      .into(catViewHolder.imageView);
+//              catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
           }
           catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
               @Override
@@ -69,10 +72,10 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
 
         return challenges.size();
     }
-    public void setChallenges(List<Challenge> challenges){
+   /* public void setChallenges(List<Challenge> challenges){
        this.challenges=challenges;
        notifyDataSetChanged();
-    }
+    }*/
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
       ImageView imageView;

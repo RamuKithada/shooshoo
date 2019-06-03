@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.WinnersMyChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.ChallengeModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +37,26 @@ public class WinnersFragment extends Fragment {
     RecyclerView myChallengesList;
     WinnersMyChallengersAdapter myChallengersAdapter;
     List<Challenge> challenges=new ArrayList<Challenge>();
+    ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
 
 
     public WinnersFragment() {
         // Required empty public constructor
+        String[] stitles=new String[]{"BlackFly ","Closeup smile ","Dance music ","Drink Challenge","Holiday Challenge",
+                "Hotel Challenge","Ice Bucket Challenge","Swimming Challenge","World music Contest","Young Challenge"};
+        int[] simages=new int[]{R.drawable.blackfly_challange,R.drawable.closeup_smile_challange,R.drawable.dance_music_challange,R.drawable.drinks_challange,
+                R.drawable.holiday_challange,R.drawable.hotel_challange,R.drawable.icebucket_challange,R.drawable.swimmimg_challange,R.drawable.world_music_contest
+                ,R.drawable.young_challange};
+        String[] sdes=new String[]{"BlackFly bird capture","Closeup smile ads","Dance music to Puma","Drink  Coke ads","Holiday Trip flight",
+                "Hotel Banjara","Ice Bucket Challenge","World Swimming Day","World music Day","Young India "};
+
+        for (int index=0;index<sdes.length;index++){
+            ChallengeModel model=new ChallengeModel();
+            model.setDescription(sdes[index]);
+            model.setTitle(stitles[index]);
+            model.setImage(simages[index]);
+            schallengeModels.add(model);
+        }
     }
 
     /**
@@ -81,7 +98,7 @@ public class WinnersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         myChallengesList =view.findViewById(R.id.my_challenges_list);
         myChallengesList.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        myChallengersAdapter=new WinnersMyChallengersAdapter(getActivity(),null);
+        myChallengersAdapter=new WinnersMyChallengersAdapter(getActivity(),schallengeModels);
         myChallengesList.setAdapter(myChallengersAdapter);
 
     }
