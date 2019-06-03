@@ -158,6 +158,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("image",schallengeModels.get(position).getImage());
+                intent.putExtra("name",schallengeModels.get(position).getTitle());
+                intent.putExtra("des",schallengeModels.get(position).getDescription());
                 startActivity(intent);
             }
 
@@ -171,6 +174,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
                 intent.putExtra("image",challengeModels.get(position).getImage());
+                intent.putExtra("name",challengeModels.get(position).getTitle());
+                intent.putExtra("des",challengeModels.get(position).getDescription());
                 startActivity(intent);
             }
 

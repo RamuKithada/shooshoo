@@ -117,6 +117,7 @@
                     >
 
                     <TextView
+                        android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="H M Hamburg Neueroffnung"
@@ -140,12 +141,15 @@
                     >
                     <VideoView
                     android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:layout_height="180dp"
+                        android:visibility="gone"/>
 
                     <ImageView
+                        android:id="@+id/video_thumb"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:src="@drawable/rose"
+                        android:layout_height="180dp"
+                        android:src="@drawable/hotel_challange"
+                        android:scaleType="centerCrop"
                         />
 
 

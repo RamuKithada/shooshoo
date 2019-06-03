@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedsImagesAdapter;
@@ -26,6 +27,15 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.brand)
     LinearLayout brand;
 
+    @BindView(R.id.video_thumb)
+    ImageView video_thumb;
+
+    @BindView(R.id.sub_title)
+    TextView sub_title;
+    @BindView(R.id.title)
+    TextView title;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +45,20 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         camera.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         rv_recnet_posts.setAdapter(new ProfileFeedsAdapter());
+       int image =getIntent().getIntExtra("image",-1);
+       if(image>-1)
+           video_thumb.setImageResource(image);
+        String titles=getIntent().getStringExtra("name");
+        if(titles!=null){
+            title.setText(titles);
+        }
+        String des=getIntent().getStringExtra("des");
+        if(des!=null)
+            sub_title.setText(des);
+
+
+
+
     }
 
     @Override
