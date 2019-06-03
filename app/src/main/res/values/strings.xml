@@ -6,7 +6,7 @@
     <string name="username">User Name</string>
     <string name="emial_hint">E-mail</string>
     <string name="pws">Password</string>
-    <string name="forget_pws">Forget Password ?</string>
+    <string name="forget_pws">Forgot Password ?</string>
     <string name="login">Login</string>
     <string name="register">REGISTER</string>
     <string name="title_activity_home">HomeActivity</string>

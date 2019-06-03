@@ -19,6 +19,11 @@ import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
+import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.RecyclerTouchListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,18 +45,64 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private OnFragmentInteractionListener mListener;
     JackpotChallengersAdapter jackpotChallengersAdapter;
-    SponsorChallengersAdapter sponsorChallengersAdapter;
+    JackpotChallengersAdapter sponsorChallengersAdapter;
     HomeBrandAdapter homeBrandAdapter;
     HomeCategoryAdapter homeCategoryAdapter;
+    ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
+    ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
+    String[] titles=new String[]{"Beard Challenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
+            "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge"};
+    int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
+    R.drawable.hips_excersize_chalange,R.drawable.iceskating_challange,R.drawable.laugh_challange,R.drawable.pullup_challange,R.drawable.running_challange
+    ,R.drawable.yoga_challange};
+    String[] des=new String[]{"Large Beard","Drink 2 Liters coke","Eating 2 Biryani","1 hour Handstand ","100 HipsUps",
+            "1 kilometer Ice Skating in 2 minutes","Laugh loud ","30 Pullups in 5minutes","2k Running in 90sec","5 hours Yoga"};
+    String[] stitles=new String[]{"BlackFly ","Closeup smile ","Dance music ","Drink Challenge","Holiday Challenge",
+            "Hotel Challenge","Ice Bucket Challenge","Swimming Challenge","World music Contest","Young Challenge"};
+    int[] simages=new int[]{R.drawable.blackfly_challange,R.drawable.closeup_smile_challange,R.drawable.dance_music_challange,R.drawable.drinks_challange,
+            R.drawable.holiday_challange,R.drawable.hotel_challange,R.drawable.icebucket_challange,R.drawable.swimmimg_challange,R.drawable.world_music_contest
+            ,R.drawable.young_challange};
+    String[] sdes=new String[]{"BlackFly bird capture","Closeup smile ads","Dance music to Puma","Drink  Coke ads","Holiday Trip flight",
+            "Hotel Banjara","Ice Bucket Challenge","World Swimming Day","World music Day","Young India "};
+    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
+            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
 
+    String[] brandnames=new String[]{"Adidas","Benz","Dmart","Flipkar","H & M","Nike","Pepsi","Puma","Vokes Wagon","Wallmart","puma"};
+    int[] catimgs=new int[]{
+            R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
+            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
+            R.drawable.style,R.drawable.travel
+    };
+    String[] catNames=new String[]{
+            "Animals","Art","Cars","Comics","Electronics",
+            "Fitness","Games","Humor","Movies","Shopping",
+            "Style","Travel"
+    };
 
 
     public HomeFragment() {
         // Required empty public constructor
-        jackpotChallengersAdapter=new JackpotChallengersAdapter();
-        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter();
-        homeCategoryAdapter=new HomeCategoryAdapter();
+        for (int index=0;index<10;index++){
+            ChallengeModel model=new ChallengeModel();
+            model.setDescription(des[index]);
+            model.setTitle(titles[index]);
+            model.setImage(images[index]);
+            challengeModels.add(model);
+        }
+        for (int index=0;index<sdes.length;index++){
+            ChallengeModel model=new ChallengeModel();
+            model.setDescription(sdes[index]);
+            model.setTitle(stitles[index]);
+            model.setImage(simages[index]);
+            schallengeModels.add(model);
+        }
+
+        jackpotChallengersAdapter=new JackpotChallengersAdapter(challengeModels);
+
+        sponsorChallengersAdapter=new JackpotChallengersAdapter(schallengeModels);
+        //new SponsorChallengersAdapter(getContext(),null);
+        homeBrandAdapter=new HomeBrandAdapter(brandimgs,brandnames);
+        homeCategoryAdapter=new HomeCategoryAdapter(catimgs,catNames);
     }
 
     /**
@@ -101,10 +152,33 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         setLayoutManager(catList);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);
-        sponsorChallengersAdapter.setOnClickListener(this);
         jackpotList.setAdapter(jackpotChallengersAdapter);
-        jackpotChallengersAdapter.setOnClickListener(this);
         catList.setAdapter(homeCategoryAdapter);
+        sponsorList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), sponsorList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        jackpotList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), jackpotList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("image",challengeModels.get(position).getImage());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
     }
 

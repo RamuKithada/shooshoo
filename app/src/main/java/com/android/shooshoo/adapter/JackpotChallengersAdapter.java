@@ -7,21 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.ChallengeModel;
+
+import java.util.ArrayList;
 
 public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChallengersAdapter.CatViewHolder> {
+      ArrayList<ChallengeModel> challengeModels;
 
-
-    View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
+    public JackpotChallengersAdapter(ArrayList<ChallengeModel> challengeModels) {
+        this.challengeModels = challengeModels;
     }
 
     @NonNull
@@ -35,20 +33,29 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-
-
-catViewHolder.itemView.setOnClickListener(onClickListener);
-
+        ChallengeModel model=challengeModels.get(i);
+catViewHolder.image.setImageResource(model.getImage());
+catViewHolder.title.setText(model.getTitle());
+catViewHolder.description.setText(model.getDescription());
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return challengeModels.size();
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView title,description,time,brand;
+
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
+            image=itemView.findViewById(R.id.image);
+            title=itemView.findViewById(R.id.title);
+            description=itemView.findViewById(R.id.sub_title);
+            time=itemView.findViewById(R.id.time);
+            brand=itemView.findViewById(R.id.brand);
         }
     }
+
 }

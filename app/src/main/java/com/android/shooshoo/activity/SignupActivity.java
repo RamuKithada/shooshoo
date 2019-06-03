@@ -237,6 +237,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
 
     @Override
     public void loginDetails(LoginSuccess loginSuccess) {
+
         if(loginSuccess.getStatus()==1) {
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
@@ -249,6 +250,8 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
                 e.printStackTrace();
             }
 
+        }else if( loginSuccess.getMessage()!=null){
+            showMessage(loginSuccess.getMessage());
         }
     }
 }

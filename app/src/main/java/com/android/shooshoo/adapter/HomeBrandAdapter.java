@@ -15,6 +15,12 @@ import com.android.shooshoo.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatViewHolder> {
+    int[] brandimgs;
+    String[] brandnames;
+    public HomeBrandAdapter(int[] brandimgs,String[] brandnames) {
+        this.brandimgs=brandimgs;
+        this.brandnames=brandnames;
+    }
 
     @NonNull
     @Override
@@ -26,12 +32,15 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
+  catViewHolder.image.setImageResource(brandimgs[i]);
+  catViewHolder.brandName.setText(brandnames[i]);
+
 
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return (brandimgs.length<brandnames.length)?brandimgs.length:brandnames.length;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

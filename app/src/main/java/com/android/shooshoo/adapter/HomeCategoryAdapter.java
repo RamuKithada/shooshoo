@@ -13,6 +13,13 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 
 public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.CatViewHolder> {
+    int[] catimgs;
+    String[] catNames;
+    public HomeCategoryAdapter(int[] catimgs,String[] catNames) {
+    this.catimgs=catimgs;
+    this.catNames=catNames;
+    }
+
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -23,11 +30,13 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
+        catViewHolder.name.setText(catNames[i]);
+        catViewHolder.image.setImageResource(catimgs[i]);
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return catimgs.length;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
