@@ -2,6 +2,7 @@ package com.android.shooshoo.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,11 +33,14 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.utils.ApiUrls;
+import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.LoginSuccess;
+import com.android.shooshoo.utils.TVShowFragment;
 import com.android.shooshoo.views.DataLoadView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -58,7 +62,7 @@ import retrofit2.Response;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class ProfileFillingFormActivity extends BaseActivity implements View.OnClickListener, DataLoadView {
+public class ProfileFillingFormActivity extends BaseActivity implements View.OnClickListener, DataLoadView , FragmentListDialogListener {
     @BindView(R.id.button1)
     Button button1;
 
@@ -79,8 +83,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
     @BindView(R.id.edt_dob)
     EditText edt_dob;
-    @BindView(R.id.spinner_city)
-    Spinner spinner_city;
+
 
     @BindView(R.id.edt_zipcode)
     EditText edt_zipcode;
@@ -161,10 +164,21 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
     ConnectionDetector connectionDetector;
 
-    @BindView(R.id.spinner_country)
-    Spinner spinner_country;
-    @BindView(R.id.spinner_gender)
-    Spinner spinner_gender;
+    @BindView(R.id.edt_country)
+    EditText edt_country;
+
+    @BindView(R.id.edt_city)
+    EditText edt_city;
+
+    @BindView(R.id.edt_gender)
+    EditText edt_gender;
+
+//    @BindView(R.id.spinner_country)
+//    Spinner spinner_country;
+//    @BindView(R.id.spinner_gender)
+//    Spinner spinner_gender;
+//@BindView(R.id.spinner_city)
+//Spinner spinner_city;
 
         @BindView(R.id.edt_country_code)
         EditText edt_country_code;
@@ -176,9 +190,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.country_lay:
-                    if(spinner_country.getSelectedItem() == null) { // user selected nothing...
-                        spinner_country.performClick();
-                    }
+
                     break;
             }
 
@@ -186,7 +198,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
     };
 
     DataLoadPresenter dataLoadPresenter;
-
+    final String genders[]=new String[]{"Male","Female","Others"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,68 +230,24 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
                 setDate(edt_dob);
             }
         });
-
-        if(connectionDetector.isConnectingToInternet())
-            loadData();
-   final String genders[]=new String[]{"Male","Female","Others"};
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, genders);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_gender.setAdapter(dataAdapter);
-
-        spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gender=genders[i];
-                Log.e("onItemSelected",""+gender);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                  TVShowFragment tv=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",genders);
+                args.putInt("view",R.id.edt_gender);
+                tv.setArguments(args);
+                tv.show(getSupportFragmentManager(),"ha");
             }
         });
 
-
+        if(connectionDetector.isConnectingToInternet())
+            loadData();
     }
 
     private void loadData() {
         dataLoadPresenter.loadCountryData();
-        dataLoadPresenter.loadCites("99");
-
-   /*     RetrofitApis apis=RetrofitApis.Factory.create(this);
-        apis.getCountries().enqueue(new Callback<CountryResult>() {
-            @Override
-            public void onResponse(Call<CountryResult> call, Response<CountryResult> response) {
-                if(response.isSuccessful()){
-                    CountryResult countryResult=response.body();
-                    List<Country> countries=countryResult.getCountries();
-                    displayList(countries,spinner_country);
-//                    displayListCode(countries,spinner_country_code);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CountryResult> call, Throwable t) {
-
-            }
-        });
-        apis.getCities("99").enqueue(new Callback<CityResult>() {
-            @Override
-            public void onResponse(Call<CityResult> call, Response<CityResult> response) {
-                if(response.isSuccessful()){
-
-                    CityResult cityResult=response.body();
-                    displayListCity(cityResult.getCities(),spinner_city);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CityResult> call, Throwable t) {
-
-            }
-        });*/
-
     }
 
     String active="#FFFFFF",inactive="#CCCCCC";
@@ -471,74 +439,64 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         newsImage=picturePath;
         Picasso.with(this).load(picturePath).into(iv_profile_pic);
     }
-    int country_pos=0,city_pos=0;
-    private void displayList(final List<Country> dropDownItems, final Spinner spinner)
+    int country_pos=-1,city_pos=-1;
+    private void displayList(final List<Country> dropDownItems, final EditText editText)
     {
-        Country country1 = new Country();
-        country1.setCountryName("Select Country");
-        if(dropDownItems!=null)
-            dropDownItems.add(0, country1);
+        if(dropDownItems==null)
+           return;
 
-        final List<String> lables=new ArrayList<String>();
-        for(Country dropDownItem:dropDownItems){
-            lables.add(dropDownItem.getCountryName());
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+            {
+            lables[index]=dropDownItems.get(index).getCountryName();
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-                country=dropDownItems.get(i);
-                edt_country_code.setText("+ "+dropDownItems.get(i).getPhoneCode());
-                country_pos=i;
-                if(i>0)
-                    dataLoadPresenter.loadCites(dropDownItems.get(i).getCountryId());
-                else
-                    onCitiesData(null);
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"country");
 
             }
         });
+
+
 
     }
-    private void displayListCity(final List<City> dropDownItems, final Spinner spinner)
+    private void displayListCity(final List<City> dropDownItems, final EditText editText)
     {
-        final List<String> lables=new ArrayList<String>();
-        City city1 = new City();
-        city1.setCityName("Select City");
-        if(dropDownItems!=null) {
-            dropDownItems.add(0, city1);
-            for (City dropDownItem : dropDownItems) {
-                lables.add(dropDownItem.getCityName());
-            }
-        }else {
-                lables.add("No Cities");
+        if(dropDownItems==null)
+        {
+            city_pos=-1;
+            editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("No Cites");
+                }
+            });
+            return;
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCityName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                city_pos=i;
-                if(dropDownItems!=null)
-                    city=dropDownItems.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"city");
             }
         });
+
 
     }
    public  boolean validateInputs(){
@@ -584,11 +542,11 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
            return false;
 
        }
-       if(country_pos<=0){
+       if(country_pos<0){
            showMessage("Please Select Country");
            return false;
        }
-       if(city_pos<=0){
+       if(city_pos<0){
            showMessage("Please Select City");
            return false;
        }
@@ -681,20 +639,51 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         return true;
 
    }
-
+    List<City> cities;
     @Override
     public void onCitiesData(List<City> cities) {
-
-        displayListCity(cities,spinner_city);
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
+        displayListCity(cities,edt_city);
     }
-
+    List<Country> countries;
     @Override
     public void onCountryData(List<Country> countries) {
-        displayList(countries,spinner_country);
+        this.countries=countries;
+        displayList(countries,edt_country);
     }
 
     @Override
     public void onAllCategories(List<Category> categories) {
 
     }
+
+    @Override
+    public void onEditView(int view, int position) {
+        switch (view){
+            case R.id.edt_gender:
+                edt_gender.setText(genders[position]);
+                break;
+            case R.id.edt_country:
+                 if(countries!=null)
+                 {
+                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                     edt_country_code.setText("+"+countries.get(position).getPhoneCode());
+                     edt_country.setText(countries.get(position).getCountryName());
+                     country_pos=position;
+                     country=countries.get(position);
+                 }
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {edt_city.setText(cities.get(position).getCityName());
+                    city=cities.get(position);
+                city_pos=position;}
+                break;
+        }
+
+    }
+
+
 }

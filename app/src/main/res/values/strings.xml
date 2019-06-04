@@ -2,11 +2,11 @@
     <string name="app_name">ShooShoo</string>
     <string name="motive">The first global digital stadium </string>
     <string name="signin_tag">SIGN IN WITH \nYOUR ACCOUNT</string>
-    <string name="signup_tag">SIGN UP WITH YOUR \n ACCOUNT</string>
-    <string name="username">User Name</string>
+    <string name="signup_tag">SIGN UP WITH YOUR \nACCOUNT</string>
+    <string name="username">Username</string>
     <string name="emial_hint">E-mail</string>
     <string name="pws">Password</string>
-    <string name="forget_pws">Forgot Password ?</string>
+    <string name="forget_pws">Forgot Password?</string>
     <string name="login">Login</string>
     <string name="register">REGISTER</string>
     <string name="title_activity_home">HomeActivity</string>
@@ -53,7 +53,7 @@
     <string name="female">Female</string>
     <string name="audience_size_lable">Size of your Audience</string>
     <string name="audience_size_lable2">Due to your criteria \n The size of Your audience is</string>
-    <string name="forget_pws_label">Please enter your registered mobile number \nand verification mail will be send</string>
+    <string name="forget_pws_label">Please enter your registered Email Id \n and verification mail will be send</string>
     <string name="send">Send</string>
     <string name="define_your_budget">Define your budget</string>
     <string name="estimate_outreach">Estimate Outreach</string>

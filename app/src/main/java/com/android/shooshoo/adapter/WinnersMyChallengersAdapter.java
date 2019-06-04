@@ -56,8 +56,6 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
               public void onClick(View v) {
                   Intent intent=new Intent(context,WinnersListActivity.class);
                   context.startActivity(intent);
-
-
               }
           });
 

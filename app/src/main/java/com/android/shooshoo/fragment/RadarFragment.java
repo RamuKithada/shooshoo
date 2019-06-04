@@ -2,12 +2,21 @@ package com.android.shooshoo.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.JackpotChallengersAdapter;
+import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
+import com.android.shooshoo.models.ChallengeModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,16 +24,12 @@ import com.android.shooshoo.R;
  * create an instance of this fragment.
  */
 public class RadarFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
-
+    ViewAllChallengersAdapter viewAllChallengersAdapter;
     public RadarFragment() {
         // Required empty public constructor
     }
@@ -63,4 +68,29 @@ public class RadarFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_radar, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        RecyclerView challenge_list=view.findViewById(R.id.challenge_list);
+        challenge_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
+
+        ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
+        String[] titles=new String[]{"Beard Challenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
+                "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge"};
+        int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
+                R.drawable.hips_excersize_chalange,R.drawable.iceskating_challange,R.drawable.laugh_challange,R.drawable.pullup_challange,R.drawable.running_challange
+                ,R.drawable.yoga_challange};
+        String[] des=new String[]{"Large Beard","Drink 2 Liters coke","Eating 2 Biryani","1 hour Handstand ","100 HipsUps",
+                "1 kilometer Ice Skating in 2 minutes","Laugh loud ","30 Pullups in 5minutes","2k Running in 90sec","5 hours Yoga"};
+        for (int index=0;index<10;index++){
+            ChallengeModel model=new ChallengeModel();
+            model.setDescription(des[index]);
+            model.setTitle(titles[index]);
+            model.setImage(images[index]);
+            challengeModels.add(model);
+        }
+
+        viewAllChallengersAdapter=new ViewAllChallengersAdapter(getActivity(),challengeModels);
+        challenge_list.setAdapter(viewAllChallengersAdapter);
+    }
 }

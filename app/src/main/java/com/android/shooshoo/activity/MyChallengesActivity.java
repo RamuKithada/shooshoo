@@ -34,7 +34,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     TextView sub_title;
     @BindView(R.id.title)
     TextView title;
-
+    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         brand.setOnClickListener(this);
         camera.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-        rv_recnet_posts.setAdapter(new ProfileFeedsAdapter());
+        rv_recnet_posts.setAdapter(new ProfileFeedsAdapter(images));
        int image =getIntent().getIntExtra("image",-1);
        if(image>-1)
            video_thumb.setImageResource(image);

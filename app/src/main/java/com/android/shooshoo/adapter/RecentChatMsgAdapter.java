@@ -17,7 +17,6 @@ public class RecentChatMsgAdapter extends RecyclerView.Adapter<RecentChatMsgAdap
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.chat_notification_list_item,null);
         return new CatViewHolder(view);
     }

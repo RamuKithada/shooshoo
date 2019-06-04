@@ -7,7 +7,6 @@
     tools:context=".fragment.HomeFragment"
     android:background="@drawable/gradiant_home">
 
-    <!-- TODO: Update blank fragment layout -->
    <ScrollView
        android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -54,7 +53,7 @@
                    android:gravity="center_vertical"
                    android:layout_centerVertical="true"
                    android:textColor="#FFF"
-                   android:layout_margin="10dp"
+                   android:layout_margin="5dp"
                    />
                <RelativeLayout
                    android:id="@+id/sponsor_viewall"
@@ -129,7 +128,7 @@
                    android:textColor="#FFF"
                    android:layout_centerVertical="true"
                    android:gravity="center_vertical"
-                   android:layout_margin="10dp"
+                   android:layout_margin="5dp"
                    />
                <RelativeLayout
                    android:id="@+id/jackpot_viewall"
@@ -188,7 +187,7 @@
                    android:textSize="18sp"
                    android:padding="5dp"
                    android:textColor="#FFF"
-                   android:layout_margin="10dp"
+                   android:layout_margin="5dp"
                    android:layout_centerVertical="true"
                    android:gravity="center"
                    />

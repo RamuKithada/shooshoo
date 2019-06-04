@@ -142,6 +142,10 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.iv_email_icon)
     ImageView iv_email_icon;
 
+
+    @BindView(R.id.iv_tax_no)
+    ImageView iv_tax_no;
+
     DataLoadPresenter dataLoadPresenter;
     SponcerChallengePresenter sponcerChallengePresenter;
     ConnectionDetector connectionDetector;
@@ -177,13 +181,14 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         title.setText("Company Profile");
         setStage(0);
         setFoucusChange(edt_company_name,R.id.company_name_line,iv_company_name,new int[]{R.drawable.company_name_active,R.drawable.company_name_normal});
-        setFoucusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
+        setFoucusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.username_active,R.drawable.username_normal});
         setFoucusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
         setFoucusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
         setFoucusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
         setFoucusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
         setFoucusChange(edt_mobile,R.id.country_code_line,iv_mobile,new int[]{R.drawable.mobile_active,R.drawable.mobile_normal});
         setFoucusChange(edt_user_email,R.id.user_mail_line,iv_email_icon,new int[]{R.drawable.email_active,R.drawable.email_normal});
+        setFoucusChange(edt_tax_number,R.id.tax_number_line,iv_tax_no,new int[]{R.drawable.tax_active,R.drawable.tax_normal});
     }
 
     @Override

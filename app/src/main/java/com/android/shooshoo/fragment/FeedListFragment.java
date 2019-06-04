@@ -22,6 +22,7 @@ public class FeedListFragment extends Fragment implements View.OnClickListener{
     RecyclerView list;
     FeedsImagesAdapter adapter;
     LinearLayoutManager layoutManager;
+    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 
 
     // TODO: Rename and change types of parameters
@@ -70,7 +71,7 @@ public class FeedListFragment extends Fragment implements View.OnClickListener{
         SnapHelper snapHelper = new PagerSnapHelper();
         list.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(list);
-        adapter = new FeedsImagesAdapter();
+        adapter = new FeedsImagesAdapter(images);
         adapter.setListener(this);
         list.setAdapter(adapter);
     }

@@ -12,7 +12,11 @@ import com.android.shooshoo.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileBrandAdapter extends RecyclerView.Adapter<ProfileBrandAdapter.CatViewHolder> {
+    int[] images;
 
+    public ProfileBrandAdapter(int[] images) {
+        this.images = images;
+    }
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -24,11 +28,13 @@ public class ProfileBrandAdapter extends RecyclerView.Adapter<ProfileBrandAdapte
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
 
+        catViewHolder.image.setImageResource(images[i]);
+
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return images.length;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

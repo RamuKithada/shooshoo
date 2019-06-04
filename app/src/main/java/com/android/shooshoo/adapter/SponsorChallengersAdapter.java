@@ -41,7 +41,6 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
     @NonNull
     @Override
     public CatViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
         View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.challengers_item,null);
         return new CatViewHolder(view);
     }
@@ -57,9 +56,7 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);
               catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
-
-
-
+              catViewHolder.subtitle.setText(challenge.getDescription());
           }
         catViewHolder.itemView.setOnClickListener(onClickListener);
 

@@ -8,6 +8,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.shooshoo.R;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import im.ene.toro.ToroPlayer;
@@ -63,16 +69,24 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public void initialize(Container container, PlaybackInfo playbackInfo) {
         if (helper == null) {
             helper = new SimpleExoPlayerViewHelper(container, this, mediaUri);
+
         }
         helper.initialize(playbackInfo);
     }
 
     @Override public void play() {
-        if (helper != null) helper.play();
+        if (helper != null){
+            helper.play();
+            iv_pauseresume.setVisibility(View.GONE);
+        }
     }
 
     @Override public void pause() {
-        if (helper != null) helper.pause();
+        if (helper != null)
+        {
+            helper.pause();
+            iv_pauseresume.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override public boolean isPlaying() {

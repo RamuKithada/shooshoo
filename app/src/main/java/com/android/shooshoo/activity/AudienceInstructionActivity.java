@@ -25,6 +25,8 @@ CardView sponsor_challenge_guide;
     List<Button> buttons;
     @BindView(R.id.jackpot_challenge_guide)
     CardView jackpot_challenge_guide;
+    @BindView(R.id.tv_title)
+    TextView title;
 
     int type=2;
     @Override
@@ -34,6 +36,8 @@ CardView sponsor_challenge_guide;
         ButterKnife.bind(this);
 
         setStage(2);
+        title.setText("Audience");
+
                if(getIntent().hasExtra("challenge_type"))
         type=getIntent().getIntExtra("challenge_type",0);
         if(type==1){

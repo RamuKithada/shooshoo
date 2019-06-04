@@ -17,7 +17,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatContactAdapter extends RecyclerView.Adapter<ChatContactAdapter.CatViewHolder> {
   Context context;
-
+int[] images=new int[]{R.drawable.portrait,R.drawable.profile_1,R.drawable.profile_2,R.drawable.portrait,
+        R.drawable.profile_1,R.drawable.profile_2,
+        R.drawable.portrait,R.drawable.profile_1,R.drawable.profile_2};
     public ChatContactAdapter(Context context) {
         this.context = context;
     }
@@ -32,6 +34,7 @@ public class ChatContactAdapter extends RecyclerView.Adapter<ChatContactAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
+        catViewHolder.image.setImageResource(images[i]);
         catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +47,7 @@ public class ChatContactAdapter extends RecyclerView.Adapter<ChatContactAdapter.
 
     @Override
     public int getItemCount() {
-        return 16;
+        return images.length;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,13 @@ import butterknife.ButterKnife;
 
 public class FeedsImagesAdapter extends RecyclerView.Adapter<FeedsImagesAdapter.MyViewHolder>
 {
+
+    int[] images;
+
+    public FeedsImagesAdapter(int[] images) {
+        this.images = images;
+    }
+
     View.OnClickListener listener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -52,23 +60,26 @@ public class FeedsImagesAdapter extends RecyclerView.Adapter<FeedsImagesAdapter.
         if(listener!=null)
         holder.itemView.setOnClickListener(listener);
 
+        holder.image.setImageResource(images[position]);
+
     }
 
     @Override
     public int getItemCount()
     {
-        return 16;
+        return images.length;
     }
 
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder
     {
-
+      ImageView image;
 
         public MyViewHolder(View itemView)
         {
             super(itemView);
+            image=itemView.findViewById(R.id.image);
         }
     }
 

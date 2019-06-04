@@ -5,12 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.shooshoo.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapter.CatViewHolder> {
+    int[] images;
+
+    public ProfileFeedsAdapter(int[] images) {
+        this.images = images;
+    }
 
     @NonNull
     @Override
@@ -21,18 +27,23 @@ public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
+    public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int pos) {
+
+   catViewHolder.imageView.setImageResource(images[pos]);
 
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return images.length;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
+        ImageView imageView;
+
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
+           imageView= itemView.findViewById(R.id.image);
         }
     }
 }

@@ -114,7 +114,7 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
                         }
                         else showMessage("please check internet connection");
                     } else {
-                        showMessage("Please select at least 3 Brands or skip ");
+                        showMessage("Please select at least 3 Brands");
                     }
                 }
 
@@ -137,14 +137,15 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
         button2.setBackgroundResource(R.drawable.unselected);
         button3.setBackgroundResource(R.drawable.unselected);
         button4.setBackgroundResource(R.drawable. selected);
-
-
     }
 
     @Override
     public void onUpdateUserInfo(ResponseBody responseBody) {
         try {
             Log.e("response",responseBody.string());
+            Intent homeIntent=new Intent(this,HomeActivity.class);
+            startActivity(homeIntent);
+            finishAffinity();
         }catch (Exception e){
             e.printStackTrace();
         }

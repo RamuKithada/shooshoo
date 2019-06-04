@@ -16,102 +16,82 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.PostVideoActivity"
-            android:windowSoftInputMode="stateHidden"
-            ></activity>
-        <activity android:name=".activity.BrandProfileActivity"
-            android:windowSoftInputMode="stateHidden"
-            >
-
-        </activity>
-        <activity android:name=".activity.CameraActivity"
-            android:windowSoftInputMode="stateHidden"
-            />
+        <activity android:name=".activity.RadarActivity"></activity>
+        <activity
+            android:name=".activity.PostVideoActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activity.BrandProfileActivity"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".activity.CameraActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.MyChallengesActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            >
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.FeedsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.DrawerActivity"
             android:label="@string/title_activity_drawer"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.EditProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SupportNowActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.JackpotOverviewActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.AudienceInstructionActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.InviteFriendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.GameMasterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.ChallengePaymentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.ChatSearchActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.CampaignActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.TheChallengeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SponsorChallengeFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.CompanyProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
 
         <service
             android:name=".utils.BGService"
@@ -121,37 +101,31 @@
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
-        <activity
-            android:name=".activity.ProfileFillingFormActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.CategoryChooseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".activity.ProfileFillingFormActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.BrandChooseActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SignupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -164,23 +138,19 @@
         <activity
             android:name=".activity.CreateSponsorChallengeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.JackpotChallengeFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.JackpotAudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.AudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait"
@@ -188,18 +158,15 @@
         <activity
             android:name=".activity.ChattingActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.FeedCommentsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.WinnersListActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            />
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

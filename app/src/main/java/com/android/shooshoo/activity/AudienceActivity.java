@@ -2,7 +2,6 @@ package com.android.shooshoo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.adapter.PriceWorthAdapter;
@@ -36,15 +34,12 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
@@ -56,8 +51,10 @@ import retrofit2.Response;
 public class AudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener{
     @BindView(R.id.btn_next)
     TextView btn_next;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
+
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 
@@ -318,7 +315,6 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     if(prices!=null){
                         if(prices.size()<0){
                             showMessage("");
-
                         }
                     }
 
@@ -532,13 +528,11 @@ sponcerChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                    try {
                        JSONObject object=new JSONObject(response.body().string());
                        if(object.optInt("status")==1){
-
                            JSONObject size=object.getJSONObject("size");
                           String audienceSize=size.optString("size");
                           userSession.setAudSize(audienceSize);
                           audience_size.setText(audienceSize);
                           showMessage(object.optString("message"));
-
                        }
 
                    } catch (JSONException e) {

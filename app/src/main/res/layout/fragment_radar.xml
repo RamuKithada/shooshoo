@@ -36,7 +36,7 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:src="@drawable/rose"
+        android:src="@drawable/radar_home"
         />
 
 
@@ -135,7 +135,7 @@
     </LinearLayout>
 
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/list"
+    android:id="@+id/challenge_list"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"

@@ -40,6 +40,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     LinearLayout show_hide;
     ImageView toggleBtn;
     ImageView support_now;
+    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
+    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
+            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -92,8 +95,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         support_now.setOnClickListener(this);
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
-        profileBrandAdapter=new ProfileBrandAdapter();
-        profileFeedsAdapter=new ProfileFeedsAdapter();
+        profileBrandAdapter=new ProfileBrandAdapter(brandimgs);
+        profileFeedsAdapter=new ProfileFeedsAdapter(images);
         brandRecyclerView.setAdapter(profileBrandAdapter);
         feedsRecyclerView.setAdapter(profileFeedsAdapter);
     }

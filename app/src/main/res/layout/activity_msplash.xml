@@ -6,11 +6,18 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_home"
     tools:context=".activity.SplashActivity">
+    <ImageView
+        android:layout_width="278dp"
+        android:layout_height="85dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/logo_295_90"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         >
         <LinearLayout
@@ -53,7 +60,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="#FFF"
-            android:textSize="18sp"
+            android:textSize="14sp"
 
             />
 
