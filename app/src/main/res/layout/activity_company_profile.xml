@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/color_gray"
                     android:text="Upload Company Logo"
                     />
 
@@ -71,7 +71,7 @@
                     android:layout_margin="5dp"
                     android:textColor="#FFFFFF"
                     android:inputType="textPersonName"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:hint="Company Name"
                     />
             </LinearLayout>
@@ -106,13 +106,18 @@
 
                     android:layout_gravity="center"
                     >
-                    <Spinner
-                        android:id="@+id/spinner_country"
+                    <EditText
+                        android:id="@+id/edt_country"
                         android:layout_toLeftOf="@+id/iv_dropdown_county"
                         android:layout_width="match_parent"
                         android:layout_centerInParent="true"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
+                        android:hint="Country"
+                        android:clickable="true"
+                        android:focusable="false"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="@color/color_gray"
                         android:background="#00FFFFFF"
                         />
                     <ImageView
@@ -153,8 +158,8 @@
                     android:padding="8dp"
                     android:src="@drawable/city_normal" />
 
-                <Spinner
-                    android:id="@+id/spinner_city"
+                <EditText
+                    android:id="@+id/edt_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -162,8 +167,10 @@
                     android:layout_weight="1"
                     android:background="#00FFFFFF"
                     android:hint="City"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC" />
+                    android:textColorHint="@color/color_gray" />
 
 
                 <ImageView
@@ -205,8 +212,7 @@
                     android:background="#00FFFFFF"
                     android:layout_margin="5dp"
                     android:textColor="#FFFFFF"
-                    android:inputType="number"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:hint="Zip Code"
                     />
             </LinearLayout>
@@ -240,9 +246,9 @@
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
-                    android:hint="Street Name"
+                    android:hint="Street"
                     />
             </LinearLayout>
             <View
@@ -275,9 +281,9 @@
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
-                    android:hint="Street Number"
+                    android:hint="Number"
                     />
             </LinearLayout>
             <View
@@ -296,69 +302,83 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="0dp"
+                    android:paddingLeft="10dp"
                     >
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+
+                    <ImageView
+                        android:id="@+id/iv_mobile"
+                        android:layout_width="@dimen/edit_icon"
+                        android:layout_height="@dimen/edit_icon"
+                        android:paddingTop="8dp"
+                        android:paddingLeft="8dp"
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/mobile_normal"
+                        android:layout_gravity="center_vertical"
+                        />
+                    <EditText
+                        android:id="@+id/edt_country_code"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp"
-                        >
-
-                        <ImageView
-                            android:id="@+id/iv_mobile"
-                            android:layout_width="@dimen/edit_icon"
-                            android:layout_height="@dimen/edit_icon"
-                            android:padding="8dp"
-                            android:src="@drawable/mobile_normal"
-                            android:layout_gravity="center_vertical"
-                            />
-                        <EditText
-                            android:id="@+id/edt_country_code"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:background="#00FFFFFF"
-                            android:textColor="#FFFFFF"
-                            android:textColorHint="#CCCCCC"
-                            android:layout_margin="6dp"
-                            android:enabled="false"
-                            android:hint=""
-                            />
-                    </LinearLayout>
-
-
+                        android:layout_gravity="center_vertical"
+                        android:background="#00FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="@color/color_gray"
+                        android:hint="+  "
+                        android:layout_marginLeft="5dp"
+                        android:text=""
+                        android:focusable="false"
+                        android:enabled="false"
+                        />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:orientation="vertical"
-                    android:layout_marginLeft="5dp"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_weight="1"
                         android:layout_gravity="center"
-                        android:padding="10dp"
+                        android:orientation="vertical"
                         >
-
-
-                        <EditText
-                            android:id="@+id/edt_mobile"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:background="#00FFFFFF"
-                            android:textColor="#FFFFFF"
-                            android:textColorHint="#CCCCCC"
-                            android:inputType="phone"
-                            android:layout_margin="5dp"
-                            android:hint="Mobile Number"
-                            />
+                            android:orientation="horizontal"
+                            android:layout_gravity="center"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="0dp"
+                            >
+
+
+                            <EditText
+                                android:id="@+id/edt_mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:background="#00FFFFFF"
+                                android:textColor="#FFFFFF"
+                                android:textColorHint="@color/color_gray"
+                                android:inputType="phone"
+                                android:layout_margin="5dp"
+                                android:layout_marginLeft="0dp"
+                                android:hint="Mobile Number"
+                                />
+                        </LinearLayout>
+
+
                     </LinearLayout>
+
 
 
                 </LinearLayout>
@@ -398,7 +418,7 @@
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
                     android:hint="Tax Number"
                     />
@@ -438,7 +458,7 @@
                     android:layout_margin="5dp"
                     android:textColor="#FFFFFF"
                     android:inputType="textPersonName"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:hint="First Name"
                     />
             </LinearLayout>
@@ -457,7 +477,6 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 >
-
                 <ImageView
                     android:id="@+id/iv_user_lname"
                     android:layout_width="@dimen/edit_icon"
@@ -474,7 +493,7 @@
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
                     android:inputType="textPersonName"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
                     android:hint="Last Name"
                     />
@@ -512,7 +531,7 @@
                     android:gravity="left|center_vertical"
                     android:hint="@string/emial_hint"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:background="#00FFFFFF"
                     android:inputType="textEmailAddress"
                     android:layout_margin="2dp"
@@ -547,8 +566,8 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/more_companies"
-                android:textSize="18sp"
-                android:textColor="#FFF"
+                android:textSize="14sp"
+                android:textColor="@color/color_gray"
                 android:layout_gravity="right|center_vertical"
                 android:gravity="center"
                 android:background="@drawable/view_more_btn_shape"
@@ -579,11 +598,10 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/next"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="#FFF"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_margin="25dp"
                 android:layout_marginBottom="25dp"
                 android:background="@drawable/submit_btn_shape"
                 />

@@ -23,7 +23,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="s_challengers_result">Total Prizes  2.234.3215 - - Biggest JackPot</string>
+    <string name="s_challengers_result">Total Prizes  2.234.3215 - - Biggest Jackpot</string>
     <string name="view_more_challenger">View More Challengers</string>
     <string name="quote1">Great! Now it\'s time to describe \n your Challenge</string>
     <string name="quote2">Think about a way, that most \n people can represent your brand</string>
@@ -62,7 +62,7 @@
     <string name="publish">Publish</string>
     <string name="mini_game">Mini game</string>
     <string name="search">Search here!</string>
-    <string name="audience_guide">it\'s time to define your requirements</string>
+    <string name="audience_guide">It\'s time to define your requirements</string>
     <string name="audience_guide2">Tell us about the competitors and \nthe jackpot</string>
     <string name="audience_guide3">It\'s time to define your outreach</string>
     <string name="audience_guide4">Tell us about your costumers and the \n prices you give away </string>
@@ -97,4 +97,8 @@
     <string name="cnf_pws">Conform Password</string>
     <string name="change">Change</string>
     <string name="post_video">Post Video</string>
+    <string name="chlengetab">Create your own Challenge for millioins \nof people!</string>
+    <string name="h_m"><![CDATA[H&M]]></string>
+    <string name="notifications">Push Notifications</string>
+    <string name="others_can_use_my_profile_info">View My Profile to others</string>
 </resources>

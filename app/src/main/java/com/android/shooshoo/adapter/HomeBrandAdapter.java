@@ -2,6 +2,7 @@ package com.android.shooshoo.adapter;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -45,7 +46,7 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
         CircleImageView image;
-        TextView brandName;
+        AppCompatTextView brandName;
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
             image=itemView.findViewById(R.id.image);

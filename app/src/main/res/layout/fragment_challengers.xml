@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:layout_centerHorizontal="true"
         >
@@ -29,8 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Create your own Challenge for millioins of people"
-            android:textColor="#FFFFFF"
+            android:text="@string/chlengetab"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/gray_text"
 
             />
         <LinearLayout
@@ -49,6 +51,8 @@
                 android:background="@drawable/submit_button"
                 android:textColor="#FFFFFF"
                 android:padding="6dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_margin="5dp"
                 />
 
@@ -60,6 +64,8 @@
                 android:background="@drawable/submit_btn_shape"
                 android:textColor="#FFFFFF"
                 android:padding="6dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_margin="5dp"
                 />
 
@@ -73,7 +79,9 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/colorAccent"
             app:tabTextColor="@color/colorAccent"
-            style="@style/MyCustomTextAppearance"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            android:background="#8a8a8a8a"
+            android:layout_marginTop="8dp"
             android:layout_gravity="center_horizontal"
             >
 
@@ -83,7 +91,9 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            >
 
         </android.support.v4.view.ViewPager>
 

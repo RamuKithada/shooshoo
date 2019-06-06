@@ -91,7 +91,8 @@
         >
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom_navi_view">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -136,20 +137,26 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:padding="5dp"
                     >
-                    <VideoView
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                        android:visibility="gone"/>
+
+                    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                        android:id="@+id/player_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:resize_mode="fit"
+                        app:surface_type="texture_view"
+                        app:use_controller="false"
+                        />
 
                     <ImageView
                         android:id="@+id/video_thumb"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
+                        android:layout_height="match_parent"
                         android:src="@drawable/hotel_challange"
                         android:scaleType="centerCrop"
+                        android:visibility="gone"
                         />
 
 
@@ -212,13 +219,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="5dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+
     >
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@drawable/upload"
-
+        android:layout_gravity="center"
         />
     <TextView
         android:layout_width="wrap_content"
@@ -234,12 +245,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/rules"
+            android:layout_gravity="center"
+
 
             />
         <TextView
@@ -256,19 +272,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         >
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/h_m"
+            android:layout_gravity="center"
 
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white_text"
-            android:text=" H and M"
+            android:text="@string/h_m"
+
             android:layout_gravity="center"
             android:gravity="center"
             />
@@ -280,6 +301,7 @@
         android:layout_margin="5dp"
         android:padding="10dp"
         android:background="#FFC107"
+        android:visibility="gone"
         android:layout_gravity="center"
         >
         <TextView
@@ -332,5 +354,172 @@
 </android.support.v7.widget.RecyclerView>
     </LinearLayout>
         </ScrollView>
+        <LinearLayout
+            android:id="@+id/bottom_navi_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/gradiant_home_bottom_navi"
+            android:layout_alignParentBottom="true"
+
+            >
+            <LinearLayout
+                android:id="@+id/navigation_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_navigation_home"
+                    android:layout_width="@dimen/botton_navi_icon"
+                    android:layout_height="@dimen/botton_navi_icon"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/botton_navi_icon_padding"
+                    android:src="@mipmap/home_active"
+                    />
+                <TextView
+                    android:id="@+id/tv_navigation_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Home"
+                    android:textSize="@dimen/home_navi_icon"
+                    android:textColor="@color/pink_drak"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navigation_challengers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_navigation_challengers"
+                    android:layout_width="@dimen/botton_navi_icon"
+                    android:layout_height="@dimen/botton_navi_icon"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/botton_navi_icon_padding"
+                    android:src="@mipmap/challenges_normal"
+                    />
+                <TextView
+                    android:id="@+id/tv_navigation_challengers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Challenge"
+                    android:textSize="@dimen/home_navi_icon"
+                    android:textColor="@color/gray_text"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navigation_feed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_navigation_feed"
+                    android:layout_width="@dimen/botton_navi_icon"
+                    android:layout_height="@dimen/botton_navi_icon"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/botton_navi_icon_padding"
+                    android:src="@mipmap/feed_normal"
+                    />
+                <TextView
+                    android:id="@+id/tv_navigation_feed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Feed"
+                    android:textSize="@dimen/home_navi_icon"
+                    android:textColor="@color/gray_text"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navigation_winners"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_navigation_winners"
+                    android:layout_width="@dimen/botton_navi_icon"
+                    android:layout_height="@dimen/botton_navi_icon"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/botton_navi_icon_padding"
+                    android:src="@mipmap/winners_normal"
+                    />
+                <TextView
+                    android:id="@+id/tv_navigation_winners"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Winners"
+                    android:textSize="@dimen/home_navi_icon"
+                    android:textColor="@color/gray_text"
+                    />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/navigation_radar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <ImageView
+                    android:id="@+id/iv_navigation_radar"
+                    android:layout_width="@dimen/botton_navi_icon"
+                    android:layout_height="@dimen/botton_navi_icon"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/botton_navi_icon_padding"
+                    android:src="@mipmap/radar_normal"
+                    />
+                <TextView
+                    android:id="@+id/tv_navigation_radar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Radar"
+                    android:textSize="@dimen/home_navi_icon"
+                    android:textColor="@color/gray_text"
+                    />
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
     </RelativeLayout>
-    </android.support.constraint.ConstraintLayout>
+
+
+
+</android.support.constraint.ConstraintLayout>

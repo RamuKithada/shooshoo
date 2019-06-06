@@ -19,7 +19,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +32,8 @@ import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.SponcerChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.utils.TVShowFragment;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
@@ -48,17 +49,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class CompanyProfileActivity extends BaseActivity implements View.OnClickListener, DataLoadView , SponsorChallengeView {
+public class CompanyProfileActivity extends BaseActivity implements View.OnClickListener, DataLoadView , SponsorChallengeView , FragmentListDialogListener {
 
 
     @BindView(R.id.edt_company_name)
     EditText edt_company_name;
 
-    @BindView(R.id.spinner_country)
-    Spinner spinner_country;
 
-    @BindView(R.id.spinner_city)
-    Spinner spinner_city;
 
     @BindView(R.id.edt_user_email)
     EditText edt_user_email;
@@ -146,10 +143,17 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.iv_tax_no)
     ImageView iv_tax_no;
 
+    @BindView(R.id.edt_country)
+    EditText edt_country;
+
+    @BindView(R.id.edt_city)
+    EditText edt_city;
+
+
+
     DataLoadPresenter dataLoadPresenter;
     SponcerChallengePresenter sponcerChallengePresenter;
     ConnectionDetector connectionDetector;
-
     int no_of_companies=0;
 
 
@@ -184,6 +188,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         setFoucusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.username_active,R.drawable.username_normal});
         setFoucusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
         setFoucusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
+        setFoucusChange(edt_country,R.id.country_line,iv_country,new int[]{R.drawable.country_active,R.drawable.country_normal});
+        setFoucusChange(edt_city,R.id.city_line,iv_city,new int[]{R.drawable.city_active,R.drawable.city_normal});
         setFoucusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
         setFoucusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
         setFoucusChange(edt_mobile,R.id.country_code_line,iv_mobile,new int[]{R.drawable.mobile_active,R.drawable.mobile_normal});
@@ -257,11 +263,14 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         edt_user_email.setText(null);
         iv_profile_pic.setImageResource(R.drawable.photo_upload);
         newsImage=null;
-        spinner_country.setSelection(0);
-        spinner_city.setSelection(0);
+        edt_country.setText(null);
+        edt_city.setText(null);
+        country_pos=-1;
+        city_pos=-1;
+        city=null;
+        country=null;
     }
 
-    int country_pos=0,city_pos=0;
     private boolean validate() {
         if(newsImage==null){
             showMessage("Please Select logo for your company");
@@ -285,16 +294,16 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
             return false;
         }
 
-        if(country_pos==0)
+        if(country_pos<0)
         {
-            spinner_country.requestFocus();
-            showMessage("Please select your Country");
+            edt_country.requestFocus();
+            edt_country.setError("Please select your Country");
             return false;
         }
-        if(city_pos==0)
+        if(city_pos<0)
         {
-            spinner_city.requestFocus();
-            showMessage("Please select your City");
+            edt_city.requestFocus();
+            edt_city.setError("Please select your City");
             return false;
         }
         if(!ApiUrls.validateString(edt_zipcode.getText().toString()))
@@ -546,94 +555,83 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     }
 
     Country country=new Country();
-    private void displayList(final List<Country> dropDownItems, final Spinner spinner)
-    {
-        Country country1 = new Country();
-        country1.setCountryName("Select Country");
-        if(dropDownItems!=null)
-        dropDownItems.add(0, country1);
-        final List<String> lables=new ArrayList<String>();
-        for(Country dropDownItem:dropDownItems){
-            lables.add(dropDownItem.getCountryName());
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-                country=dropDownItems.get(i);
-                if(dropDownItems.get(i).getPhoneCode()!=null)
-                edt_country_code.setText("+ "+dropDownItems.get(i).getPhoneCode());
-                country_pos=i;
-                if(i>0)
-                dataLoadPresenter.loadCites(dropDownItems.get(i).getCountryId());
-                else
-                  onCitiesData(null);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-    }
     City city=new City();
-    private void displayListCity(final List<City> dropDownItems, final Spinner spinner)
+
+    int country_pos=-1,city_pos=-1;
+    private void displayList(final List<Country> dropDownItems, final EditText editText)
     {
-        final List<String> lables=new ArrayList<String>();
-        City city1 = new City();
-        city1.setCityName("Select City");
+        if(dropDownItems==null)
+            return;
 
-        if(dropDownItems!=null) {
-            dropDownItems.add(0, city1);
-            for (City dropDownItem : dropDownItems) {
-                lables.add(dropDownItem.getCityName());
-            }
-        }else {
-            lables.add("No Cities");
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCountryName();
         }
-
-
-
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-
-                city_pos=i;
-                if(dropDownItems!=null)
-                    city=dropDownItems.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"country");
 
             }
         });
 
+
+
+    }
+    private void displayListCity(final List<City> dropDownItems, final EditText editText)
+    {
+        if(dropDownItems==null)
+        {
+            city_pos=-1;
+            editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("No Cites");
+                }
+            });
+            return;
+        }
+
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCityName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"city");
+            }
+        });
+
+
     }
 
-
+    List<City> cities;
     @Override
     public void onCitiesData(List<City> cities) {
-
-        displayListCity(cities,spinner_city);
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
+        displayListCity(cities,edt_city);
     }
-
+    List<Country> countries;
     @Override
     public void onCountryData(List<Country> countries) {
-        displayList(countries,spinner_country);
-
+        this.countries=countries;
+        displayList(countries,edt_country);
     }
 
     @Override
@@ -668,6 +666,29 @@ View view=null;
 
     }
 
-//        userSession.setSponsorChallenge(company.getId());
+    @Override
+    public void onEditView(int view, int position) {
+        switch (view){
+            case R.id.edt_country:
+                if(countries!=null)
+                {
+                    dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                    edt_country_code.setText("+"+countries.get(position).getPhoneCode());
+                    edt_country.setText(countries.get(position).getCountryName());
+                    edt_city.setError(null);
+                    country_pos=position;
+                    country=countries.get(position);
+                }
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {
+                    edt_city.setText(cities.get(position).getCityName());
+                    edt_city.setError(null);
+                    city=cities.get(position);
+                    city_pos=position;}
+                break;
+        }
 
+    }
 }

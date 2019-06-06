@@ -36,6 +36,44 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     TextView title;
     int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 
+    @BindView(R.id.navigation_home)
+    LinearLayout navigation_home;
+    @BindView(R.id.navigation_challengers)
+    LinearLayout navigation_challengers;
+    @BindView(R.id.navigation_feed)
+    LinearLayout navigation_feed;
+    @BindView(R.id.navigation_winners)
+    LinearLayout navigation_winners;
+    @BindView(R.id.navigation_radar)
+    LinearLayout navigation_radar;
+    private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(MyChallengesActivity.this,HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            switch (v.getId()) {
+                case R.id.navigation_home:
+                    intent.putExtra("icon",0);
+                    break;
+                case R.id.navigation_challengers:
+                    intent.putExtra("icon",1);
+                    break;
+                case R.id.navigation_feed:
+                    intent.putExtra("icon",2);
+                    break;
+                case R.id.navigation_winners:
+                    intent.putExtra("icon",3);
+                    break;
+                case R.id.navigation_radar:
+                    intent.putExtra("icon",4);
+                    break;
+            }
+            startActivity(intent);
+            finish();
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +96,11 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
 
 
 
-
+        navigation_home.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
     }
 
     @Override

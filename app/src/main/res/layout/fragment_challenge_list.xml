@@ -10,10 +10,11 @@
 <android.support.v7.widget.RecyclerView
     android:id="@+id/list"
     android:layout_gravity="center_horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     app:layoutManager="android.support.v7.widget.GridLayoutManager"
     app:spanCount="2"
+    android:layout_centerHorizontal="true"
     tools:listitem="@layout/challengers_item"
     android:layout_margin="2dp"
     />

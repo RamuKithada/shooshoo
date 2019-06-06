@@ -43,18 +43,16 @@
                    android:id="@+id/sponsor_title_lay"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content">
-               <TextView
-                   android:id="@+id/sponsor_title"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/sponsor_challengers"
-                   android:textSize="18sp"
-                   android:padding="5dp"
-                   android:gravity="center_vertical"
-                   android:layout_centerVertical="true"
-                   android:textColor="#FFF"
-                   android:layout_margin="5dp"
-                   />
+
+                   <TextView
+                       android:id="@+id/sponsor_title"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:gravity="center_vertical"
+                       android:padding="5dp"
+                       android:text="@string/sponsor_challengers"
+                       android:textColor="#FFF"
+                       android:textSize="17sp" />
                <RelativeLayout
                    android:id="@+id/sponsor_viewall"
                    android:layout_width="wrap_content"
@@ -87,6 +85,9 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
                    >
 
 
@@ -100,6 +101,7 @@
                    android:text="@string/s_challengers_result"
                    android:textColor="#FFF"
                    android:gravity="center"
+                   android:fontFamily="@font/futura_medium_bt"
                    android:layout_below="@+id/sponsor_challengers_list"
                    android:background="@drawable/zigzag_image"
                    />
@@ -123,7 +125,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="@string/jackpot_challengers"
-                   android:textSize="18sp"
+                   android:textSize="17sp"
                    android:padding="5dp"
                    android:textColor="#FFF"
                    android:layout_centerVertical="true"
@@ -164,6 +166,9 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
                    >
 
 
@@ -184,7 +189,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="@string/categories_title"
-                   android:textSize="18sp"
+                   android:textSize="17sp"
                    android:padding="5dp"
                    android:textColor="#FFF"
                    android:layout_margin="5dp"
@@ -226,6 +231,10 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/home_cat_item"
+                   android:orientation="horizontal"
+                   android:layout_marginBottom="10dp"
                    >
 
 
@@ -238,6 +247,7 @@
              android:paddingRight="10dp"
              android:paddingLeft="10dp"
              android:paddingTop="2dp"
+             android:visibility="gone"
              android:paddingBottom="2dp"
              android:layout_margin="10dp"
              android:layout_gravity="center_horizontal"

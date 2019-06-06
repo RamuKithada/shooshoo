@@ -3,12 +3,11 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
-import android.view.MenuItem;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -40,9 +39,147 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
     ImageView iv_edit_profile;
     @BindView(R.id.iv_profile)
     ImageView iv_profile;
+    @BindView(R.id.bottom_navi_view)
+    LinearLayout bottom_navi_view;
+    @BindView(R.id.iv_navigation_home)
+    ImageView iv_navigation_home;
+    @BindView(R.id.iv_navigation_challengers)
+    ImageView iv_navigation_challengers;
+    @BindView(R.id.iv_navigation_feed)
+    ImageView iv_navigation_feed;
+    @BindView(R.id.iv_navigation_winners)
+    ImageView iv_navigation_winners;
+    @BindView(R.id.iv_navigation_radar)
+    ImageView iv_navigation_radar;
+    @BindView(R.id.tv_navigation_home)
+    AppCompatTextView tv_navigation_home;
+    @BindView(R.id.tv_navigation_challengers)
+    AppCompatTextView tv_navigation_challengers;
+    @BindView(R.id.tv_navigation_feed)
+    AppCompatTextView tv_navigation_feed;
+    @BindView(R.id.tv_navigation_winners)
+    AppCompatTextView tv_navigation_winners;
+    @BindView(R.id.tv_navigation_radar)
+    AppCompatTextView tv_navigation_radar;
+
+    @BindView(R.id.navigation_home)
+    LinearLayout navigation_home;
+    @BindView(R.id.navigation_challengers)
+    LinearLayout navigation_challengers;
+    @BindView(R.id.navigation_feed)
+    LinearLayout navigation_feed;
+    @BindView(R.id.navigation_winners)
+    LinearLayout navigation_winners;
+    @BindView(R.id.navigation_radar)
+    LinearLayout navigation_radar;
+
+private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        FragmentManager fragmentManager=getSupportFragmentManager();
+        switch (v.getId()) {
+            case R.id.navigation_home:
+                mTextMessage.setText(R.string.title_home);
+                iv_chat.setVisibility(View.VISIBLE);
+                iv_help.setVisibility(View.VISIBLE);
+                iv_search.setVisibility(View.GONE);
+                iv_wallet.setVisibility(View.VISIBLE);
+                iv_filters.setVisibility(View.VISIBLE);
+                iv_edit_profile.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
+                break;
+            case R.id.navigation_challengers:
+                mTextMessage.setText(R.string.title_challengers);
+                iv_chat.setVisibility(View.VISIBLE);
+                iv_help.setVisibility(View.VISIBLE);
+                iv_search.setVisibility(View.GONE);
+                iv_wallet.setVisibility(View.GONE);
+                iv_filters.setVisibility(View.GONE);
+                iv_edit_profile.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ChallengersFragment.newInstance("Hi","Ram")).commit();
+                    break;
+            case R.id.navigation_feed:
+                mTextMessage.setText(R.string.title_feed);
+                iv_chat.setVisibility(View.VISIBLE);
+                iv_help.setVisibility(View.GONE);
+                iv_search.setVisibility(View.GONE);
+                iv_wallet.setVisibility(View.GONE);
+                iv_filters.setVisibility(View.VISIBLE);
+                iv_edit_profile.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, FeedFragment.newInstance("Hi","Ram")).commit();
+              break;
+            case R.id.navigation_winners:
+                mTextMessage.setText(R.string.title_winners);
+                iv_chat.setVisibility(View.VISIBLE);
+                iv_help.setVisibility(View.VISIBLE);
+                iv_search.setVisibility(View.GONE);
+                iv_wallet.setVisibility(View.GONE);
+                iv_filters.setVisibility(View.GONE);
+                iv_edit_profile.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, WinnersFragment.newInstance("Hi","Ram")).commit();
+                break;
+            case R.id.navigation_radar:
+                mTextMessage.setText(R.string.title_radar);
+                iv_chat.setVisibility(View.GONE);
+                iv_help.setVisibility(View.GONE);
+                iv_search.setVisibility(View.GONE);
+                iv_wallet.setVisibility(View.GONE);
+                iv_filters.setVisibility(View.GONE);
+                iv_edit_profile.setVisibility(View.GONE);
+                iv_profile.setVisibility(View.VISIBLE);
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, RadarFragment.newInstance("Hi","Ram")).commit();
+                break;
+        }
+        selectNavi(v);
+    }
+};
+
+    private void selectNavi(View view) {
+        iv_navigation_home.setImageResource(R.mipmap.home_normal);
+        iv_navigation_challengers.setImageResource(R.mipmap.challenges_normal);
+        iv_navigation_feed.setImageResource(R.mipmap.feed_normal);
+        iv_navigation_winners.setImageResource(R.mipmap.winners_normal);
+        iv_navigation_radar.setImageResource(R.mipmap.radar_normal);
+        tv_navigation_home.setTextColor(getResources().getColor(R.color.gray_text));
+        tv_navigation_challengers.setTextColor(getResources().getColor(R.color.gray_text));
+        tv_navigation_feed.setTextColor(getResources().getColor(R.color.gray_text));
+        tv_navigation_winners.setTextColor(getResources().getColor(R.color.gray_text));
+        tv_navigation_radar.setTextColor(getResources().getColor(R.color.gray_text));
+        switch (view.getId()){
+            case R.id.navigation_home:
+                iv_navigation_home.setImageResource(R.mipmap.home_active);
+                tv_navigation_home.setTextColor(getResources().getColor(R.color.pink_drak));
+
+                break;
+            case R.id.navigation_challengers:
+                iv_navigation_challengers.setImageResource(R.mipmap.challenges_active);
+                tv_navigation_challengers.setTextColor(getResources().getColor(R.color.pink_drak));
+
+                 break;
+            case R.id.navigation_feed:
+                iv_navigation_feed.setImageResource(R.mipmap.feed_active);
+                tv_navigation_feed.setTextColor(getResources().getColor(R.color.pink_drak));
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+                break;
+            case R.id.navigation_winners:
+                iv_navigation_winners.setImageResource(R.mipmap.winners_active);
+                tv_navigation_winners.setTextColor(getResources().getColor(R.color.pink_drak));
+
+
+                break;
+            case R.id.navigation_radar:
+                iv_navigation_radar.setImageResource(R.mipmap.radar_active);
+                tv_navigation_radar.setTextColor(getResources().getColor(R.color.pink_drak));
+               break;
+        }
+    }
+
+/*    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -110,7 +247,7 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
             }
             return false;
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,14 +262,41 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
         iv_profile.setVisibility(View.VISIBLE);
         iv_filters.setVisibility(View.GONE);
         iv_edit_profile.setVisibility(View.GONE);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottom_navi_view.setOnClickListener(bottomNavigationOnClickListener);
+    /*    BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
         iv_profile.setOnClickListener(this);
         iv_edit_profile.setOnClickListener(this);
         iv_chat.setOnClickListener(this);
         iv_search.setOnClickListener(this);
+        navigation_home.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
+
+        int icon=getIntent().getIntExtra("icon",0);
+        switch (icon){
+            case 0:
+                bottomNavigationOnClickListener.onClick(navigation_home);
+                break;
+            case 1:
+                bottomNavigationOnClickListener.onClick(navigation_challengers);
+                break;
+            case 2:
+                bottomNavigationOnClickListener.onClick(navigation_feed);
+                break;
+            case 3:
+                bottomNavigationOnClickListener.onClick(navigation_winners);
+                break;
+            case 4:
+                bottomNavigationOnClickListener.onClick(navigation_radar);
+                break;
+        }
+
+
     }
 
     @Override

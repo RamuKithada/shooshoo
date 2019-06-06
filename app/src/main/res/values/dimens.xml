@@ -11,4 +11,7 @@
     <dimen name="dropdown_icon">30dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="chat_radius">50dp</dimen>
+    <dimen name="home_navi_icon">12sp</dimen>
+    <dimen name="botton_navi_icon">30dp</dimen>
+    <dimen name="botton_navi_icon_padding">3dp</dimen>
 </resources>

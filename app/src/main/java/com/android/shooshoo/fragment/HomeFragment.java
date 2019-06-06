@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     HomeCategoryAdapter homeCategoryAdapter;
     ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
     ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
-    String[] titles=new String[]{"Beard Challenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
+    String[] titles=new String[]{"Beard \nChallenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
             "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge"};
     int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
     R.drawable.hips_excersize_chalange,R.drawable.iceskating_challange,R.drawable.laugh_challange,R.drawable.pullup_challange,R.drawable.running_challange
@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
             R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
 
-    String[] brandnames=new String[]{"Adidas","Benz","Dmart","Flipkar","H & M","Nike","Pepsi","Puma","Vokes Wagon","Wallmart","puma"};
+    String[] brandnames=new String[]{"Adidas","Benz","Dmart","Flipkar","H & M","Nike","Pepsi","Puma","Vokes Wagon","Wallmart","Puma"};
     int[] catimgs=new int[]{
             R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
             R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,

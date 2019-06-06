@@ -273,7 +273,7 @@
      android:layout_height="wrap_content"
      app:tabSelectedTextColor="#FFF"
      app:tabTextColor="@color/color_gray"
-     style="@style/MyCustomTextAppearance"
+     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
      app:tabMode="fixed"
      >
      <android.support.design.widget.TabItem
