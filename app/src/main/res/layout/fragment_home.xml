@@ -216,7 +216,6 @@
                        android:text="@string/view_all"
                        android:textColor="#FFF"
                        android:layout_centerVertical="true"
-
                        android:layout_margin="2dp"
                        android:gravity="center"
                        android:textSize="10sp"

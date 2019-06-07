@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:background="@drawable/gradiant_home"
     tools:context=".activity.BrandProfileActivity">
     <LinearLayout
         android:id="@+id/tool_bar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginRight="2dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+
+        >
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="40dp"
@@ -72,22 +72,14 @@
             />
     </LinearLayout>
     <View
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#FFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
-        android:layout_marginTop="1dp"
-        >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -173,181 +165,20 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_below="@+id/tab_layout"
             >
         </android.support.v4.view.ViewPager>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bottom_navi_view"
-        android:layout_width="0dp"
+    <RelativeLayout
+        android:id="@+id/bottom_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:orientation="horizontal"
-        android:background="@drawable/gradiant_home_bottom_navi"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
         >
-        <LinearLayout
-            android:id="@+id/navigation_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_navigation_home"
-                android:layout_width="@dimen/botton_navi_icon"
-                android:layout_height="@dimen/botton_navi_icon"
-                android:layout_gravity="center"
-                android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/home_active"
-                />
-            <TextView
-                android:id="@+id/tv_navigation_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Home"
-                android:textSize="@dimen/home_navi_icon"
-                android:textColor="@color/pink_drak"
-                />
+        <include
+            layout="@layout/bottom_navi"
+            />
+    </RelativeLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/navigation_challengers"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_navigation_challengers"
-                android:layout_width="@dimen/botton_navi_icon"
-                android:layout_height="@dimen/botton_navi_icon"
-                android:layout_gravity="center"
-                android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/challenges_normal"
-                />
-            <TextView
-                android:id="@+id/tv_navigation_challengers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Challenge"
-                android:textSize="@dimen/home_navi_icon"
-                android:textColor="@color/gray_text"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/navigation_feed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_navigation_feed"
-                android:layout_width="@dimen/botton_navi_icon"
-                android:layout_height="@dimen/botton_navi_icon"
-                android:layout_gravity="center"
-                android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/feed_normal"
-                />
-            <TextView
-                android:id="@+id/tv_navigation_feed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Feed"
-                android:textSize="@dimen/home_navi_icon"
-                android:textColor="@color/gray_text"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/navigation_winners"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_navigation_winners"
-                android:layout_width="@dimen/botton_navi_icon"
-                android:layout_height="@dimen/botton_navi_icon"
-                android:layout_gravity="center"
-                android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/winners_normal"
-                />
-            <TextView
-                android:id="@+id/tv_navigation_winners"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Winners"
-                android:textSize="@dimen/home_navi_icon"
-                android:textColor="@color/gray_text"
-                />
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/navigation_radar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            >
-            <ImageView
-                android:id="@+id/iv_navigation_radar"
-                android:layout_width="@dimen/botton_navi_icon"
-                android:layout_height="@dimen/botton_navi_icon"
-                android:layout_gravity="center"
-                android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/radar_normal"
-                />
-            <TextView
-                android:id="@+id/tv_navigation_radar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Radar"
-                android:textSize="@dimen/home_navi_icon"
-                android:textColor="@color/gray_text"
-                />
-
-
-        </LinearLayout>
-
-
-
-
-
-    </LinearLayout>
-
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

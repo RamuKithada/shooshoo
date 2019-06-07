@@ -15,22 +15,65 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.adapter.ProfileViewPagerAdapter;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditProfileActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class EditProfileActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListDialogListener {
     DrawerLayout mDrawerLayout;
     ImageView iv_chat;
     ImageView iv_back;
+
+    @BindView(R.id.navigation_home)
+    LinearLayout navigation_home;
+    @BindView(R.id.navigation_challengers)
+    LinearLayout navigation_challengers;
+    @BindView(R.id.navigation_feed)
+    LinearLayout navigation_feed;
+    @BindView(R.id.navigation_winners)
+    LinearLayout navigation_winners;
+    @BindView(R.id.navigation_radar)
+    LinearLayout navigation_radar;
+    private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(EditProfileActivity.this,HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            switch (v.getId()) {
+                case R.id.navigation_home:
+                    intent.putExtra("icon",0);
+                    break;
+                case R.id.navigation_challengers:
+                    intent.putExtra("icon",1);
+                    break;
+                case R.id.navigation_feed:
+                    intent.putExtra("icon",2);
+                    break;
+                case R.id.navigation_winners:
+                    intent.putExtra("icon",3);
+                    break;
+                case R.id.navigation_radar:
+                    intent.putExtra("icon",4);
+                    break;
+            }
+            startActivity(intent);
+            finish();
+
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+        ButterKnife.bind(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         iv_chat=(ImageView)findViewById(R.id.iv_chat);
         iv_back=(ImageView)findViewById(R.id.iv_back);
@@ -46,10 +89,8 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
         });
         TextView profilename = (TextView) headerview.findViewById(R.id.profilename);
         TextView location = (TextView) headerview.findViewById(R.id.location);
-//        profilename.setText("your name");
         navigationView.setNavigationItemSelectedListener(this);
-//        NavigationMenuView navMenuView = (NavigationMenuView) navigationView.getChildAt(0);
-//        navMenuView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+;
          TabLayout tabLayout=findViewById(R.id.tab_layout);
          ViewPager viewPager=findViewById(R.id.view_pager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
@@ -73,6 +114,11 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
                 finish();
             }
         });
+        navigation_home.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
+        navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
     }
 
     @Override
@@ -101,5 +147,10 @@ switch (menuItem.getItemId()){
 }
         mDrawerLayout.closeDrawer(GravityCompat.END);
         return false;
+    }
+
+    @Override
+    public void onEditView(int view, int pos) {
+
     }
 }

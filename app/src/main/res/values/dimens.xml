@@ -14,4 +14,6 @@
     <dimen name="home_navi_icon">12sp</dimen>
     <dimen name="botton_navi_icon">30dp</dimen>
     <dimen name="botton_navi_icon_padding">3dp</dimen>
+    <dimen name="bottom_navi_icon_padding">10dp</dimen>
+
 </resources>

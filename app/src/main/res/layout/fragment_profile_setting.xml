@@ -52,7 +52,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="User Name"
                 />
             <View
@@ -81,7 +81,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textEmailAddress"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Email-Id"
                 />
             <View
@@ -132,7 +132,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="First Name"
                 />
             <View
@@ -161,7 +161,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Last Name"
                 />
             <View
@@ -200,28 +200,24 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 >
-                <Spinner
-                    android:id="@+id/spinner_city"
+                <EditText
+                    android:id="@+id/edt_city"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
+                    android:drawablePadding="5dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:hint="City"
+                    android:drawableRight="@drawable/ic_spinner_icon"
                     />
 
-
-                <ImageView
-                    android:id="@+id/iv_dropdown_city"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="8dp"
-                    android:src="@drawable/down_angel"
-                    android:layout_gravity="center_vertical"
-                    />
             </LinearLayout>
             <View
                 android:id="@+id/city_line"
@@ -244,27 +240,22 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 >
-                <Spinner
-                    android:id="@+id/spinner_state"
+                <EditText
+                    android:id="@+id/edt_country"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
-                    android:hint="City"
-                    />
-
-
-                <ImageView
-                    android:id="@+id/iv_dropdown_state"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="8dp"
-                    android:src="@drawable/down_angel"
-                    android:layout_gravity="center_vertical"
+                    android:drawablePadding="5dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Country"
+                    android:drawableRight="@drawable/ic_spinner_icon"
                     />
             </LinearLayout>
             <View
@@ -306,7 +297,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Street Name"
                 />
             <View
@@ -335,7 +326,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Street Number"
                 />
             <View
@@ -376,7 +367,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="textPersonName"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Zipcode"
                 />
             <View
@@ -405,7 +396,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#FFFFFF"
                 android:inputType="phone"
-                android:textColorHint="#CCCCCC"
+                android:textColorHint="@color/color_gray"
                 android:hint="Mobile Number"
                 />
             <View
@@ -442,27 +433,22 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 >
-                <Spinner
-                    android:id="@+id/spinner_gender"
+                <EditText
+                    android:id="@+id/edt_gender"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
                     android:textColor="#FFFFFF"
-                    android:textColorHint="#CCCCCC"
+                    android:textColorHint="@color/color_gray"
                     android:layout_margin="5dp"
-                    android:hint="City"
-                    />
-
-
-                <ImageView
-                    android:id="@+id/iv_dropdown_gender"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="8dp"
-                    android:src="@drawable/down_angel"
-                    android:layout_gravity="center_vertical"
+                    android:drawablePadding="5dp"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="Gender"
+                    android:drawableRight="@drawable/ic_spinner_icon"
                     />
             </LinearLayout>
             <View

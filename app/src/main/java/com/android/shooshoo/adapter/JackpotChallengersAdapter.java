@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.ChallengeModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -34,7 +35,7 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         ChallengeModel model=challengeModels.get(i);
-catViewHolder.image.setImageResource(model.getImage());
+        Picasso.with(catViewHolder.itemView.getContext()).load(model.getImage()).into(catViewHolder.image);
 catViewHolder.title.setText(model.getTitle());
 catViewHolder.description.setText(model.getDescription());
     }

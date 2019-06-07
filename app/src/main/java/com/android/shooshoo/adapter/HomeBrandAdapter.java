@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,7 +34,7 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-  catViewHolder.image.setImageResource(brandimgs[i]);
+        Picasso.with(catViewHolder.itemView.getContext()).load(brandimgs[i]).into(catViewHolder.image);
   catViewHolder.brandName.setText(brandnames[i]);
 
 

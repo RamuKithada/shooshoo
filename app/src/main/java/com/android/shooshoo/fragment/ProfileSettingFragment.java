@@ -27,6 +27,7 @@ import com.android.shooshoo.models.Country;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.TVShowFragment;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 
@@ -77,13 +78,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     @BindView(R.id.edt_bank_name)
     EditText edt_bank_name;
 
-    @BindView(R.id.spinner_city)
-    Spinner spinner_city;
+    @BindView(R.id.edt_country)
+    EditText edt_country;
 
-    @BindView(R.id.spinner_state)
-    Spinner spinner_state;
-    @BindView(R.id.spinner_gender)
-    Spinner spinner_gender;
+    @BindView(R.id.edt_city)
+    EditText edt_city;
+
+    @BindView(R.id.edt_gender)
+    EditText edt_gender;
     @BindView(R.id.cat_subcat_list)
     RecyclerView cat_subcat_list;
     @BindView(R.id.btn_save_bank)
@@ -94,7 +96,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     TextView btn_more_categories;
     ConnectionDetector connectionDetector;
 
-
+    final String genders[]=new String[]{"Male","Female","Others"};
+    Country country=new Country();
+    String gender="male";
+    City city=new City();
+    int country_pos=-1,city_pos=-1;
 
     public ProfileSettingFragment() {
         // Required empty public constructor
@@ -157,26 +163,20 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         dataLoadPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(getActivity());
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
-        if(connectionDetector.isConnectingToInternet())
-            loadData();
-        final String genders[]=new String[]{"Male","Female","Others"};
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinnet_text, genders);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_gender.setAdapter(dataAdapter);
-
-        spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gender=genders[i];
-                Log.e("onItemSelected",""+gender);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                TVShowFragment tv=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",genders);
+                args.putInt("view",R.id.edt_gender);
+                tv.setArguments(args);
+                tv.show(getChildFragmentManager(),"ha");
             }
         });
+
+        if(connectionDetector.isConnectingToInternet())
+            loadData();
 
 
     }
@@ -427,12 +427,12 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onCitiesData(List<City> cities) {
-        displayListCity(cities,spinner_city);
+        displayListCity(cities,edt_city);
     }
 
     @Override
     public void onCountryData(List<Country> countries) {
-        displayList(countries,spinner_state);
+        displayList(countries,edt_country);
     }
 
     @Override
@@ -485,76 +485,63 @@ baseView.showMessage(stringId);
         dataLoadPresenter.detachView();
     }
 
-    int country_pos=0,city_pos=0;
-    Country country=new Country();
-    String gender="male";
-    City city=new City();
-    private void displayList(final List<Country> dropDownItems, final Spinner spinner)
+    private void displayList(final List<Country> dropDownItems, final EditText editText)
     {
-        Country country1 = new Country();
-        country1.setCountryName("Select Country");
-        if(dropDownItems!=null)
-            dropDownItems.add(0, country1);
+        if(dropDownItems==null)
+            return;
 
-        final List<String> lables=new ArrayList<String>();
-        for(Country dropDownItem:dropDownItems){
-            lables.add(dropDownItem.getCountryName());
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCountryName();
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-                country=dropDownItems.get(i);
-                country_pos=i;
-                if(i>0)
-                    dataLoadPresenter.loadCites(dropDownItems.get(i).getCountryId());
-                else
-                    onCitiesData(null);
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getChildFragmentManager(),"country");
 
             }
         });
+
+
 
     }
-    private void displayListCity(final List<City> dropDownItems, final Spinner spinner)
+    private void displayListCity(final List<City> dropDownItems, final EditText editText)
     {
-        final List<String> lables=new ArrayList<String>();
-        City city1 = new City();
-        city1.setCityName("Select City");
-        if(dropDownItems!=null) {
-            dropDownItems.add(0, city1);
-            for (City dropDownItem : dropDownItems) {
-                lables.add(dropDownItem.getCityName());
-            }
-        }else {
-            lables.add("No Cities");
+        if(dropDownItems==null)
+        {
+            city_pos=-1;
+            editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("No Cites");
+                }
+            });
+            return;
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCityName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                city_pos=i;
-                if(dropDownItems!=null)
-                    city=dropDownItems.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                TVShowFragment showFragment=new TVShowFragment();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getChildFragmentManager(),"city");
             }
         });
+
 
     }
 }

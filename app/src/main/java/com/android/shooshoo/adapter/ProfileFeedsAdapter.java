@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,7 +30,7 @@ public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapte
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int pos) {
 
-   catViewHolder.imageView.setImageResource(images[pos]);
+        Picasso.with(catViewHolder.itemView.getContext()).load(images[pos]).into(catViewHolder.imageView);
 
     }
 

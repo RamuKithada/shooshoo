@@ -12,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RelativeLayout sponsor_viewall,jackpot_viewall,category_viewalll;
 
     private OnFragmentInteractionListener mListener;
     JackpotChallengersAdapter jackpotChallengersAdapter;
@@ -146,6 +150,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         RecyclerView sponsorList=view.findViewById(R.id.sponsor_challengers_list);
         RecyclerView jackpotList=view.findViewById(R.id.jackpot_challengers_list);
         RecyclerView catList=view.findViewById(R.id.category_challengers_list);
+        sponsor_viewall=view.findViewById(R.id.sponsor_viewall);
+        jackpot_viewall=view.findViewById(R.id.jackpot_viewall);
+        category_viewalll=view.findViewById(R.id.category_viewall);
+        sponsor_viewall.setOnClickListener(this);
+        jackpot_viewall.setOnClickListener(this);
+        category_viewalll.setOnClickListener(this);
         setLayoutManager(sponsorList);
         setLayoutManager(brandsList);
         setLayoutManager(jackpotList);
@@ -218,8 +228,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+        Intent intent;
+        switch (v.getId()){
+            case R.id.sponsor_viewall:
+         intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
+         intent.putExtra("title","Sponsor Challenges");
+         intent.putExtra("catId",1);
         startActivity(intent);
+        break;
+            case R.id.jackpot_viewall:
+                 intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
+                intent.putExtra("title","Jackpot Challenges");
+                intent.putExtra("catId",2);
+                startActivity(intent);
+                break;
+            case R.id.category_viewall:
+                 intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
+                intent.putExtra("title","My Categories");
+                intent.putExtra("catId",3);
+                startActivity(intent);
+                break;
+        }
+
     }
 
     /**

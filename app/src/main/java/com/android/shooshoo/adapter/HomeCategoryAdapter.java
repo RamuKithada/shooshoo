@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.squareup.picasso.Picasso;
 
 public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapter.CatViewHolder> {
     int[] catimgs;
@@ -31,7 +32,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         catViewHolder.name.setText(catNames[i]);
-        catViewHolder.image.setImageResource(catimgs[i]);
+        Picasso.with(catViewHolder.itemView.getContext()).load(catimgs[i]).into(catViewHolder.image);
     }
 
     @Override

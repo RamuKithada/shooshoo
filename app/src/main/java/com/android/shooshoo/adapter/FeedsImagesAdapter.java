@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.ContactsModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class FeedsImagesAdapter extends RecyclerView.Adapter<FeedsImagesAdapter.
         if(listener!=null)
         holder.itemView.setOnClickListener(listener);
 
-        holder.image.setImageResource(images[position]);
+        Picasso.with(holder.itemView.getContext()).load(images[position]).into(holder.image);
 
     }
 
