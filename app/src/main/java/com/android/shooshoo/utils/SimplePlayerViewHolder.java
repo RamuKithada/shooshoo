@@ -4,8 +4,11 @@ import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -22,7 +25,7 @@ import im.ene.toro.exoplayer.SimpleExoPlayerViewHelper;
 import im.ene.toro.media.PlaybackInfo;
 import im.ene.toro.widget.Container;
 
-public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlayer {
+public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements ToroPlayer,ToroPlayer.EventListener {
 
     public SimpleExoPlayerView playerView;
     public SimpleExoPlayerViewHelper helper;
@@ -31,12 +34,18 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public Uri mediaUri;
     public boolean isPlay=true;
     public LinearLayout comment_view;
-    public SimplePlayerViewHolder(View itemView) {
+    public LinearLayout options_lay;
+    public LinearLayout message_lay;
+    public RelativeLayout profile_lay;
+    public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
         card=(CardView)itemView.findViewById(R.id.card);
         comment_view=itemView.findViewById(R.id.comment_view);
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
+        profile_lay=(RelativeLayout)itemView.findViewById(R.id.profile_lay);
+        options_lay=(LinearLayout)itemView.findViewById(R.id.options_layout);
+        message_lay=(LinearLayout)itemView.findViewById(R.id.message_layout);
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,11 +56,13 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                     isPlay=false;
                     helper.pause();
                     iv_pauseresume.setVisibility(View.VISIBLE);
+
                 }
                 else {
                     isPlay=true;
                     helper.play();
                     iv_pauseresume.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -72,21 +83,72 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
         }
         helper.initialize(playbackInfo);
+        helper.addPlayerEventListener(this);
     }
 
     @Override public void play() {
         if (helper != null){
             helper.play();
             iv_pauseresume.setVisibility(View.GONE);
+
         }
+    }
+
+    private void fadeOut() {
+        Animation aniFade = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.fade_out);
+        options_lay.startAnimation(aniFade);
+        message_lay.startAnimation(aniFade);
+        profile_lay.startAnimation(aniFade);
+        aniFade.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                options_lay.setVisibility(View.GONE);
+                message_lay.setVisibility(View.GONE);
+                profile_lay.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override public void pause() {
         if (helper != null)
         {
             helper.pause();
-            iv_pauseresume.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void fadeIn() {
+        Animation aniFade = AnimationUtils.loadAnimation(itemView.getContext(),R.anim.fade_in);
+        options_lay.startAnimation(aniFade);
+        message_lay.startAnimation(aniFade);
+        profile_lay.startAnimation(aniFade);
+        aniFade.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                options_lay.setVisibility(View.VISIBLE);
+                message_lay.setVisibility(View.VISIBLE);
+                profile_lay.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     @Override public boolean isPlaying() {
@@ -110,5 +172,29 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     public void bind(Uri media) {
         this.mediaUri = media;
+    }
+
+    @Override
+    public void onBuffering() {
+
+    }
+
+    @Override
+    public void onPlaying() {
+        fadeOut();
+        iv_pauseresume.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onPaused() {
+        fadeIn();
+        iv_pauseresume.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onCompleted(Container container, ToroPlayer player) {
+        fadeIn();
+        iv_pauseresume.setVisibility(View.VISIBLE);
     }
 }
