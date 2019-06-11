@@ -14,7 +14,13 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class AudienceInstructionActivity extends AppCompatActivity {
-@BindView(R.id.btn_next)
+
+    /**
+     * this is used to shoe the Instruction for the user to how to address the users
+     *
+     */
+
+    @BindView(R.id.btn_next)
     TextView btn_next;
 @BindView(R.id.sponsor_challenge_guide)
 CardView sponsor_challenge_guide;

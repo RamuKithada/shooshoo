@@ -9,6 +9,7 @@ import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.GameMasterResult;
+import com.android.shooshoo.models.HomeSponsorResponce;
 import com.android.shooshoo.models.LoginSuccess;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -65,21 +66,19 @@ public interface RetrofitApis {
         @POST("login")
         Call<LoginSuccess> loginUser(@Field("userName") String userName,@Field("password") String password,@Field("deviceType") String deviceType,@Field("deviceToken") String deviceToken );
        @GET("categories")
-    Call<CatResult> getCatgories();
+       Call<CatResult> getCategories();
 
        @FormUrlEncoded
     @POST("brands")
     Call<BrandsResult> getBrands(@Field("categoryIds") String categoryIds);
-   @FormUrlEncoded
+
+    @FormUrlEncoded
     @POST("cities")
     Call<CityResult> getCities(@Field("countryId") String countryId);
 
     @GET("countries")
     Call<CountryResult> getCountries();
-/*
-* (@Part MultipartBody.Part imageFile,
-                                @Part("title") RequestBody title
-* */
+
     @Multipart
     @POST("editprofile")
     Call<LoginSuccess> updateProfile(@Part MultipartBody.Part imageFile,
@@ -166,6 +165,8 @@ public interface RetrofitApis {
                                              @Field("brands") String brands,
                                              @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
 
+    @GET("sponsors")
+    Call<HomeSponsorResponce> getHomeSponcers();
 
 
 }

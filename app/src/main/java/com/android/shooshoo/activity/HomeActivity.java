@@ -18,6 +18,11 @@ import com.android.shooshoo.fragment.HomeFragment;
 import com.android.shooshoo.fragment.ProfileFragment;
 import com.android.shooshoo.fragment.RadarFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
+import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.presenters.HomePresenter;
+import com.android.shooshoo.views.HomeView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +78,15 @@ public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmen
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
 
+
+
+    /**
+     * This is fragment to present Home tab view
+     * {@link #bottomNavigationOnClickListener} is used to click functionality for bottom menu items
+     * here we transform one tab to another
+     * Those are Home,Challenges,Feeds,Winners,Radar
+     *
+     */
 private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -109,7 +123,8 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.VISIBLE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, FeedFragment.newInstance("Hi","Ram")).commit();
+                startActivity(new Intent(HomeActivity.this,FeedsActivity.class));
+//                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, FeedFragment.newInstance("Hi","Ram")).commit();
               break;
             case R.id.navigation_winners:
                 mTextMessage.setText(R.string.title_winners);
@@ -137,6 +152,10 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         selectNavi(v);
     }
 };
+
+/**
+ * {@link #selectNavi(View)} is used to tab when user select a tab highlights and default it home is highlighted.
+ */
 
     private void selectNavi(View view) {
         iv_navigation_home.setImageResource(R.mipmap.home_normal);
@@ -303,7 +322,11 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
     public void onFragmentInteraction(Uri uri) {
 
     }
-
+/**
+*  onClick is used to handling top menu icon click actions
+ *  like search ,profile,Chat
+*
+* */
     @Override
     public void onClick(View v) {
         switch (v.getId())
@@ -335,10 +358,14 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram")).commit();
                 break;
             case R.id.iv_search:
+                /**
+                 * calling Chatting search friends activity
+                 */
                 Intent intentsearch=new Intent(this,ChatSearchActivity.class);
                 startActivity(intentsearch);
                 break;
         }
 
     }
+
 }

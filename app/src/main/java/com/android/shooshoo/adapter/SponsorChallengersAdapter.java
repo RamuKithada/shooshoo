@@ -76,6 +76,10 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
        notifyDataSetChanged();
     }
 
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+
     public class CatViewHolder extends RecyclerView.ViewHolder{
       ImageView imageView;
       TextView title,subtitle,brand,time;

@@ -25,6 +25,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ *
+ *
+ */
 public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoView, View.OnClickListener {
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;

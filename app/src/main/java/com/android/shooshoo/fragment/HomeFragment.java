@@ -21,21 +21,22 @@ import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
+import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.presenters.HomePresenter;
 import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.views.HomeView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This is fragment to present Home tab view
+ *
  */
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener, HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -45,15 +46,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
+    /**
+     * sponsor_viewall,jackpot_viewall,category_viewall are view buttons in respective  categories sponsor challenges,jackpot challenges,categories
+     *
+     */
     RelativeLayout sponsor_viewall,jackpot_viewall,category_viewalll;
 
     private OnFragmentInteractionListener mListener;
+    //Jackpot challenge List adapter
     JackpotChallengersAdapter jackpotChallengersAdapter;
+
+    //Sponsor challenge List adapter
     JackpotChallengersAdapter sponsorChallengersAdapter;
+
+    //Brand  List adapter to show brand list view
     HomeBrandAdapter homeBrandAdapter;
+
+    //Category  List adapter to show Category list view
     HomeCategoryAdapter homeCategoryAdapter;
+
+    //  challengeModels is used to hold jackpot challenges list
     ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
+
+    //  schallengeModels is used to hold Sponsor challenges list
     ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
+
+
     String[] titles=new String[]{"Beard \nChallenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
             "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge"};
     int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
@@ -83,9 +101,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             "Style","Travel"
     };
 
+    HomePresenter homePresenter;
+    ConnectionDetector connectionDetector;
 
     public HomeFragment() {
-        // Required empty public constructor
         for (int index=0;index<10;index++){
             ChallengeModel model=new ChallengeModel();
             model.setDescription(des[index]);
@@ -115,6 +134,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
+     *
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -164,6 +184,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         sponsorList.setAdapter(sponsorChallengersAdapter);
         jackpotList.setAdapter(jackpotChallengersAdapter);
         catList.setAdapter(homeCategoryAdapter);
+        /**
+         * to get item from the sponsor list when selected one item.
+         */
+
         sponsorList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), sponsorList, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -171,6 +195,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 intent.putExtra("image",schallengeModels.get(position).getImage());
                 intent.putExtra("name",schallengeModels.get(position).getTitle());
                 intent.putExtra("des",schallengeModels.get(position).getDescription());
+                // to  open Challenge details  activity
                 startActivity(intent);
             }
 
@@ -179,6 +204,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             }
         }));
+        /**
+         * to get item from the jackpot challenges list when selected one item.
+         * onItemclick listener for Recyclerview.
+         */
         jackpotList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), jackpotList, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -194,7 +223,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
             }
         }));
-
+        if(connectionDetector.isConnectingToInternet())
+        homePresenter.loadSponsor();
+        else
+            showMessage("No Internet Connection");
     }
 
     private void setLayoutManager(RecyclerView brandsList) {
@@ -209,6 +241,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     *
+     * @param context is used to interact with Home activity
+     *                Home Activity must implement OnFragmentInteractionListener
+     *                else it throws Runtime error
+     */
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -218,14 +257,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        homePresenter=new HomePresenter();
+        homePresenter.attachView(this);
+        connectionDetector=new ConnectionDetector(getActivity());
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        homePresenter.detachView();
         mListener = null;
     }
 
+    /**
+     *
+     * onClick is used to click functionality of view all buttons
+     * @param v  is one of the sponsor_viewall,jackpot_viewall,category_viewall
+     */
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -249,6 +298,32 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
         }
+
+    }
+
+    /**
+     *
+     * @param challenges are the data fron server to show list of sponsor challenges
+     *
+     */
+
+    @Override
+    public void onLoadSponsors(List<Challenge> challenges) {
+
+    }
+
+    @Override
+    public void showMessage(int stringId) {
+
+    }
+
+    @Override
+    public void showMessage(String message) {
+
+    }
+
+    @Override
+    public void showProgressIndicator(Boolean show) {
 
     }
 

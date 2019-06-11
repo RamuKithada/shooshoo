@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
@@ -158,6 +158,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     switch (v.getId()){
         case R.id.camera:
             Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+            intent.setType("*/*");
 //            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 //            Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
@@ -198,7 +199,9 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
                     new DefaultTrackSelector(videoTrackSelectionFactory);
             // 2. Create the player
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this), trackSelector);
+            player.setRepeatMode(Player.REPEAT_MODE_ALL);
                 playerView.setPlayer(player);
+                playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
         }
     }
 
@@ -245,8 +248,10 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     }
 
 
+
+
     @Override
-    public void onTimelineChanged(Timeline timeline, Object manifest) {
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
 
     }
 
@@ -266,20 +271,38 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void onRepeatModeChanged(int repeatMode) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+    }
+
+    @Override
     public void onPlayerError(ExoPlaybackException error) {
 
     }
 
     @Override
-    public void onPositionDiscontinuity() {
+    public void onPositionDiscontinuity(int reason) {
 
     }
+
+
 
     @Override
     public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
 
     }
-boolean activityPaused=true;
+
+    @Override
+    public void onSeekProcessed() {
+
+    }
+
+    boolean activityPaused=true;
     @Override
     protected void onResume() {
         super.onResume();

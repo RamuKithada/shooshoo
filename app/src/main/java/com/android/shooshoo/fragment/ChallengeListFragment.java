@@ -1,6 +1,7 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeResponse;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.BaseView;
 
@@ -41,6 +47,7 @@ public class ChallengeListFragment extends Fragment {
 
     public SponsorChallengersAdapter adapter=null;
     List<Challenge> challenges=new ArrayList<Challenge>();
+    RecyclerView recyclerView;
 //    private OnListFragmentInteractionListener mListener;
 
     /**
@@ -81,7 +88,7 @@ public class ChallengeListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recyclerView.setAdapter(adapter);
         String endpoint=null;
@@ -103,10 +110,29 @@ public class ChallengeListFragment extends Fragment {
                    ChallengeResponse challengeResponse=response.body();
                    if(challengeResponse.getStatus()==1){
                        if(mColumnCount==0){
-                            adapter.setChallenges(challengeResponse.getLatest());
+                             adapter.setChallenges(challengeResponse.getLatest());
                        }else if(mColumnCount==1){
-                           adapter.setChallenges(challengeResponse.getPast());
+                             adapter.setChallenges(challengeResponse.getPast());
                        }
+                       recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
+                           @Override
+                           public void onClick(View view, int position) {
+                               Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
+                               challenges=adapter.getChallenges();
+                               if(challenges!=null) {
+                                   Intent intent = new Intent(getActivity(), MyChallengesActivity.class);
+                                   intent.putExtra("image", challenges.get(position).getBannerImage());
+                                   intent.putExtra("name", challenges.get(position).getChallengeName());
+                                   intent.putExtra("des", challenges.get(position).getDescription());
+                                   startActivity(intent);
+                               }
+                           }
+
+                           @Override
+                           public void onLongClick(View view, int position) {
+
+                           }
+                       }));
                    }
                 }
             }

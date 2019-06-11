@@ -2,6 +2,8 @@ package com.android.shooshoo.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Challenge {
 
     @SerializedName("challengeId")
@@ -106,6 +108,14 @@ public class Challenge {
     @SerializedName("status")
     @Expose
     private String status;
+
+    private String userFirst;
+    @SerializedName("userLast")
+    @Expose
+    private String userLast;
+    @SerializedName("companies")
+    @Expose
+    private List<Company> companies = null;
 
     public String getChallengeId() {
         return challengeId;
@@ -379,4 +389,27 @@ public class Challenge {
         this.status = status;
     }
 
+    public String getUserFirst() {
+        return userFirst;
+    }
+
+    public void setUserFirst(String userFirst) {
+        this.userFirst = userFirst;
+    }
+
+    public String getUserLast() {
+        return userLast;
+    }
+
+    public void setUserLast(String userLast) {
+        this.userLast = userLast;
+    }
+
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
 }

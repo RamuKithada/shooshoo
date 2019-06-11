@@ -180,8 +180,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
                 userSession.login();
-                Intent signupIntent=new Intent(LoginActivity.this,HomeActivity.class);
-                startActivity(signupIntent);
+                /*Intent signupIntent=new Intent(LoginActivity.this,Fe.class);
+                startActivity(signupIntent);*/
+                setResult(RESULT_OK);
                 showMessage(loginSuccess.getMessage());
                 finish();
             }catch (Exception e){

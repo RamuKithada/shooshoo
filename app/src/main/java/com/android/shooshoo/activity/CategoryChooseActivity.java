@@ -88,7 +88,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
 
     private void loadCategory() {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getCatgories().enqueue(new Callback<CatResult>() {
+        RetrofitApis.Factory.create(this).getCategories().enqueue(new Callback<CatResult>() {
             @Override
             public void onResponse(Call<CatResult> call, Response<CatResult> response) {
                 showProgressIndicator(false);

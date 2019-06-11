@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.FeedCommentsActivity;
+import com.android.shooshoo.activity.LoginActivity;
 import com.android.shooshoo.models.VideoModel;
 import com.android.shooshoo.utils.SimplePlayerViewHolder;
 
@@ -21,13 +22,14 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
     private ArrayList<VideoModel> modelArrayList;
     private Context context;
+    View.OnClickListener clickListener;
 
 
-
-    public FullVideoAdapter(Context context, ArrayList<VideoModel> modelArrayList)
+    public FullVideoAdapter(Context context, ArrayList<VideoModel> modelArrayList,View.OnClickListener clickListener)
     {
         this.modelArrayList=modelArrayList;
         this.context=context;
+        this.clickListener=clickListener;
     }
 
     @Override public SimplePlayerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,13 +40,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
     @Override public void onBindViewHolder(SimplePlayerViewHolder holder, final int position) {
         holder.bind(Uri.parse(modelArrayList.get(position).getVideo()) );
-        holder.comment_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(context,FeedCommentsActivity.class);
-                context.startActivity(intent);
-            }
-        });
+        holder.comment_view.setOnClickListener(clickListener);
     }
 
     @Override public int getItemCount() {

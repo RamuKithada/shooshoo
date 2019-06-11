@@ -49,6 +49,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener{
+    /**
+     * This {@link AudienceActivity} is used to show the
+     *
+     */
+
+
+
+
+
+
     @BindView(R.id.btn_next)
     TextView btn_next;
 

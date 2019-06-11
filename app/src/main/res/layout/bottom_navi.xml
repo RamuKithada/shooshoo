@@ -24,7 +24,7 @@
                 android:layout_height="@dimen/botton_navi_icon"
                 android:layout_gravity="center"
                 android:padding="@dimen/botton_navi_icon_padding"
-                android:src="@mipmap/home_active"
+                android:src="@mipmap/home_normal"
                 />
             <TextView
                 android:id="@+id/tv_navigation_home"
