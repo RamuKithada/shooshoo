@@ -18,6 +18,9 @@ import com.android.shooshoo.models.CategoryModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is used in Audience activity in Jackpot challenge registration Process
+ */
 public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelectionAdapter.CategoryHolder> {
     Context context;
     List<Category> categoryList;
@@ -75,7 +78,7 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
                     if (list.size()==0){
                         list.add("No Subcategory");
                     }
-                        ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
+                    ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
                     brandArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     viewHolder.subcategorySpinner.setAdapter(brandArrayAdapter);
                     if(category.getBrandNames().size()>categoryModel.getSubcategory())
@@ -109,6 +112,10 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
     public int getItemCount() {
         return categoryModels.size();
     }
+
+    /**
+     * It is called to add new item to list
+     */
     public void add(){
         categoryModels.add(new CategoryModel(0,0));
         notifyDataSetChanged();
@@ -120,7 +127,7 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     public class CategoryHolder extends RecyclerView.ViewHolder{
          Spinner categorySpinner;
-         Spinner subcategorySpinner;
+        Spinner subcategorySpinner;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             categorySpinner=itemView.findViewById(R.id.spinner_category);

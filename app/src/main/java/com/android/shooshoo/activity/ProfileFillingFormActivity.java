@@ -2,7 +2,6 @@ package com.android.shooshoo.activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,19 +12,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,20 +28,18 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.utils.ApiUrls;
-import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.LoginSuccess;
-import com.android.shooshoo.utils.TVShowFragment;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.DataLoadView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -62,7 +55,14 @@ import retrofit2.Response;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+/**{@link ProfileFillingFormActivity} is used to show the
+ *
+ *
+ */
 public class ProfileFillingFormActivity extends BaseActivity implements View.OnClickListener, DataLoadView , FragmentListDialogListener {
+
+
+
     @BindView(R.id.button1)
     Button button1;
 
@@ -172,18 +172,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
     @BindView(R.id.edt_gender)
     EditText edt_gender;
+    @BindView(R.id.edt_country_code)
+    EditText edt_country_code;
 
-//    @BindView(R.id.spinner_country)
-//    Spinner spinner_country;
-//    @BindView(R.id.spinner_gender)
-//    Spinner spinner_gender;
-//@BindView(R.id.spinner_city)
-//Spinner spinner_city;
-
-        @BindView(R.id.edt_country_code)
-        EditText edt_country_code;
-//    @BindView(R.id.spinner_country_code)
-//    Spinner spinner_country_code;
 
     View.OnClickListener dropdownOnClickListener=new View.OnClickListener() {
         @Override
@@ -233,7 +224,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  TVShowFragment tv=new TVShowFragment();
+                  CustomListFragmentDialog tv=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",genders);
                 args.putInt("view",R.id.edt_gender);
@@ -453,7 +444,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment showFragment=new TVShowFragment();
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());
@@ -488,7 +479,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment showFragment=new TVShowFragment();
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());

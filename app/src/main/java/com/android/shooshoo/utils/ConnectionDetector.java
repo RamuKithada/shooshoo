@@ -5,13 +5,18 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class ConnectionDetector {
-    
+    /**
+     * {@link ConnectionDetector} is used to check network connections information.
+     */
     private Context _context;
      
     public ConnectionDetector(Context context){
         this._context = context;
     }
- 
+
+    /**isConnectingToInternet is used to check whether the device is connected network or not
+     * @return  true or false
+     */
     public boolean isConnectingToInternet(){
     	
         ConnectivityManager connectivity = (ConnectivityManager) _context.getSystemService(Context.CONNECTIVITY_SERVICE);

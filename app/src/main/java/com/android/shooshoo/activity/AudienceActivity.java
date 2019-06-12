@@ -28,7 +28,7 @@ import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.EditModel;
 import com.android.shooshoo.presenters.DataLoadPresenter;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -47,17 +47,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * This {@link AudienceActivity} is used to show the sponsor challenge target Audience selection functionality
+ * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
+ */
 public class AudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener{
-    /**
-     * This {@link AudienceActivity} is used to show the
-     *
-     */
-
-
-
-
-
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -129,6 +123,9 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
     @BindView(R.id.audience_size)
     TextView audience_size;
 
+    /** winners,miles,age are lists set them to FragmentDialog to show to choose one of the them.
+     */
+
     ArrayList<String> winners=new ArrayList<String>();
     ArrayList<String> miles=new ArrayList<String>();
     ArrayList<String> age=new ArrayList<String>();
@@ -137,7 +134,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
     ConnectionDetector connectionDetector;
     CategorySelectionAdapter categorySelectionAdapter;
 
-    SponcerChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
     List<Category> categoryArrayList=new ArrayList<Category>();
 
 
@@ -182,8 +179,8 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
         rv_price_list.setNestedScrollingEnabled(false);
                 dataLoadPresenter=new DataLoadPresenter();
         dataLoadPresenter.attachView(this);
-        sponcerChallengePresenter=new SponcerChallengePresenter();
-        sponcerChallengePresenter.attachView(this);
+        sponsorChallengePresenter =new SponsorChallengePresenter();
+        sponsorChallengePresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
         checkbox_male.setOnCheckedChangeListener(this);
         checkbox_female.setOnCheckedChangeListener(this);
@@ -335,7 +332,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                         showMessage("Please check internet connection !");
                         return;
                     }
-sponcerChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
+sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
         jsonArray.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
         edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
         ,age.get(minAgePos),age.get(maxAgePos),gender.toString());
@@ -411,13 +408,16 @@ sponcerChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
 
         return true;
     }
-
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
+                    buttons.get(index).setText(String.valueOf(step+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 

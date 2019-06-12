@@ -12,25 +12,28 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-
+/**
+ * this is used to shoe the Instruction for the user to how to address the users
+  */
 public class AudienceInstructionActivity extends AppCompatActivity {
 
-    /**
-     * this is used to shoe the Instruction for the user to how to address the users
-     *
-     */
+
 
     @BindView(R.id.btn_next)
     TextView btn_next;
-@BindView(R.id.sponsor_challenge_guide)
-CardView sponsor_challenge_guide;
+    @BindView(R.id.sponsor_challenge_guide)
+    CardView sponsor_challenge_guide;
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
     @BindView(R.id.jackpot_challenge_guide)
     CardView jackpot_challenge_guide;
     @BindView(R.id.tv_title)
     TextView title;
-
+/**
+ * type is used classify the whether it has to show sponsor challenge audience or Jackpot challenge
+ * type is 1 then it show sponsor challenge guide lines and direct sponsor challenge audience selection screen.
+ * type is 2 then it show Jackpot challenge guide lines and direct Jackpot challenge audience selection screen.
+ */
     int type=2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +71,13 @@ CardView sponsor_challenge_guide;
         });
     }
 
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 

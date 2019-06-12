@@ -15,8 +15,16 @@ import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.views.LoginView;
 
 public class ForgetPasswordActivity extends BaseActivity implements LoginView {
-LoginPresenter loginPresenter;
-EditText email;
+
+    /**{@link ForgetPasswordActivity} is used to show forget password screen
+     * loginPresenter is the presenter of login , forget password ,change password and registration related services call handling class
+     * LoginPresenter uses LoginView to interact ForgetPasswordActivity class ui.
+     *
+     */
+    LoginPresenter loginPresenter;
+  EditText email;
+
+
 
 @Override
     protected void onCreate(Bundle savedInstanceState) {

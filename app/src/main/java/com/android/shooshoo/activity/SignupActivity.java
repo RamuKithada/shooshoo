@@ -22,6 +22,12 @@ import com.android.shooshoo.views.LoginView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * {@link SignupActivity} is used to sign up the user into app.
+ *  {@link LoginPresenter }
+ * edt_user_email  is the input field of user name
+ * edt_pws  is the input field of user password
+ */
 public class SignupActivity extends BaseActivity implements LoginView,View.OnClickListener{
     @BindView(R.id.edt_user_name)
     EditText edt_user_name;

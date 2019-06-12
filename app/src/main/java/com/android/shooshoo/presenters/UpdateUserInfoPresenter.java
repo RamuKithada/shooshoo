@@ -9,6 +9,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/****
+ * {@link UpdateUserInfoPresenter} is used to update the categories and brands to server
+ */
 public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView> {
     UpdateUserInfoView view;
     RetrofitApis retrofitApis;
@@ -25,6 +28,11 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
        retrofitApis=null;
     }
 
+    /**
+     * to update the categories to server
+     * @param userId user id
+     * @param catList categories list that are selected by user
+     */
     public void updateUserCat(String userId,String catList){
         view.showProgressIndicator(true);
         retrofitApis.updateUserCat(userId,catList).enqueue(new Callback<ResponseBody>() {
@@ -45,6 +53,13 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
         });
 
     }
+
+    /**
+     * to update the brands to server
+     * @param userId is user id
+     * @param brandList ids of the brands
+     */
+
     public void updateUserBrand(String userId,String brandList){
         view.showProgressIndicator(true);
         retrofitApis.updateUserBrand(userId,brandList).enqueue(new Callback<ResponseBody>() {

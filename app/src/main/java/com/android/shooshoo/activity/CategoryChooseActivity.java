@@ -27,14 +27,23 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**{@link CategoryChooseActivity} is used to select Categories
+ *  the user select at least 3 Categories from the list then
+ *  he can complete the registration step 3 otherwise he can skip this process.
+ */
 
 public class CategoryChooseActivity extends BaseActivity implements UpdateUserInfoView,View.OnClickListener{
+
+
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;
 
     @BindView(R.id.next_lay)
     RelativeLayout next_lay;
 
+    /***
+     * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
+     */
     @BindView(R.id.button1)
     Button button1;
 
@@ -113,7 +122,6 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
             case R.id.next_lay:
                 if(chooseAdapter.selectedSize()>=3) {
                     if (connectionDetector.isConnectingToInternet()) {
-
                         presenter.updateUserCat(userSession.getUserId(), chooseAdapter.getCats());
                         userSession.setCats(chooseAdapter.getCats());
                     } else showMessage("please check internet connection");
@@ -130,6 +138,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         }
 
     }
+    //To set the step of the registration process
     private void setState() {
         button1.setBackgroundResource(R.drawable.unselected);
         button2.setBackgroundResource(R.drawable.unselected);

@@ -15,8 +15,12 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/** {@link SponsorChallengePresenter} is used to call web service related to create saveJackpotAudience challenge
+ * {@link SponsorChallengeView} is used by {@link SponsorChallengePresenter} to interact withe activity that want use {@link SponsorChallengePresenter}
+ */
+public class SponsorChallengePresenter implements BasePresenter<SponsorChallengeView> {
 
-public class SponcerChallengePresenter implements BasePresenter<SponsorChallengeView> {
+
     RetrofitApis retrofitApis;
     SponsorChallengeView view;
 

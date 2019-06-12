@@ -7,11 +7,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedCommentsAdapter;
 
 public class FeedCommentsActivity extends AppCompatActivity implements View.OnClickListener{
+    /**{@link FeedCommentsActivity} is used show list of comment for a feed and provide to comment on the feed
+     *
+     */
     RecyclerView commentList;
     FeedCommentsAdapter feedCommentsAdapter;
     ImageView iv_back, iv_send_cmnt;

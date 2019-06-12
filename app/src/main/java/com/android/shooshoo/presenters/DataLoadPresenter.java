@@ -12,8 +12,14 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * {@link DataLoadPresenter} is used to load the common data like countries
+ * ,cites from selected country and all categories and their available brands
+ */
 public class DataLoadPresenter implements BasePresenter<DataLoadView> {
+
+
+
     DataLoadView view;
     RetrofitApis retrofitApis;
 
@@ -30,6 +36,7 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
     }
 
+    /**this is used to load countries data*/
     public void loadCountryData(){
         view.showProgressIndicator(true);
         retrofitApis.getCountries().enqueue(new Callback<CountryResult>() {
@@ -57,7 +64,7 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
         });
 
     }
-
+   /**This is used to load cites data*/
     public void loadCites(String countryCode){
         view.showProgressIndicator(true);
         retrofitApis.getCities(countryCode).enqueue(new Callback<CityResult>() {
@@ -92,6 +99,7 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
             }
         });
     }
+    /**This is used to load all categories and the brands*/
     public void loadAllcategoriesList(){
         view.showProgressIndicator(true);
         retrofitApis.getAllCategories().enqueue(new Callback<CategoryList>() {

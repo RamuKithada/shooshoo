@@ -15,9 +15,10 @@ import com.android.shooshoo.adapter.ChatContactAdapter;
 import com.android.shooshoo.adapter.RecentChatMsgAdapter;
 
 /**
- * A simple {@link Fragment} subclass.
+ *
  * Use the {@link ChatsFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * this is Chats screen to show chat list when use click in chat icon in top menu
  */
 public class ChatsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

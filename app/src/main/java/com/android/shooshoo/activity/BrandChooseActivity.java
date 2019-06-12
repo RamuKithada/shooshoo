@@ -18,6 +18,8 @@ import com.android.shooshoo.adapter.BrandChooseAdapter;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.views.UpdateUserInfoView;
 
+import org.json.JSONObject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
@@ -25,18 +27,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
+/**{@link BrandChooseActivity} is used to select brands of selected categories.
+ * the user select at least 3 brands from the list then he can complete the registration.
  *
  *
  */
 public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoView, View.OnClickListener {
+    //this is list view used to show  list of  brands
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;
 
+    //after choosing user used to click next
     @BindView(R.id.next_lay)
     RelativeLayout next_lay;
 
-
+    /***
+     * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
+     */
     @BindView(R.id.button1)
     Button button1;
 
@@ -59,8 +66,10 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
     ImageView iv_back;
 
     BrandChooseAdapter chooseAdapter;
-    ConnectionDetector connectionDetector;
+    ConnectionDetector connectionDetector;//network checking by isConnectingToInternet method  of ConnectionDetector class
     UpdateUserInfoPresenter presenter;
+    //UpdateUserInfoPresenter is used to call the user in
+    // updating services.It uses UpdateUserInfoView to update the service call response to ui
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,9 +155,14 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
     public void onUpdateUserInfo(ResponseBody responseBody) {
         try {
             Log.e("response",responseBody.string());
-            Intent homeIntent=new Intent(this,HomeActivity.class);
-            startActivity(homeIntent);
-            finishAffinity();
+            JSONObject object=new JSONObject(responseBody.string());
+            if(object.optString("status").equalsIgnoreCase("1")) {
+                Intent homeIntent = new Intent(this, HomeActivity.class);
+                startActivity(homeIntent);
+                finishAffinity();
+            }else {
+                showMessage(object.getString("message"));
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

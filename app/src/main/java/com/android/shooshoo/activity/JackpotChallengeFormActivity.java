@@ -29,15 +29,11 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.views.JackpotChallengeView;
-import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -45,9 +41,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -56,7 +50,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
+/**{@link JackpotChallengeFormActivity} is The
+ * Challenge screen in process of jackpot challenge creation.
+ * Here we show the challenge name and audience size from previous screen and for name challenge is stored in preferences
+ *
+ *
+ */
 public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView {
+
     @BindView(R.id.btn_next)
     TextView btn_next;
     @BindView(R.id.iv_back)

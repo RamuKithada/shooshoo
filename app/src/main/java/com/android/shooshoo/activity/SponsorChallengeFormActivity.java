@@ -16,14 +16,11 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,11 +28,11 @@ import android.widget.Toast;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
-import com.android.shooshoo.utils.TVShowFragment;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -106,7 +103,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
 
     ConnectionDetector connectionDetector;
-    SponcerChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
     String  challengeImageUri=null;
     String challengeVideoUri=null;
     private int sizePos=-1;
@@ -128,8 +125,8 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         edt_end_time.setOnClickListener(this);
 
         connectionDetector=new ConnectionDetector(this);
-        sponcerChallengePresenter=new SponcerChallengePresenter();
-        sponcerChallengePresenter.attachView(this);
+        sponsorChallengePresenter =new SponsorChallengePresenter();
+        sponsorChallengePresenter.attachView(this);
         title.setText("The Challenge");
         setStage(1);
         viewInitilization();
@@ -146,7 +143,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         edt_video_sizes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment showFragment=new TVShowFragment();
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",edt_video_sizes.getId());
@@ -189,7 +186,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             return;
                         }
 
-                        sponcerChallengePresenter.createChallenge(userSession.getUserId(),builder.toString(), challengeImageUri, challengeVideoUri,
+                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),builder.toString(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
                                 videos, lables[sizePos]);

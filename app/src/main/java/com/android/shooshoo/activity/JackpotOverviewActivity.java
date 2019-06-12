@@ -14,6 +14,12 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 
+/**{@link JackpotOverviewActivity} is the Payment screen in the Jackpot registration process.
+ * This is the last step in  Jackpot registration process.
+ * Here we show the challenge data is stored in preferences
+ *
+ *
+ */
 public class JackpotOverviewActivity extends BaseActivity implements View.OnClickListener {
 
 

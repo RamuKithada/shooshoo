@@ -37,6 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/***
+ * Challenges list to show Challenges in gridview in ViewPager of the {@link ChallengersFragment}
+ */
 
 public class ChallengeListFragment extends Fragment {
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.views.SponsorChallengeView;
@@ -22,8 +22,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-
+/**{@link ChallengePaymentActivity} is used to show payment screen of the Jockpot challenge registration screen
+ *  {@link SponsorChallengePresenter} is used to call related services for this screen
+ *  {@link SponsorChallengeView} is used by sponsorChallengePresenter to interact with this screen.
+ */
 public class ChallengePaymentActivity extends BaseActivity implements SponsorChallengeView, View.OnClickListener {
+
     @BindView(R.id.btn_next)
     TextView btn_next;
 
@@ -52,7 +56,7 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
 
 
     ConnectionDetector connectionDetector;
-    SponcerChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
 
 
     @Override
@@ -65,8 +69,8 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             setStage(4);
             title.setText("Payment");
             this.connectionDetector = new ConnectionDetector(this);
-        this.sponcerChallengePresenter = new SponcerChallengePresenter();
-        this.sponcerChallengePresenter.attachView((SponsorChallengeView) this);
+        this.sponsorChallengePresenter = new SponsorChallengePresenter();
+        this.sponsorChallengePresenter.attachView((SponsorChallengeView) this);
         if (getIntent().hasExtra("budget")) {
             int progress = getIntent().getIntExtra("budget", 0);
             TextView textView = this.budget_per_day;
@@ -83,12 +87,16 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             this.tv_end_time.setText(company.getEndDate());
         }
     }
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
 
-    private void setStage(int i) {
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
-                buttons.get(index).setText(String.valueOf(i+1));
+                buttons.get(index).setText(String.valueOf(step+1));
             }
             else
                 buttons.get(index).setBackgroundResource(R.drawable.unselected);
@@ -102,12 +110,12 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             case R.id.btn_next:
                 if(validate()){
                     if (this.connectionDetector.isConnectingToInternet()) {
-                        SponcerChallengePresenter sponcerChallengePresenter = this.sponcerChallengePresenter;
+                        SponsorChallengePresenter sponsorChallengePresenter = this.sponsorChallengePresenter;
                         String sponsorChallenge = this.userSession.getSponsorChallenge();
                         StringBuilder stringBuilder = new StringBuilder();
                         stringBuilder.append("");
                         stringBuilder.append(getIntent().getIntExtra("budget", 0));
-                        sponcerChallengePresenter.saveCampaign(sponsorChallenge,userSession.getUserId(), stringBuilder.toString(), this.edt_summary.getText().toString());
+                        sponsorChallengePresenter.saveCampaign(sponsorChallenge,userSession.getUserId(), stringBuilder.toString(), this.edt_summary.getText().toString());
                         return;
                             }
                     showMessage("Please check your Internet Connection");
@@ -120,6 +128,11 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
 
     }
 
+    /**
+     * vlidations of the input fields of this screen
+     *
+     * @return
+     */
     private boolean validate() {
         if(!tc_checkbox.isChecked()){
          showMessage("Please accept Terms and Conditions");

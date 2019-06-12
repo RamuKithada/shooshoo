@@ -22,6 +22,12 @@ import com.android.shooshoo.activity.SupportNowActivity;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
 import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 
+/**
+ *
+ * Use the {@link ProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ * this is Profile screen to show settings options
+ */
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match

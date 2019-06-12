@@ -23,6 +23,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * Use the {@link WinnersFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This is used to show the List Challenges that are completed
  */
 public class WinnersFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match

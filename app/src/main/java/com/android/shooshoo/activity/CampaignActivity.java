@@ -19,8 +19,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
-
+/**
+ * This is used to show Campaign screen of the sponsor challenge registration process
+ *
+ */
 public class CampaignActivity extends BaseActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+
     @BindView(R.id.btn_next)
     TextView btn_next;
 
@@ -94,12 +98,15 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
-
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
-                buttons.get(index).setText(String.valueOf(i+1));
+                buttons.get(index).setText(String.valueOf(step+1));
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
         }

@@ -17,6 +17,10 @@ import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/***
+ * {@link BrandProfileActivity} is used to show the chllenges of the related Brand
+ *
+ */
 public class BrandProfileActivity extends BaseActivity implements View.OnClickListener {
 
 
@@ -65,6 +69,7 @@ public class BrandProfileActivity extends BaseActivity implements View.OnClickLi
         ButterKnife.bind(this);
         final TabLayout tabLayout=findViewById(R.id.tab_layout);
         final ViewPager viewPager=findViewById(R.id.view_pager);
+        //tab_layout colors settings
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
         ChallengerViewPagerAdapter challengerViewPagerAdapter=new ChallengerViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Recent ","Finished ","Profile"});

@@ -18,6 +18,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Api call related constants i.e, end points of the urls
+ *
+ *
+ */
 public class ApiUrls {
     public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
@@ -26,7 +31,11 @@ public class ApiUrls {
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
 
 
-
+    /**
+     * Validating the String object whether is empty or not
+     * @param s
+     * @return true if s has value
+     */
    public static boolean validateString(String s){
          if(s==null)
                return false;

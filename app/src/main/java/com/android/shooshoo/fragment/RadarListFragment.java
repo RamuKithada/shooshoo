@@ -16,7 +16,12 @@ import com.android.shooshoo.adapter.RadarListAdapter;
 import com.android.shooshoo.models.Challenge;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link RadarListFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ * This is used to show the List user that are competed on the challenge
+ */
 public class RadarListFragment extends Fragment {
 
     // TODO: Customize parameter argument names

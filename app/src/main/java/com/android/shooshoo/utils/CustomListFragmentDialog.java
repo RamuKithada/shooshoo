@@ -12,14 +12,17 @@ import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
 
-public class TVShowFragment extends DialogFragment {
+/***
+ * This id the dialog to show the List of Items Context must implement FragmentListDialogListener
+ */
+public class CustomListFragmentDialog extends DialogFragment {
 
     String[] names;
     RecyclerView rv;
-    MyAdapter adapter;
+    DialogListAdapter adapter;
     FragmentListDialogListener clickListener;
 
-    public TVShowFragment() {
+    public CustomListFragmentDialog() {
     }
 
     @Override
@@ -60,7 +63,7 @@ public class TVShowFragment extends DialogFragment {
         }));
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         //ADAPTER
-        adapter=new MyAdapter(this.getActivity(),names);
+        adapter=new DialogListAdapter(this.getActivity(),names);
         rv.setAdapter(adapter);
 
         this.getDialog().setTitle("TV Shows");

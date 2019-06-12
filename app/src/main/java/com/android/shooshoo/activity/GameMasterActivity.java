@@ -12,19 +12,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.shooshoo.R;
@@ -32,20 +28,17 @@ import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.GameMaster;
-import com.android.shooshoo.models.GameMasterResult;
-import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.RetrofitApis;
+import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.JackpotChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -53,16 +46,15 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class GameMasterActivity   extends BaseActivity implements View.OnClickListener, DataLoadView, JackpotChallengeView {
+public class GameMasterActivity   extends BaseActivity implements View.OnClickListener, DataLoadView, JackpotChallengeView, FragmentListDialogListener {
+    /**
+     * {@link GameMasterActivity} is used to create game master in registration process of the Jackpot challenge.
+     * JackpotChallengePresenter is used to call web services related to create jackpot challenge.
+     * JackpotChallengeView is used by JackpotChallengePresenter to interact with GameMasterActivity.
+     */
     @BindView(R.id.edt_first_name)
     EditText edt_first_name;
 
@@ -71,8 +63,8 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.edt_dob)
     EditText edt_dob;
-    @BindView(R.id.spinner_city)
-    Spinner spinner_city;
+    @BindView(R.id.edt_country)
+    EditText edt_country;
 
     @BindView(R.id.edt_zipcode)
     EditText edt_zipcode;
@@ -82,8 +74,6 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.edt_number)
     EditText edt_number;
-
-
 
     @BindView(R.id.edt_mobile)
     EditText edt_mobile;
@@ -152,24 +142,20 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     ConnectionDetector connectionDetector;
 
-    @BindView(R.id.spinner_country)
-    Spinner spinner_country;
-    @BindView(R.id.spinner_gender)
-    Spinner spinner_gender;
+    @BindView(R.id.edt_city)
+    EditText edt_city;
+    @BindView(R.id.edt_gender)
+    EditText edt_gender;
 
     @BindView(R.id.edt_country_code)
     EditText edt_country_code;
-//    @BindView(R.id.spinner_country_code)
-//    Spinner spinner_country_code;
 
     View.OnClickListener dropdownOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
                 case R.id.country_lay:
-                    if(spinner_country.getSelectedItem() == null) { // user selected nothing...
-                        spinner_country.performClick();
-                    }
+
                     break;
             }
 
@@ -178,6 +164,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     DataLoadPresenter dataLoadPresenter;
     JackpotChallengePresenter jackpotChallengePresenter;
+    final String genders[]=new String[]{"Male","Female","Others"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,25 +201,17 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
         if(connectionDetector.isConnectingToInternet())
             loadData();
-        final String genders[]=new String[]{"Male","Female","Others"};
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, genders);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_gender.setAdapter(dataAdapter);
-
-        spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gender=genders[i];
-                Log.e("onItemSelected",""+gender);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",genders);
+                args.putInt("view",edt_gender.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"gender");
             }
         });
-
 
     }
     private void loadData() {
@@ -313,9 +292,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
                 break;
         }
     }
-    Country country=new Country();
     String gender="male";
-    City city=new City();
     private void setStage(int i) {
         for(int index=0;index<buttons.size();index++){
             if(index==i){
@@ -392,82 +369,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
         newsImage=picturePath;
         Picasso.with(this).load(picturePath).into(iv_profile_pic);
     }
-    int country_pos,city_pos;
-    private void displayList(final List<Country> dropDownItems, final Spinner spinner)
-    {
-        Country country1 = new Country();
-        country1.setCountryName("Select Country");
-        if(dropDownItems!=null)
-            dropDownItems.add(0, country1);
-        final List<String> lables=new ArrayList<String>();
-        for(Country dropDownItem:dropDownItems){
-            lables.add(dropDownItem.getCountryName());
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-                country=dropDownItems.get(i);
-                if(dropDownItems.get(i).getPhoneCode()!=null)
-                    edt_country_code.setText("+ "+dropDownItems.get(i).getPhoneCode());
-                country_pos=i;
-                if(i>0)
-                    dataLoadPresenter.loadCites(dropDownItems.get(i).getCountryId());
-                else
-                    onCitiesData(null);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-    }
-    private void displayListCity(final List<City> dropDownItems, final Spinner spinner)
-    {
-        final List<String> lables=new ArrayList<String>();
-        City city1 = new City();
-        city1.setCityName("Select City");
-
-        if(dropDownItems!=null) {
-            dropDownItems.add(0, city1);
-            for (City dropDownItem : dropDownItems) {
-                lables.add(dropDownItem.getCityName());
-            }
-        }else {
-            lables.add("No Cities");
-        }
-
-
-
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-
-                city_pos=i;
-                if(dropDownItems!=null)
-                    city=dropDownItems.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-    }
     public  boolean validateInputs(){
         if(!ApiUrls.validateString(edt_first_name.getText().toString())){
             edt_first_name.setError("Enter First Name");
@@ -518,16 +420,16 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
             return false;
         }
 
-        if(country_pos==0)
+        if(country_pos<0)
         {
-            spinner_country.requestFocus();
-            showMessage("Please select your Country");
+            edt_country.requestFocus();
+            edt_country.setError("Please select your Country");
             return false;
         }
-        if(city_pos==0)
+        if(city_pos<0)
         {
-            spinner_city.requestFocus();
-            showMessage("Please select your City");
+            edt_city.requestFocus();
+            edt_city.setError("Please select your City");
             return false;
         }
 
@@ -602,22 +504,105 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
             return false;
 
         }
-
-
-
+        if(genger_pos<0){
+             edt_gender.requestFocus();
+            edt_gender.setError("Please select your Gender");
+            return false;
+        }
         return true;
 
     }
 
 
-    @Override
-    public void onCitiesData(List<City> cities) {
-        displayListCity(cities,spinner_city);
+    Country country=new Country();
+
+    City city=new City();
+
+    int country_pos=-1,city_pos=-1,genger_pos=-1;
+
+    /**
+     *  country_pos is used to hold the selected country position and city_pos is used to hold the selected country position
+     *  country is used to hold selected country object and   city is used to hold selected city object
+     * @param dropDownItems are the list of countries to show the user
+     * @param editText is the country field to fill after selection of one country
+     */
+    private void displayList(final List<Country> dropDownItems, final EditText editText)
+    {
+        if(dropDownItems==null)
+            return;
+
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCountryName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"country");
+
+            }
+        });
+
+
+
+    }/**
+     * @param dropDownItems are the list of cites to show the user
+     * @param editText is the country field to fill after selection of one city
+     *                 if there is no city under contry selection is shows no cities in the country
+     */
+    private void displayListCity(final List<City> dropDownItems, final EditText editText)
+    {
+        if(dropDownItems==null)
+        {
+            city_pos=-1;
+            editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("No Cites");
+                }
+            });
+            return;
+        }
+
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCityName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"city");
+            }
+        });
+
+
     }
 
+    List<City> cities;
+    @Override
+    public void onCitiesData(List<City> cities) {
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
+        displayListCity(cities,edt_city);
+    }
+    List<Country> countries;
     @Override
     public void onCountryData(List<Country> countries) {
-        displayList(countries,spinner_country);
+        this.countries=countries;
+        displayList(countries,edt_country);
     }
 
     @Override
@@ -635,4 +620,33 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     }
 
+    @Override
+    public void onEditView(int view, int position) {
+        switch (view){
+            case R.id.edt_country:
+                if(countries!=null)
+                {
+                    dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                    edt_country_code.setText("+"+countries.get(position).getPhoneCode());
+                    edt_country.setText(countries.get(position).getCountryName());
+                    edt_city.setError(null);
+                    country_pos=position;
+                    country=countries.get(position);
+                }
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {
+                    edt_city.setText(cities.get(position).getCityName());
+                    edt_city.setError(null);
+                    city=cities.get(position);
+                    city_pos=position;}
+                break;
+            case R.id.edt_gender:
+                edt_gender.setText(genders[position]);
+                gender=genders[position];
+                genger_pos=position;
+                break;
+        }
+    }
 }

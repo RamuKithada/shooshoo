@@ -28,10 +28,13 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditProfileActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentListDialogListener {
+    /**
+     * {@link EditProfileActivity} is called when the user clicked on profile edit button on the profile screen
+     *mDrawerLayout is side slide menu
+     */
     DrawerLayout mDrawerLayout;
     ImageView iv_chat;
     ImageView iv_back;
-
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
     @BindView(R.id.navigation_challengers)
@@ -90,9 +93,8 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
         TextView profilename = (TextView) headerview.findViewById(R.id.profilename);
         TextView location = (TextView) headerview.findViewById(R.id.location);
         navigationView.setNavigationItemSelectedListener(this);
-;
-         TabLayout tabLayout=findViewById(R.id.tab_layout);
-         ViewPager viewPager=findViewById(R.id.view_pager);
+        TabLayout tabLayout=findViewById(R.id.tab_layout);
+        ViewPager viewPager=findViewById(R.id.view_pager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
         ProfileViewPagerAdapter profileViewPagerAdapter=new ProfileViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Profile Settings","Profile Visibility"});

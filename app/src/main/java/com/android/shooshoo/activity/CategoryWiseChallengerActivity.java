@@ -22,13 +22,20 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+/**
+ * {@link CategoryWiseChallengerActivity} is used to show the all challenges of respective category of the home page category wise challenges.
+ * this is called from home fragment
+ *
+ */
 
 public class CategoryWiseChallengerActivity extends AppCompatActivity {
+
+
     RecyclerView challengesList;
     ImageView iv_back;
 
 
-@BindView(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tv_title;
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;

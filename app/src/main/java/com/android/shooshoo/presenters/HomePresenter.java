@@ -8,6 +8,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * {@link HomePresenter} is used to call web services from server i.e, used to in home fragment
+ */
 public class HomePresenter implements BasePresenter<HomeView> {
     private HomeView homeView;
     private RetrofitApis retrofitApis;
@@ -22,6 +25,10 @@ public class HomePresenter implements BasePresenter<HomeView> {
         homeView=null;
         retrofitApis=null;
     }
+
+    /**
+     * Load the Sponsor challenges from server to show in home fragment
+     */
     public void loadSponsor(){
         homeView.showProgressIndicator(true);
         retrofitApis.getHomeSponcers()

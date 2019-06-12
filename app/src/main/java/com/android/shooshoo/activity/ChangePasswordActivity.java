@@ -16,6 +16,10 @@ import com.android.shooshoo.utils.ApiUrls;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ *
+ *
+ */
 public class ChangePasswordActivity extends AppCompatActivity implements View.OnClickListener{
     @BindView(R.id.edt_old_pws)
     EditText edt_old_pws;
@@ -42,7 +46,19 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         setFoucusChange(edt_cnf_pws,R.id.cnf_pws_line,R.id.iv_cnf_pws_icon,new int[]{R.drawable.password_active,R.drawable.password_normal});
     }
 
+    /**
+     * active,inactive are the color codes of the highlighting colors of input fields
+     */
+
     String active="#ffffff",inactive="#cccccc";
+
+    /**
+     *
+     * @param editText is the input field
+     * @param id is the viewid of underline view
+     * @param imageid is the viewid of image view
+     * @param res are the image references of drawables
+     */
     public void setFoucusChange(EditText editText, int id, final int imageid, final int[] res){
         final View view=findViewById(id);
         final ImageView imageView=findViewById(imageid);
@@ -80,9 +96,18 @@ public class ChangePasswordActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     *  used to services call to change password
+     */
     private void changePawssord() {
+
     }
 
+    /**
+     * validations of the input fields of this screen
+     *
+     * @return true if all fields are valid
+     */
     private boolean validateInput() {
         String oldpws=edt_old_pws.getText().toString();
         String newpws=edt_new_pws.getText().toString();

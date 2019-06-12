@@ -9,14 +9,21 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyHolder> {
-
+public class DialogListAdapter extends RecyclerView.Adapter<DialogListAdapter.MyHolder> {
+    /***
+     * This the adapter to show the list in dialog
+     */
     Context c;
     String[] tvshows;
 
-    public MyAdapter(Context c, String[] tvshows) {
+    /**
+     *
+     * @param c Context
+     * @param strings list of the labels those are shown
+     */
+    public DialogListAdapter(Context c, String[] strings) {
         this.c = c;
-        this.tvshows = tvshows;
+        this.tvshows = strings;
     }
 
     @Override

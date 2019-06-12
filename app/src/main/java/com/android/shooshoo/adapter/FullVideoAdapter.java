@@ -17,6 +17,9 @@ import com.android.shooshoo.utils.SimplePlayerViewHolder;
 
 import java.util.ArrayList;
 
+/**
+ * This is used to show the list of Videos in Feeds activity
+ */
 
 public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolder> {
 

@@ -9,17 +9,17 @@ import android.widget.Toast;
 import com.android.shooshoo.R;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
-
+/**
+ * Base activity is activity for all the activities used in this application
+ * this used for code reusability
+ * {@link #dialog} is to show whenever we call service to load data fro activities.
+ *
+ */
 public class BaseActivity extends AppCompatActivity implements BaseView {
     public Dialog dialog;
     public UserSession userSession;
 
-    /**
-     * Base activity is activity for all the activities used in this application
-     * this used for code reusability
-     * {@link #dialog} is to show whenever we call service to load data fro activities.
-     *
-     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

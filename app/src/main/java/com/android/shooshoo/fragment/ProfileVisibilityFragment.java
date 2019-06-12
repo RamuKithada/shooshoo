@@ -10,7 +10,12 @@ import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
 
-
+/**
+ *
+ * Use the {@link ProfileVisibilityFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ * this is Profile screen to show general profile visibility to others settings options
+ */
 public class ProfileVisibilityFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

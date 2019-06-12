@@ -31,7 +31,9 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-
+/**
+ * Here we using the Retrofit Library for service calls
+ */
 public interface RetrofitApis {
 
         class Factory {

@@ -12,10 +12,7 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -27,7 +24,7 @@ import com.android.shooshoo.models.Country;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.TVShowFragment;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 
@@ -37,7 +34,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
+/**
+ *
+ * Use the {@link ProfileSettingFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ * this is Profile screen to show general profile settings options
+ */
 public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -166,7 +168,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment tv=new TVShowFragment();
+                CustomListFragmentDialog tv=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",genders);
                 args.putInt("view",R.id.edt_gender);
@@ -498,7 +500,7 @@ baseView.showMessage(stringId);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment showFragment=new TVShowFragment();
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());
@@ -533,7 +535,7 @@ baseView.showMessage(stringId);
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TVShowFragment showFragment=new TVShowFragment();
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());

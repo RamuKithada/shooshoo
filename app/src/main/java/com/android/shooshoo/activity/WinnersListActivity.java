@@ -21,6 +21,10 @@ import com.android.shooshoo.fragment.WinnersFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * {@link WinnersListActivity} show the list of all winner participated in challenge
+ * {@link WinnersListAdapter} is used to show the list;
+ */
 public class WinnersListActivity extends AppCompatActivity {
 WinnersListAdapter listAdapter;
 RecyclerView winnersList;

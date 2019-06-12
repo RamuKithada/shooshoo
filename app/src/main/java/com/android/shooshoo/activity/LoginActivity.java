@@ -19,6 +19,13 @@ import com.android.shooshoo.views.LoginView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * {@link LoginActivity} is used to login the user
+ *
+ *
+ *
+ */
+
 public class LoginActivity extends BaseActivity implements LoginView {
 @BindView(R.id.edt_user_name)
     EditText edt_user_name;
@@ -146,13 +153,22 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     }
 
+    /**
+     * login is to call initiation of login process
+     *
+     */
     private void login() {
-        if(connectionDetector.isConnectingToInternet())
+        if(connectionDetector.isConnectingToInternet())//checking internet is available or not
            loginPresenter.loginUser(edt_user_name.getText().toString(),edt_pws.getText().toString());
         else showMessage("Please Check internet connection !");
 
     }
 
+    /***
+     * validation the input fields here locally
+     *
+     * @return true
+     */
     private boolean validateInput() {
           String name=edt_user_name.getText().toString();
           String pws=edt_pws.getText().toString();

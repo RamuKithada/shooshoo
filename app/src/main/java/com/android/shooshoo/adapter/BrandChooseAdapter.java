@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * BrandChooseAdapter is used to present the list of Brands When the user registration process
+ */
 public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.CatViewHolder> {
     String active="#CCCCCC",inactive="#FFFFFF";
    int[] isActive=new int[0];
@@ -59,6 +62,9 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
         catViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
+                  /**
+                   * here change color of the selected background
+                   */
                   isActive[i]=Math.abs(isActive[i]-1);
                   if(isActive[i]==1)
                   {
@@ -82,6 +88,11 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
             return 0;
         return brands.size();
     }
+
+    /**
+     * get list selected brands size
+     * @return size of the selected brands
+     */
     public int selectedSize(){
         int selected_size=0;
         if(brands!=null&&brands.size()>0)
@@ -93,7 +104,10 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
 
         return selected_size;
     }
-
+    /**
+     * get list selected brands ids in String format
+     * @return the selected brands ids
+     */
     public String getBrandIds(){
         StringBuilder builder=new StringBuilder();
         if(brands!=null&&brands.size()>0)

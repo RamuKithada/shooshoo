@@ -40,7 +40,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MyChallengesActivity extends AppCompatActivity implements View.OnClickListener , SimpleExoPlayer.EventListener{
-@BindView(R.id.iv_back)
+    /***
+     * {@link MyChallengesActivity} shows the  challenge and posts of the recent challenge
+      *
+     */
+    @BindView(R.id.iv_back)
     ImageView iv_back;
     @BindView(R.id.rv_recnet_posts)
     RecyclerView rv_recnet_posts;
@@ -181,6 +185,9 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     }
     }
 
+    /**
+     * setUpVideo is to setup the video player to play the video
+     */
     private void setUpVideo() {
         initializePlayer();
         if (videoUri == null) {
@@ -199,11 +206,15 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
                     new DefaultTrackSelector(videoTrackSelectionFactory);
             // 2. Create the player
             player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this), trackSelector);
-            player.setRepeatMode(Player.REPEAT_MODE_ALL);
+            player.setRepeatMode(Player.REPEAT_MODE_ALL);//
                 playerView.setPlayer(player);
-                playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
+                playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);// play repeat video
         }
     }
+
+    /**
+     *  binding the uri of the video to the media player
+      */
 
     private void buildMediaSource(Uri mUri) {
         // Measures bandwidth during playback. Can be null if not required.
@@ -215,12 +226,13 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
 
         MediaSource mediaSource = new ExtractorMediaSource(mUri,
                 dataSourceFactory, extractorsFactory, null, null);
-
         player.prepare(mediaSource);
         player.setPlayWhenReady(true);
         player.addListener(this);
     }
-
+/**
+    release the media Player
+ */
     private void releasePlayer() {
         if (player != null) {
             player.release();
@@ -228,6 +240,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /**pause the media player*/
     private void pausePlayer() {
         if (player != null) {
             player.setPlayWhenReady(false);
@@ -236,7 +249,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
             activityPaused=false;
         }
     }
-
+/** resume the media player*/
     private void resumePlayer() {
 
         if (player != null) {
@@ -301,7 +314,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     public void onSeekProcessed() {
 
     }
-
+   /**conform that the video is playing the video or not  when activity is paused*/
     boolean activityPaused=true;
     @Override
     protected void onResume() {

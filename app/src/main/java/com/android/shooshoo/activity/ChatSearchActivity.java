@@ -18,6 +18,12 @@ import butterknife.ButterKnife;
 
 public class ChatSearchActivity extends AppCompatActivity implements View.OnClickListener{
 
+    /***
+     * {@link ChatSearchActivity} is used to search the user by name ,brand etc., to find a user and chat with him
+     *
+     *
+     */
+
     @BindView(R.id.search_result_list)
     RecyclerView search_result_list;
 

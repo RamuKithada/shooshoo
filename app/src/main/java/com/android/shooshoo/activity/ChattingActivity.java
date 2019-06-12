@@ -12,6 +12,14 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ChattingAdapter;
 
 public class ChattingActivity extends AppCompatActivity implements View.OnClickListener{
+    /***
+     * This is the screen of chatting functionality ui
+     *  chatHistoryList is to show chatting conversation with an user
+     *  edt_message is used to take input from user to make conversation
+     *  iv_send_msg is used to send icon to send message on user action
+     *  iv_back is used close the chatting screen go back to  chats screen
+     */
+
    RecyclerView chatHistoryList;
    ChattingAdapter chattingAdapter;
    ImageView iv_back,iv_send_msg;

@@ -17,6 +17,10 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CreateSponsorChallengeActivity;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 
+/**Use the {@link ChallengersFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ * To show the Challenges screen in Home Activity.This is the Challenges Tab result view
+ */
 
 public class ChallengersFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
