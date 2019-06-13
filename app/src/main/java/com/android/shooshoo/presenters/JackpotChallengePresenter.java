@@ -28,6 +28,7 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     @Override
     public void detachView() {
+        view.showProgressIndicator(false);
         retrofitApis=null;
         view =null;
 
@@ -35,19 +36,25 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
   Callback<GameMasterResult> callback=new Callback<GameMasterResult>() {
       @Override
       public void onResponse(Call<GameMasterResult> call, Response<GameMasterResult> response) {
-          view.showProgressIndicator(false);
-          if(response.isSuccessful()){
-              GameMasterResult companyResponse=response.body();
-                     view.showMessage(companyResponse.getMessage());
-              if(companyResponse.getStatus()==1)
-                  view.onGameMasterCreate(companyResponse.getGameMaster());
+          if (view != null) {
+              view.showProgressIndicator(false);
+              if (response.isSuccessful()) {
+                  GameMasterResult companyResponse = response.body();
+                  view.showMessage(companyResponse.getMessage());
+                  if (companyResponse.getStatus() == 1)
+                      view.onGameMasterCreate(companyResponse.getGameMaster());
+              }
           }
       }
 
       @Override
       public void onFailure(Call<GameMasterResult> call, Throwable t) {
-          view.showProgressIndicator(false);
-          view.showMessage(t.getMessage());
+
+          if (view != null) {
+              view.showProgressIndicator(false);
+              view.showMessage(t.getMessage());
+          }
+
       }
   };
 
@@ -64,11 +71,12 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
             RequestBody reqFile= RequestBody.create(MediaType.parse("image/*"), file);
             body = MultipartBody.Part.createFormData("masterLogo", file.getName(), reqFile);
         }
+        if(view!=null){
         view.showProgressIndicator(true);
         retrofitApis.saveGameMaster(body,getTextPart(userid),getTextPart(firstName),getTextPart(lastName),getTextPart(dob),
                 getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(streetName),getTextPart(streetNumber),
                 getTextPart(mobileNumber),getTextPart(gender))
-                .enqueue(callback);
+                .enqueue(callback);}
     }
 
 
@@ -94,12 +102,14 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
             RequestBody reqFile= RequestBody.create(MediaType.parse("video/*"), challengeVideofile);
             challengeVideoBody = MultipartBody.Part.createFormData("challengeVideo", challengeVideofile.getName(), reqFile);
         }
+        if(view!=null){
         view.showProgressIndicator(true);
         retrofitApis.saveJackpotChallenge(getTextPart(userId),getTextPart(challengeId),bannerImageBody,challengeVideoBody,
                 getTextPart(challName),getTextPart(startDate),getTextPart(startTime),getTextPart(endDate),
                 getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),getTextPart(videoEntries),
                 getTextPart(miniGame),getTextPart(maxLength))
                 .enqueue(callback);
+        }
 
 
 
@@ -117,11 +127,12 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
     public void createAudience(String challenegId, String userId,String amount, String keyDescription,String priceWorth, String limitedAccess,
                                String winners,String radar,String audZipcode,String audMiles, String personalAddress,
                                String categories,String brands,String ageStart, String ageEnd,String gender) {
-
-        view.showProgressIndicator(true);
-                retrofitApis.saveJackpotAudience(challenegId,userId,amount,keyDescription,priceWorth,
-                limitedAccess,winners,radar,audZipcode,audMiles,personalAddress,
-                categories,brands,ageStart,ageEnd,gender).enqueue(callback);
+        if(view!=null) {
+            view.showProgressIndicator(true);
+            retrofitApis.saveJackpotAudience(challenegId, userId, amount, keyDescription, priceWorth,
+                    limitedAccess, winners, radar, audZipcode, audMiles, personalAddress,
+                    categories, brands, ageStart, ageEnd, gender).enqueue(callback);
+        }
 
     }
 }

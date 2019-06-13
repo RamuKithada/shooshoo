@@ -38,6 +38,7 @@
             android:textColor="#CCCCCC"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp"
+            android:singleLine="true"
             android:layout_gravity="center"
             android:gravity="center"
             />

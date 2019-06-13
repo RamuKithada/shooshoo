@@ -131,6 +131,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         />
                     <TextView
+                        android:id="@+id/created_at"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2 weeks "
@@ -188,6 +189,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         />
                     <TextView
+                        android:id="@+id/tv_key_des"
                         android:layout_below="@+id/sub_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

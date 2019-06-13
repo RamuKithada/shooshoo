@@ -28,6 +28,7 @@ import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.views.HomeView;
+import com.android.shooshoo.views.SponsorChallengeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +37,7 @@ import java.util.List;
  * This is fragment to present Home tab view
  *
  */
-public class HomeFragment extends Fragment implements View.OnClickListener, HomeView {
+public class HomeFragment extends Fragment implements View.OnClickListener,HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,12 +53,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
      */
     RelativeLayout sponsor_viewall,jackpot_viewall,category_viewalll;
 
-    private OnFragmentInteractionListener mListener;
+    private HomeView mListener;
     //Jackpot challenge List adapter
     JackpotChallengersAdapter jackpotChallengersAdapter;
 
     //Sponsor challenge List adapter
-    JackpotChallengersAdapter sponsorChallengersAdapter;
+    SponsorChallengersAdapter sponsorChallengersAdapter;
 
     //Brand  List adapter to show brand list view
     HomeBrandAdapter homeBrandAdapter;
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
     HomeCategoryAdapter homeCategoryAdapter;
 
     //  challengeModels is used to hold jackpot challenges list
-    ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
+    ArrayList<Challenge> sponsorChallenges=new ArrayList<Challenge>();
 
     //  schallengeModels is used to hold Sponsor challenges list
     ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
@@ -105,13 +106,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
     ConnectionDetector connectionDetector;
 
     public HomeFragment() {
-        for (int index=0;index<10;index++){
+     /*   for (int index=0;index<10;index++){
             ChallengeModel model=new ChallengeModel();
             model.setDescription(des[index]);
             model.setTitle(titles[index]);
             model.setImage(images[index]);
             challengeModels.add(model);
-        }
+        }*/
         for (int index=0;index<sdes.length;index++){
             ChallengeModel model=new ChallengeModel();
             model.setDescription(sdes[index]);
@@ -120,9 +121,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
             schallengeModels.add(model);
         }
 
-        jackpotChallengersAdapter=new JackpotChallengersAdapter(challengeModels);
+        jackpotChallengersAdapter=new  JackpotChallengersAdapter(schallengeModels);
 
-        sponsorChallengersAdapter=new JackpotChallengersAdapter(schallengeModels);
+        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
         //new SponsorChallengersAdapter(getContext(),null);
         homeBrandAdapter=new HomeBrandAdapter(brandimgs,brandnames);
         homeCategoryAdapter=new HomeCategoryAdapter(catimgs,catNames);
@@ -192,10 +193,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
             @Override
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
-                intent.putExtra("image",schallengeModels.get(position).getImage());
-                intent.putExtra("name",schallengeModels.get(position).getTitle());
-                intent.putExtra("des",schallengeModels.get(position).getDescription());
-                // to  open Challenge details  activity
+                intent.putExtra("challenge",sponsorChallenges.get(position));
+//                intent.putExtra("image",schallengeModels.get(position).getImage());
+//                intent.putExtra("name",schallengeModels.get(position).getTitle());
+//                intent.putExtra("des",schallengeModels.get(position).getDescription());
+//                // to  open Challenge details  activity
                 startActivity(intent);
             }
 
@@ -212,9 +214,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
             @Override
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
-                intent.putExtra("image",challengeModels.get(position).getImage());
-                intent.putExtra("name",challengeModels.get(position).getTitle());
-                intent.putExtra("des",challengeModels.get(position).getDescription());
+
+//                intent.putExtra("image",challengeModels.get(position).getImage());
+//                intent.putExtra("name",challengeModels.get(position).getTitle());
+//                intent.putExtra("des",challengeModels.get(position).getDescription());
                 startActivity(intent);
             }
 
@@ -223,6 +226,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
 
             }
         }));
+        homePresenter.attachView(this);
         if(connectionDetector.isConnectingToInternet())
         homePresenter.loadSponsor();
         else
@@ -234,12 +238,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
         brandsList.setLayoutManager(manager);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     /**
      *
@@ -251,23 +249,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof HomeView) {
+            mListener = (HomeView) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement HomeView");
         }
         homePresenter=new HomePresenter();
-        homePresenter.attachView(this);
+
         connectionDetector=new ConnectionDetector(getActivity());
 
     }
 
     @Override
     public void onDetach() {
-        super.onDetach();
         homePresenter.detachView();
         mListener = null;
+        super.onDetach();
     }
 
     /**
@@ -309,36 +307,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Home
 
     @Override
     public void onLoadSponsors(List<Challenge> challenges) {
+    mListener.onLoadSponsors(challenges);
+        sponsorChallenges.addAll(challenges);
+        sponsorChallengersAdapter.notifyDataSetChanged();
+
+
 
     }
 
     @Override
     public void showMessage(int stringId) {
-
+mListener.showMessage(stringId);
     }
 
     @Override
     public void showMessage(String message) {
-
+mListener.showMessage(message);
     }
 
     @Override
     public void showProgressIndicator(Boolean show) {
-
+mListener.showProgressIndicator(show);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
+
 }

@@ -31,6 +31,7 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
     @Override
     public void detachView() {
+        view.showProgressIndicator(false);
         this.retrofitApis=null;
         this.view=null;
 
@@ -38,10 +39,12 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
     /**this is used to load countries data*/
     public void loadCountryData(){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getCountries().enqueue(new Callback<CountryResult>() {
             @Override
             public void onResponse(Call<CountryResult> call, Response<CountryResult> response) {
+               if(view!=null){
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
 
@@ -52,13 +55,15 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
                         view.onCountryData(countries);
                     }else
                     view.showMessage(countryResult.getMessage());
-                }
+                }}
             }
 
             @Override
             public void onFailure(Call<CountryResult> call, Throwable t) {
-                view.showProgressIndicator(false);
-                view.showMessage(t.getMessage());
+               if(view!=null) {
+                   view.showProgressIndicator(false);
+                   view.showMessage(t.getMessage());
+               }
 
             }
         });

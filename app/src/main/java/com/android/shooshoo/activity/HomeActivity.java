@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener,View.OnClickListener{
+public class HomeActivity extends BaseActivity implements HomeView,View.OnClickListener{
 
     private TextView mTextMessage;
     @BindView(R.id.iv_help)
@@ -318,10 +318,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
 
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 /**
 *  onClick is used to handling top menu icon click actions
  *  like search ,profile,Chat
@@ -368,4 +365,8 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
 
     }
 
+    @Override
+    public void onLoadSponsors(List<Challenge> challenges) {
+
+    }
 }

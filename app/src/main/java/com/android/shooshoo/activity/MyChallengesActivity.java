@@ -3,9 +3,11 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +15,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileFeedsAdapter;
+import com.android.shooshoo.adapter.RecentPostAdapter;
+import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Post;
+import com.android.shooshoo.presenters.PostChallengePresenter;
+import com.android.shooshoo.utils.ApiUrls;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.PostChallengeView;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -36,10 +45,14 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyChallengesActivity extends AppCompatActivity implements View.OnClickListener , SimpleExoPlayer.EventListener{
+import static com.android.shooshoo.utils.ApiUrls.SPONSOR_VIDEO_URL;
+
+public class MyChallengesActivity extends BaseActivity implements View.OnClickListener, PostChallengeView, SimpleExoPlayer.EventListener{
     /***
      * {@link MyChallengesActivity} shows the  challenge and posts of the recent challenge
       *
@@ -52,6 +65,12 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     LinearLayout camera;
     @BindView(R.id.brand)
     LinearLayout brand;
+    @BindView(R.id.created_at)
+    TextView created_at;
+    @BindView(R.id.tv_key_des)
+    TextView tv_key_des;
+    @BindView(R.id.participants)
+    TextView participants;
 
     @BindView(R.id.video_thumb)
     ImageView video_thumb;
@@ -81,6 +100,9 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     String videoUri="";
     SimpleExoPlayer player;
     private boolean isPlaying=true;
+    ConnectionDetector connectionDetector=null;
+    PostChallengePresenter challengePresenter=null;
+    RecentPostAdapter recentPostAdapter;
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -118,17 +140,29 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         camera.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         playerView.setUseController(false);
-        rv_recnet_posts.setAdapter(new ProfileFeedsAdapter(images));
-       int image =getIntent().getIntExtra("image",-1);
-       if(image>-1)
-           video_thumb.setImageResource(image);
-        String titles=getIntent().getStringExtra("name");
-        if(titles!=null){
-            title.setText(titles);
+        connectionDetector=new ConnectionDetector(this);
+        challengePresenter=new PostChallengePresenter();
+        challengePresenter.attachView(this);
+        recentPostAdapter=new RecentPostAdapter(images);
+        rv_recnet_posts.setAdapter(new RecentPostAdapter(images));
+        if(getIntent().hasExtra("challenge")){
+            Challenge challenge=getIntent().getParcelableExtra("challenge");
+            setChallenge(challenge);
+        }else {
+
+            int image = getIntent().getIntExtra("image", -1);
+            if (image > -1)
+                video_thumb.setImageResource(image);
+            String titles = getIntent().getStringExtra("name");
+            if (titles != null) {
+                title.setText(titles);
+            }
+            String des = getIntent().getStringExtra("des");
+            if (des != null)
+                sub_title.setText(des);
+            videoUri ="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+            setUpVideo();
         }
-        String des=getIntent().getStringExtra("des");
-        if(des!=null)
-            sub_title.setText(des);
 
 
 
@@ -137,8 +171,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
         navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
-        videoUri ="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-        setUpVideo();
+
         video_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,13 +189,27 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
             }
         });
     }
+Challenge challenge;
+    private void setChallenge(Challenge challenge) {
+        this.challenge=challenge;
+        title.setText(challenge.getChallengeName());
+        sub_title.setText(challenge.getDescription());
+        created_at.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+        tv_key_des.setText(challenge.getKeyDescription());
+        participants.setText(challenge.getParticipants());
+        videoUri =SPONSOR_VIDEO_URL+challenge.getChallengeVideo();
+        setUpVideo();
+        if(connectionDetector.isConnectingToInternet())
+             challengePresenter.getRecentPosts(challenge.getChallengeId(),"sponsor");
+         else
+             showMessage("Check Internet connection");
+    }
 
     @Override
     public void onClick(View v) {
     switch (v.getId()){
         case R.id.camera:
-            Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-            intent.setType("*/*");
+            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 //            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 //            Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
@@ -317,7 +364,7 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
    /**conform that the video is playing the video or not  when activity is paused*/
     boolean activityPaused=true;
     @Override
-    protected void onResume() {
+    protected void onResume(){
         super.onResume();
          if(activityPaused)
          {
@@ -336,5 +383,32 @@ public class MyChallengesActivity extends AppCompatActivity implements View.OnCl
     protected void onDestroy() {
         super.onDestroy();
         releasePlayer();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri videoFileUri = data.getData();
+                Log.e("Uri", "" + videoUri);
+                Intent intent = new Intent(this, PostVideoActivity.class);
+                intent.putExtra("post", videoUri);
+                intent.putExtra("mpost", videoFileUri);
+                intent.putExtra("challenge", challenge);
+                startActivity(intent);
+//          buildMediaSource(videoFileUri);
+            }
+        }
+    }
+
+    @Override
+    public void onSuccessfulUpload(String msg) {
+
+    }
+
+    @Override
+    public void onRecentPosts(List<Post> posts) {
+
     }
 }

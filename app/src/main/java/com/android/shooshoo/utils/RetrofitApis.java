@@ -1,6 +1,8 @@
 package com.android.shooshoo.utils;
 
 import android.content.Context;
+
+import com.android.shooshoo.activity.PostVideoActivity;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
@@ -11,6 +13,7 @@ import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.HomeSponsorResponce;
 import com.android.shooshoo.models.LoginSuccess;
+import com.android.shooshoo.models.RecentPostsResponce;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -169,6 +172,16 @@ public interface RetrofitApis {
 
     @GET("sponsors")
     Call<HomeSponsorResponce> getHomeSponcers();
+
+    @Multipart
+    @POST("addParticipant")
+    Call<ResponseBody>   postforChallenge(@Part("challengeId") RequestBody  challengeId,
+                                              @Part("userId") RequestBody  userId,
+                                              @Part("type") RequestBody  type,
+                                              @Part MultipartBody.Part  content);
+
+    @POST("recentposts")
+    Call<RecentPostsResponce> getRecentPostsOfChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
 
 
 }

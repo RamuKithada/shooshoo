@@ -22,6 +22,7 @@ public class HomePresenter implements BasePresenter<HomeView> {
 
     @Override
     public void detachView() {
+        homeView.showProgressIndicator(false);
         homeView=null;
         retrofitApis=null;
     }
@@ -30,23 +31,28 @@ public class HomePresenter implements BasePresenter<HomeView> {
      * Load the Sponsor challenges from server to show in home fragment
      */
     public void loadSponsor(){
+
         homeView.showProgressIndicator(true);
         retrofitApis.getHomeSponcers()
                 .enqueue(new Callback<HomeSponsorResponce>() {
                     @Override
                     public void onResponse(Call<HomeSponsorResponce> call, Response<HomeSponsorResponce> response) {
-                        homeView.showProgressIndicator(false);
-                        if(response.isSuccessful()){
-                            HomeSponsorResponce homeSponsorResponce=response.body();
-                            homeView.onLoadSponsors(homeSponsorResponce.getChallenges());
+                        if(homeView!=null) {
+                            homeView.showProgressIndicator(false);
+                            if (response.isSuccessful()) {
+                                HomeSponsorResponce homeSponsorResponce = response.body();
+                                homeView.onLoadSponsors(homeSponsorResponce.getChallenges());
+                            }
                         }
                     }
 
                     @Override
                     public void onFailure(Call<HomeSponsorResponce> call, Throwable t) {
-                        homeView.showProgressIndicator(false);
-                        if(t!=null)
-                            homeView.showMessage(t.getMessage());
+                        if (homeView != null) {
+                            homeView.showProgressIndicator(false);
+                            if (t != null)
+                                homeView.showMessage(t.getMessage());
+                        }
                     }
                 });
     }

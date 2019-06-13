@@ -42,6 +42,7 @@
             android:layout_marginLeft="5dp"
             android:layout_gravity="center"
             android:gravity="center"
+            android:singleLine="true"
             />
 
     </LinearLayout>

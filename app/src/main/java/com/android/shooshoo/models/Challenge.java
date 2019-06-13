@@ -1,10 +1,13 @@
 package com.android.shooshoo.models;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Challenge {
+public class Challenge implements Parcelable {
 
     @SerializedName("challengeId")
     @Expose
@@ -116,6 +119,57 @@ public class Challenge {
     @SerializedName("companies")
     @Expose
     private List<Company> companies = null;
+
+    protected Challenge(Parcel in) {
+        challengeId = in.readString();
+        challengeName = in.readString();
+        startDate = in.readString();
+        startTime = in.readString();
+        endDate = in.readString();
+        endTime = in.readString();
+        description = in.readString();
+        photoEntries = in.readString();
+        videoEntries = in.readString();
+        bannerImage = in.readString();
+        challengeVideo = in.readString();
+        maxLength = in.readString();
+        amount = in.readString();
+        keyDescription = in.readString();
+        priceWorth = in.readString();
+        totalPrize = in.readString();
+        winners = in.readString();
+        radar = in.readString();
+        audZipcode = in.readString();
+        audMiles = in.readString();
+        personalAddress = in.readString();
+        categories = in.readString();
+        brands = in.readString();
+        ageStart = in.readString();
+        ageEnd = in.readString();
+        gender = in.readString();
+        participants = in.readString();
+        budget = in.readString();
+        summery = in.readString();
+        sponsoredBy = in.readString();
+        createdBy = in.readString();
+        createdOn = in.readString();
+        updatedOn = in.readString();
+        status = in.readString();
+        userFirst = in.readString();
+        userLast = in.readString();
+    }
+
+    public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
+        @Override
+        public Challenge createFromParcel(Parcel in) {
+            return new Challenge(in);
+        }
+
+        @Override
+        public Challenge[] newArray(int size) {
+            return new Challenge[size];
+        }
+    };
 
     public String getChallengeId() {
         return challengeId;
@@ -411,5 +465,50 @@ public class Challenge {
 
     public void setCompanies(List<Company> companies) {
         this.companies = companies;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(challengeId);
+        dest.writeString(challengeName);
+        dest.writeString(startDate);
+        dest.writeString(startTime);
+        dest.writeString(endDate);
+        dest.writeString(endTime);
+        dest.writeString(description);
+        dest.writeString(photoEntries);
+        dest.writeString(videoEntries);
+        dest.writeString(bannerImage);
+        dest.writeString(challengeVideo);
+        dest.writeString(maxLength);
+        dest.writeString(amount);
+        dest.writeString(keyDescription);
+        dest.writeString(priceWorth);
+        dest.writeString(totalPrize);
+        dest.writeString(winners);
+        dest.writeString(radar);
+        dest.writeString(audZipcode);
+        dest.writeString(audMiles);
+        dest.writeString(personalAddress);
+        dest.writeString(categories);
+        dest.writeString(brands);
+        dest.writeString(ageStart);
+        dest.writeString(ageEnd);
+        dest.writeString(gender);
+        dest.writeString(participants);
+        dest.writeString(budget);
+        dest.writeString(summery);
+        dest.writeString(sponsoredBy);
+        dest.writeString(createdBy);
+        dest.writeString(createdOn);
+        dest.writeString(updatedOn);
+        dest.writeString(status);
+        dest.writeString(userFirst);
+        dest.writeString(userLast);
     }
 }

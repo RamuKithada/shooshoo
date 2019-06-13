@@ -29,6 +29,7 @@ public class ApiUrls {
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
     public static final String IMAGE_URL = "http://165.22.94.168/uploads/";
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
+    public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
 
 
     /**
