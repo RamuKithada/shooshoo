@@ -1,20 +1,30 @@
 package com.android.shooshoo.fragment;
 
 
+import android.content.Context;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
 import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.utils.OnRadarListener;
+import com.android.shooshoo.utils.RadarView;
 
 import java.util.ArrayList;
 
@@ -23,13 +33,16 @@ import java.util.ArrayList;
  * Use the {@link RadarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RadarFragment extends Fragment {
+public class RadarFragment extends Fragment implements OnRadarListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private String mParam1;
     private String mParam2;
     ViewAllChallengersAdapter viewAllChallengersAdapter;
+    RadarView radarView;
+    AppCompatSeekBar seekBar;
+    TextView milesLabel;
     public RadarFragment() {
         // Required empty public constructor
     }
@@ -72,6 +85,42 @@ public class RadarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RecyclerView challenge_list=view.findViewById(R.id.challenge_list);
+        radarView=view.findViewById(R.id.radarView);
+        radarView.setOnRadarListener(this);
+        seekBar=view.findViewById(R.id.seekbar);
+        milesLabel=view.findViewById(R.id.miles_lable);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                radarView.setScale(50-progress);
+                milesLabel.setText(progress+" mi");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        ArrayList<PointF> pointFS=new ArrayList<>();
+        pointFS.add(new PointF(0,0));
+        pointFS.add(new PointF(5,-10));
+        pointFS.add(new PointF(-360,360));
+        pointFS.add(new PointF(30,-80));
+        pointFS.add(new PointF(150,-70));
+        pointFS.add(new PointF(20,-40));
+        pointFS.add(new PointF(-50,-30));
+        pointFS.add(new PointF(-140,60));
+        pointFS.add(new PointF(80,50));
+        pointFS.add(new PointF(25,10));
+        pointFS.add(new PointF(-66,80));
+        pointFS.add(new PointF(44,50));
+        pointFS.add(new PointF(-10,10));
+        radarView.setPointFS(pointFS);
         challenge_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
@@ -92,5 +141,39 @@ public class RadarFragment extends Fragment {
 
         viewAllChallengersAdapter=new ViewAllChallengersAdapter(getActivity(),challengeModels);
         challenge_list.setAdapter(viewAllChallengersAdapter);
+    }
+
+    @Override
+    public void onItemClicked(float x, float y) {
+        if(popupWindow!=null)
+            if(popupWindow.isShowing())
+                popupWindow.dismiss();
+
+        showDialog((int) x,(int) y);
+    }
+
+    @Override
+    public void dismissPopup() {
+        if(popupWindow!=null)
+            if(popupWindow.isShowing())
+                popupWindow.dismiss();
+    }
+
+    PopupWindow popupWindow;
+    private void showDialog(int x, int y) {
+        //instantiate the popup.xml layout file
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.popup_dialog,null);
+        customView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        //display the popup window
+        popupWindow.showAsDropDown(radarView, x, -(radarView.getHeight()-y));
+
     }
 }

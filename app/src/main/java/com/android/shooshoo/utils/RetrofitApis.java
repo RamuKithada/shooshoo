@@ -10,6 +10,7 @@ import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
+import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.HomeSponsorResponce;
 import com.android.shooshoo.models.LoginSuccess;
@@ -183,6 +184,9 @@ public interface RetrofitApis {
     @POST("recentposts")
     Call<RecentPostsResponce> getRecentPostsOfChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
 
+
+    @GET("feeds")
+    Call<FeedsResponse> getFeeds();
 
 }
 

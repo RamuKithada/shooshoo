@@ -28,7 +28,7 @@ Runnable runnable=new Runnable() {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_msplash);
         /**
-         *  Handler used to show the splash for 2 seconds after 2 sec it opens Feeds list
+         *  Handler used to show the splash for 2 seconds after 2 sec it opens Feed list
          * */
         new Handler().postDelayed(runnable,2000);
     }

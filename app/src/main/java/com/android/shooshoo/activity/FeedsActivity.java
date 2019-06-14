@@ -15,17 +15,22 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FullVideoAdapter;
+import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.VideoModel;
+import com.android.shooshoo.presenters.FeedsPresenter;
+import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.FeedsView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import im.ene.toro.widget.Container;
 
 /**
- * Feeds activity is used to show the list new feeds
+ * Feed activity is used to show the list new feeds
  * container is used to show list of videos,it is subclass if RecyclerView,it is imported  from Toro player
  * please check Toro player library
  * adapter is recyclerview adapter for container
@@ -34,14 +39,14 @@ import im.ene.toro.widget.Container;
  *
  */
 
-public class FeedsActivity extends BaseActivity implements View.OnClickListener{
+public class FeedsActivity extends BaseActivity implements View.OnClickListener, FeedsView {
     Container container;
     FullVideoAdapter adapter;
     LinearLayoutManager layoutManager;
     RelativeLayout bottom_view;
-    private ArrayList<VideoModel> modelArrayList=new ArrayList<>();
+    private ArrayList<Feed> modelArrayList=new ArrayList<>();
 
-    String[] urls=new String[]{
+/*    String[] urls=new String[]{
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
             "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
@@ -49,7 +54,7 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
             "http://www.exit109.com/~dnn/clips/RW20seconds_2.mp4",
             "http://www.exit109.com/~dnn/clips/RW20seconds_1.mp4",
 
-    };
+    };*/
 
 
     @BindView(R.id.navigation_home)
@@ -62,6 +67,12 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
     LinearLayout navigation_winners;
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
+    /**
+     * feedsPresenter is used to load the data;
+     */
+    FeedsPresenter feedsPresenter;
+
+    ConnectionDetector detector;
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -102,13 +113,21 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
         container = findViewById(R.id.player_container);
         bottom_view=findViewById(R.id.bottom_view);
         userSession=new UserSession(this);
+        detector=new ConnectionDetector(this);
+        feedsPresenter=new FeedsPresenter();
+        feedsPresenter.attachView(this);
         layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
         SnapHelper snapHelper = new PagerSnapHelper();
         container.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(container);
         adapter = new FullVideoAdapter(this,modelArrayList,this);
         container.setAdapter(adapter);
-        setDataToContainer();
+        if(detector.isConnectingToInternet())
+            feedsPresenter.loadFeeds();
+        else {
+            showMessage("Check internet connection");
+        }
+//        setDataToContainer();
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
@@ -116,7 +135,7 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
         bottomNavigationOnClickListener.onClick(navigation_feed);
     }
-    private void setDataToContainer()
+/*    private void setDataToContainer()
     {
         for (String s:urls) {
             VideoModel videoModel = new VideoModel();
@@ -124,7 +143,7 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
             modelArrayList.add(videoModel);
             adapter.notifyDataSetChanged();
         }
-    }
+    }*/
 
     @Override
     public void onClick(View v) {
@@ -190,4 +209,16 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener{
     }
 
 
+    @Override
+    public void onFeedsLoaded(List<Feed> feeds) {
+        modelArrayList.addAll(feeds);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        feedsPresenter.detachView();
+    }
 }

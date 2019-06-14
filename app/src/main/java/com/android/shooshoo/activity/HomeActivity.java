@@ -84,7 +84,7 @@ public class HomeActivity extends BaseActivity implements HomeView,View.OnClickL
      * This is fragment to present Home tab view
      * {@link #bottomNavigationOnClickListener} is used to click functionality for bottom menu items
      * here we transform one tab to another
-     * Those are Home,Challenges,Feeds,Winners,Radar
+     * Those are Home,Challenges,Feed,Winners,Radar
      *
      */
 private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
