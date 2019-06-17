@@ -78,16 +78,6 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
     @BindView(R.id.edt_mobile)
     EditText edt_mobile;
 
-
-
-    @BindView(R.id.iv_dropdown_city)
-    ImageView iv_dropdown_city;
-
-    @BindView(R.id.iv_dropdown_county)
-    ImageView iv_dropdown_county;
-
-    @BindView(R.id.iv_dropdown_gender)
-    ImageView iv_dropdown_gender;
     @BindView(R.id.next_lay)
     RelativeLayout next_lay;
 
@@ -144,6 +134,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.edt_city)
     EditText edt_city;
+
     @BindView(R.id.edt_gender)
     EditText edt_gender;
 
@@ -182,16 +173,14 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
         setFocusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
-        setFocusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
+        setFocusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.username_active,R.drawable.username_normal});
         setFocusChange(edt_dob,R.id.dob_line,iv_dob,new int[]{R.drawable.date_birth_active,R.drawable.date_birth_normal});
 //        setFocusChange(edt_city,R.id.city_line,iv_city,new int[]{R.drawable.city_active,R.drawable.city_normal});
         setFocusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
         setFocusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
         setFocusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
         setFocusChange(edt_mobile,R.id.country_code_line,iv_mobile,new int[]{R.drawable.mobile_active,R.drawable.mobile_normal});
-        iv_dropdown_city.setOnClickListener(dropdownOnClickListener);
         country_lay.setOnClickListener(dropdownOnClickListener);
-        iv_dropdown_gender.setOnClickListener(dropdownOnClickListener);
         edt_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -623,9 +612,9 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
     @Override
     public void onEditView(int view, int position) {
         switch (view){
-            case R.id.edt_country:
-                if(countries!=null)
-                {
+                    case R.id.edt_country:
+                        if(countries!=null)
+                        {
                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
                     edt_country_code.setText("+"+countries.get(position).getPhoneCode());
                     edt_country.setText(countries.get(position).getCountryName());

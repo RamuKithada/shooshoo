@@ -38,7 +38,7 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
         view=null;
         retrofitApis=null;
     }
-    public void postChallenge(String userId, String challengeId, String filename, String type){
+    public void postChallenge(String userId, String challengeId, String filename, String type,String mPostDes){
         if(view!=null){
             File file=null;
             MultipartBody.Part body=null;
@@ -49,7 +49,7 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
                 body = MultipartBody.Part.createFormData("content", file.getName(), reqFile);
             }
             view.showProgressIndicator(true);
-            retrofitApis.postforChallenge(getTextPart(challengeId),getTextPart(userId),getTextPart(type),body).enqueue(new Callback<ResponseBody>() {
+            retrofitApis.postforChallenge(getTextPart(challengeId),getTextPart(userId),getTextPart(type),body,getTextPart(mPostDes)).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     view.showProgressIndicator(false);

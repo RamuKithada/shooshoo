@@ -307,7 +307,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     @Override
     public void onLoadSponsors(List<Challenge> challenges) {
-    mListener.onLoadSponsors(challenges);
+        if(mListener!=null)
+        mListener.onLoadSponsors(challenges);
         sponsorChallenges.addAll(challenges);
         sponsorChallengersAdapter.notifyDataSetChanged();
 
@@ -317,17 +318,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     @Override
     public void showMessage(int stringId) {
-mListener.showMessage(stringId);
+        if(mListener!=null)
+     mListener.showMessage(stringId);
     }
 
     @Override
     public void showMessage(String message) {
+        if(mListener!=null)
 mListener.showMessage(message);
     }
 
     @Override
     public void showProgressIndicator(Boolean show) {
-mListener.showProgressIndicator(show);
+        if(mListener!=null)
+           mListener.showProgressIndicator(show);
     }
 
 

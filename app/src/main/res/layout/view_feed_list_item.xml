@@ -14,8 +14,7 @@
         android:layout_height="match_parent"
         app:resize_mode="fixed_width"
         app:surface_type="texture_view"
-        app:use_controller="false"
-        />
+        app:use_controller="false" />
 
     <ImageView
         android:id="@+id/iv_pauseresume"
@@ -52,6 +51,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:maxEms="25"
                 android:layout_marginBottom="10dp"
                 />
             <RelativeLayout
@@ -216,11 +216,12 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text1"
+            android:id="@+id/tv_video_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/profile_lay"
             android:layout_alignBottom="@+id/profile_lay"
+            android:layout_marginLeft="15dp"
             android:text="Hi Everybody, this my video H and M challenge.If you like it a like a comment "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" />
@@ -240,10 +241,11 @@
                 android:layout_margin="5dp"
                 >
                 <TextView
-                    android:id="@+id/text2"
+                    android:id="@+id/tv_time"
                     android:layout_alignParentLeft="true"
                     android:text="1 week ago"
                     android:textColor="#FFFFFF"
+                    android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView

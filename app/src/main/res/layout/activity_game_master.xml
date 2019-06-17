@@ -96,7 +96,7 @@
                         android:layout_width="@dimen/edit_icon"
                         android:layout_height="@dimen/edit_icon"
                         android:padding="8dp"
-                        android:src="@drawable/lastname_normal"
+                        android:src="@drawable/username_normal"
                         android:layout_gravity="center_vertical"
                         />
                     <EditText
@@ -143,6 +143,8 @@
                         android:textColor="#FFFFFF"
                         android:textColorHint="#CCCCCC"
                         android:layout_margin="5dp"
+                        android:focusable="false"
+                        android:clickable="true"
                         android:hint="Date of Birth"
                         />
                 </LinearLayout>
@@ -183,6 +185,8 @@
                             android:layout_centerInParent="true"
                             android:layout_margin="5dp"
                             android:hint="Country"
+                            android:focusable="false"
+                            android:clickable="true"
                             android:textColor="#FFFFFF"
                             android:textColorHint="#CCCCCC"
                             android:drawableRight="@drawable/ic_spinner_icon"
@@ -225,6 +229,8 @@
                         android:background="#00FFFFFF"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#CCCCCC"
+                        android:focusable="false"
+                        android:clickable="true"
                         android:layout_margin="5dp"
                         android:hint="City"
                         android:drawableRight="@drawable/ic_spinner_icon"
@@ -444,7 +450,7 @@
                         android:layout_gravity="center_vertical"
                         />
                     <EditText
-                        android:id="@+id/spinner_gender"
+                        android:id="@+id/edt_gender"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -454,6 +460,8 @@
                         android:textColorHint="#CCCCCC"
                         android:hint="Gender"
                         android:layout_margin="5dp"
+                        android:focusable="false"
+                        android:clickable="true"
                         android:drawableRight="@drawable/ic_spinner_icon"
                         />
 

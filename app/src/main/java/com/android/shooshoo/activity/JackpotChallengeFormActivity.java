@@ -33,6 +33,8 @@ import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.views.JackpotChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -56,7 +58,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
  *
  *
  */
-public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView {
+public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView, FragmentListDialogListener {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -86,14 +88,10 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     @BindView(R.id.edt_challenge_des)
     EditText edt_challenge_des;
 
-//    @BindView(R.id.edt_photo_entries)
-//    EditText edt_photo_entries;
-//
-//    @BindView(R.id.edt_video_entries)
-//    EditText edt_video_entries;
+    @BindView(R.id.edt_video_sizes)
+    EditText edt_video_sizes;
 
-    @BindView(R.id.spinner_video_sizes)
-    Spinner spinner_video_sizes;
+
 
     @BindView(R.id.banner_card)
     CardView bannerCard;
@@ -117,7 +115,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     String  challengeImageUri=null;
     String challengeVideoUri=null;
     private int sizePos=0;
-    final String[] lables=new String[]{"Max Length","1 min","50 sec","40 sec","30 sec","20 sec"};
+    final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +131,17 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         edt_startdate.setOnClickListener(this);
         edt_enddate.setOnClickListener(this);
         edt_end_time.setOnClickListener(this);
-
+      edt_video_sizes.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+              Bundle args = new Bundle();
+              args.putStringArray("list",lables);
+              args.putInt("view",edt_video_sizes.getId());
+              showFragment.setArguments(args);
+              showFragment.show(getSupportFragmentManager(),"limit");
+          }
+      });
         connectionDetector=new ConnectionDetector(this);
         sponcerChallengePresenter=new JackpotChallengePresenter();
         sponcerChallengePresenter.attachView(this);
@@ -152,22 +160,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
 //        setFocusChange(edt_photo_entries,R.id.edt_photo_entries_line);
 //        setFocusChange(edt_video_entries,R.id.edt_video_entries_line);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_video_sizes.setAdapter(dataAdapter);
-        spinner_video_sizes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sizePos=position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
     }
 
     @Override
@@ -257,26 +249,16 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             return false;
         }
 
-        /*if(!ApiUrls.validateString(edt_photo_entries.getText().toString())){
-            edt_photo_entries.setError("Enter a number");
-            edt_photo_entries.requestFocus();
-            return false;
-        }
 
-        if(!ApiUrls.validateString(edt_video_entries.getText().toString())){
-            edt_video_entries.setError("Enter a number");
-            edt_video_entries.requestFocus();
-            return false;
-        }*/
         if(sizePos==0){
-            spinner_video_sizes.requestFocus();
-            showMessage("Please set Limit?");
+            edt_video_sizes.requestFocus();
+            edt_video_sizes.setError("Please set Limit?");
             return false;
         }
 
 
         if(!ch_video_entites.isChecked()&&!ch_photo_entites.isChecked()){
-            showMessage("Select atleast one type from videos Entries and Photo Entries");
+            showMessage("Select at least one type from videos Entries and Photo Entries");
             return false;
         }
 
@@ -490,5 +472,12 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         Intent intent=new Intent(this, AudienceInstructionActivity.class);
         intent.putExtra("challenge_type",2);
         startActivity(intent);
+    }
+
+    @Override
+    public void onEditView(int view, int position) {
+          sizePos=position;
+        if(lables.length>position)
+        edt_video_sizes.setText(lables[position]);
     }
 }

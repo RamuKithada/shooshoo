@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import im.ene.toro.ToroPlayer;
 import im.ene.toro.ToroUtil;
 import im.ene.toro.exoplayer.ExoPlayerViewHelper;
@@ -41,40 +42,52 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public ProgressBar progress_circular;
     public Uri mediaUri;
     public boolean isPlay=true;
-    public LinearLayout comment_view;
+    public LinearLayout comment_view,likes_view,share_view,donation_view;
     public LinearLayout options_lay;
     public LinearLayout message_lay;
     public LinearLayout profile_lay;
-    public TextView text1;
+    public TextView tv_video_des,tv_name,tv_time;
+    public CircleImageView profile_pic;
+    public ImageView iv_like;
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
         playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
         card=(CardView)itemView.findViewById(R.id.card);
         comment_view=itemView.findViewById(R.id.comment_view);
+        likes_view=itemView.findViewById(R.id.likes_view);
+        share_view=itemView.findViewById(R.id.share_view);
+        donation_view=itemView.findViewById(R.id.donation_view);
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
         profile_lay=(LinearLayout)itemView.findViewById(R.id.profile_lay);
         options_lay=(LinearLayout)itemView.findViewById(R.id.options_layout);
         message_lay=(LinearLayout)itemView.findViewById(R.id.message_layout);
-        text1=(TextView)itemView.findViewById(R.id.text1);
+        tv_video_des=(TextView)itemView.findViewById(R.id.tv_video_des);
+        profile_pic=itemView.findViewById(R.id.profile_pic);
+        tv_name=itemView.findViewById(R.id.tv_name);
+        tv_time=itemView.findViewById(R.id.tv_time);
+        iv_like=itemView.findViewById(R.id.iv_like);
+
         progress_circular=(ProgressBar)itemView.findViewById(R.id.progress_circular);
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(helper==null)
                     return;
-                if(isPlay && isPlaying())
-                {
-                    isPlay=false;
-                    helper.pause();
-                    iv_pauseresume.setVisibility(View.VISIBLE);
 
-                }
-                else {
-                    isPlay=true;
-                    helper.play();
-                    iv_pauseresume.setVisibility(View.GONE);
+                if(progress_circular.getVisibility()!=View.VISIBLE) {
+                    if (isPlay && isPlaying()) {
+                        isPlay = false;
+                        helper.pause();
+                        iv_pauseresume.setVisibility(View.VISIBLE);
 
+                    } else {
+                        isPlay = true;
+                        helper.play();
+                        iv_pauseresume.setVisibility(View.GONE);
+
+                    }
                 }
             }
         });
@@ -147,6 +160,8 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onSeekProcessed() {
+          if(!isPlay)
+              pause();
 
             }
 
@@ -187,7 +202,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         options_lay.startAnimation(aniFade);
         message_lay.startAnimation(aniFade);
         profile_lay.startAnimation(aniFade);
-        text1.startAnimation(aniFade);
+        tv_video_des.startAnimation(aniFade);
         aniFade.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -199,7 +214,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                 options_lay.setVisibility(View.GONE);
                 message_lay.setVisibility(View.GONE);
                 profile_lay.setVisibility(View.GONE);
-                text1.setVisibility(View.GONE);
+                tv_video_des.setVisibility(View.GONE);
             }
 
             @Override
@@ -221,7 +236,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         options_lay.startAnimation(aniFade);
         message_lay.startAnimation(aniFade);
         profile_lay.startAnimation(aniFade);
-        text1.startAnimation(aniFade);
+        tv_video_des.startAnimation(aniFade);
         aniFade.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -233,7 +248,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                 options_lay.setVisibility(View.VISIBLE);
                 message_lay.setVisibility(View.VISIBLE);
                 profile_lay.setVisibility(View.VISIBLE);
-                text1.setVisibility(View.VISIBLE);
+                tv_video_des.setVisibility(View.VISIBLE);
             }
 
             @Override

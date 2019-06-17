@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#8e8e8e"
+    android:background="@drawable/gradiant_home"
     tools:context=".activity.AudienceActivity">
-<include layout="@layout/stagebar_layout"/>
+   <include layout="@layout/stagebar_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradiant_home"
+
         >
         <LinearLayout
             android:layout_width="match_parent"

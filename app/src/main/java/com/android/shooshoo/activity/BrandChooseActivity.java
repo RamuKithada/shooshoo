@@ -154,8 +154,9 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
     @Override
     public void onUpdateUserInfo(ResponseBody responseBody) {
         try {
-            Log.e("response",responseBody.string());
-            JSONObject object=new JSONObject(responseBody.string());
+            String res=responseBody.string();
+            Log.e("response",res);
+            JSONObject object=new JSONObject(res);
             if(object.optString("status").equalsIgnoreCase("1")) {
                 Intent homeIntent = new Intent(this, HomeActivity.class);
                 startActivity(homeIntent);

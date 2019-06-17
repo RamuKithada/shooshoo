@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.SnapHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,7 +40,7 @@ import im.ene.toro.widget.Container;
  *
  */
 
-public class FeedsActivity extends BaseActivity implements View.OnClickListener, FeedsView {
+public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView {
     Container container;
     FullVideoAdapter adapter;
     LinearLayoutManager layoutManager;
@@ -73,9 +74,11 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
     FeedsPresenter feedsPresenter;
 
     ConnectionDetector detector;
+    View view=null;
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+           view=v;
             Intent intent=new Intent(FeedsActivity.this,HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
@@ -98,8 +101,18 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
                     intent.putExtra("icon",4);
                     break;
             }
-            startActivity(intent);
-            finish();
+            if(!userSession.isLogin())
+            {
+                Intent loginIntent=new Intent(FeedsActivity.this,LoginActivity.class);
+                  startActivityForResult(loginIntent,150);
+            }
+            else
+            {
+                Log.e("user id",""+userSession.getUserId());
+                startActivity(intent);
+                finish();
+            }
+
 
         }
     };
@@ -146,7 +159,7 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
     }*/
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View v,Feed feed) {
         Intent intent=new Intent(this, LoginActivity.class);
 
         switch (v.getId()){
@@ -154,7 +167,7 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
                 if(!userSession.isLogin())
                     startActivityForResult(intent,100);
                 else {
-                    onActivityResult(RESULT_OK,100,null);
+                    onActivityResult(100,RESULT_OK,null);
                 }
 
                 break;
@@ -162,21 +175,23 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
                 if(!userSession.isLogin())
                     startActivityForResult(intent,101);
                 else {
-                    onActivityResult(RESULT_OK,101,null);
+                    onActivityResult(101,RESULT_OK,null);
                 }
                 break;
             case R.id.likes_view:
                 if(!userSession.isLogin())
                     startActivityForResult(intent,102);
                 else {
-                    onActivityResult(RESULT_OK,102,null);
+                   feed.setLike(!feed.isLike());
+                   adapter.notifyDataSetChanged();
+//                     onActivityResult(102,RESULT_OK,null);
                 }
                 break;
             case R.id.share_view:
                 if(!userSession.isLogin())
                     startActivityForResult(intent,103);
                 else {
-                    onActivityResult(RESULT_OK,103,null);
+                    onActivityResult(103,RESULT_OK,null);
                 }
                 break;
 
@@ -203,6 +218,10 @@ public class FeedsActivity extends BaseActivity implements View.OnClickListener,
                         break;
                     case 103:
 
+                        break;
+                    case 150:
+                        if(bottomNavigationOnClickListener!=null&&view!=null)
+                           bottomNavigationOnClickListener.onClick(view);
                         break;
                 }
         }

@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="#0025ffff"
     android:layout_gravity="center_horizontal"
     >
     <LinearLayout
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:orientation="horizontal"
+        android:background="#0025ffff"
         >
         <ImageView
             android:id="@+id/iv_back"
@@ -63,6 +65,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
+        android:background="#0025ffff"
         >
 
 

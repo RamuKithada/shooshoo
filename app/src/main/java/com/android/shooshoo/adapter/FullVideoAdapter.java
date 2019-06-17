@@ -2,9 +2,11 @@ package com.android.shooshoo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,17 @@ import com.android.shooshoo.activity.FeedCommentsActivity;
 import com.android.shooshoo.activity.LoginActivity;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.VideoModel;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.SimplePlayerViewHolder;
+import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
 /**
@@ -29,10 +38,10 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
     private ArrayList<Feed> modelArrayList;
     private Context context;
-    View.OnClickListener clickListener;
+    FeedClickListener clickListener;
 
 
-    public FullVideoAdapter(Context context, ArrayList<Feed> modelArrayList,View.OnClickListener clickListener)
+    public FullVideoAdapter(Context context, ArrayList<Feed> modelArrayList,FeedClickListener clickListener)
     {
         this.modelArrayList=modelArrayList;
         this.context=context;
@@ -46,17 +55,59 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     }
 
     @Override public void onBindViewHolder(SimplePlayerViewHolder holder, final int position) {
-        Feed feed=modelArrayList.get(position);
+        final Feed feed=modelArrayList.get(position);
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
         holder.bind(Uri.parse(url));
         Log.e("url",url);
-        holder.comment_view.setOnClickListener(clickListener);
+
+        holder.tv_video_des.setText(feed.getPostDescription());
+        if(ApiUrls.validateString(feed.getUserName()))
+            holder.tv_name.setText(feed.getUserName());
+      holder.tv_time.setText(ApiUrls.getDurationTimeStamp(feed.getCreatedOn()));
+      if(feed.isLike())
+            holder.iv_like.setImageResource(R.drawable.like_active);
+      else
+            holder.iv_like.setImageResource(R.drawable.like_normal);
+
+
+        if(ApiUrls.validateString(feed.getImage()))
+        Picasso.with(context).load(PROFILE_IMAGE_URL+feed.getImage()).error(R.drawable.profile_1).into(holder.profile_pic);
+        holder.comment_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
+        holder.likes_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
+        holder.share_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
+        holder.donation_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
     }
 
     @Override public int getItemCount() {
         return modelArrayList.size();
     }
-
+  public interface FeedClickListener{
+        void onClick(View view,Feed feed);
+  }
 
 
 }

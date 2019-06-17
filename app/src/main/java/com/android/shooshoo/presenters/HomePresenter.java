@@ -22,6 +22,7 @@ public class HomePresenter implements BasePresenter<HomeView> {
 
     @Override
     public void detachView() {
+        if(homeView!=null)
         homeView.showProgressIndicator(false);
         homeView=null;
         retrofitApis=null;

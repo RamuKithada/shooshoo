@@ -28,6 +28,7 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     @Override
     public void detachView() {
+        if(view!=null)
         view.showProgressIndicator(false);
         retrofitApis=null;
         view =null;

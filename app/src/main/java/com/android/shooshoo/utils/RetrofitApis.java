@@ -179,8 +179,9 @@ public interface RetrofitApis {
     Call<ResponseBody>   postforChallenge(@Part("challengeId") RequestBody  challengeId,
                                               @Part("userId") RequestBody  userId,
                                               @Part("type") RequestBody  type,
-                                              @Part MultipartBody.Part  content);
-
+                                              @Part MultipartBody.Part  content,
+                                              @Part("postDescription") RequestBody mpostDes);
+    @FormUrlEncoded
     @POST("recentposts")
     Call<RecentPostsResponce> getRecentPostsOfChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
 

@@ -170,7 +170,6 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             videos="yes";
 
                         Set<String> stringSet=userSession.getSponsors();
-
                         Iterator<String> stringIterator=stringSet.iterator();
                         StringBuilder builder=new StringBuilder();
                         while (stringIterator.hasNext()){
@@ -215,10 +214,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                     getGalleryVideos();
                 else requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
-            case R.id.edit_video_sizes:
 
-
-                break;
         }
     }
 

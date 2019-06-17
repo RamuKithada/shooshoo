@@ -588,9 +588,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
        }
        if(ApiUrls.validateString(edt_number.getText().toString())){
 
-           if(edt_number.getText().toString().length()>5){
+           if(edt_number.getText().toString().length()>255){
 
-               edt_number.setError(" Street number have maximum 5 digits");
+               edt_number.setError(" Street number have maximum 255 letters");
                edt_number.requestFocus();
                return false;
 

@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.net.URISyntaxException;
@@ -17,6 +18,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.WEEK_IN_MILLIS;
+import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
 /**
  * Api call related constants i.e, end points of the urls
@@ -31,6 +36,7 @@ public class ApiUrls {
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
     public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
     public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/participants/";
+    public static final String PROFILE_IMAGE_URL="http://165.22.94.168/uploads/profiles/";
 
 
     /**
@@ -119,7 +125,18 @@ public class ApiUrls {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
     public  synchronized static String getDurationTimeStamp(String newsdatetime) {
-        String timeDifference = "";
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date=simpleDateFormat.parse(newsdatetime);
+            CharSequence relativeDate =
+                    DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
+                            0L,DateUtils.FORMAT_ABBREV_ALL);
+            return relativeDate.toString();
+        }catch (ParseException e){
+            e.printStackTrace();
+            return newsdatetime;
+        }
+    /*    String timeDifference = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm a");
         SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
@@ -153,7 +170,7 @@ public class ApiUrls {
             else
                 timeDifference=""+diffInSeconds+"S "+"ago";
         }
-        return timeDifference;
+        return timeDifference;*/
     }
 
 }

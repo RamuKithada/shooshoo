@@ -86,7 +86,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
 
                     try {
                         String challengeVideoUri= ApiUrls.getFilePath(this,uri);
-                    challengePresenter.postChallenge(userSession.getUserId(),challenge.getChallengeId(),challengeVideoUri,"sponsor");
+                    challengePresenter.postChallenge(userSession.getUserId(),challenge.getChallengeId(),challengeVideoUri,"sponsor",about_video.getText().toString());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }

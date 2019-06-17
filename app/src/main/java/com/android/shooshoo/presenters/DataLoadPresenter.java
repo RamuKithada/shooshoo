@@ -31,7 +31,8 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
     @Override
     public void detachView() {
-        view.showProgressIndicator(false);
+         if(view!=null)
+          view.showProgressIndicator(false);
         this.retrofitApis=null;
         this.view=null;
 
@@ -71,25 +72,28 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
     }
    /**This is used to load cites data*/
     public void loadCites(String countryCode){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getCities(countryCode).enqueue(new Callback<CityResult>() {
 
             @Override
             public void onResponse(Call<CityResult> call, Response<CityResult> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
 
                     CityResult cityResult=response.body();
 
                     if(cityResult.getStatus()==1){
+                        if(view!=null)
                         view.onCitiesData(cityResult.getCities());
                         //                    displayListCity(cityResult.getCities(),spinner_city);
 
                     }else if(cityResult.getStatus()==2)
-                    {
+                    { if(view!=null)
                         view.onCitiesData(null);
                     }
-
+                    if(view!=null)
                         view.showMessage(cityResult.getMessage());
 
 
@@ -98,26 +102,34 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
             @Override
             public void onFailure(Call<CityResult> call, Throwable t) {
-                view.showProgressIndicator(false);
-                view.showMessage(t.getMessage());
+                if(view!=null) {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
 
             }
         });
     }
     /**This is used to load all categories and the brands*/
     public void loadAllcategoriesList(){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getAllCategories().enqueue(new Callback<CategoryList>() {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
                     CategoryList categoryList=response.body();
                     if(categoryList.getStatus()==1){
+                        if(view!=null)
                         view.onAllCategories(categoryList.getCategories());
                         //                    displayListCity(cityResult.getCities(),spinner_city);
 
-                    }else   view.showMessage(categoryList.getMessage());
+                    }else {
+                        if(view!=null)
+                        view.showMessage(categoryList.getMessage());
+                    }
 
 
                 }
@@ -125,8 +137,9 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
             @Override
             public void onFailure(Call<CategoryList> call, Throwable t) {
-                view.showProgressIndicator(false);
+                if(view!=null){ view.showProgressIndicator(false);
                 view.showMessage(t.getMessage());
+            }
             }
         });
 

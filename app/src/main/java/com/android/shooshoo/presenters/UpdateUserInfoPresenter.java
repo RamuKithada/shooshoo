@@ -34,20 +34,24 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
      * @param catList categories list that are selected by user
      */
     public void updateUserCat(String userId,String catList){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.updateUserCat(userId,catList).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
+                    if(view!=null)
                     view.onUpdateUserInfo(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view.showProgressIndicator(false);
+                if(view!=null){  view.showProgressIndicator(false);
                 view.showMessage(t.getMessage());
+                }
 
             }
         });
@@ -61,20 +65,25 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
      */
 
     public void updateUserBrand(String userId,String brandList){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.updateUserBrand(userId,brandList).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
+                    if(view!=null)
                     view.onUpdateUserInfo(response.body());
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                view.showProgressIndicator(false);
-                view.showMessage(t.getMessage());
+                if(view!=null){
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
 
             }
         });

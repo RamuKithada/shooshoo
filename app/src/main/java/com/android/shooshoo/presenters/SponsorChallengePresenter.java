@@ -32,18 +32,23 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
     @Override
     public void detachView() {
+        if(view!=null)
+            view.showProgressIndicator(false);
         this.view=null;
         this.retrofitApis=null;
     }
     Callback<CompanyResponse> companyResponseCallback=new Callback<CompanyResponse>() {
         @Override
         public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
+            if(view!=null)
             view.showProgressIndicator(false);
 
             if(response.isSuccessful()){
                 CompanyResponse companyResponse=response.body();
+                if(view!=null)
                 view.showMessage(companyResponse.getMessage());
                 if(companyResponse.getStatus()==1)
+                    if(view!=null)
                     view.onCompanyRegister(companyResponse.getData());
 
             }
@@ -51,20 +56,25 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
         @Override
         public void onFailure(Call<CompanyResponse> call, Throwable t) {
-            view.showProgressIndicator(false);
+            if(view!=null){
+                view.showProgressIndicator(false);
             view.showMessage(t.getMessage());
+        }
         }
     };
 
     Callback<ChallengeResponse> challengeResponseCallback=new Callback<ChallengeResponse>() {
         @Override
         public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
+            if(view!=null)
             view.showProgressIndicator(false);
 
             if(response.isSuccessful()){
                 ChallengeResponse companyResponse=response.body();
+                if(view!=null)
                 view.showMessage(companyResponse.getMessage());
                 if(companyResponse.getStatus()==1)
+                    if(view!=null)
                     view.onChallengeResponse(companyResponse.getData());
 
             }
@@ -72,9 +82,10 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
         @Override
         public void onFailure(Call<ChallengeResponse> call, Throwable t) {
+            if(view!=null){
             view.showProgressIndicator(false);
             view.showMessage(t.getMessage());
-        }
+        }}
     };
 
 
@@ -91,6 +102,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
             RequestBody reqFile= RequestBody.create(MediaType.parse("image/*"), file);
             body = MultipartBody.Part.createFormData("compLogo", file.getName(), reqFile);
         }
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.saveComapany(body,getTextPart(userId),getTextPart(compName),getTextPart(email),getTextPart(firstName),getTextPart(lastName)
           ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(mobile)
@@ -118,6 +130,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
            RequestBody reqFile= RequestBody.create(MediaType.parse("video/*"), challengeVideofile);
            challengeVideoBody = MultipartBody.Part.createFormData("challengeVideo", challengeVideofile.getName(), reqFile);
        }
+       if(view!=null)
        view.showProgressIndicator(true);
        retrofitApis.saveChallenge(getTextPart(userId),getTextPart(sponsoredBy),bannerImageBody,challengeVideoBody,getTextPart(challName),getTextPart(startDate),
                getTextPart(startTime),getTextPart(endDate),getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),getTextPart(videoEntries),getTextPart(maxLength)
@@ -130,6 +143,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
    public  void createAudience( String companyId, String userId,String amount, String keyDescription,String priceWorth, String totalPrize,
                                String winners,String radar,String audZipcode,String audMiles, String personalAddress,
                                 String categories,String brands,String ageStart, String ageEnd,String gender){
+       if(view!=null)
        view.showProgressIndicator(true);
         retrofitApis.saveAudience(companyId, userId,amount, keyDescription, priceWorth, totalPrize, winners, radar, audZipcode, audMiles, personalAddress,
                 categories,brands,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
@@ -138,7 +152,8 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
    }
 
    public void saveCampaign(String companyId, String userId, String budget, String summery){
-       view.showProgressIndicator(true);
+       if(view!=null)
+        view.showProgressIndicator(true);
         retrofitApis.saveCampaign(companyId,userId,budget,summery).enqueue(challengeResponseCallback);
 
 

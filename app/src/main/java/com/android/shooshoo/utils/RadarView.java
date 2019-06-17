@@ -105,7 +105,7 @@ public class RadarView extends View {
      *
      * @param xPoint
      * @param yPoint
-     * @return
+     * @return distance from the center of the Radar View
      */
     private float getDistance(float xPoint, float yPoint) {
         float distance;
