@@ -110,8 +110,9 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
     }
 
-   public void createChallenge(String  userId,String  sponsoredBy,String  bannerImage,String challVideo,String challName,String  startDate,String  startTime,
-                               String  endDate,String  endtime,String  description,String  photoEntries, String  videoEntries,String  maxLength){
+   public void createChallenge(String  userId,String  sponsoredBy,String challName,String  startDate,String  startTime,
+                               String  endDate,String  endtime,String  description,String  photoEntries,
+                               String  videoEntries,String  maxLength,String  bannerImage,String challVideo){
 
        File bannerImagefile=null;
        MultipartBody.Part bannerImageBody=null;
@@ -132,9 +133,9 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
        }
        if(view!=null)
        view.showProgressIndicator(true);
-       retrofitApis.saveChallenge(getTextPart(userId),getTextPart(sponsoredBy),bannerImageBody,challengeVideoBody,getTextPart(challName),getTextPart(startDate),
-               getTextPart(startTime),getTextPart(endDate),getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),getTextPart(videoEntries),getTextPart(maxLength)
-               ).enqueue(challengeResponseCallback);
+       retrofitApis.saveChallenge(getTextPart(userId),getTextPart(sponsoredBy),getTextPart(challName),getTextPart(startDate),
+               getTextPart(startTime),getTextPart(endDate),getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),
+               getTextPart(videoEntries),getTextPart(maxLength),bannerImageBody,challengeVideoBody).enqueue(challengeResponseCallback);
 
 
 

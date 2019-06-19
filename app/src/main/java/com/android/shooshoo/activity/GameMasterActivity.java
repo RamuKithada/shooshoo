@@ -248,6 +248,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
         datePickerDialog.show();
         hideKeyboard(this,edt_dob);
 

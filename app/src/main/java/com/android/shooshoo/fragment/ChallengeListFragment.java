@@ -120,13 +120,11 @@ public class ChallengeListFragment extends Fragment {
                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
                            @Override
                            public void onClick(View view, int position) {
-                               Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
+//                               Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
                                challenges=adapter.getChallenges();
                                if(challenges!=null) {
                                    Intent intent = new Intent(getActivity(), MyChallengesActivity.class);
-                                   intent.putExtra("image", challenges.get(position).getBannerImage());
-                                   intent.putExtra("name", challenges.get(position).getChallengeName());
-                                   intent.putExtra("des", challenges.get(position).getDescription());
+                                   intent.putExtra("challenge",challenges.get(position));
                                    startActivity(intent);
                                }
                            }

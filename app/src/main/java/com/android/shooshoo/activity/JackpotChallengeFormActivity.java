@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -199,6 +200,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                 setTime((EditText) view);
                 break;
             case R.id.edt_startdate:
+                setDate((EditText) view);
+                break;
             case R.id.edt_enddate:
                 setDate((EditText) view);
                 break;
@@ -243,6 +246,27 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             edt_end_time.requestFocus();
             return false;
         }
+
+            try
+            {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
+                String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
+                Date date1 = format.parse(dateStr);
+                Date date2 = format.parse(dateEnd);
+
+                if(date2.before(date1)){
+                    showMessage("Please select End time  after the Start time");
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
             edt_challenge_des.setError("Provide Description");
             edt_challenge_des.requestFocus();
@@ -417,7 +441,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
         }
     }
-
+int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
     private void setDate(final EditText edt_dob) {
 
@@ -425,6 +449,9 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                startYear=year;
+                startDate=dayOfMonth;
+                startMonth=month;
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);
@@ -433,6 +460,17 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        if(edt_dob.getId()==R.id.edt_enddate)
+        {
+            if(startDate>0&&startMonth>0&&startYear>0) {
+                c.set(startYear, startMonth, startDate);
+                edt_startdate.getText();
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            }else {
+                showMessage("Please select first Starting date and time");
+                return;
+        }
+        }
         datePickerDialog.show();
     }
 
@@ -451,6 +489,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                     Date date = calendar.getTime();
+
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
                     simpleDateFormat.applyPattern("HH:mm:ss");
                     time.setText(simpleDateFormat.format(date));

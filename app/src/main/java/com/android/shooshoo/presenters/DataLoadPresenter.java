@@ -81,7 +81,6 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
                 if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
-
                     CityResult cityResult=response.body();
 
                     if(cityResult.getStatus()==1){

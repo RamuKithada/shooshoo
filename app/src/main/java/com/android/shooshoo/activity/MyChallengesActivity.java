@@ -406,7 +406,7 @@ Challenge challenge;
     public void onSuccessfulUpload(String msg) {
 
     }
-
+    List<Post> posts;
     @Override
     public void onRecentPosts(List<Post> posts) {
 

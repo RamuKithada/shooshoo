@@ -35,7 +35,7 @@ public class ApiUrls {
     public static final String IMAGE_URL = "http://165.22.94.168/uploads/";
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
     public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
-    public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/participants/";
+    public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/feeds/";
     public static final String PROFILE_IMAGE_URL="http://165.22.94.168/uploads/profiles/";
 
 
@@ -136,41 +136,7 @@ public class ApiUrls {
             e.printStackTrace();
             return newsdatetime;
         }
-    /*    String timeDifference = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
 
-        Date newsdate = null;
-        try {
-            newsdate = sdf.parse(newsdatetime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date currentDate = new Date();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newsdate);
-        int ndd=cal.get(Calendar.DAY_OF_MONTH);
-
-        cal.setTime(currentDate);
-        int cdd=cal.get(Calendar.DAY_OF_MONTH);
-
-        if(ndd!=cdd)
-            timeDifference=""+ndd+" "+monthFormat.format(newsdate);
-        else {
-            long duration = currentDate.getTime()-newsdate.getTime();
-            long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-            long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-            long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
-            if(diffInHours>=1)
-                timeDifference = timeformat.format(newsdate);
-            else if(diffInMinutes>=1)
-                timeDifference=""+diffInMinutes+"M "+"ago";
-            else
-                timeDifference=""+diffInSeconds+"S "+"ago";
-        }
-        return timeDifference;*/
     }
 
 }

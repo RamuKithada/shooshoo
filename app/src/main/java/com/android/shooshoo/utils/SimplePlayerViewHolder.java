@@ -1,9 +1,11 @@
 package com.android.shooshoo.utils;
 
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -46,12 +48,16 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public LinearLayout options_lay;
     public LinearLayout message_lay;
     public LinearLayout profile_lay;
-    public TextView tv_video_des,tv_name,tv_time;
+    public TextView tv_video_des,tv_name,tv_time,tv_like_count,tv_views_count;
     public CircleImageView profile_pic;
     public ImageView iv_like;
+
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
+//        //Set media controller
+//        playerView.setUseController(true);
+//        playerView.requestFocus();
         playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
         card=(CardView)itemView.findViewById(R.id.card);
         comment_view=itemView.findViewById(R.id.comment_view);
@@ -67,6 +73,8 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         tv_name=itemView.findViewById(R.id.tv_name);
         tv_time=itemView.findViewById(R.id.tv_time);
         iv_like=itemView.findViewById(R.id.iv_like);
+        tv_like_count=itemView.findViewById(R.id.tv_like_count);
+        tv_views_count=itemView.findViewById(R.id.tv_views_count);
 
         progress_circular=(ProgressBar)itemView.findViewById(R.id.progress_circular);
         card.setOnClickListener(new View.OnClickListener() {
@@ -106,30 +114,50 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         if (helper == null) {
             helper = new ExoPlayerViewHelper(container, this, mediaUri);
 
+
+
         }
+
         helper.initialize(container,playbackInfo);
         helper.addPlayerEventListener(this);
+
         helper.addEventListener(new Playable.EventListener() {
             @Override
             public void onTimelineChanged(Timeline timeline, @Nullable Object manifest, int reason) {
-
+                Log.e("onTimelineChanged","");
             }
 
             @Override
             public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
-
+                Log.e("onTracksChanged","");
             }
 
             @Override
             public void onLoadingChanged(boolean isLoading) {
-
+                Log.e("onLoadingChanged","");
             }
+
 
             @Override
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
 
-                if(playerView.getPlayer()!=null)
-                    playerView.getPlayer().setRepeatMode(Player.REPEAT_MODE_ALL);
+                if(playerView.getPlayer()!=null) {
+                    if (playerView.getPlayer().getRepeatMode() != Player.REPEAT_MODE_ALL)
+                        playerView.getPlayer().setRepeatMode(Player.REPEAT_MODE_ALL);
+
+                    if (playWhenReady){
+                        if(handler==null)
+                        {
+                            handler=new Handler();
+                            handler.post(runnable);
+                        }
+
+                }
+
+
+
+                }
+
 
             }
 
@@ -150,6 +178,22 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onPositionDiscontinuity(int reason) {
+                if(playerView.getPlayer()!=null)
+                {
+                    long c_pos=  playerView.getPlayer().getCurrentPosition();
+                    long duration=playerView.getPlayer().getDuration();
+                    if(duration>0&&c_pos>0){
+                        float percentage=(c_pos*100)/duration;
+                        Log.e("c : "+c_pos,"duration: "+duration+" "+"percentage :"+percentage);
+                        if(percentage>30){
+
+                            Log.e("VIews","Viewed");
+                        }
+                    }
+
+
+
+                }
 
             }
 
@@ -160,8 +204,9 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onSeekProcessed() {
-          if(!isPlay)
-              pause();
+                Log.e("onSeekProcessed","");
+              if(!isPlay)
+                  pause();
 
             }
 
@@ -182,6 +227,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onRenderedFirstFrame() {
+                Log.e("onRenderedFirstFrame","");
 
             }
         });
@@ -266,6 +312,8 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         if (helper != null) {
             helper.release();
             helper = null;
+
+
         }
     }
 
@@ -279,6 +327,11 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     public void bind(Uri media) {
         this.mediaUri = media;
+        if(handler!=null){
+        handler.removeCallbacks(runnable);
+        handler=null;
+        }
+
     }
 
     @Override
@@ -311,10 +364,49 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     @Override
     public void onCompleted() {
+
         //        fadeIn();
 //        play();
         iv_pauseresume.setVisibility(View.VISIBLE);
         progress_circular.setVisibility(View.GONE);
     }
+    VideoViewedListener listener=null;
+
+    public void setListener(VideoViewedListener listener) {
+        this.listener = listener;
+    }
+
+    public Handler handler=null;
+    Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            calculateDuration();
+            if(handler!=null) {
+                handler.removeCallbacks(runnable);
+                handler.postDelayed(runnable, 2000);
+            }
+        }
+    };
+    public  void calculateDuration(){
+        if(playerView==null)
+            return;
+        if(playerView.getPlayer()==null)
+            return;
+
+        long c_pos = playerView.getPlayer().getCurrentPosition();
+        long duration = playerView.getPlayer().getDuration();
+        if (duration > 0 && c_pos > 0) {
+            float percentage = (c_pos * 100) / duration;
+            Log.e("c : " + c_pos, "duration: " + duration + " " + "percentage :" + percentage);
+            if (percentage > 30) {
+                if(listener!=null)
+                    listener.viewed();
+            }
+        }
+    }
+
+    public  interface VideoViewedListener{
+        void viewed();
+    };
 
 }

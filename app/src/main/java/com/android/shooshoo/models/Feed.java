@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Feed {
 
-    @SerializedName("id")
+    @SerializedName("postId")
     @Expose
     private String id;
     @SerializedName("challengeId")
@@ -32,7 +32,17 @@ public class Feed {
     @SerializedName("image")
     @Expose
     private String image;
+
+    @SerializedName("likes")
+    @Expose
+    private String likes;
+
+    @SerializedName("views")
+    @Expose
+    private String views;
+
     private boolean like;
+    private boolean viewed;
 
     public String getId() {
         return id;
@@ -106,11 +116,35 @@ public class Feed {
         this.image = image;
     }
 
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getViews() {
+        return views;
+    }
+
+    public void setViews(String views) {
+        this.views = views;
+    }
+
     public boolean isLike() {
         return like;
     }
 
     public void setLike(boolean like) {
         this.like = like;
+    }
+
+    public boolean isViewed() {
+        return viewed;
+    }
+
+    public void setViewed(boolean viewed) {
+        this.viewed = viewed;
     }
 }

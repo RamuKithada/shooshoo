@@ -169,26 +169,17 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                         if(ch_video_entites.isChecked())
                             videos="yes";
 
-                        Set<String> stringSet=userSession.getSponsors();
-                        Iterator<String> stringIterator=stringSet.iterator();
-                        StringBuilder builder=new StringBuilder();
-                        while (stringIterator.hasNext()){
-                            if(builder.length()==0){
-                                builder.append(stringIterator.next());
-                            }else {
-                                builder.append(',').append(stringIterator.next());
-                            }
+                        String sponsorIds=userSession.getSponsorIds();
 
-                        }
-                        if(builder.toString().trim().length()==0){
+                        if(sponsorIds!=null&&sponsorIds.trim().length()==0){
                             showMessage("Please save a company");
                             return;
                         }
 
-                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),builder.toString(), challengeImageUri, challengeVideoUri,
-                                edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
+                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,edt_challenge_name.getText().toString(),
+                                edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
-                                videos, lables[sizePos]);
+                                videos, lables[sizePos], challengeImageUri, challengeVideoUri);
 
                     } else showMessage("Please Check Internet connection");
                 }
@@ -246,6 +237,30 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             edt_end_time.requestFocus();
             return false;
         }
+
+
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
+            String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
+            Date date1 = format.parse(dateStr);
+            Date date2 = format.parse(dateEnd);
+
+            if(date2.before(date1)){
+                showMessage("Please select End time  after the Start time");
+                return false;
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
             edt_challenge_des.setError("Provide Description");
             edt_challenge_des.requestFocus();
@@ -431,6 +446,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         }
     }
 
+    int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
     private void setDate(final EditText edt_dob) {
 
@@ -438,6 +454,9 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                startYear=year;
+                startDate=dayOfMonth;
+                startMonth=month;
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);
@@ -446,6 +465,17 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        if(edt_dob.getId()==R.id.edt_enddate)
+        {
+            if(startDate>0&&startMonth>0&&startYear>0) {
+                c.set(startYear, startMonth, startDate);
+                edt_startdate.getText();
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            }else {
+                showMessage("Please select first Starting date and time");
+                return;
+            }
+        }
         datePickerDialog.show();
     }
 
@@ -488,7 +518,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     public void onChallengeResponse(Challenge company) {
         userSession.setSponsorChallenge(company.getChallengeId());
         userSession.savaChallenge(company);
-        userSession.addSponsor(null);
+        userSession.setSponsorIds(null);
         Intent intent=new Intent(this, AudienceInstructionActivity.class);
         intent.putExtra("challenge_type",1);
         startActivity(intent);

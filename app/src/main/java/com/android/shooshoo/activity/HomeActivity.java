@@ -32,8 +32,8 @@ public class HomeActivity extends BaseActivity implements HomeView,View.OnClickL
     private TextView mTextMessage;
     @BindView(R.id.iv_help)
     ImageView iv_help;
-    @BindView(R.id.iv_wallet)
-    ImageView iv_wallet;
+    /*@BindView(R.id.iv_wallet)
+    ImageView iv_wallet;*/
     @BindView(R.id.iv_filters)
     ImageView iv_filters;
     @BindView(R.id.iv_search)
@@ -97,7 +97,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.VISIBLE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.VISIBLE);
+//                iv_wallet.setVisibility(View.VISIBLE);
                 iv_filters.setVisibility(View.VISIBLE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
@@ -108,7 +108,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.VISIBLE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
@@ -119,7 +119,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.VISIBLE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
@@ -131,7 +131,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.VISIBLE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
@@ -142,7 +142,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.GONE);
                 iv_help.setVisibility(View.GONE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
@@ -277,7 +277,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         iv_chat.setVisibility(View.VISIBLE);
         iv_help.setVisibility(View.VISIBLE);
         iv_search.setVisibility(View.VISIBLE);
-        iv_wallet.setVisibility(View.VISIBLE);
+//        iv_wallet.setVisibility(View.VISIBLE);
         iv_profile.setVisibility(View.VISIBLE);
         iv_filters.setVisibility(View.GONE);
         iv_edit_profile.setVisibility(View.GONE);
@@ -335,7 +335,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);
                 iv_search.setVisibility(View.GONE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.VISIBLE);
@@ -350,7 +350,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_profile.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);
                 iv_search.setVisibility(View.VISIBLE);
-                iv_wallet.setVisibility(View.GONE);
+//                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram")).commit();
                 break;
@@ -367,6 +367,8 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
 
     @Override
     public void onLoadSponsors(List<Challenge> challenges) {
+
+
 
     }
 }

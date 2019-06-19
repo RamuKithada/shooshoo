@@ -34,6 +34,8 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 
 /**
  * Here we using the Retrofit Library for service calls
@@ -121,10 +123,12 @@ public interface RetrofitApis {
 
     @Multipart
     @POST("sponsor")
-    Call<ChallengeResponse> saveChallenge(@Part("createdBy") RequestBody  createdBy, @Part("sponsoredBy") RequestBody  sponsoredBy, @Part MultipartBody.Part  bannerImage, @Part MultipartBody.Part  challVideo,
-                                          @Part("challengeName") RequestBody  challName, @Part("startDate") RequestBody  startDate, @Part("startTime") RequestBody  startTime,
-                                          @Part("endDate") RequestBody  endDate, @Part("endTime") RequestBody  endTime, @Part("description") RequestBody  description, @Part("photoEntries") RequestBody  photoEntries,
-                                          @Part("videoEntries") RequestBody  videoEntries, @Part("maxLength") RequestBody  maxLength );
+    Call<ChallengeResponse> saveChallenge(@Part("createdBy") RequestBody  createdBy, @Part("sponsoredBy") RequestBody  sponsoredBy,
+                                          @Part("challengeName") RequestBody  challName, @Part("startDate") RequestBody  startDate,
+                                          @Part("startTime") RequestBody  startTime,@Part("endDate") RequestBody  endDate, @Part("endTime") RequestBody  endTime,
+                                          @Part("description") RequestBody  description, @Part("photoEntries") RequestBody  photoEntries,
+                                          @Part("videoEntries") RequestBody  videoEntries, @Part("maxLength") RequestBody  maxLength,
+                                          @Part MultipartBody.Part  bannerImage, @Part MultipartBody.Part  challVideo);
     @FormUrlEncoded
     @POST("audience")
     Call<ChallengeResponse> saveAudience(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,@Field("amount") String amount,@Field("keyDescription") String keyDescription,
@@ -175,7 +179,7 @@ public interface RetrofitApis {
     Call<HomeSponsorResponce> getHomeSponcers();
 
     @Multipart
-    @POST("addParticipant")
+    @POST("addFeed")
     Call<ResponseBody>   postforChallenge(@Part("challengeId") RequestBody  challengeId,
                                               @Part("userId") RequestBody  userId,
                                               @Part("type") RequestBody  type,
@@ -188,6 +192,23 @@ public interface RetrofitApis {
 
     @GET("feeds")
     Call<FeedsResponse> getFeeds();
+
+    @FormUrlEncoded
+    @POST("feedLike")
+    Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId);
+
+    @FormUrlEncoded
+    @POST("views")
+    Call<ResponseBody> feedViewed(@Field("userId") String userId,@Field("postId") String postId);
+
+
+    @POST("videolength")
+    @FormUrlEncoded
+    Call<ResponseBody> getVideolength(@Field("name") String videoname);
+
+    @Streaming
+    @GET
+    Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
 
 }
 

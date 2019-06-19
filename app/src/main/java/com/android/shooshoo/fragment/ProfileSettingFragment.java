@@ -25,6 +25,7 @@ import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 
@@ -40,7 +41,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  * this is Profile screen to show general profile settings options
  */
-public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView {
+public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView, FragmentListDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -102,7 +103,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     Country country=new Country();
     String gender="male";
     City city=new City();
-    int country_pos=-1,city_pos=-1;
+    int country_pos=-1,city_pos=-1,gender_pos=-1;
+    static ProfileSettingFragment fragment;
 
     public ProfileSettingFragment() {
         // Required empty public constructor
@@ -118,11 +120,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
      */
     // TODO: Rename and change types and number of parameters
     public static ProfileSettingFragment newInstance(String param1, String param2) {
-        ProfileSettingFragment fragment = new ProfileSettingFragment();
+        if(fragment==null)
+        {
+            fragment = new ProfileSettingFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        }
         return fragment;
     }
 
@@ -186,6 +191,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     private void loadData() {
         dataLoadPresenter.loadCountryData();
         dataLoadPresenter.loadCites("99");
+        dataLoadPresenter.loadAllcategoriesList();
     }
 
     String active="#FFFFFF",inactive="#CCCCCC";
@@ -427,13 +433,19 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         return true;
     }
 
+    List<City> cities;
     @Override
     public void onCitiesData(List<City> cities) {
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
         displayListCity(cities,edt_city);
     }
 
+    List<Country> countries;
     @Override
     public void onCountryData(List<Country> countries) {
+        this.countries=countries;
         displayList(countries,edt_country);
     }
 
@@ -547,6 +559,34 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             }
         });
 
+
+    }
+
+    @Override
+    public void onEditView(int view, int position) {
+        switch (view){
+            case R.id.edt_gender:
+                gender_pos=position;
+                gender=genders[position];
+                edt_gender.setText(gender);
+
+                break;
+            case R.id.edt_country:
+                if(countries!=null)
+                {
+                    dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                    edt_country.setText(countries.get(position).getCountryName());
+                    country_pos=position;
+                    country=countries.get(position);
+                }
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {edt_city.setText(cities.get(position).getCityName());
+                    city=cities.get(position);
+                    city_pos=position;}
+                break;
+        }
 
     }
 }

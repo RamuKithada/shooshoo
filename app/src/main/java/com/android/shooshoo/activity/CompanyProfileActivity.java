@@ -35,6 +35,7 @@ import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -155,7 +156,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     DataLoadPresenter dataLoadPresenter;
     SponsorChallengePresenter sponsorChallengePresenter;
     ConnectionDetector connectionDetector;
-    int no_of_companies=0;
+
+    ArrayList<String> sponsorIds=new ArrayList<>();
 
 
     @Override
@@ -672,19 +674,30 @@ View view=null;
     @Override
     public void onCompanyRegister(Company company) {
 
-        userSession.addSponsor(company.getCompanyId());
+        sponsorIds.add(company.getCompanyId());
+
+
         if(view!=null){
             if(view.getId()==R.id.btn_more_companies){
-                no_of_companies++;
                 clearAll();
 
                 iv_profile_pic.requestFocus();
-                if(no_of_companies==2){
+                if(sponsorIds.size()==2){
                     view.setVisibility(View.GONE);
                 }
             }else if(view.getId()==R.id.btn_next){
                 Intent intent=new Intent(this,TheChallengeActivity.class);
                 intent.putExtra("challenge_type",1);
+                StringBuilder ids=new StringBuilder();
+                for(int index=0;index<sponsorIds.size();index++)
+                {
+                    if(index>0)
+                        ids.append(',').append(sponsorIds.get(index));
+                      else
+                        ids.append(sponsorIds.get(index));
+
+                }
+                userSession.setSponsorIds(ids.toString());
                 startActivity(intent);
             }
             }

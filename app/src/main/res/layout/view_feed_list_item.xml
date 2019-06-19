@@ -170,7 +170,7 @@
                     android:padding="5dp"
                     />
                 <TextView
-                    android:id="@+id/iv_like_count"
+                    android:id="@+id/tv_like_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -251,12 +251,12 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_toLeftOf="@+id/text3"
+                    android:layout_toLeftOf="@+id/tv_views_count"
                     android:layout_margin="5dp"
                     app:srcCompat="@drawable/ic_remove_red_eye_black_24dp"
                     />
                 <TextView
-                    android:id="@+id/text3"
+                    android:id="@+id/tv_views_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1,12,543"

@@ -206,7 +206,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         setFocusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
         setFocusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
         setFocusChange(edt_dob,R.id.dob_line,iv_dob,new int[]{R.drawable.date_birth_active,R.drawable.date_birth_normal});
-//        setFocusChange(edt_city,R.id.city_line,iv_city,new int[]{R.drawable.city_active,R.drawable.city_normal});
+        setFocusChange(edt_city,R.id.city_line,iv_city,new int[]{R.drawable.city_active,R.drawable.city_normal});
+        setFocusChange(edt_country,R.id.country_line,iv_country,new int[]{R.drawable.country_active,R.drawable.country_normal});
+        setFocusChange(edt_gender,R.id.gender_line,iv_gender,new int[]{R.drawable.gender_active,R.drawable.gender_normal});
         setFocusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
         setFocusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
         setFocusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
@@ -279,6 +281,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
              datePickerDialog.show();
         hideKeyboard(this,edt_dob);
 
@@ -310,7 +313,8 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
             case R.id.ll_upload_photo_layout:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
                     getGalleryImages();
-                else requestPermission(WRITE_EXTERNAL_STORAGE);
+                else
+                    requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
         }
     }
@@ -430,7 +434,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
         newsImage=picturePath;
         Picasso.with(this).load(picturePath).into(iv_profile_pic);
     }
-    int country_pos=-1,city_pos=-1;
+    int country_pos=-1,city_pos=-1,gender_pos=-1;
     private void displayList(final List<Country> dropDownItems, final EditText editText)
     {
         if(dropDownItems==null)
@@ -534,11 +538,18 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
 
        }
        if(country_pos<0){
-           showMessage("Please Select Country");
+           edt_country.setError("Please Select Country");
+           edt_country.requestFocus();
            return false;
        }
        if(city_pos<0){
-           showMessage("Please Select City");
+           edt_city.setError("Please Select City");
+           edt_city.requestFocus();
+           return false;
+       }
+       if(gender_pos<0){
+           edt_gender.setError("Please Select Gender");
+           edt_gender.requestFocus();
            return false;
        }
 
@@ -612,6 +623,13 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
            return false;
 
        }
+       if(!ApiUrls.validateString(edt_dob.getText().toString())){
+
+           edt_dob.setError(" Select Birth date");
+           edt_dob.requestFocus();
+           return false;
+
+       }
        if(edt_mobile.getText().toString().length()>15){
            edt_mobile.setError("Mobile Number have maximum 15 digits");
            edt_mobile.requestFocus();
@@ -654,7 +672,10 @@ public class ProfileFillingFormActivity extends BaseActivity implements View.OnC
     public void onEditView(int view, int position) {
         switch (view){
             case R.id.edt_gender:
-                edt_gender.setText(genders[position]);
+                gender_pos=position;
+                gender=genders[position];
+                edt_gender.setText(gender);
+
                 break;
             case R.id.edt_country:
                  if(countries!=null)

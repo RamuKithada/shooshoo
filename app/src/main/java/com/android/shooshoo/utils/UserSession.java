@@ -167,33 +167,19 @@ public  void logout(){
 
     /** add to preferences company ids
      *
-     * @param sponsorId Sponsored comapany id
+     * @param sponsorIds Sponsored comapany id
      */
-    public void addSponsor(String sponsorId){
-        if(sponsorId==null){
-            pref.edit().putStringSet(SPONSOR_BY,null).commit();
-        }
+    public void setSponsorIds(String sponsorIds){
+            pref.edit().putString(SPONSOR_BY,sponsorIds).commit();
 
-
-        if(pref.contains(SPONSOR_BY))
-        {
-           Set<String> sponsors=pref.getStringSet(SPONSOR_BY,null);
-           if(sponsors==null)
-               sponsors=new HashSet<String>();
-               sponsors.add(sponsorId);
-           pref.edit().putStringSet(SPONSOR_BY,sponsors).commit();
-        }else {
-            Set<String> sponsors=new HashSet<String>();
-            pref.edit().putStringSet(SPONSOR_BY,sponsors).commit();
-        }
     }
 
     /**
      *
      * @return ids of the companies ids those r sponsor the challenge
      */
-    public Set<String> getSponsors(){
-       return pref.getStringSet(SPONSOR_BY,null);
+    public String getSponsorIds(){
+       return pref.getString(SPONSOR_BY,null);
     }
 
     /***

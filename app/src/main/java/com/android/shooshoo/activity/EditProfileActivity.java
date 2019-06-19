@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.adapter.ProfileViewPagerAdapter;
+import com.android.shooshoo.fragment.ProfileSettingFragment;
 import com.android.shooshoo.utils.FragmentListDialogListener;
 
 import butterknife.BindView;
@@ -45,6 +47,9 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
     LinearLayout navigation_winners;
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ProfileViewPagerAdapter profileViewPagerAdapter;
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -93,11 +98,11 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
         TextView profilename = (TextView) headerview.findViewById(R.id.profilename);
         TextView location = (TextView) headerview.findViewById(R.id.location);
         navigationView.setNavigationItemSelectedListener(this);
-        TabLayout tabLayout=findViewById(R.id.tab_layout);
-        ViewPager viewPager=findViewById(R.id.view_pager);
+         tabLayout=findViewById(R.id.tab_layout);
+         viewPager=findViewById(R.id.view_pager);
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
-        ProfileViewPagerAdapter profileViewPagerAdapter=new ProfileViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Profile Settings","Profile Visibility"});
+         profileViewPagerAdapter=new ProfileViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Profile Settings","Profile Visibility"});
         viewPager.setAdapter(profileViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         iv_chat.setOnClickListener(new View.OnClickListener() {
@@ -153,6 +158,11 @@ switch (menuItem.getItemId()){
 
     @Override
     public void onEditView(int view, int pos) {
-
+        viewPager.getCurrentItem();
+       Fragment fragment= profileViewPagerAdapter.getItem(viewPager.getCurrentItem());
+       if(fragment!=null)
+           if(fragment instanceof ProfileSettingFragment){
+               ((ProfileSettingFragment) fragment).onEditView(view,pos);
+           }
     }
 }
