@@ -51,6 +51,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public TextView tv_video_des,tv_name,tv_time,tv_like_count,tv_views_count;
     public CircleImageView profile_pic;
     public ImageView iv_like;
+    public ImageView plus_mark;
 
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
@@ -65,6 +66,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         share_view=itemView.findViewById(R.id.share_view);
         donation_view=itemView.findViewById(R.id.donation_view);
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
+        plus_mark=(ImageView)itemView.findViewById(R.id.plus_mark);
         profile_lay=(LinearLayout)itemView.findViewById(R.id.profile_lay);
         options_lay=(LinearLayout)itemView.findViewById(R.id.options_layout);
         message_lay=(LinearLayout)itemView.findViewById(R.id.message_layout);

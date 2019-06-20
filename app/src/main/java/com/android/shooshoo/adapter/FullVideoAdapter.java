@@ -16,7 +16,6 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.FeedCommentsActivity;
 import com.android.shooshoo.activity.LoginActivity;
 import com.android.shooshoo.models.Feed;
-import com.android.shooshoo.models.VideoModel;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.SimplePlayerViewHolder;
 import com.squareup.picasso.Picasso;
@@ -54,6 +53,10 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         return new SimplePlayerViewHolder(view);
     }
  int cutPos=-1;
+    public int getCurrentPosition(){
+        return cutPos;
+    }
+
     @Override public void onBindViewHolder(final SimplePlayerViewHolder holder, final int position) {
         final Feed feed=modelArrayList.get(position);
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
@@ -103,11 +106,26 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
             }
         });
+        holder.plus_mark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                     clickListener.onClick(v,feed);
+            }
+        });
+        holder.profile_lay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
     }
 
     @Override public int getItemCount() {
         return modelArrayList.size();
     }
+
 
     @Override
     public void viewed() {
@@ -115,15 +133,14 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
          if(clickListener!=null)
              if(!modelArrayList.get(cutPos).isViewed())
              {
-                 clickListener.onView(modelArrayList.get(cutPos).getId());
-                 modelArrayList.get(cutPos).setViewed(true);
+                 clickListener.onView(modelArrayList.get(cutPos));
              }
       }
     }
 
     public interface FeedClickListener{
         void onClick(View view,Feed feed);
-        void onView(String feedid);
+        void onView(Feed feed);
   }
 
 

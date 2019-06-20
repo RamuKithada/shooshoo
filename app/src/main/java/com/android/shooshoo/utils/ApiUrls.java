@@ -125,6 +125,9 @@ public class ApiUrls {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
     public  synchronized static String getDurationTimeStamp(String newsdatetime) {
+       if(newsdatetime==null)
+           return null;
+
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date=simpleDateFormat.parse(newsdatetime);

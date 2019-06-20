@@ -72,10 +72,13 @@
                     />
 
                 <ImageView
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:id="@+id/plus_mark"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:padding="5dp"
                     android:layout_alignTop="@+id/profile_pic"
                     android:layout_marginLeft="-13dp"
+                    android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@+id/profile_pic"
                     android:src="@drawable/add_plus_icon"
                     />

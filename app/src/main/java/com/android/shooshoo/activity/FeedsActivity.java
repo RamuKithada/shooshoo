@@ -7,12 +7,10 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
@@ -29,7 +27,6 @@ import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.models.Feed;
-import com.android.shooshoo.models.VideoModel;
 import com.android.shooshoo.presenters.FeedsPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -52,7 +49,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.Manifest.permission.GET_ACCOUNTS;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
@@ -73,15 +69,6 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     RelativeLayout bottom_view;
     private ArrayList<Feed> modelArrayList=new ArrayList<>();
 
-/*    String[] urls=new String[]{
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-            "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-            "http://www.exit109.com/~dnn/clips/RW20seconds_2.mp4",
-            "http://www.exit109.com/~dnn/clips/RW20seconds_1.mp4",
-
-    };*/
 
 
     @BindView(R.id.navigation_home)
@@ -208,12 +195,13 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,102);
                 else {
-                   feed.setLike(!feed.isLike());
-                    ImageView imageView=v.findViewById(R.id.iv_like);
+
+
+                  /*  ImageView imageView=v.findViewById(R.id.iv_like);
                     if(feed.isLike())
                         imageView.setImageResource(R.drawable.like_active);
                     else
-                        imageView.setImageResource(R.drawable.like_normal);
+                        imageView.setImageResource(R.drawable.like_normal);*/
                     feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
 
 
@@ -226,6 +214,18 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
                      onDownloadImage(url,null);
                       break;
+            case R.id.plus_mark:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,103);
+                else {
+                    feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
+                }
+                break;
+                case R.id.profile_lay:
+                    Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
+                    userProfileIntent.putExtra("userId",feed.getUserId());
+                      startActivity(userProfileIntent);
+                    break;
 
 
 
@@ -233,8 +233,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
 
     @Override
-    public void onView(String feedid) {
-        feedsPresenter.viewFeed(userSession.getUserId(),feedid);
+    public void onView(Feed feed) {
+        this.feed=feed;
+        feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
     }
 
     /***
@@ -249,6 +250,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 switch (requestCode){
                     case 100:
                         intent=new Intent(this,FeedCommentsActivity.class);
+                        intent.putExtra("feedId",feed.getId());
                         startActivity(intent);
                         break;
                     case 101:
@@ -277,12 +279,40 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
     @Override
     public void onFeedLike(int status,String message){
-           showMessage(message);
+        if(status==1) {
+            try {
+                int likes = Integer.parseInt(feed.getLikes());
+                if(feed.isLike())
+                        likes--;
+                    else
+                        likes++;
+                feed.setLike(!feed.isLike());
+                feed.setLikes(String.valueOf(likes));
+                adapter.notifyDataSetChanged();
+            } catch (Exception e) {
+
+            }
+        }
 
     }
 
     @Override
     public void onFeedViewed(int status, String message) {
+        if(status==1) {
+            try {
+                int views = Integer.parseInt(feed.getViews());
+                views++;
+                feed.setViews(String.valueOf(views));
+
+
+            } catch (Exception e) {
+
+            }
+        }
+    }
+
+    @Override
+    public void onFollowed(int status, String message) {
         showMessage(message);
     }
 

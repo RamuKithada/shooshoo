@@ -29,6 +29,7 @@
             />
 
         <TextView
+            android:id="@+id/total_comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -70,6 +71,24 @@
         android:background="@color/color_gray"
         />
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/reply_for"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="1"
+            android:maxLines="1"
+            android:layout_gravity="center"
+            android:gravity="left"
+            android:layout_margin="2dp"
+            android:textColor="@color/white_text"
+            android:singleLine="true"
+            android:visibility="gone"
+            />
+    <LinearLayout
         android:id="@+id/message_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -104,5 +123,6 @@
 
             />
 
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

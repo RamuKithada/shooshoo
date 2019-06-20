@@ -8,6 +8,7 @@ import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CityResult;
+import com.android.shooshoo.models.CommentsResponce;
 import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.FeedsResponse;
@@ -194,12 +195,15 @@ public interface RetrofitApis {
     Call<FeedsResponse> getFeeds();
 
     @FormUrlEncoded
-    @POST("feedLike")
+    @POST("likeFeed")
     Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId);
 
     @FormUrlEncoded
     @POST("views")
     Call<ResponseBody> feedViewed(@Field("userId") String userId,@Field("postId") String postId);
+    @FormUrlEncoded
+    @POST("followers")
+    Call<ResponseBody> followUser(@Field("userId") String userId,@Field("fromId") String fromId);
 
 
     @POST("videolength")
@@ -209,6 +213,18 @@ public interface RetrofitApis {
     @Streaming
     @GET
     Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);
+
+    @FormUrlEncoded
+    @POST("comments")
+    Call<CommentsResponce> getComments(@Field("postId") String postId, @Field("limit") String limit, @Field("offset") String offset);
+
+    @FormUrlEncoded
+    @POST("addComment")
+    Call<ResponseBody> addComments(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment);
+
+    @FormUrlEncoded
+    @POST("replyComment")
+    Call<ResponseBody> replyComment(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment,@Field("commentId") String commentId);
 
 }
 

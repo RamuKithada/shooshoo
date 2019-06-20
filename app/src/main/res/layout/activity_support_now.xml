@@ -76,12 +76,11 @@
                android:layout_height="wrap_content"
                android:background="@drawable/circler_view_bg"
                >
-           <de.hdodenhof.circleimageview.CircleImageView
+           <ImageView
                android:layout_width="50dp"
                android:layout_height="50dp"
                android:layout_margin="15dp"
-               android:layout_gravity="center"
-               android:scaleType="fitCenter"
+               android:layout_centerInParent="true"
                android:src="@drawable/ic_wallet_notification_icon"
                />
            </RelativeLayout>
