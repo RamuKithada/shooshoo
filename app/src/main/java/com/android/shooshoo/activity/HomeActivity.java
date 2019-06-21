@@ -330,7 +330,8 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         {
             case R.id.iv_profile:
                 FragmentManager fragmentManager=getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ProfileFragment.newInstance("Hi","Ram")).commit();
+
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ProfileFragment.newInstance(userSession.getUserId(),"Ram")).commit();
                 mTextMessage.setText(R.string.profile);
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);

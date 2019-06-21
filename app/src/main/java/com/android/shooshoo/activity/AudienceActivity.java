@@ -292,11 +292,16 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     }
 
                 }
-                    JSONArray jsonArray=new JSONArray();
-                for (EditModel model:prices){
-                    jsonArray.put(model.getEditTextValue());
+                StringBuilder stringBuilder=new StringBuilder();
+//                    JSONArray jsonArray=new JSONArray();
+                for (int index=0;index<prices.size();index++){
+                    EditModel model=prices.get(index);
+                    if(index!=0){
+                        stringBuilder.append(',').append(model.getEditTextValue());
+                    }else stringBuilder.append(model.getEditTextValue());
+
                 }
-                jsonArray.put(edt_price_worth.getText().toString());
+                    stringBuilder.append(',').append(edt_price_worth.getText().toString());
 
            StringBuilder cats=new StringBuilder();
                 StringBuilder brands=new StringBuilder();
@@ -333,7 +338,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                         return;
                     }
 sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
-        jsonArray.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
+        stringBuilder.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
         edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
         ,age.get(minAgePos),age.get(maxAgePos),gender.toString());
         }

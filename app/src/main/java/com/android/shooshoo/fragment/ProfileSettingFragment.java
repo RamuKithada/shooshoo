@@ -3,6 +3,7 @@ package com.android.shooshoo.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,13 +22,18 @@ import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Post;
+import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.DataLoadPresenter;
+import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
+import com.android.shooshoo.views.ProfileView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +47,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  * this is Profile screen to show general profile settings options
  */
-public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView, FragmentListDialogListener {
+public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView, ProfileView,FragmentListDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,6 +55,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     BaseView baseView;
     DataLoadPresenter dataLoadPresenter;
+    ProfilePresenter profilePresenter;
     List<Category> categoryArrayList=new ArrayList<Category>();
     CategorySelectionAdapter categorySelectionAdapter;
 
@@ -105,6 +112,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     City city=new City();
     int country_pos=-1,city_pos=-1,gender_pos=-1;
     static ProfileSettingFragment fragment;
+    UserSession userSession;
 
     public ProfileSettingFragment() {
         // Required empty public constructor
@@ -168,7 +176,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         btn_save_bank.setOnClickListener(this);
         dataLoadPresenter=new DataLoadPresenter();
         dataLoadPresenter.attachView(this);
+        profilePresenter=new ProfilePresenter();
+        profilePresenter.attachView(this);
+
         connectionDetector=new ConnectionDetector(getActivity());
+        userSession=new UserSession(getActivity());
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
         edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,14 +196,13 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(connectionDetector.isConnectingToInternet())
             loadData();
-
-
     }
 
     private void loadData() {
-        dataLoadPresenter.loadCountryData();
-        dataLoadPresenter.loadCites("99");
-        dataLoadPresenter.loadAllcategoriesList();
+          gender_pos=country_pos=city_pos=-1;
+          isloadedFirst=3;
+        profilePresenter.loadProfile(userSession.getUserId());
+
     }
 
     String active="#FFFFFF",inactive="#CCCCCC";
@@ -440,6 +451,19 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         edt_city.setText(null);
         city=null;
         displayListCity(cities,edt_city);
+        if(city_pos<0&&isloadedFirst>0){
+            isloadedFirst--;
+            if(cities!=null&&userInfo!=null){
+                for(int index=0;index<cities.size();index++)
+                    if(cities.get(index).getCityId().equalsIgnoreCase(userInfo.getCity())){
+                        city_pos=index;
+                        onEditView(R.id.edt_city,city_pos);
+                        return;
+                    }
+
+            }
+
+        }
     }
 
     List<Country> countries;
@@ -447,6 +471,18 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     public void onCountryData(List<Country> countries) {
         this.countries=countries;
         displayList(countries,edt_country);
+        if(country_pos<0&&isloadedFirst>0){
+               isloadedFirst--;
+            if(countries!=null&&userInfo!=null){
+                for(int index=0;index<countries.size();index++)
+                    if(countries.get(index).getCountryId().equalsIgnoreCase(userInfo.getCountry())){
+                        country_pos=index;
+                        onEditView(R.id.edt_country,country_pos);
+                        return;
+                    }
+
+            }
+        }
     }
 
     @Override
@@ -462,6 +498,13 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         this.categoryArrayList = categories;
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
         this.cat_subcat_list.setAdapter(this.categorySelectionAdapter);
+        if(isloadedFirst>0){
+           isloadedFirst--;
+
+
+
+        }
+
     }
 
     @Override
@@ -587,6 +630,48 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                     city_pos=position;}
                 break;
         }
+
+    }
+
+    public UserInfo userInfo=null;
+     int  isloadedFirst=3;
+    @Override
+    public void onProfileData(final UserInfo userInfo) {
+        if(userInfo!=null) {
+            this.userInfo = userInfo;
+            edt_user_name.setText(userInfo.getUserName());
+            edt_user_email.setText(userInfo.getEmail());
+            edt_first_name.setText(userInfo.getFirstName());
+            edt_last_name.setText(userInfo.getLastName());
+            edt_city.setText(userInfo.getCity());
+            edt_country.setText(userInfo.getCountry());
+            edt_street_name.setText(userInfo.getStreet());
+            edt_street_number.setText(userInfo.getStreetNum());
+            edt_zipcode.setText(userInfo.getZipcode());
+            edt_mobile_number.setText(userInfo.getMobileNumber());
+            for(int index=0;index<genders.length;index++)
+                   if(genders[index].equalsIgnoreCase(userInfo.getGender())){
+                        gender_pos=index;
+            }
+            edt_gender.setText(userInfo.getGender());
+                   if(connectionDetector.isConnectingToInternet()) {
+                       isloadedFirst=3;
+                       dataLoadPresenter.loadCountryData();
+                       dataLoadPresenter.loadAllcategoriesList();
+                   }
+
+
+        }
+
+    }
+
+    @Override
+    public void onBrands(List<Brand> brands) {
+
+    }
+
+    @Override
+    public void onPosts(List<Post> posts) {
 
     }
 }

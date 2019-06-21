@@ -23,7 +23,13 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.adapter.ProfileViewPagerAdapter;
 import com.android.shooshoo.fragment.ProfileSettingFragment;
+import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.Post;
+import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.views.ProfileView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,4 +171,6 @@ switch (menuItem.getItemId()){
                ((ProfileSettingFragment) fragment).onEditView(view,pos);
            }
     }
+
+
 }

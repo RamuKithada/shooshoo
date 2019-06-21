@@ -141,5 +141,23 @@ public class ApiUrls {
         }
 
     }
+    public  synchronized static String getAge(String newsdatetime) {
+       if(newsdatetime==null)
+           return null;
+        Calendar startDate=Calendar.getInstance();
+
+        Calendar endDate=Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date=simpleDateFormat.parse(newsdatetime);
+            startDate.setTime(date);
+            DateCalculator dateCaculator=DateCalculator.calculateAge(startDate,endDate);
+            return ""+dateCaculator.getYear()+" Years";
+        }catch (ParseException e){
+            e.printStackTrace();
+            return newsdatetime;
+        }
+
+    }
 
 }

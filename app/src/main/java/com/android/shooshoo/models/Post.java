@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Post {
 
-    @SerializedName("id")
+    @SerializedName("postId")
     @Expose
     private String id;
     @SerializedName("challengeId")
@@ -21,6 +21,15 @@ public class Post {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("likes")
+    @Expose
+    private String likes;
+    @SerializedName("views")
+    @Expose
+    private String views;
+    @SerializedName("postDescription")
+    @Expose
+    private String postDescription;
     @SerializedName("createdOn")
     @Expose
     private String createdOn;
@@ -63,6 +72,30 @@ public class Post {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes = likes;
+    }
+
+    public String getViews() {
+        return views;
+    }
+
+    public void setViews(String views) {
+        this.views = views;
+    }
+
+    public String getPostDescription() {
+        return postDescription;
+    }
+
+    public void setPostDescription(String postDescription) {
+        this.postDescription = postDescription;
     }
 
     public String getCreatedOn() {

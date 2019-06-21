@@ -593,10 +593,12 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                showFragment.getDialog().setCanceledOnTouchOutside(true);
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());
                 showFragment.setArguments(args);
+
                 showFragment.show(getSupportFragmentManager(),"country");
 
             }

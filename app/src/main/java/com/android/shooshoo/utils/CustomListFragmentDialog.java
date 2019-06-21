@@ -26,6 +26,7 @@ public class CustomListFragmentDialog extends DialogFragment {
     FragmentListDialogListener clickListener;
 
     public CustomListFragmentDialog() {
+
     }
 
     @Override
@@ -42,7 +43,6 @@ public class CustomListFragmentDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView=inflater.inflate(R.layout.fraglayout,container);
              names= getArguments().getStringArray("list");
              final int viewid=getArguments().getInt("view");
@@ -59,7 +59,6 @@ public class CustomListFragmentDialog extends DialogFragment {
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    Log.e("onQueryTextChange", "" + s);
                     adapter.getFilter().filter(s);
                     return true;
                 }
@@ -89,7 +88,8 @@ public class CustomListFragmentDialog extends DialogFragment {
         adapter=new DialogListAdapter(this.getActivity(),names);
         rv.setAdapter(adapter);
 
-        this.getDialog().setTitle("TV Shows");
+//        this.getDialog().setTitle("TV Shows");
+        getDialog().setCanceledOnTouchOutside(true);
 
         return rootView;
     }

@@ -2,7 +2,6 @@ package com.android.shooshoo.utils;
 
 import android.content.Context;
 
-import com.android.shooshoo.activity.PostVideoActivity;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
@@ -15,11 +14,11 @@ import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.HomeSponsorResponce;
 import com.android.shooshoo.models.LoginSuccess;
+import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -209,6 +208,10 @@ public interface RetrofitApis {
     @POST("videolength")
     @FormUrlEncoded
     Call<ResponseBody> getVideolength(@Field("name") String videoname);
+
+    @POST("profile")
+    @FormUrlEncoded
+    Call<ProfileResponse> getProfile(@Field("userId") String userId);
 
     @Streaming
     @GET

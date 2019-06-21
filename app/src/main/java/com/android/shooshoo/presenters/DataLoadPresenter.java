@@ -111,6 +111,7 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
     }
     /**This is used to load all categories and the brands*/
     public void loadAllcategoriesList(){
+
         if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getAllCategories().enqueue(new Callback<CategoryList>() {

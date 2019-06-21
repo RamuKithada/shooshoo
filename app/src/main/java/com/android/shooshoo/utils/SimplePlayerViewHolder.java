@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -39,7 +40,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     public SimpleExoPlayerView playerView;
     public ExoPlayerViewHelper helper;
-    public CardView card;
+    public RelativeLayout card;
     public ImageView iv_pauseresume;
     public ProgressBar progress_circular;
     public Uri mediaUri;
@@ -51,7 +52,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public TextView tv_video_des,tv_name,tv_time,tv_like_count,tv_views_count;
     public CircleImageView profile_pic;
     public ImageView iv_like;
-    public ImageView plus_mark;
+    public ImageView plus_mark,imageView;
 
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
@@ -60,10 +61,11 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 //        playerView.setUseController(true);
 //        playerView.requestFocus();
         playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
-        card=(CardView)itemView.findViewById(R.id.card);
+        card=(RelativeLayout) itemView.findViewById(R.id.card);
         comment_view=itemView.findViewById(R.id.comment_view);
         likes_view=itemView.findViewById(R.id.likes_view);
         share_view=itemView.findViewById(R.id.share_view);
+        imageView=itemView.findViewById(R.id.imageView);
         donation_view=itemView.findViewById(R.id.donation_view);
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
         plus_mark=(ImageView)itemView.findViewById(R.id.plus_mark);

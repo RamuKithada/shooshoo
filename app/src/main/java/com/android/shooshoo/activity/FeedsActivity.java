@@ -343,11 +343,28 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     public void onDownloadImage(String fileName, final String packageName) {
 
         File file1=new File(fileName);
+
+        String rootDir = Environment.getExternalStorageDirectory()
+                + File.separator + "ShooShoo";
+        File rootFile = new File(rootDir);
+        rootFile.mkdir();
+
+
+
+
         final String filename=file1.getName();
+
+
         if(!checkPermission(WRITE_EXTERNAL_STORAGE)){
             requestPermission(WRITE_EXTERNAL_STORAGE);
             return;
         }else {
+            File futureStudioIconFile = new File(rootFile,filename);
+            if(futureStudioIconFile.exists()){
+                shareFile(packageName,futureStudioIconFile.getAbsolutePath());
+                return;
+            }
+
             RetrofitApis.Factory.create(FeedsActivity.this).downloadFileWithDynamicUrlSync(fileName).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {

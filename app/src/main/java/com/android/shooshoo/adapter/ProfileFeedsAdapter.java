@@ -1,5 +1,6 @@
 package com.android.shooshoo.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,15 +9,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.Post;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapter.CatViewHolder> {
-    int[] images;
+import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
-    public ProfileFeedsAdapter(int[] images) {
-        this.images = images;
+public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapter.CatViewHolder> {
+    Context context;
+    List<Post> posts;
+
+    public ProfileFeedsAdapter(Context context, List<Post> posts) {
+        this.context = context;
+        this.posts = posts;
     }
 
     @NonNull
@@ -29,14 +37,14 @@ public class ProfileFeedsAdapter extends RecyclerView.Adapter<ProfileFeedsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int pos) {
-
-        Picasso.with(catViewHolder.itemView.getContext()).load(images[pos]).into(catViewHolder.imageView);
+        String url=SPONSOR_FEEDS_VIDEO_URL+posts.get(pos).getType()+"/"+posts.get(pos).getChallengeId()+"/"+posts.get(pos).getUrl();
+        Picasso.with(catViewHolder.itemView.getContext()).load(url).into(catViewHolder.imageView);
 
     }
 
     @Override
     public int getItemCount() {
-        return images.length;
+        return posts==null?0:posts.size();
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

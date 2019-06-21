@@ -33,9 +33,13 @@ public class UserInfo{
     @SerializedName("deviceToken")
     @Expose
     private String deviceToken;
+
     @SerializedName("image")
     @Expose
     private String image;
+    @SerializedName("followers")
+    @Expose
+    private String followers;
     @SerializedName("categories")
     @Expose
     private String categories;
@@ -48,6 +52,7 @@ public class UserInfo{
     @SerializedName("street")
     @Expose
     private String street;
+
     @SerializedName("streetNum")
     @Expose
     private String streetNum;
@@ -55,18 +60,23 @@ public class UserInfo{
     @SerializedName("country")
     @Expose
     private String country;
+
     @SerializedName("city")
     @Expose
     private String city;
+
     @SerializedName("zipcode")
     @Expose
     private String zipcode;
+
     @SerializedName("latitude")
     @Expose
     private String latitude;
+
     @SerializedName("longitude")
     @Expose
     private String longitude;
+
     @SerializedName("mobileOs")
     @Expose
     private String mobileOs;
@@ -302,4 +312,11 @@ public class UserInfo{
         this.status = status;
     }
 
+    public String getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(String followers) {
+        this.followers = followers;
+    }
 }

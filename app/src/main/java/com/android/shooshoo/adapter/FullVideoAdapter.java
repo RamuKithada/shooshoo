@@ -60,9 +60,26 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     @Override public void onBindViewHolder(final SimplePlayerViewHolder holder, final int position) {
         final Feed feed=modelArrayList.get(position);
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
-        holder.setListener(this);
-        holder.bind(Uri.parse(url));
-        Log.e("url",url);
+        if(feed.getUrl().endsWith(".jpg")||feed.getUrl().endsWith(".JPG")||feed.getUrl().endsWith(".jpeg")||feed.getUrl().endsWith(".png")||feed.getUrl().endsWith(".JPEG")||feed.getUrl().endsWith(".PNG"))
+        {
+            holder.imageView.setVisibility(View.VISIBLE);
+            Picasso.with(context).load(url).noPlaceholder().into(holder.imageView);
+            holder.bind(Uri.parse(url));
+            holder.card.setVisibility(View.GONE);
+               if(!feed.isViewed())
+               {
+                viewed();
+                feed.setViewed(true);
+               }
+            Log.e("image_url",url);
+        }else {
+            holder.imageView.setVisibility(View.GONE);
+            holder.card.setVisibility(View.VISIBLE);
+            holder.setListener(this);
+            holder.bind(Uri.parse(url));
+            Log.e("video_url",url);
+        }
+
         cutPos=position;
         holder.tv_video_des.setText(feed.getPostDescription());
         holder.tv_views_count.setText(feed.getViews());
@@ -75,7 +92,6 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
       else
             holder.iv_like.setImageResource(R.drawable.like_normal);
 
-        if(ApiUrls.validateString(feed.getImage()))
         Picasso.with(context).load(PROFILE_IMAGE_URL+feed.getImage()).error(R.drawable.profile_1).into(holder.profile_pic);
         holder.comment_view.setOnClickListener(new View.OnClickListener() {
             @Override
