@@ -44,4 +44,5 @@ dependencies {
     implementation "im.ene.toro3:toro:${latest_snapshot}"
     implementation "im.ene.toro3:toro-ext-exoplayer:${latest_snapshot}"
     implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
 }

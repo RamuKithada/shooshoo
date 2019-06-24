@@ -110,4 +110,9 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     public void onRecentPosts(List<Post> posts) {
 
     }
+
+    @Override
+    public void onRules(List<String> rules) {
+
+    }
 }

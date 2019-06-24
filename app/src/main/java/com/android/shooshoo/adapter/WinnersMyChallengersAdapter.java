@@ -70,7 +70,7 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
 
         return challenges.size();
     }
-   /* public void setChallenges(List<Challenge> challenges){
+   /* public void setSponsorChallenges(List<Challenge> challenges){
        this.challenges=challenges;
        notifyDataSetChanged();
     }*/

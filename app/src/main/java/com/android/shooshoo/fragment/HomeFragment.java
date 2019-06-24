@@ -2,7 +2,6 @@ package com.android.shooshoo.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,17 +20,19 @@ import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
+import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.presenters.HomePresenter;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.HomeView;
-import com.android.shooshoo.views.SponsorChallengeView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This is fragment to present Home tab view
@@ -66,67 +67,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     //Category  List adapter to show Category list view
     HomeCategoryAdapter homeCategoryAdapter;
 
-    //  challengeModels is used to hold jackpot challenges list
+    //  sponsor challengeModels is used to hold jackpot challenges list
     ArrayList<Challenge> sponsorChallenges=new ArrayList<Challenge>();
 
-    //  schallengeModels is used to hold Sponsor challenges list
-    ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
+    //  jackpoy challengeModels is used to hold Sponsor challenges list
+    ArrayList<Challenge> jackpotChallenges=new ArrayList<Challenge>();
 
+    ArrayList<Brand> brands=new ArrayList<Brand>();
+    ArrayList<Category> categories=new ArrayList<Category>();
 
-    String[] titles=new String[]{"Beard \nChallenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
-            "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge"};
-    int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
-    R.drawable.hips_excersize_chalange,R.drawable.iceskating_challange,R.drawable.laugh_challange,R.drawable.pullup_challange,R.drawable.running_challange
-    ,R.drawable.yoga_challange};
-    String[] des=new String[]{"Large Beard","Drink 2 Liters coke","Eating 2 Biryani","1 hour Handstand ","100 HipsUps",
-            "1 kilometer Ice Skating in 2 minutes","Laugh loud ","30 Pullups in 5minutes","2k Running in 90sec","5 hours Yoga"};
-    String[] stitles=new String[]{"BlackFly ","Closeup smile ","Dance music ","Drink Challenge","Holiday Challenge",
-            "Hotel Challenge","Ice Bucket Challenge","Swimming Challenge","World music Contest","Young Challenge"};
-    int[] simages=new int[]{R.drawable.blackfly_challange,R.drawable.closeup_smile_challange,R.drawable.dance_music_challange,R.drawable.drinks_challange,
-            R.drawable.holiday_challange,R.drawable.hotel_challange,R.drawable.icebucket_challange,R.drawable.swimmimg_challange,R.drawable.world_music_contest
-            ,R.drawable.young_challange};
-    String[] sdes=new String[]{"BlackFly bird capture","Closeup smile ads","Dance music to Puma","Drink  Coke ads","Holiday Trip flight",
-            "Hotel Banjara","Ice Bucket Challenge","World Swimming Day","World music Day","Young India "};
-    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
-            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
-
-    String[] brandnames=new String[]{"Adidas","Benz","Dmart","Flipkar","H & M","Nike","Pepsi","Puma","Vokes Wagon","Wallmart","Puma"};
-    int[] catimgs=new int[]{
-            R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
-            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
-            R.drawable.style,R.drawable.travel
-    };
-    String[] catNames=new String[]{
-            "Animals","Art","Cars","Comics","Electronics",
-            "Fitness","Games","Humor","Movies","Shopping",
-            "Style","Travel"
-    };
 
     HomePresenter homePresenter;
     ConnectionDetector connectionDetector;
+    UserSession userSession;
 
     public HomeFragment() {
-     /*   for (int index=0;index<10;index++){
-            ChallengeModel model=new ChallengeModel();
-            model.setDescription(des[index]);
-            model.setTitle(titles[index]);
-            model.setImage(images[index]);
-            challengeModels.add(model);
-        }*/
-        for (int index=0;index<sdes.length;index++){
-            ChallengeModel model=new ChallengeModel();
-            model.setDescription(sdes[index]);
-            model.setTitle(stitles[index]);
-            model.setImage(simages[index]);
-            schallengeModels.add(model);
-        }
-
-        jackpotChallengersAdapter=new  JackpotChallengersAdapter(schallengeModels);
-
+        jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
         sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
         //new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter(brandimgs,brandnames);
-        homeCategoryAdapter=new HomeCategoryAdapter(catimgs,catNames);
+        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands);
+        homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
     }
 
     /**
@@ -194,6 +154,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
                 intent.putExtra("challenge",sponsorChallenges.get(position));
+                intent.putExtra("type",1);
 //                intent.putExtra("image",schallengeModels.get(position).getImage());
 //                intent.putExtra("name",schallengeModels.get(position).getTitle());
 //                intent.putExtra("des",schallengeModels.get(position).getDescription());
@@ -214,7 +175,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             @Override
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
-
+                intent.putExtra("challenge",jackpotChallenges.get(position));
+                intent.putExtra("type",2);
 //                intent.putExtra("image",challengeModels.get(position).getImage());
 //                intent.putExtra("name",challengeModels.get(position).getTitle());
 //                intent.putExtra("des",challengeModels.get(position).getDescription());
@@ -228,7 +190,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         }));
         homePresenter.attachView(this);
         if(connectionDetector.isConnectingToInternet())
-        homePresenter.loadSponsor();
+        homePresenter.loadHome(userSession.getUserId());
         else
             showMessage("No Internet Connection");
     }
@@ -256,8 +218,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
                     + " must implement HomeView");
         }
         homePresenter=new HomePresenter();
-
-        connectionDetector=new ConnectionDetector(getActivity());
+        connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
 
     }
 
@@ -301,19 +263,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     /**
      *
-     * @param challenges are the data fron server to show list of sponsor challenges
+     * @param response are the data fron server to show list of sponsor challenges
      *
      */
 
     @Override
-    public void onLoadSponsors(List<Challenge> challenges) {
+    public void onLoadService(HomeResponse response) {
         if(mListener!=null)
-        mListener.onLoadSponsors(challenges);
-        sponsorChallenges.addAll(challenges);
-        sponsorChallengersAdapter.notifyDataSetChanged();
+        mListener.onLoadService(response);
+        if(response.getStatus()==1) {
+            sponsorChallenges.addAll(response.getSponsorChallenges());
+            sponsorChallengersAdapter.notifyDataSetChanged();
+            jackpotChallenges.addAll(response.getJackpotsChallenges());
+            jackpotChallengersAdapter.notifyDataSetChanged();
+            brands.addAll(response.getBrands());
+            categories.addAll(response.getCategories());
+            homeBrandAdapter.notifyDataSetChanged();
+         homeCategoryAdapter.notifyDataSetChanged();
 
-
-
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.net.Uri;
 
 import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.RecentPostsResponce;
+import com.android.shooshoo.models.RulesResponse;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.PostChallengeView;
@@ -92,6 +93,31 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
         }
         return RequestBody.create(MediaType.parse("text/plain"),s);
     }
+    public void getRules(){
+        if(view!=null)
+            view.showProgressIndicator(true);
+        retrofitApis.getRules().enqueue(new Callback<RulesResponse>() {
+            @Override
+            public void onResponse(Call<RulesResponse> call, Response<RulesResponse> response) {
+                if(view!=null)
+                    view.showProgressIndicator(false);
+                if(response.isSuccessful()){
+                    RulesResponse rulesResponse=response.body();
+                    if(view!=null)
+                        view.onRules(rulesResponse.getRules());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RulesResponse> call, Throwable t) {
+                if(view!=null) {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
+            }
+        });
+
+    }
     public void getRecentPosts(String challengeId,  String type){
 
           if(view!=null){
@@ -99,9 +125,11 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
               retrofitApis.getRecentPostsOfChallenge(challengeId,type).enqueue(new Callback<RecentPostsResponce>() {
                   @Override
                   public void onResponse(Call<RecentPostsResponce> call, Response<RecentPostsResponce> response) {
+                      if(view!=null)
                       view.showProgressIndicator(false);
                       if(response.isSuccessful()){
                       RecentPostsResponce recentPostsResponce=response.body();
+                          if(view!=null)
                       view.onRecentPosts(recentPostsResponce.getPost());
                       }
 
@@ -109,8 +137,10 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
 
                   @Override
                   public void onFailure(Call<RecentPostsResponce> call, Throwable t) {
-                      view.showProgressIndicator(false);
-                      view.showMessage(t.getMessage());
+                      if(view!=null) {
+                          view.showProgressIndicator(false);
+                          view.showMessage(t.getMessage());
+                      }
                   }
               });
           }

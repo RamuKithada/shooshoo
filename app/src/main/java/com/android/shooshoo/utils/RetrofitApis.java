@@ -12,10 +12,11 @@ import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.models.GameMasterResult;
-import com.android.shooshoo.models.HomeSponsorResponce;
+import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
+import com.android.shooshoo.models.RulesResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -101,6 +102,8 @@ public interface RetrofitApis {
                                      @Part("streetNum") RequestBody streetNum,
                                      @Part("mobileNumber") RequestBody mobileNumber,
                                      @Part("gender") RequestBody gender,
+                                     @Part("latitude") RequestBody latitude,
+                                     @Part("longitude") RequestBody longitude,
                                      @Part("deviceType") RequestBody deviceType,
                                      @Part("deviceToken") RequestBody deviceToken);
     @FormUrlEncoded
@@ -174,9 +177,11 @@ public interface RetrofitApis {
                                               @Field("audMiles") String audMiles,@Field("address") String personalAddress,@Field("categories") String categories,
                                              @Field("brands") String brands,
                                              @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
-
-    @GET("sponsors")
-    Call<HomeSponsorResponce> getHomeSponcers();
+   @FormUrlEncoded
+   @POST("home ")
+    Call<HomeResponse> getHomeData(@Field("userId") String userId);
+   /* @GET("jackpots")
+    Call<HomeResponse> getHomeJackpots();*/
 
     @Multipart
     @POST("addFeed")
@@ -228,6 +233,10 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("replyComment")
     Call<ResponseBody> replyComment(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment,@Field("commentId") String commentId);
+
+    @GET("rules")
+   Call<RulesResponse> getRules();
+
 
 }
 

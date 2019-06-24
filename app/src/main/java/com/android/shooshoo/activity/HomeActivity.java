@@ -19,6 +19,7 @@ import com.android.shooshoo.fragment.ProfileFragment;
 import com.android.shooshoo.fragment.RadarFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.presenters.HomePresenter;
 import com.android.shooshoo.views.HomeView;
 
@@ -367,9 +368,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
     }
 
     @Override
-    public void onLoadSponsors(List<Challenge> challenges) {
-
-
+    public void onLoadService(HomeResponse response) {
 
     }
 }

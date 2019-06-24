@@ -13,14 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
 import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.utils.OnRadarListener;

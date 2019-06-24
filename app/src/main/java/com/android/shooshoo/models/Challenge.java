@@ -111,14 +111,66 @@ public class Challenge implements Parcelable {
     @SerializedName("status")
     @Expose
     private String status;
-
+    @SerializedName("userFirst")
+    @Expose
     private String userFirst;
     @SerializedName("userLast")
     @Expose
     private String userLast;
+
+
+    /***
+     *   These are related to jackpot challenges parameters
+     *
+     */
+
+    @SerializedName("masterLogo")
+    @Expose
+    private String masterLogo;
+    @SerializedName("firstName")
+    @Expose
+    private String firstName;
+    @SerializedName("lastName")
+    @Expose
+    private String lastName;
+    @SerializedName("dob")
+    @Expose
+    private String dob;
+    @SerializedName("country")
+    @Expose
+    private String country;
+    @SerializedName("city")
+    @Expose
+    private String city;
+    @SerializedName("zipcode")
+    @Expose
+    private String zipcode;
+    @SerializedName("street")
+    @Expose
+    private String street;
+    @SerializedName("streetNumber")
+    @Expose
+    private String streetNumber;
+    @SerializedName("mobileNumber")
+    @Expose
+    private String mobileNumber;
+    @SerializedName("miniGame")
+    @Expose
+    private String miniGame;
+    @SerializedName("limited")
+    @Expose
+    private String limited;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("audGender")
+    @Expose
+    private String audGender;
+///Sponsored CompanyList
     @SerializedName("companies")
     @Expose
     private List<Company> companies = null;
+
 
     protected Challenge(Parcel in) {
         challengeId = in.readString();
@@ -157,6 +209,20 @@ public class Challenge implements Parcelable {
         status = in.readString();
         userFirst = in.readString();
         userLast = in.readString();
+        masterLogo=in.readString();
+        firstName=in.readString();
+        lastName=in.readString();
+        dob=in.readString();
+        country=in.readString();
+        city=in.readString();
+        zipcode=in.readString();
+        street=in.readString();
+        streetNumber=in.readString();
+        mobileNumber=in.readString();
+        miniGame=in.readString();
+        limited=in.readString();
+        address=in.readString();
+        audGender=in.readString();
     }
 
     public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
@@ -467,6 +533,118 @@ public class Challenge implements Parcelable {
         this.companies = companies;
     }
 
+    public String getMasterLogo() {
+        return masterLogo;
+    }
+
+    public void setMasterLogo(String masterLogo) {
+        this.masterLogo = masterLogo;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getZipcode() {
+        return zipcode;
+    }
+
+    public void setZipcode(String zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
+
+    public String getMiniGame() {
+        return miniGame;
+    }
+
+    public void setMiniGame(String miniGame) {
+        this.miniGame = miniGame;
+    }
+
+    public String getLimited() {
+        return limited;
+    }
+
+    public void setLimited(String limited) {
+        this.limited = limited;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAudGender() {
+        return audGender;
+    }
+
+    public void setAudGender(String audGender) {
+        this.audGender = audGender;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -510,5 +688,17 @@ public class Challenge implements Parcelable {
         dest.writeString(status);
         dest.writeString(userFirst);
         dest.writeString(userLast);
+        dest.writeString(dob);
+        dest.writeString(country);
+        dest.writeString(city);
+        dest.writeString(zipcode);
+        dest.writeString(street);
+        dest.writeString(streetNumber);
+        dest.writeString(mobileNumber);
+        dest.writeString(miniGame);
+        dest.writeString(limited);
+        dest.writeString(address);
+        dest.writeString(audGender);
+
     }
 }

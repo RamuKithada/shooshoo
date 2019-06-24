@@ -7,4 +7,5 @@ import java.util.List;
 public interface PostChallengeView extends BaseView{
     void onSuccessfulUpload(String msg);
     void  onRecentPosts(List<Post> posts);
+    void onRules(List<String> rules);
 }

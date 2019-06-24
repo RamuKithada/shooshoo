@@ -1,9 +1,6 @@
 package com.android.shooshoo.views;
 
-import com.android.shooshoo.models.Challenge;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.android.shooshoo.models.HomeResponse;
 
 /**
  * {@link HomeView} is implement by Home Activity the load challenges
@@ -12,5 +9,5 @@ import java.util.List;
 public interface HomeView  extends BaseView{
 
     /**we will get all list of sponsor challenges
- */   void onLoadSponsors(List<Challenge> challenges);
+ */   void onLoadService(HomeResponse response);
 }

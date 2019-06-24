@@ -34,20 +34,22 @@ public class ApiUrls {
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
     public static final String IMAGE_URL = "http://165.22.94.168/uploads/";
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
+    public static final String JACKPOT_BANNER_IMAGE_URL="http://165.22.94.168/uploads/jackpots/banners/";
     public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
+    public static final String JACKPOT_VIDEO_URL="http://165.22.94.168/uploads/jackpots/videos/";
     public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/feeds/";
     public static final String PROFILE_IMAGE_URL="http://165.22.94.168/uploads/profiles/";
 
 
     /**
      * Validating the String object whether is empty or not
-     * @param s
+     * @param string
      * @return true if s has value
      */
-   public static boolean validateString(String s){
-         if(s==null)
+   public static boolean validateString(String string){
+         if(string==null)
                return false;
-         if(s.trim().length()==0)
+         if(string.trim().length()==0)
                return false;
 
          return true;

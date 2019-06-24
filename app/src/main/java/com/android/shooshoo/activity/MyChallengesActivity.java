@@ -1,5 +1,7 @@
 package com.android.shooshoo.activity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -9,18 +11,24 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
+import com.android.shooshoo.adapter.RulesListAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.utils.RuleListFragmentDialog;
 import com.android.shooshoo.views.PostChallengeView;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -45,11 +53,13 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.android.shooshoo.utils.ApiUrls.JACKPOT_VIDEO_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_VIDEO_URL;
 
 public class MyChallengesActivity extends BaseActivity implements View.OnClickListener, PostChallengeView, SimpleExoPlayer.EventListener{
@@ -63,6 +73,8 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     RecyclerView rv_recnet_posts;
     @BindView(R.id.camera)
     LinearLayout camera;
+    @BindView(R.id.rules)
+    LinearLayout rules;
     @BindView(R.id.brand)
     LinearLayout brand;
     @BindView(R.id.created_at)
@@ -103,6 +115,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     ConnectionDetector connectionDetector=null;
     PostChallengePresenter challengePresenter=null;
     RecentPostAdapter recentPostAdapter;
+    ArrayList<String> ruleList=new ArrayList<>();
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -138,6 +151,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
         ButterKnife.bind(this);
         brand.setOnClickListener(this);
         camera.setOnClickListener(this);
+        rules.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         playerView.setUseController(false);
         connectionDetector=new ConnectionDetector(this);
@@ -197,10 +211,16 @@ Challenge challenge;
         created_at.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
         tv_key_des.setText(challenge.getKeyDescription());
         participants.setText(challenge.getParticipants());
-        videoUri =SPONSOR_VIDEO_URL+challenge.getChallengeVideo();
+        if(getIntent().getIntExtra("type",0)==1)
+            videoUri =SPONSOR_VIDEO_URL+challenge.getChallengeVideo();
+        else if(getIntent().getIntExtra("type",0)==2)
+            videoUri =JACKPOT_VIDEO_URL+challenge.getChallengeVideo();
         setUpVideo();
         if(connectionDetector.isConnectingToInternet())
-             challengePresenter.getRecentPosts(challenge.getChallengeId(),"sponsor");
+        {
+            challengePresenter.getRecentPosts(challenge.getChallengeId(),"sponsor");
+            challengePresenter.getRules();
+        }
          else
              showMessage("Check Internet connection");
     }
@@ -228,6 +248,14 @@ Challenge challenge;
             break;
         case R.id.brand:
             startActivity(new Intent(this,BrandProfileActivity.class));
+            break;
+        case R.id.rules:
+            RuleListFragmentDialog showFragment=new RuleListFragmentDialog();
+            Bundle args = new Bundle();
+            args.putStringArrayList("list",ruleList);
+            showFragment.setArguments(args);
+            showFragment.show(getSupportFragmentManager(),"rules");
+
             break;
     }
     }
@@ -410,5 +438,11 @@ Challenge challenge;
     @Override
     public void onRecentPosts(List<Post> posts) {
 
+    }
+
+    @Override
+    public void onRules(List<String> rules) {
+    if(rules!=null)
+        ruleList.addAll(rules);
     }
 }

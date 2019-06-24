@@ -50,8 +50,13 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
           if(challenges!=null){
                Challenge challenge=challenges.get(i);
                catViewHolder.title.setText(challenge.getChallengeName());
+               String uri_end=null;
+               if(challenge.getBannerImage()!=null)
+                     uri_end=challenge.getBannerImage();
+                 else
+                     uri_end=challenge.getMasterLogo();
               Picasso.with(context)
-                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+challenge.getBannerImage())
+                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+uri_end)
                       .error(R.drawable.rose)
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);

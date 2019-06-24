@@ -1,11 +1,10 @@
-
 package com.android.shooshoo.models;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class HomeSponsorResponce {
+import java.util.List;
+public class RulesResponse {
 
     @SerializedName("message")
     @Expose
@@ -13,9 +12,9 @@ public class HomeSponsorResponce {
     @SerializedName("status")
     @Expose
     private Integer status;
-    @SerializedName("sponsors")
+    @SerializedName("rules")
     @Expose
-    private List<Challenge> challenges = null;
+    private List<String> rules = null;
 
     public String getMessage() {
         return message;
@@ -33,12 +32,12 @@ public class HomeSponsorResponce {
         this.status = status;
     }
 
-    public List<Challenge> getChallenges() {
-        return challenges;
+    public List<String> getRules() {
+        return rules;
     }
 
-    public void setChallenges(List<Challenge> sponsors) {
-        this.challenges = sponsors;
+    public void setRules(List<String> rules) {
+        this.rules = rules;
     }
 
 }

@@ -140,11 +140,11 @@ public class CategoryWiseChallengerActivity extends AppCompatActivity {
         int catId = getIntent().getIntExtra("catId", 0);
         if (catId == 3) {
             challengesList.setLayoutManager(new GridLayoutManager(this,4));
-            homeCategoryAdapter=new HomeCategoryAdapter(catimgs,catNames);
+            homeCategoryAdapter=new HomeCategoryAdapter(this,null);
             challengesList.setAdapter(homeCategoryAdapter);
             
         } else {
-            jackpotChallengersAdapter = new JackpotChallengersAdapter(challengeModels);
+            jackpotChallengersAdapter = new JackpotChallengersAdapter(this,null);
             challengesList.setAdapter(jackpotChallengersAdapter);
             navigation_home.setOnClickListener(bottomNavigationOnClickListener);
             navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);

@@ -1,5 +1,6 @@
 package com.android.shooshoo.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
@@ -12,16 +13,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatViewHolder> {
-    int[] brandimgs;
-    String[] brandnames;
-    public HomeBrandAdapter(int[] brandimgs,String[] brandnames) {
-        this.brandimgs=brandimgs;
-        this.brandnames=brandnames;
+
+    Context context;
+    List<Brand> brandList;
+
+    public HomeBrandAdapter(Context context, List<Brand> brandList) {
+        this.context = context;
+        this.brandList = brandList;
     }
 
     @NonNull
@@ -34,15 +41,15 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-        Picasso.with(catViewHolder.itemView.getContext()).load(brandimgs[i]).into(catViewHolder.image);
-  catViewHolder.brandName.setText(brandnames[i]);
+        Picasso.with(context).load(ApiUrls.IMAGE_URL+"brands/"+brandList.get(i).getIcon()).into(catViewHolder.image);
+        catViewHolder.brandName.setText(brandList.get(i).getBrandName());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return (brandimgs.length<brandnames.length)?brandimgs.length:brandnames.length;
+        return (brandList==null)?0:brandList.size();
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

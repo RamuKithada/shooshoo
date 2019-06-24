@@ -1,6 +1,6 @@
 package com.android.shooshoo.presenters;
 
-import com.android.shooshoo.models.HomeSponsorResponce;
+import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.HomeView;
 
@@ -31,24 +31,24 @@ public class HomePresenter implements BasePresenter<HomeView> {
     /**
      * Load the Sponsor challenges from server to show in home fragment
      */
-    public void loadSponsor(){
+    public void loadHome(String userId){
 
         homeView.showProgressIndicator(true);
-        retrofitApis.getHomeSponcers()
-                .enqueue(new Callback<HomeSponsorResponce>() {
+        retrofitApis.getHomeData(userId)
+                .enqueue(new Callback<HomeResponse>() {
                     @Override
-                    public void onResponse(Call<HomeSponsorResponce> call, Response<HomeSponsorResponce> response) {
+                    public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
                         if(homeView!=null) {
                             homeView.showProgressIndicator(false);
                             if (response.isSuccessful()) {
-                                HomeSponsorResponce homeSponsorResponce = response.body();
-                                homeView.onLoadSponsors(homeSponsorResponce.getChallenges());
+                                HomeResponse homeResponse = response.body();
+                                homeView.onLoadService(homeResponse);
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<HomeSponsorResponce> call, Throwable t) {
+                    public void onFailure(Call<HomeResponse> call, Throwable t) {
                         if (homeView != null) {
                             homeView.showProgressIndicator(false);
                             if (t != null)
@@ -56,6 +56,36 @@ public class HomePresenter implements BasePresenter<HomeView> {
                         }
                     }
                 });
+    }
+  /*  public void loadJackpots(){
+
+        homeView.showProgressIndicator(true);
+        retrofitApis.getHomeJackpots()
+                .enqueue(new Callback<HomeResponse>() {
+                    @Override
+                    public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {
+                        if(homeView!=null) {
+                            homeView.showProgressIndicator(false);
+                            if (response.isSuccessful()) {
+                                HomeResponse homeSponsorResponce = response.body();
+                                homeView.onLoadSponsors(homeSponsorResponce.getJackpotsChallenges());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<HomeResponse> call, Throwable t) {
+                        if (homeView != null) {
+                            homeView.showProgressIndicator(false);
+                            if (t != null)
+                                homeView.showMessage(t.getMessage());
+                        }
+                    }
+                });
+    }*/
+    public void LoadHome(String userId){
+
+
     }
 
 }
