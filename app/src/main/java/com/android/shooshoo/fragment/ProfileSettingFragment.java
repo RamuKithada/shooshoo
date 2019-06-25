@@ -20,12 +20,14 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
+import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.ProfilePresenter;
+import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
@@ -34,12 +36,15 @@ import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.ProfileView;
+import com.android.shooshoo.views.UpdateUserInfoView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 
 /**
  *
@@ -47,7 +52,7 @@ import butterknife.ButterKnife;
  * create an instance of this fragment.
  * this is Profile screen to show general profile settings options
  */
-public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView, ProfileView,FragmentListDialogListener {
+public class ProfileSettingFragment extends Fragment implements View.OnClickListener,DataLoadView, ProfileView,UpdateUserInfoView,FragmentListDialogListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -56,6 +61,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     BaseView baseView;
     DataLoadPresenter dataLoadPresenter;
     ProfilePresenter profilePresenter;
+    UpdateUserInfoPresenter updateUserInfoPresenter;
     List<Category> categoryArrayList=new ArrayList<Category>();
     CategorySelectionAdapter categorySelectionAdapter;
 
@@ -178,6 +184,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         dataLoadPresenter.attachView(this);
         profilePresenter=new ProfilePresenter();
         profilePresenter.attachView(this);
+        updateUserInfoPresenter=new UpdateUserInfoPresenter();
+        updateUserInfoPresenter.attachView(this);
 
         connectionDetector=new ConnectionDetector(getActivity());
         userSession=new UserSession(getActivity());
@@ -227,11 +235,53 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             case R.id.btn_save:
                if(validateSave()){
                    showMessage("Saved successfully");
+                   updateUserInfoPresenter.updateProfile(userSession.getUserId(),edt_first_name.getText().toString(),
+                           edt_last_name.getText().toString(),country.getCountryId(),city.getCityId(),edt_zipcode.getText().toString()
+                   ,edt_street_name.getText().toString(),edt_street_number.getText().toString(),edt_mobile_number.getText().toString()
+                   ,gender,ApiUrls.DEVICE_TOKEN);
+                   StringBuilder cats=new StringBuilder();
+                   StringBuilder brands=new StringBuilder();
+                   for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
+                       if(categoryArrayList.size()>categoryModel.getCategory())
+                           if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
+                               if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
+                                   Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
+
+                                   if(cats.length()>0){
+                                       if(!cats.toString().contains(brand.getCategoryId()))
+                                       cats.append(',').append(brand.getCategoryId());
+                                   }else
+                                   {
+                                       if(!cats.toString().contains(brand.getCategoryId()))
+                                       cats.append(brand.getCategoryId());
+                                   }
+
+                                   if(brands.length()>0){
+                                       if(!brands.toString().contains(brand.getBrandId()))
+                                        brands.append(',').append(brand.getBrandId());
+                                   }else{
+                                       if(!brands.toString().contains(brand.getBrandId()))
+                                          brands.append(brand.getBrandId());
+                                   }
+
+
+                               }
+                   }
+
+
+                             Log.e("cats",cats.toString());
+                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),cats.toString());
+
+                           Log.e("brands",brands.toString());
+                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),brands.toString());
+
+
                }
                 break;
             case R.id.btn_save_bank:
                 if(validateBank()){
                     showMessage("Bank data Saved successfully");
+                    updateUserInfoPresenter.saveBankDetails(userSession.getUserId(),edt_iban.getText().toString(),edt_bic_swift.getText().toString(),edt_acc_owner.getText().toString(),edt_bank_name.getText().toString());
                 }
                 break;
             case R.id.btn_more_categories:
@@ -278,14 +328,12 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             return false;
         }
         if(edt_user_name.getText().toString().length()<2){
-
             edt_user_name.setError("User Name have at least 2 letters");
             edt_user_name.requestFocus();
             return false;
 
         }
         if(edt_user_name.getText().toString().length()>70){
-
             edt_user_name.setError("User Name have maximum 70 letters");
             edt_user_name.requestFocus();
             return false;
@@ -294,7 +342,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             String email=edt_user_email.getText().toString();
         if(!ApiUrls.validateString(email))
         {
-
             edt_user_email.setError("Enter email");
             edt_user_email.requestFocus();
             return false;
@@ -310,7 +357,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-
             edt_user_email.setError("Enter valid email");
             edt_user_email.requestFocus();
             return false;
@@ -456,8 +502,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             if(cities!=null&&userInfo!=null){
                 for(int index=0;index<cities.size();index++)
                     if(cities.get(index).getCityId().equalsIgnoreCase(userInfo.getCity())){
-                        city_pos=index;
-                        onEditView(R.id.edt_city,city_pos);
+//                        city_pos=index;
+                        onEditView(R.id.edt_city,index);
                         return;
                     }
 
@@ -476,8 +522,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             if(countries!=null&&userInfo!=null){
                 for(int index=0;index<countries.size();index++)
                     if(countries.get(index).getCountryId().equalsIgnoreCase(userInfo.getCountry())){
-                        country_pos=index;
-                        onEditView(R.id.edt_country,country_pos);
+//                        country_pos=index;
+                        onEditView(R.id.edt_country,index);
                         return;
                     }
 
@@ -487,6 +533,9 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onAllCategories(List<Category> categories) {
+        if(categories==null)
+            return;
+
         Category category = new Category();
         category.setCategoryName("Category");
         Brand brand = new Brand();
@@ -498,8 +547,52 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         this.categoryArrayList = categories;
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
         this.cat_subcat_list.setAdapter(this.categorySelectionAdapter);
-        if(isloadedFirst>0){
+        if(isloadedFirst>0&&userInfo!=null){
            isloadedFirst--;
+           String s=userInfo.getCategories();
+           if(s!=null){
+               String[] strings=s.split(",");
+
+               if(strings.length>=0){
+                   categorySelectionAdapter.getCategoryModels().clear();
+               }
+               for(int index=1;index<categories.size();index++){
+                  if(s.toLowerCase().contains(categories.get(index).getCategoryId().toLowerCase())){
+                      for (String id:strings){
+                          if(id.equalsIgnoreCase(categories.get(index).getCategoryId())){
+                              categorySelectionAdapter.getCategoryModels().add(0,new CategoryModel(index,0));
+                          }
+                      }
+                      if(userInfo.getBrands()!=null) {
+                          int noOfBrands=0;
+                          String brandss = userInfo.getBrands();
+                          String[] brandsList = brandss.split(",");
+                          List<Brand> list = categories.get(index).getBrands();
+                          for (int brand_pos = 0; brand_pos < list.size(); brand_pos++) {
+                              if (brandss.toLowerCase().contains(list.get(brand_pos).getBrandId().toLowerCase())) {
+                                  for (String id : brandsList) {
+                                      if (id.equalsIgnoreCase(list.get(brand_pos).getBrandId())) {
+                                         if(noOfBrands==0)
+                                         {
+                                             categorySelectionAdapter.getCategoryModels().get(0).setSubcategory(brand_pos);
+                                             noOfBrands++;
+                                         }else {
+                                             categorySelectionAdapter.getCategoryModels().add(new CategoryModel(index,brand_pos));
+                                             noOfBrands++;
+                                         }
+
+                                      }
+                                  }
+                              }
+                          }
+                      }
+
+                   }
+
+               }
+               categorySelectionAdapter.notifyDataSetChanged();
+
+           }
 
 
 
@@ -672,6 +765,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onPosts(List<Post> posts) {
+
+    }
+
+    @Override
+    public void onUpdateUserInfo(ResponseBody responseBody) {
 
     }
 }

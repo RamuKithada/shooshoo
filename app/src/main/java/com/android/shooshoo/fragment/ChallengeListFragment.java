@@ -18,6 +18,7 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.RecyclerTouchListener;
@@ -105,17 +106,17 @@ public class ChallengeListFragment extends Fragment {
 
             Log.e("mColumnCount",""+mColumnCount);
    baseView.showProgressIndicator(true);
-        RetrofitApis.Factory.create(getContext()).getChallenges(endpoint).enqueue(new Callback<ChallengeResponse>() {
+        RetrofitApis.Factory.create(getContext()).getChallenges(endpoint).enqueue(new Callback<ChallengeListResponse>() {
             @Override
-            public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
+            public void onResponse(Call<ChallengeListResponse> call, Response<ChallengeListResponse> response) {
                 baseView.showProgressIndicator(false);
                 if(response.isSuccessful()){
-                   ChallengeResponse challengeResponse=response.body();
+                    ChallengeListResponse challengeResponse=response.body();
                    if(challengeResponse.getStatus()==1){
                        if(mColumnCount==0){
-                             adapter.setChallenges(challengeResponse.getLatest());
+                             adapter.setChallenges(challengeResponse.getLatest().getChallengeList());
                        }else if(mColumnCount==1){
-                             adapter.setChallenges(challengeResponse.getPast());
+                             adapter.setChallenges(challengeResponse.getPast().getChallengeList());
                        }
                        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
                            @Override
@@ -125,6 +126,11 @@ public class ChallengeListFragment extends Fragment {
                                if(challenges!=null) {
                                    Intent intent = new Intent(getActivity(), MyChallengesActivity.class);
                                    intent.putExtra("challenge",challenges.get(position));
+                                   if(challenges.get(position).getSponsoredBy()==null)
+                                       intent.putExtra("type",2);
+                                   else
+                                       intent.putExtra("type",1);
+
                                    startActivity(intent);
                                }
                            }
@@ -139,7 +145,7 @@ public class ChallengeListFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ChallengeResponse> call, Throwable t) {
+            public void onFailure(Call<ChallengeListResponse> call, Throwable t) {
                 baseView.showProgressIndicator(false);
 
             }

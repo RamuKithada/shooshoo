@@ -247,7 +247,9 @@ Challenge challenge;
             finish();
             break;
         case R.id.brand:
-            startActivity(new Intent(this,BrandProfileActivity.class));
+            Intent intentBrand=new Intent(this,BrandProfileActivity.class);
+            intentBrand.putExtra("companyId",challenge.getBrands());
+            startActivity(intentBrand);
             break;
         case R.id.rules:
             RuleListFragmentDialog showFragment=new RuleListFragmentDialog();

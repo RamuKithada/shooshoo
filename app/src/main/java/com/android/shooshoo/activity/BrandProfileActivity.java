@@ -13,15 +13,19 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
+import com.android.shooshoo.models.CompanyDetails;
+import com.android.shooshoo.presenters.BrandDetailsPresenter;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.BrandProfileView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /***
- * {@link BrandProfileActivity} is used to show the chllenges of the related Brand
+ * {@link BrandProfileActivity} is used to show the challenges of the related Brand
  *
  */
-public class BrandProfileActivity extends BaseActivity implements View.OnClickListener {
+public class BrandProfileActivity extends BaseActivity implements BrandProfileView, View.OnClickListener {
 
 
     @BindView(R.id.navigation_home)
@@ -34,6 +38,8 @@ public class BrandProfileActivity extends BaseActivity implements View.OnClickLi
     LinearLayout navigation_winners;
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
+
+
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -62,11 +68,17 @@ public class BrandProfileActivity extends BaseActivity implements View.OnClickLi
         }
     };
 
+    ConnectionDetector connectionDetector;
+    BrandDetailsPresenter brandDetailsPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_profile);
         ButterKnife.bind(this);
+        connectionDetector=new ConnectionDetector(this);
+        brandDetailsPresenter=new BrandDetailsPresenter();
+        brandDetailsPresenter.attachView(this);
         final TabLayout tabLayout=findViewById(R.id.tab_layout);
         final ViewPager viewPager=findViewById(R.id.view_pager);
         //tab_layout colors settings
@@ -87,6 +99,10 @@ public class BrandProfileActivity extends BaseActivity implements View.OnClickLi
         navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
 
+        if(connectionDetector.isConnectingToInternet()){
+            brandDetailsPresenter.getBrandDetails("8");
+        }
+
     }
 
     @Override
@@ -106,5 +122,18 @@ public class BrandProfileActivity extends BaseActivity implements View.OnClickLi
                 break;
 
         }
+    }
+
+    @Override
+    public void onBrandDetails(CompanyDetails details) {
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        brandDetailsPresenter.detachView();
     }
 }

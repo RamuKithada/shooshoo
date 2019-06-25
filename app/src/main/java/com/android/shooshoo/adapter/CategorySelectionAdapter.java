@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.android.shooshoo.R;
@@ -50,10 +51,18 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategorySelectionAdapter.CategoryHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull CategorySelectionAdapter.CategoryHolder viewHolder, final int position) {
 
-       CategoryModel categoryModel=categoryModels.get(i);
+       final CategoryModel categoryModel=categoryModels.get(position);
         setAdapters(categoryModel,viewHolder);
+        viewHolder.iv_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryModels.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
 
 
 
@@ -61,7 +70,6 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     private void setAdapters(final CategoryModel categoryModel, final CategoryHolder viewHolder) {
         if(categoryList.size()>categoryModel.getCategory()) {
-
             ArrayAdapter<String> catArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, catNames);
             catArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -117,8 +125,9 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
      * It is called to add new item to list
      */
     public void add(){
+        int pos=categoryModels.size();
         categoryModels.add(new CategoryModel(0,0));
-        notifyDataSetChanged();
+        notifyItemInserted(pos);
     }
 
     public List<CategoryModel> getCategoryModels() {
@@ -127,11 +136,13 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     public class CategoryHolder extends RecyclerView.ViewHolder{
          Spinner categorySpinner;
-        Spinner subcategorySpinner;
+         Spinner subcategorySpinner;
+         ImageView iv_remove;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             categorySpinner=itemView.findViewById(R.id.spinner_category);
             subcategorySpinner=itemView.findViewById(R.id.spinner_subcategory);
+            iv_remove=itemView.findViewById(R.id.iv_remove);
 
         }
     }

@@ -3,16 +3,13 @@ package com.android.shooshoo.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -38,6 +35,7 @@ import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.presenters.DataLoadPresenter;
+import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
@@ -47,14 +45,17 @@ import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.DataLoadView;
+import com.android.shooshoo.views.UpdateUserInfoView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -64,6 +65,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,7 +76,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
  *
  *
  */
-public class ProfileFillingFormActivity extends BaseActivity implements GoogleApiClient.ConnectionCallbacks,
+public class ProfileFillingFormActivity extends BaseActivity implements UpdateUserInfoView,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener, View.OnClickListener, DataLoadView, FragmentListDialogListener {
 
 
@@ -203,6 +205,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements GoogleAp
     };
 
     DataLoadPresenter dataLoadPresenter;
+    UpdateUserInfoPresenter updateUserInfoPresenter;
     final String genders[] = new String[]{"Male", "Female", "Others"};
 
 
@@ -248,6 +251,8 @@ public class ProfileFillingFormActivity extends BaseActivity implements GoogleAp
         connectionDetector = new ConnectionDetector(this);
         dataLoadPresenter = new DataLoadPresenter();
         dataLoadPresenter.attachView(this);
+        updateUserInfoPresenter=new UpdateUserInfoPresenter();
+        updateUserInfoPresenter.attachView(this);
         tv_title.setText("Personal Info");
         setState();
         next_lay.setOnClickListener(this);
@@ -287,9 +292,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements GoogleAp
 
         if (connectionDetector.isConnectingToInternet())
             loadData();
+            buildGoogleApiClient();
 
 
-                buildGoogleApiClient();
     }
 
     private void loadData() {
@@ -378,46 +383,16 @@ public class ProfileFillingFormActivity extends BaseActivity implements GoogleAp
     City city = new City();
 
     private void updateProfile() {
-        showProgressIndicator(true);
-        File file = null;
-        MultipartBody.Part body = null;
-        if (newsImage != null) {
-            file = new File(newsImage.getPath());
-            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
-            body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
-        }
-        RetrofitApis.Factory.create(this).updateProfile(body, getTextPart(userSession.getUserId()),
-                getTextPart(edt_first_name.getText().toString()), getTextPart(edt_last_name.getText().toString()),
-                getTextPart(edt_dob.getText().toString()), getTextPart(country.getCountryId()),
-                getTextPart(city.getCityId()), getTextPart(edt_zipcode.getText().toString()),
-                getTextPart(edt_Street.getText().toString()), getTextPart(edt_number.getText().toString()),
-                getTextPart(edt_mobile.getText().toString()), getTextPart(gender.toLowerCase()),
-                getTextPart(lat),
-                getTextPart(lng),
-                getTextPart("android"),
-                getTextPart(userSession.getToken())).enqueue(new Callback<LoginSuccess>() {
-            @Override
-            public void onResponse(Call<LoginSuccess> call, Response<LoginSuccess> response) {
-                showProgressIndicator(false);
-                if (response.isSuccessful()) {
-                    Intent nextIntent = new Intent(ProfileFillingFormActivity.this, CategoryChooseActivity.class);
-                    startActivity(nextIntent);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginSuccess> call, Throwable t) {
-                showProgressIndicator(false);
-            }
-        });
+        if (newsImage != null)
+            updateUserInfoPresenter.updateUserProfile(newsImage, userSession.getUserId(),
+                    edt_first_name.getText().toString(), edt_last_name.getText().toString(),
+                    edt_dob.getText().toString(), country.getCountryId(),
+                    city.getCityId(), edt_zipcode.getText().toString(),
+                    edt_Street.getText().toString(), edt_number.getText().toString(),
+                    edt_mobile.getText().toString(), gender.toLowerCase(),
+                    lat, lng, userSession.getToken());
     }
 
-    private RequestBody getTextPart(String s) {
-        if (s == null) {
-            s = "";
-        }
-        return RequestBody.create(MediaType.parse("text/plain"), s);
-    }
 
 
     private void setState() {
@@ -938,12 +913,30 @@ public class ProfileFillingFormActivity extends BaseActivity implements GoogleAp
         String msg = "Updated Location: " +
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         // You can now create a LatLng Object for use with maps
         if(location!=null)
         {
             lat=""+location.getLatitude();
             lng=""+location.getLongitude();
         }
+    }
+
+    @Override
+    public void onUpdateUserInfo(ResponseBody responseBody) {
+              if(responseBody!=null){
+                  try {
+                      String result=responseBody.string();
+                      Gson gson=new Gson();
+                     LoginSuccess loginSuccess= gson.fromJson(result,LoginSuccess.class);
+                     if(loginSuccess.getStatus()==1){
+                         Intent intent=new Intent(this,CategoryChooseActivity.class);
+                         startActivity(intent);
+                     }
+
+                  } catch (IOException e) {
+                      e.printStackTrace();
+                  }
+              }
     }
 }

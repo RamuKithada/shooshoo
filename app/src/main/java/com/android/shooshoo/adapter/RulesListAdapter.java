@@ -24,7 +24,7 @@ public class RulesListAdapter extends RecyclerView.Adapter<RulesListAdapter.Stri
     @NonNull
     @Override
     public StringViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.spinnet_text,null);
+        View view=LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.spinner_item,null);
         return new StringViewHolder(view);
     }
 
@@ -43,7 +43,7 @@ public class RulesListAdapter extends RecyclerView.Adapter<RulesListAdapter.Stri
            TextView textView;
         public StringViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView=(TextView) itemView;
+            textView=(TextView) itemView.findViewById(R.id.nameTxt);
 
         }
     }

@@ -50,13 +50,14 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
           if(challenges!=null){
                Challenge challenge=challenges.get(i);
                catViewHolder.title.setText(challenge.getChallengeName());
-               String uri_end=null;
-               if(challenge.getBannerImage()!=null)
-                     uri_end=challenge.getBannerImage();
+               String uri=null;
+               if(challenge.getSponsoredBy()!=null)
+                     uri=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
                  else
-                     uri_end=challenge.getMasterLogo();
+                     uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+
               Picasso.with(context)
-                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+uri_end)
+                      .load(uri+challenge.getBannerImage())
                       .error(R.drawable.rose)
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);
@@ -72,8 +73,7 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
     @Override
     public int getItemCount() {
         if(challenges==null)
-        return 16;
-
+        return 0;
         return challenges.size();
     }
     public void setChallenges(List<Challenge> challenges){

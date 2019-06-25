@@ -5,9 +5,11 @@ import android.content.Context;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
+import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CommentsResponce;
+import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.FeedsResponse;
@@ -90,7 +92,7 @@ public interface RetrofitApis {
 
     @Multipart
     @POST("editprofile")
-    Call<LoginSuccess> updateProfile(@Part MultipartBody.Part imageFile,
+    Call<ResponseBody> updateProfile(@Part MultipartBody.Part imageFile,
                                      @Part("userId") RequestBody userId,
                                      @Part("firstName") RequestBody firstName,
                                      @Part("lastName") RequestBody lastName,
@@ -106,6 +108,29 @@ public interface RetrofitApis {
                                      @Part("longitude") RequestBody longitude,
                                      @Part("deviceType") RequestBody deviceType,
                                      @Part("deviceToken") RequestBody deviceToken);
+
+
+    @FormUrlEncoded
+    @POST("editprofile")
+    Call<ResponseBody> updateProfile(@Field("userId") String userId,
+                                     @Field("firstName") String firstName,
+                                     @Field("lastName") String lastName,
+                                     @Field("country") String country,
+                                     @Field("city") String city,
+                                     @Field("zipcode") String zipcode,
+                                     @Field("street") String street,
+                                     @Field("streetNum") String streetNum,
+                                     @Field("mobileNumber") String mobileNumber,
+                                     @Field("gender") String gender,
+                                     @Field("deviceToken") String deviceToken);
+    @FormUrlEncoded
+    @POST("bankDetails")
+    Call<ResponseBody> saveBankDetails(@Field("userId") String userId,@Field("iban") String iban,@Field("bic_swift") String bic_swift,@Field("accountOwner") String accountOwner,
+                                       @Field("bankName") String bankName);
+
+
+
+
     @FormUrlEncoded
     @POST("updateuserinfo")
     Call<ResponseBody> updateUserCat(@Field("userId") String userId,@Field("categories") String categories);
@@ -149,7 +174,7 @@ public interface RetrofitApis {
     Call<CategoryList> getAllCategories();
 
     @GET("{challenges}")
-    Call<ChallengeResponse> getChallenges(@Path("challenges") String challenges);
+    Call<ChallengeListResponse> getChallenges(@Path("challenges") String challenges);
 
     @FormUrlEncoded
     @POST("sizeofaudience")
@@ -236,6 +261,11 @@ public interface RetrofitApis {
 
     @GET("rules")
    Call<RulesResponse> getRules();
+
+    @FormUrlEncoded
+    @POST("companyInfo")
+    Call<CompanyDetails> getCompanyDetails(@Field("companyId") String companyId);
+
 
 
 }

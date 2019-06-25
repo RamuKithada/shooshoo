@@ -98,7 +98,7 @@ public class Challenge implements Parcelable {
     private String summery;
     @SerializedName("sponsoredBy")
     @Expose
-    private String sponsoredBy;
+    private String sponsoredBy=null;
     @SerializedName("createdBy")
     @Expose
     private String createdBy;

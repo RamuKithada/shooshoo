@@ -12,6 +12,7 @@
         android:layout_marginBottom="2dp"
         android:padding="5dp"
         android:textColor="#000"
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceMedium"
         />
 
