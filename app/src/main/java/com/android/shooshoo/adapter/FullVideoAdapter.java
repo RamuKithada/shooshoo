@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -25,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import im.ene.toro.CacheManager;
+
 import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
@@ -33,7 +37,7 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  * This is used to show the list of Videos in Feed activity
  */
 
-public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolder> implements SimplePlayerViewHolder.VideoViewedListener {
+public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolder> implements SimplePlayerViewHolder.VideoViewedListener, CacheManager {
 
     private ArrayList<Feed> modelArrayList;
     private Context context;
@@ -143,6 +147,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     }
 
 
+
     @Override
     public void viewed() {
   if(cutPos>=0){
@@ -154,10 +159,28 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
       }
     }
 
+    @Nullable
+    @Override
+    public Object getKeyForOrder(int order) {
+        return getItem(order);
+    }
+
+    private Object getItem(int order) {
+        if(order<modelArrayList.size()){
+            return modelArrayList.get(order);
+        }else
+            return null;
+    }
+
+    @Nullable
+    @Override
+    public Integer getOrderForKey(@NonNull Object key) {
+        return key instanceof Feed ? modelArrayList.indexOf(key) : null;
+    }
+
     public interface FeedClickListener{
         void onClick(View view,Feed feed);
         void onView(Feed feed);
   }
-
 
 }

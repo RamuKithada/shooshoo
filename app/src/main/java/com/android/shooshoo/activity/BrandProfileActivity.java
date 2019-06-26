@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.BrandProfilePagerAdapter;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.presenters.BrandDetailsPresenter;
@@ -70,7 +71,9 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
 
     ConnectionDetector connectionDetector;
     BrandDetailsPresenter brandDetailsPresenter;
-
+    BrandProfilePagerAdapter brandProfilePagerAdapter;
+    TabLayout tabLayout=null;
+    ViewPager viewPager=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,14 +82,14 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
         connectionDetector=new ConnectionDetector(this);
         brandDetailsPresenter=new BrandDetailsPresenter();
         brandDetailsPresenter.attachView(this);
-        final TabLayout tabLayout=findViewById(R.id.tab_layout);
-        final ViewPager viewPager=findViewById(R.id.view_pager);
+          tabLayout=findViewById(R.id.tab_layout);
+          viewPager=findViewById(R.id.view_pager);
         //tab_layout colors settings
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
+      /*  tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
         tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
-        ChallengerViewPagerAdapter challengerViewPagerAdapter=new ChallengerViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Recent ","Finished ","Profile"});
-        viewPager.setAdapter(challengerViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+         brandProfilePagerAdapter=new BrandProfilePagerAdapter(this,getSupportFragmentManager(),new String[]{"Recent ","Finished ","Profile"},null);
+        viewPager.setAdapter(brandProfilePagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);*/
         TextView tv_categories=findViewById(R.id.tv_categories);
         TextView tv_follow=findViewById(R.id.tv_follow);
         tv_categories.setOnClickListener(this);
@@ -101,21 +104,20 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
 
         if(connectionDetector.isConnectingToInternet()){
             brandDetailsPresenter.getBrandDetails("8");
-        }
+         }
 
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(this, CreateSponsorChallengeActivity.class);
         switch (v.getId()) {
             case R.id.tv_categories:
-                intent.putExtra("challenge_type",1);
+//                Intent intent=new Intent(this, CreateSponsorChallengeActivity.class);
+//                intent.putExtra("challenge_type",1);
 //                startActivity(intent);
                 break;
             case R.id.tv_follow:
-                intent.putExtra("challenge_type",2);
-//                startActivity(intent);
+
                 break;
             case R.id.iv_back:
                     finish();
@@ -126,10 +128,12 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
 
     @Override
     public void onBrandDetails(CompanyDetails details) {
-
-
-
-    }
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
+        tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
+        brandProfilePagerAdapter=new BrandProfilePagerAdapter(this,getSupportFragmentManager(),new String[]{"Recent ","Finished ","Profile"},details);
+        viewPager.setAdapter(brandProfilePagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+}
 
     @Override
     protected void onDestroy() {

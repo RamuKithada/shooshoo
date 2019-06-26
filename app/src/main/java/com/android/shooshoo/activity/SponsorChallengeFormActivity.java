@@ -348,7 +348,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
 //        intent.setType("video/*");
 //        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), RESULT_LOAD_VIDEO);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
 
     }
     private void requestPermission(String permission) {

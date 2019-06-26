@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +44,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import im.ene.toro.CacheManager;
 import im.ene.toro.widget.Container;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -147,6 +149,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         snapHelper.attachToRecyclerView(container);
         adapter = new FullVideoAdapter(this,modelArrayList,this);
         container.setAdapter(adapter);
+        container.setCacheManager(adapter);
         if(detector.isConnectingToInternet())
             feedsPresenter.loadFeeds();
         else {

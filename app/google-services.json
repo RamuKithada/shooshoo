@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "644582364779",
+    "firebase_url": "https://shooshoo-dc26d.firebaseio.com",
+    "project_id": "shooshoo-dc26d",
+    "storage_bucket": "shooshoo-dc26d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644582364779:android:47a58968ae3a6d0c",
+        "android_client_info": {
+          "package_name": "com.android.shooshoo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644582364779-66t62j4jif3evqblje0g559i49b3ou1a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.shooshoo",
+            "certificate_hash": "4c24a2129d07c7d70f7d9b630db82368df4dc289"
+          }
+        },
+        {
+          "client_id": "644582364779-lckpoc5mas941m62l7u6ll3ep3h9kvqv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl1WTIR4opuj4Qjn9U9TFXqwKNqT_luzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644582364779-lckpoc5mas941m62l7u6ll3ep3h9kvqv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

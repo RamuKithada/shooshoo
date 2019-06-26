@@ -24,6 +24,7 @@ import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.Post;
+import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.ProfilePresenter;
@@ -766,6 +767,16 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     @Override
     public void onPosts(List<Post> posts) {
 
+    }
+
+    @Override
+    public void onBankDetails(UserBankDetails bankDetails) {
+        if(bankDetails!=null){
+            edt_acc_owner.setText(bankDetails.getAccountOwner());
+            edt_iban.setText(bankDetails.getIban());
+            edt_bic_swift.setText(bankDetails.getBicSwift());
+            edt_bank_name.setText(bankDetails.getBankName());
+        }
     }
 
     @Override

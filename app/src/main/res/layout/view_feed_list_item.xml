@@ -11,12 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:src="@drawable/young_challange"
         />
     <RelativeLayout
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         >
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/player"

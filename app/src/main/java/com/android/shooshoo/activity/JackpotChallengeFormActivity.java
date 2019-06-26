@@ -37,6 +37,7 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.views.JackpotChallengeView;
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -181,9 +182,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
                         if(ch_mini_game.isChecked())
                             minigame="yes";
-
-
-
                         sponcerChallengePresenter.createChallenge(userSession.getUserId(),userSession.getSponsorChallenge(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
@@ -212,7 +210,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.video_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
-                    getGalleryVideos();
+                       getGalleryVideos();
                 else requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
         }
@@ -341,16 +339,15 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     }
 
     private void getGalleryVideos() {
+
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("video/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), RESULT_LOAD_VIDEO);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
 
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-            Toast.makeText(this, "Get account permission allows us to get your email",
-                    Toast.LENGTH_LONG).show();
+         /*   Toast.makeText(this, "Get account permission allows us to get your email",
+                    Toast.LENGTH_LONG).show();*/
         }
         ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSION_REQUEST_CODE);
     }

@@ -13,6 +13,9 @@ public class ProfileResponse {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("bankDetails")
+    UserBankDetails bankDetails;
+
     @SerializedName("userinfo")
     @Expose
     private UserInfo userInfo;
@@ -37,6 +40,14 @@ public class ProfileResponse {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public UserBankDetails getBankDetails() {
+        return bankDetails;
+    }
+
+    public void setBankDetails(UserBankDetails bankDetails) {
+        this.bankDetails = bankDetails;
     }
 
     public UserInfo getUserInfo() {

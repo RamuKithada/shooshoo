@@ -57,9 +57,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
-//        //Set media controller
-//        playerView.setUseController(true);
-//        playerView.requestFocus();
         playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
         card=(RelativeLayout) itemView.findViewById(R.id.card);
         comment_view=itemView.findViewById(R.id.comment_view);
@@ -117,9 +114,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public void initialize(Container container, PlaybackInfo playbackInfo) {
         if (helper == null) {
             helper = new ExoPlayerViewHelper(container, this, mediaUri);
-
-
-
         }
 
         helper.initialize(container,playbackInfo);
@@ -148,7 +142,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                 if(playerView.getPlayer()!=null) {
                     if (playerView.getPlayer().getRepeatMode() != Player.REPEAT_MODE_ALL)
                         playerView.getPlayer().setRepeatMode(Player.REPEAT_MODE_ALL);
-
                     if (playWhenReady){
                         if(handler==null)
                         {
@@ -157,9 +150,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                         }
 
                 }
-
-
-
                 }
 
 
@@ -208,9 +198,9 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onSeekProcessed() {
-                Log.e("onSeekProcessed","");
-              if(!isPlay)
-                  pause();
+//                Log.e("onSeekProcessed","");
+//              if(!isPlay)
+//                  pause();
 
             }
 

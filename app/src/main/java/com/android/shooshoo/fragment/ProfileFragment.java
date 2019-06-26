@@ -25,6 +25,7 @@ import com.android.shooshoo.adapter.ProfileBrandAdapter;
 import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Post;
+import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -235,5 +236,10 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
             this.posts.addAll(posts);
             profileFeedsAdapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onBankDetails(UserBankDetails bankDetails) {
+
     }
 }

@@ -40,10 +40,8 @@ public class ProfilePresenter implements BasePresenter<ProfileView>{
                         view.onProfileData(profileResponce.getUserInfo());
                         view.onBrands(profileResponce.getBrands());
                         view.onPosts(profileResponce.getPosts());
+                        view.onBankDetails(profileResponce.getBankDetails());
                     }
-
-
-
                 }
 
             }

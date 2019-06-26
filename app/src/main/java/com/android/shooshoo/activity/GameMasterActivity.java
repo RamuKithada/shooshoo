@@ -1,5 +1,4 @@
 package com.android.shooshoo.activity;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -38,10 +37,8 @@ import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.JackpotChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 import java.util.Calendar;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
@@ -206,8 +203,6 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
     private void loadData() {
         dataLoadPresenter.loadCountryData();
         dataLoadPresenter.loadCites("99");
-
-
     }
 
     String active="#FFFFFF",inactive="#CCCCCC";

@@ -188,7 +188,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                             String msg=object.optString("message");
                             int status=object.optInt("status");
                             if(view!=null)
-                                 view.onFeedLike(status,msg);
+                                 view.onFollowed(status,msg);
 
                         } catch (IOException e) {
                             e.printStackTrace();

@@ -22,21 +22,12 @@ import java.util.List;
 public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChallengersAdapter.CatViewHolder> {
     Context context;
     List<Challenge> challenges=new ArrayList<Challenge>();
-    View.OnClickListener onClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
-
     public SponsorChallengersAdapter(Context context, List<Challenge> challenges) {
         this.challenges=challenges;
         this.context=context;
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener) {
-        this.onClickListener = onClickListener;
-    }
+
 
     @NonNull
     @Override
@@ -64,9 +55,6 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
               catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
               catViewHolder.subtitle.setText(challenge.getDescription());
           }
-        catViewHolder.itemView.setOnClickListener(onClickListener);
-
-
 
     }
 

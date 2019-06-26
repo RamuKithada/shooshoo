@@ -54,7 +54,7 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     FeedCommentsPresenter presenter;
     ConnectionDetector connectionDetector;
     LinearLayoutManager linearLayoutManager;
-    boolean iscomment=true;
+    boolean isComment =true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,7 +113,7 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
 
                 if(edt_comment.getText().toString().length()>0) {
                     if(connectionDetector.isConnectingToInternet()) {
-                        if(iscomment)
+                        if(isComment)
                                 presenter.postComment(getIntent().getStringExtra("feedId"),userSession.getUserId(),edt_comment.getText().toString());
                          else {
                              if(comment!=null){
@@ -137,7 +137,7 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onCommentPosted(int status, String msg) {
      if(status==1){
-         edt_comment.setText("");
+         edt_comment.setText(null);
          edt_comment.clearFocus();
          TOTAL_PAGES++;
          loadNextPage();
@@ -148,9 +148,10 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     public void onReplyPosted(int status, String msg) {
         if(status==1){
             edt_comment.setHint("Type your comment here");
-            iscomment=true;
+            isComment =true;
             reply_for.setText("");
             reply_for.setVisibility(View.GONE);
+            edt_comment.setText(null);
         }
     }
 
@@ -166,10 +167,11 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onReply(Comment comment) {
         this.comment=comment;
-        iscomment=false;
+        isComment =false;
         reply_for.setVisibility(View.VISIBLE);
         reply_for.setText("Reply @ "+comment.getComment());
         edt_comment.setHint("Type your reply here");
+
     }
 
     @Override
@@ -179,11 +181,12 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        if(iscomment)
+        if(isComment)
         super.onBackPressed();
         else {
             edt_comment.setHint("Type your comment here");
-            iscomment=true;
+            edt_comment.setText(null);
+            isComment =true;
             reply_for.setText("");
             reply_for.setVisibility(View.GONE);
         }
