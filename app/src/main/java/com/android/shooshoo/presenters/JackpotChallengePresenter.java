@@ -13,8 +13,8 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-/** {@link JackpotChallengePresenter} is used to call web service related to create saveJackpotAudience challenge
- * {@link JackpotChallengeView} is used by {@link JackpotChallengePresenter} to interact withe activity that want use {@link JackpotChallengePresenter}
+/** {@link JackpotChallengePresenter} is used to call web service related to create or save JackpotAudience challenge
+ * {@link JackpotChallengeView} is used by {@link JackpotChallengePresenter} to interact with activity that want use {@link JackpotChallengePresenter}
  */
 public class JackpotChallengePresenter implements BasePresenter<JackpotChallengeView> {
   private   RetrofitApis retrofitApis;
@@ -84,7 +84,14 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     public void createChallenge(String  userId,String  challengeId,String  bannerImage,String challVideo,String challName,
                                 String  startDate,String  startTime,String  endDate,String  endtime,String  description,
-                                String  photoEntries, String  videoEntries,String miniGame,String  maxLength){
+                                String  photoEntries, String  videoEntries,String miniGame,String  videoLength){
+
+
+        String  maxLength=videoLength;
+        if(videoLength.toLowerCase().contains("sec"))
+            maxLength=videoLength.toLowerCase().replace("sec"," ").trim();
+        else if(videoLength.toLowerCase().contains("sec"))
+            maxLength=videoLength.toLowerCase().replace("min"," ").trim();
 
         File bannerImagefile=null;
         MultipartBody.Part bannerImageBody=null;
@@ -128,11 +135,17 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
     public void createAudience(String challenegId, String userId,String amount, String keyDescription,String priceWorth, String limitedAccess,
                                String winners,String radar,String audZipcode,String audMiles, String personalAddress,
                                String categories,String brands,String ageStart, String ageEnd,String gender) {
+
+        String mWinners=winners.toLowerCase().replace("top"," ").trim();
+        String mAudMiles=audMiles.toLowerCase().replace("miles"," ").trim();
+        String mAgeStart=ageStart.toLowerCase().replace("years"," ").trim();
+        String mAgeEnd=ageEnd.toLowerCase().replace("years"," ").trim();
+
         if(view!=null) {
             view.showProgressIndicator(true);
             retrofitApis.saveJackpotAudience(challenegId, userId, amount, keyDescription, priceWorth,
-                    limitedAccess, winners, radar, audZipcode, audMiles, personalAddress,
-                    categories, brands, ageStart, ageEnd, gender).enqueue(callback);
+                    limitedAccess, mWinners, radar, audZipcode, mAudMiles, personalAddress,
+                    categories, brands, mAgeStart, mAgeEnd, gender).enqueue(callback);
         }
 
     }

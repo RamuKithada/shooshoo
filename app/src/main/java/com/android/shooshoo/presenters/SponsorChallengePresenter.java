@@ -1,6 +1,7 @@
 package com.android.shooshoo.presenters;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CompanyResponse;
@@ -112,7 +113,15 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
    public void createChallenge(String  userId,String  sponsoredBy,String challName,String  startDate,String  startTime,
                                String  endDate,String  endtime,String  description,String  photoEntries,
-                               String  videoEntries,String  maxLength,String  bannerImage,String challVideo){
+                               String  videoEntries,String  videoLength,String  bannerImage,String challVideo){
+
+
+       String  maxLength=videoLength;
+       if(videoLength.toLowerCase().contains("sec"))
+           maxLength=videoLength.toLowerCase().replace("sec"," ").trim();
+       else if(videoLength.toLowerCase().contains("sec"))
+           maxLength=videoLength.toLowerCase().replace("min"," ").trim();
+
 
        File bannerImagefile=null;
        MultipartBody.Part bannerImageBody=null;
@@ -144,10 +153,18 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
    public  void createAudience( String companyId, String userId,String amount, String keyDescription,String priceWorth, String totalPrize,
                                String winners,String radar,String audZipcode,String audMiles, String personalAddress,
                                 String categories,String brands,String ageStart, String ageEnd,String gender){
+
+
+String mWinners=winners.toLowerCase().replace("top"," ").trim();
+String mAudMiles=audMiles.toLowerCase().replace("miles"," ").trim();
+String mAgeStart=ageStart.toLowerCase().replace("years"," ").trim();
+String mAgeEnd=ageEnd.toLowerCase().replace("years"," ").trim();
+//       Log.e(mWinners+" "+mAudMiles,""+mAgeStart+" "+mAgeEnd+" ");
+
        if(view!=null)
        view.showProgressIndicator(true);
-        retrofitApis.saveAudience(companyId, userId,amount, keyDescription, priceWorth, totalPrize, winners, radar, audZipcode, audMiles, personalAddress,
-                categories,brands,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
+        retrofitApis.saveAudience(companyId, userId,amount, keyDescription, priceWorth, totalPrize, mWinners, radar, audZipcode, mAudMiles, personalAddress,
+                          categories,brands,mAgeStart,mAgeEnd, gender).enqueue(challengeResponseCallback);
 
 
    }

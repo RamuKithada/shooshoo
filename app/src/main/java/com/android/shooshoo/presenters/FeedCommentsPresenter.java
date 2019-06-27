@@ -1,19 +1,14 @@
 package com.android.shooshoo.presenters;
-
 import com.android.shooshoo.models.CommentsResponce;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.FeedCommentsView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class FeedCommentsPresenter implements BasePresenter<FeedCommentsView>{
     FeedCommentsView view=null;
     RetrofitApis retrofitApis=null;
