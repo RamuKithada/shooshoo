@@ -1,12 +1,10 @@
 package com.android.shooshoo.activity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -17,17 +15,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.text.InputType;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +36,6 @@ import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
-import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.LoginSuccess;
@@ -54,7 +50,6 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -62,13 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
@@ -91,80 +80,41 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     @BindView(R.id.button3)
     Button button3;
 
-    @BindView(R.id.button4)
-    Button button4;
+
+
+    @BindView(R.id.edt_user_name)
+    AppCompatEditText edt_user_name;
+
 
     @BindView(R.id.edt_first_name)
-    EditText edt_first_name;
+    AppCompatEditText edt_first_name;
 
     @BindView(R.id.edt_last_name)
-    EditText edt_last_name;
+    AppCompatEditText edt_last_name;
 
     @BindView(R.id.edt_dob)
-    EditText edt_dob;
+    AppCompatEditText edt_dob;
 
 
     @BindView(R.id.edt_zipcode)
-    EditText edt_zipcode;
+    AppCompatEditText edt_zipcode;
 
     @BindView(R.id.edt_Street)
-    EditText edt_Street;
+    AppCompatEditText edt_Street;
 
-    @BindView(R.id.edt_number)
-    EditText edt_number;
+    @BindView(R.id.edt_street_number)
+    AppCompatEditText edt_street_number;
 
 
     @BindView(R.id.edt_mobile)
-    EditText edt_mobile;
+    AppCompatEditText edt_mobile;
 
 
-    @BindView(R.id.iv_dropdown_city)
-    ImageView iv_dropdown_city;
-
-    @BindView(R.id.iv_dropdown_county)
-    ImageView iv_dropdown_county;
-
-    @BindView(R.id.iv_dropdown_gender)
-    ImageView iv_dropdown_gender;
     @BindView(R.id.next_lay)
-    RelativeLayout next_lay;
+    AppCompatTextView next_lay;
 
     @BindView(R.id.tv_title)
     TextView tv_title;
-
-    @BindView(R.id.iv_user_fname)
-    ImageView iv_user_fname;
-
-    @BindView(R.id.iv_user_lname)
-    ImageView iv_user_lname;
-
-
-    @BindView(R.id.iv_dob)
-    ImageView iv_dob;
-
-    @BindView(R.id.iv_country)
-    ImageView iv_country;
-
-    @BindView(R.id.iv_city)
-    ImageView iv_city;
-
-    @BindView(R.id.iv_zip_code)
-    ImageView iv_zip_code;
-
-    @BindView(R.id.iv_street_name)
-    ImageView iv_street_name;
-
-    @BindView(R.id.iv_street_no)
-    ImageView iv_street_no;
-
-    @BindView(R.id.iv_mobile)
-    ImageView iv_mobile;
-
-    @BindView(R.id.iv_gender)
-    ImageView iv_gender;
-
-    @BindView(R.id.tv_skip)
-    TextView tv_skip;
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
@@ -175,21 +125,19 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     @BindView(R.id.iv_profile_pic)
     CircleImageView iv_profile_pic;
 
-    @BindView(R.id.country_lay)
-    RelativeLayout country_lay;
-
     ConnectionDetector connectionDetector;
 
     @BindView(R.id.edt_country)
-    EditText edt_country;
+    AppCompatEditText edt_country;
 
     @BindView(R.id.edt_city)
-    EditText edt_city;
+    AppCompatEditText edt_city;
 
     @BindView(R.id.edt_gender)
-    EditText edt_gender;
+    AppCompatEditText edt_gender;
+
     @BindView(R.id.edt_country_code)
-    EditText edt_country_code;
+    AppCompatEditText edt_country_code;
 
 
     View.OnClickListener dropdownOnClickListener = new View.OnClickListener() {
@@ -258,7 +206,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         next_lay.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
-        setFocusChange(edt_first_name, R.id.firstname_line, iv_user_fname, new int[]{R.drawable.lastname_active, R.drawable.lastname_normal});
+     /*   setFocusChange(edt_first_name, R.id.firstname_line, iv_user_fname, new int[]{R.drawable.lastname_active, R.drawable.lastname_normal});
         setFocusChange(edt_last_name, R.id.lastname_line, iv_user_lname, new int[]{R.drawable.lastname_active, R.drawable.lastname_normal});
         setFocusChange(edt_dob, R.id.dob_line, iv_dob, new int[]{R.drawable.date_birth_active, R.drawable.date_birth_normal});
         setFocusChange(edt_city, R.id.city_line, iv_city, new int[]{R.drawable.city_active, R.drawable.city_normal});
@@ -266,12 +214,10 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         setFocusChange(edt_gender, R.id.gender_line, iv_gender, new int[]{R.drawable.gender_active, R.drawable.gender_normal});
         setFocusChange(edt_zipcode, R.id.zipcode_line, iv_zip_code, new int[]{R.drawable.zipcode_active, R.drawable.zipcode_normal});
         setFocusChange(edt_Street, R.id.street_line, iv_street_name, new int[]{R.drawable.street_active, R.drawable.street_normal});
-        setFocusChange(edt_number, R.id.number_line, iv_street_no, new int[]{R.drawable.streetno_active, R.drawable.streetno_normal});
+        setFocusChange(edt_street_number, R.id.number_line, iv_street_no, new int[]{R.drawable.streetno_active, R.drawable.streetno_normal});
         setFocusChange(edt_mobile, R.id.country_code_line, iv_mobile, new int[]{R.drawable.mobile_active, R.drawable.mobile_normal});
         iv_dropdown_city.setOnClickListener(dropdownOnClickListener);
-        country_lay.setOnClickListener(dropdownOnClickListener);
-        iv_dropdown_gender.setOnClickListener(dropdownOnClickListener);
-        tv_skip.setOnClickListener(this);
+        country_lay.setOnClickListener(dropdownOnClickListener);*/
         edt_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,7 +249,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
     String active = "#FFFFFF", inactive = "#CCCCCC";
 
-    void setFocusChange(EditText editText, int id, final ImageView imageView, final int[] res) {
+   /* void setFocusChange(AppCompatEditText editText, int id, final ImageView imageView, final int[] res) {
         final View view = findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -324,10 +270,10 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         });
 
     }
-
+*/
     DatePickerDialog datePickerDialog;
 
-    private void setDate(final EditText edt_dob) {
+    private void setDate(final AppCompatEditText edt_dob) {
 
         Calendar c = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
@@ -361,11 +307,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                     }
                 } else showMessage("Please check internet connection");
                 break;
-            case R.id.tv_skip:
-                tv_skip.setOnClickListener(null);
-                Intent homeIntent = new Intent(this, HomeActivity.class);
-                startActivity(homeIntent);
-                break;
+
             case R.id.iv_back:
                 finish();
                 break;
@@ -388,7 +330,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                     edt_first_name.getText().toString(), edt_last_name.getText().toString(),
                     edt_dob.getText().toString(), country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(),
-                    edt_Street.getText().toString(), edt_number.getText().toString(),
+                    edt_Street.getText().toString(), edt_street_number.getText().toString(),
                     edt_mobile.getText().toString(), gender.toLowerCase(),
                     lat, lng, userSession.getToken());
     }
@@ -396,10 +338,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
 
     private void setState() {
-        button1.setBackgroundResource(R.drawable.unselected);
-        button2.setBackgroundResource(R.drawable.selected);
+        button1.setBackgroundResource(R.drawable.selected);
+        button2.setBackgroundResource(R.drawable.unselected);
         button3.setBackgroundResource(R.drawable.unselected);
-        button4.setBackgroundResource(R.drawable.unselected);
     }
 
 
@@ -599,7 +540,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         Picasso.with(this).load(picturePath).into(iv_profile_pic);
     }
     int country_pos=-1,city_pos=-1,gender_pos=-1;
-    private void displayList(final List<Country> dropDownItems, final EditText editText)
+    private void displayList(final List<Country> dropDownItems, final AppCompatEditText editText)
     {
         if(dropDownItems==null)
            return;
@@ -625,7 +566,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
 
     }
-    private void displayListCity(final List<City> dropDownItems, final EditText editText)
+    private void displayListCity(final List<City> dropDownItems, final AppCompatEditText editText)
     {
         if(dropDownItems==null)
         {
@@ -761,12 +702,12 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            return false;
 
        }
-       if(ApiUrls.validateString(edt_number.getText().toString())){
+       if(ApiUrls.validateString(edt_street_number.getText().toString())){
 
-           if(edt_number.getText().toString().length()>255){
+           if(edt_street_number.getText().toString().length()>255){
 
-               edt_number.setError(" Street number have maximum 255 letters");
-               edt_number.requestFocus();
+               edt_street_number.setError(" Street number have maximum 255 letters");
+               edt_street_number.requestFocus();
                return false;
 
            }

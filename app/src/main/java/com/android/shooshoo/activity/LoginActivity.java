@@ -2,6 +2,7 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
@@ -49,7 +50,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     LinearLayout sign_up_layout;
 
     @BindView(R.id.btn_login)
-    Button btn_login;
+    AppCompatTextView btn_login;
 
     @BindView(R.id.user_name_layout)
     LinearLayout user_name_layout;
@@ -76,7 +77,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
-        edt_user_name.setOnFocusChangeListener( new View.OnFocusChangeListener(){
+    /*    edt_user_name.setOnFocusChangeListener( new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                     if(hasFocus)
@@ -107,7 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 }
 
             }
-        });
+        });*/
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

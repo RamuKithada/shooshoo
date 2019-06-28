@@ -3,10 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/gray_text</item>
+        <item name="colorPrimary">#CCCCCC</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/futura_book_font</item>
 
     </style>
 
@@ -43,4 +42,12 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#D2308A</item>
     </style>
+    <style name="MyEditTextTheme">
+        <item name="colorControlNormal">@color/white_text</item>
+        <item name="colorControlActivated">@color/white_text</item>
+        <item name="colorControlHighlight">@color/white_text</item>
+
+
+    </style>
+
 </resources>

@@ -3,8 +3,11 @@
     android:shape="oval"
     android:padding="0dp">
     <solid android:color="@color/pink_drak"/>
-    <stroke android:width="2dp"
-        android:color="#CCCCCC"
+    <padding
+        android:top="13dp"
+        android:right="13dp"
+        android:left="13dp"
+        android:bottom="13dp"
         />
     <padding />
 </shape>

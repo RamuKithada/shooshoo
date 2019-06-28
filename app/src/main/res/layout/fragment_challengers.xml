@@ -5,101 +5,98 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.ChallengersFragment"
-    android:background="@drawable/gradiant_home">
-    <LinearLayout
+    android:background="@color/bg_color">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Challenge Creator"
-        android:textSize="22sp"
-        android:textColor="#FFF"
-        android:padding="10dp"
-
-        />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="@string/chlengetab"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/gray_text"
-
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            tools:listitem="@layout/list_of_list_item"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
-
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#DD000000"
+            android:layout_gravity="bottom"
+            >
             <TextView
-                android:id="@+id/tv_sponsor_challenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" + Sponsor Challenge"
-                android:background="@drawable/submit_button"
-                android:textColor="#FFFFFF"
-                android:padding="6dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_margin="5dp"
+                android:layout_centerHorizontal="true"
+                android:text="Challenge Creator"
+                android:fontFamily="@font/raleway_extrabold"
+                android:textSize="22sp"
+                android:textColor="#FFF"
+                android:padding="10dp"
+
                 />
 
             <TextView
-                android:id="@+id/tv_jackpot_challenge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" + Jackpot Challenge"
-                android:background="@drawable/submit_btn_shape"
-                android:textColor="#FFFFFF"
-                android:padding="6dp"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/raleway_medium"
+                android:text="@string/chlengetab"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:layout_margin="5dp"
-                />
+                android:textColor="@color/white_text"
 
+                />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="15dp"
+                >
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_sponsor_challenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" + Sponsor "
+                    android:fontFamily="@font/raleway_black"
+                    android:background="@drawable/submit_button"
+                    android:textColor="@color/white_text"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_margin="5dp"
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_jackpot_challenge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Jackpot"
+                    android:fontFamily="@font/raleway_black"
+                    android:background="@drawable/submit_button"
+                    android:textColor="@color/white_text"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_margin="5dp"
+                    />
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorAccent"
-            app:tabTextColor="@color/colorAccent"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            android:background="#8a8a8a8a"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center_horizontal"
-            >
-
-
-
-        </android.support.design.widget.TabLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            >
-
-        </android.support.v4.view.ViewPager>
-
-
-
-    </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 
 

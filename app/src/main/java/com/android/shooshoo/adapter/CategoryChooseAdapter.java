@@ -55,7 +55,6 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         Category category=categories.get(i);
         catViewHolder.textView.setText(category.getCategoryName());
-        Picasso.with(context).load(ApiUrls.IMAGE_URL+"category/"+category.getIcon()).into(catViewHolder.imageView);
         /**
          * here change color of the selected background
          */
@@ -63,10 +62,12 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
         if(isActive[i]==1)
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
+            catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
         }
         else
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_unselected);
+            catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.bg_color));
         }
 
         catViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -79,10 +80,12 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
                   if(isActive[i]==1)
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
+                      catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
                   }
                   else
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_unselected);
+                      catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.bg_color));
                   }
               }
           });
@@ -138,12 +141,10 @@ StringBuilder builder=new StringBuilder();
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
          RelativeLayout cardView;
-         ImageView imageView;
          TextView textView;
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView=itemView.findViewById(R.id.card);
-            imageView=itemView.findViewById(R.id.image);
             textView=itemView.findViewById(R.id.name);
 
         }

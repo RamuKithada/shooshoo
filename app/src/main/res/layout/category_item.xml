@@ -2,7 +2,6 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
@@ -12,39 +11,24 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="5dp"
-        android:background="@drawable/cat_selected"
+        android:background="@drawable/cat_unselected"
         >
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        >
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:src="@drawable/rose"
-            android:padding="5dp"
-            />
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Category"
-            android:textColor="#CCCCCC"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white_text"
+            android:padding="5dp"
+            android:fontFamily="@font/raleway_extrabold"
             android:layout_gravity="center"
             android:gravity="center"
             android:singleLine="true"
             />
 
-    </LinearLayout>
+
     </RelativeLayout>
 </RelativeLayout>

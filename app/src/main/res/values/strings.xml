@@ -7,7 +7,7 @@
     <string name="emial_hint">E-mail</string>
     <string name="pws">Password</string>
     <string name="forget_pws">Forgot Password?</string>
-    <string name="login">Login</string>
+    <string name="login">LOGIN</string>
     <string name="register">REGISTER</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_home">Home</string>
@@ -16,10 +16,10 @@
     <string name="title_feed">Feed</string>
     <string name="title_winners">Winners</string>
     <string name="title_radar">Radar</string>
-    <string name="sponsor_challengers">Sponsor Challenge</string>
-    <string name="jackpot_challengers">Jackpot Challenge</string>
+    <string name="sponsor_challengers">SPONSOR CHALLENGES</string>
+    <string name="jackpot_challengers">JACKPOT CHALLENGES</string>
     <string name="view_all">View All</string>
-    <string name="categories_title">My Categories</string>
+    <string name="categories_title">MY CATEGORIES</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -97,7 +97,7 @@
     <string name="cnf_pws">Conform Password</string>
     <string name="change">Change</string>
     <string name="post_video">Post Video</string>
-    <string name="chlengetab">Create your own Challenge for millioins \nof people!</string>
+    <string name="chlengetab">Create your own Challenge for millioins of people!</string>
     <string name="h_m"><![CDATA[H&M]]></string>
     <string name="notifications">Push Notifications</string>
     <string name="others_can_use_my_profile_info">View My Profile to others</string>

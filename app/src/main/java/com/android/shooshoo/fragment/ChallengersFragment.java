@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CreateSponsorChallengeActivity;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
+import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 
 /**Use the {@link ChallengersFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -73,15 +77,11 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final TabLayout  tabLayout=view.findViewById(R.id.tab_layout);
-        final ViewPager viewPager=view.findViewById(R.id.view_pager);
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
-        tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
-        ChallengerViewPagerAdapter challengerViewPagerAdapter=new ChallengerViewPagerAdapter(getActivity(),getChildFragmentManager(),new String[]{"Latest Challenges","Past Challenges"});
-        viewPager.setAdapter(challengerViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-        TextView tv_sponsor_challenge=view.findViewById(R.id.tv_sponsor_challenge);
-        TextView tv_jackpot_challenge=view.findViewById(R.id.tv_jackpot_challenge);
+        RecyclerView recyclerView=view.findViewById(R.id.main_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new ChallengesMainListAdapter(getContext()));
+        AppCompatTextView tv_sponsor_challenge=view.findViewById(R.id.tv_sponsor_challenge);
+        AppCompatTextView tv_jackpot_challenge=view.findViewById(R.id.tv_jackpot_challenge);
 
         tv_sponsor_challenge.setOnClickListener(this);
         tv_jackpot_challenge.setOnClickListener(this);

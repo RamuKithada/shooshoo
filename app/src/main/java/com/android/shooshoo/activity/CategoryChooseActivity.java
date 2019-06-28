@@ -2,6 +2,7 @@ package com.android.shooshoo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     RecyclerView recyclerView;
 
     @BindView(R.id.next_lay)
-    RelativeLayout next_lay;
+    AppCompatTextView next_lay;
 
     /***
      * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
@@ -53,14 +54,12 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     @BindView(R.id.button3)
     Button button3;
 
-    @BindView(R.id.button4)
-    Button button4;
+
 
     @BindView(R.id.tv_title)
     TextView tv_title;
 
-    @BindView(R.id.tv_skip)
-    TextView tv_skip;
+
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
@@ -84,7 +83,6 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         tv_title.setText("Choose Categories");
         next_lay.setOnClickListener(this);
         setState();
-        tv_skip.setOnClickListener(this);
         iv_back.setOnClickListener(this);
 
         if(connectionDetector.isConnectingToInternet()){
@@ -127,10 +125,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
                     } else showMessage("please check internet connection");
                 }else showMessage("Please select at least 3 categories ");
                 break;
-            case R.id.tv_skip:
-                Intent homeIntent=new Intent(this,HomeActivity.class);
-                startActivity(homeIntent);
-                break;
+
             case R.id.iv_back:
                 finish();
                 break;
@@ -141,10 +136,8 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     //To set the step of the registration process
     private void setState() {
         button1.setBackgroundResource(R.drawable.unselected);
-        button2.setBackgroundResource(R.drawable.unselected);
-        button3.setBackgroundResource(R.drawable.selected);
-        button4.setBackgroundResource(R.drawable.unselected);
-
+        button2.setBackgroundResource(R.drawable.selected);
+        button3.setBackgroundResource(R.drawable.unselected);
 
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
@@ -52,7 +54,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
      * sponsor_viewall,jackpot_viewall,category_viewall are view buttons in respective  categories sponsor challenges,jackpot challenges,categories
      *
      */
-    RelativeLayout sponsor_viewall,jackpot_viewall,category_viewalll;
+    AppCompatTextView sponsor_viewall,jackpot_viewall,category_viewalll;
 
     private HomeView mListener;
     //Jackpot challenge List adapter
@@ -131,6 +133,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         RecyclerView sponsorList=view.findViewById(R.id.sponsor_challengers_list);
         RecyclerView jackpotList=view.findViewById(R.id.jackpot_challengers_list);
         RecyclerView catList=view.findViewById(R.id.category_challengers_list);
+        RecyclerView extralist=view.findViewById(R.id.extra_list);
+        extralist.setLayoutManager(new LinearLayoutManager(getContext()));
+        extralist.setAdapter(new ChallengesMainListAdapter(getContext()));
         sponsor_viewall=view.findViewById(R.id.sponsor_viewall);
         jackpot_viewall=view.findViewById(R.id.jackpot_viewall);
         category_viewalll=view.findViewById(R.id.category_viewall);

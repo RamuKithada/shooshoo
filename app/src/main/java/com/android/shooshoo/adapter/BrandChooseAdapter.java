@@ -22,7 +22,6 @@ import java.util.List;
  * BrandChooseAdapter is used to present the list of Brands When the user registration process
  */
 public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.CatViewHolder> {
-    String active="#CCCCCC",inactive="#FFFFFF";
    int[] isActive=new int[0];
    List<Brand> brands=new ArrayList<Brand>();
    Context context;
@@ -77,7 +76,7 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
               }
           });
         Brand brand=brands.get(i);
-        catViewHolder.textView.setText(brand.getBrandName());
+//        catViewHolder.textView.setText(brand.getBrandName());
         Picasso.with(context).load(ApiUrls.IMAGE_URL+"brands/"+brand.getIcon()).into(catViewHolder.imageView);
 
     }
@@ -128,12 +127,12 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
     public class CatViewHolder extends RecyclerView.ViewHolder{
          RelativeLayout cardView;
          ImageView imageView;
-         TextView textView;
+//         TextView textView;
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView=itemView.findViewById(R.id.card);
             imageView=itemView.findViewById(R.id.image);
-            textView=itemView.findViewById(R.id.name);
+//            textView=itemView.findViewById(R.id.name);
         }
     }
 }
