@@ -87,7 +87,7 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View headerview = navigationView.getHeaderView(0);
-        CircleImageView profilepic = (CircleImageView) headerview.findViewById(R.id.profilepic);
+        CircleImageView profilepic = (CircleImageView) headerview.findViewById(R.id.profile_pic);
         profilepic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +103,7 @@ public class EditProfileActivity extends BaseActivity implements NavigationView.
         tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
          profileViewPagerAdapter=new ProfileViewPagerAdapter(this,getSupportFragmentManager(),new String[]{"Profile Settings","Profile Visibility"});
         viewPager.setAdapter(profileViewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.setupWithViewPager(viewPager);
         iv_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

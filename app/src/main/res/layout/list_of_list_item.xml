@@ -28,7 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:textColor="@color/white_text"
-        android:text="All"
+        android:text="@string/all"
         android:fontFamily="@font/raleway_extrabold"
         android:textSize="22sp"
 

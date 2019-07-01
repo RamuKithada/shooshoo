@@ -2,30 +2,33 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_profile"
+        android:title="@string/profile" />
+    <item
+        android:id="@+id/navigation_visibility"
+        android:title="@string/profile_visibility" />
+    <item
+        android:id="@+id/navigation_notification"
+        android:title="@string/notifications" />
+    <item
         android:id="@+id/navigation_legal"
-        android:icon="@drawable/ic_legal"
         android:title="@string/title_legal" />
 
     <item
         android:id="@+id/navigation_Licenses"
-        android:icon="@drawable/ic_license"
         android:title="@string/title_Licenses"
         />
 
     <item
         android:id="@+id/navigation_user_agreement"
-        android:icon="@drawable/ic_user_agreement"
         android:title="@string/title_user_agreement" />
     <item
         android:id="@+id/navigation_tc"
-        android:icon="@drawable/ic_terms_use"
         android:title="@string/title_tc" />
     <item
         android:id="@+id/navigation_pws"
-        android:icon="@drawable/password_active"
         android:title="@string/title_chpws" />
     <item
         android:id="@+id/navigation_logout"
-        android:icon="@drawable/ic_logout"
         android:title="@string/title_logout" />
 </menu>

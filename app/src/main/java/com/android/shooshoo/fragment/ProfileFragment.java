@@ -63,10 +63,11 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     RecyclerView feedsRecyclerView;
     ProfileBrandAdapter profileBrandAdapter;
     ProfileFeedsAdapter profileFeedsAdapter;
-    TextView profile_name,profile_quotes,profile_status,profile_age;
-    LinearLayout show_hide;
-    ImageView toggleBtn;
-    ImageView support_now;
+    TextView profile_name,profile_quotes;
+    //,profile_status,profile_age;
+//    LinearLayout show_hide;
+//    ImageView toggleBtn;
+//    ImageView support_now;
     CircleImageView iv_profile_pic;
     ConnectionDetector connectionDetector;
     ProfilePresenter presenter;
@@ -120,16 +121,16 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         super.onViewCreated(view, savedInstanceState);
         brandRecyclerView=view.findViewById(R.id.rv_list_brand);
         feedsRecyclerView=view.findViewById(R.id.rv_list_feed);
-        show_hide=view.findViewById(R.id.show_hide_lay);
-        toggleBtn=view.findViewById(R.id.toggle_btn);
-        toggleBtn.setOnClickListener(this);
-        support_now=view.findViewById(R.id.support_now);
+//        show_hide=view.findViewById(R.id.show_hide_lay);
+//        toggleBtn=view.findViewById(R.id.toggle_btn);
+//        toggleBtn.setOnClickListener(this);
+//        support_now=view.findViewById(R.id.support_now);
         iv_profile_pic=view.findViewById(R.id.iv_profile_pic);
         profile_name=view.findViewById(R.id.profile_name);
-        profile_quotes=view.findViewById(R.id.profile_quotes);
-        profile_status=view.findViewById(R.id.profile_status);
-        profile_age=view.findViewById(R.id.profile_age);
-        support_now.setOnClickListener(this);
+        profile_quotes=view.findViewById(R.id.profile_description);
+//        profile_status=view.findViewById(R.id.profile_status);
+//        profile_age=view.findViewById(R.id.profile_age);
+//        support_now.setOnClickListener(this);
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
@@ -170,18 +171,10 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.toggle_btn:
-                if(show_hide.getVisibility()==View.VISIBLE){
-                    show_hide.setVisibility(View.GONE);
-                    toggleBtn.setImageResource(R.drawable.plus_collaps);
-                }else {
-                    show_hide.setVisibility(View.VISIBLE);
-                    toggleBtn.setImageResource(R.drawable.minus_add);
-                }
-                break;
+
             case R.id.support_now:
-                Intent intent=new Intent(getActivity(), SupportNowActivity.class);
-                startActivity(intent);
+//                Intent intent=new Intent(getActivity(), SupportNowActivity.class);
+////                startActivity(intent);
                 break;
         }
 
@@ -211,9 +204,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         if(userInfo!=null) {
             this.userInfo=userInfo;
             profile_name.setText(userInfo.getUserName());
-            profile_age.setText(ApiUrls.getAge(userInfo.getDob()));
-            profile_quotes.setVisibility(View.GONE);
-            profile_status.setVisibility(View.GONE);
+            profile_quotes.setText(userInfo.getDob());//ApiUrls.getAge(userInfo.getDob()));
             Picasso.with(getContext()).load(PROFILE_IMAGE_URL+userInfo.getImage()).error(R.drawable.profile_1).into(iv_profile_pic);
         }
     }

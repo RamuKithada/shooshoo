@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -107,10 +108,10 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     RecyclerView cat_subcat_list;
     @BindView(R.id.btn_save_bank)
     TextView btn_save_bank;
-    @BindView(R.id.btn_save)
-    TextView btn_save;
+//    @BindView(R.id.btn_save)
+//    TextView btn_save;
     @BindView(R.id.btn_more_categories)
-    TextView btn_more_categories;
+    ImageView btn_more_categories;
     ConnectionDetector connectionDetector;
 
     final String genders[]=new String[]{"Male","Female","Others"};
@@ -166,19 +167,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        setFoucusChange(edt_user_name,view,R.id.user_name_line);
-        setFoucusChange(edt_user_email,view,R.id.user_email_line);
-        setFoucusChange(edt_first_name,view,R.id.first_name_line);
-        setFoucusChange(edt_last_name,view,R.id.last_name_line);
-        setFoucusChange(edt_street_name,view,R.id.street_name_line);
-        setFoucusChange(edt_street_number,view,R.id.street_number_line);
-        setFoucusChange(edt_zipcode,view,R.id.zipcode_line);
-        setFoucusChange(edt_mobile_number,view,R.id.mobile_number_line);
-        setFoucusChange(edt_iban,view,R.id.iban_line);
-        setFoucusChange(edt_bic_swift,view,R.id.bic_swift_line);
-        setFoucusChange(edt_acc_owner,view,R.id.acc_owner_line);
-        setFoucusChange(edt_bank_name,view,R.id.bank_name_line);
-        btn_save.setOnClickListener(this);
+
+//        btn_save.setOnClickListener(this);
         btn_more_categories.setOnClickListener(this);
         btn_save_bank.setOnClickListener(this);
         dataLoadPresenter=new DataLoadPresenter();
@@ -233,7 +223,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_save:
+            case R.id.btn_save_bank:
                if(validateSave()){
                    showMessage("Saved successfully");
                    updateUserInfoPresenter.updateProfile(userSession.getUserId(),edt_first_name.getText().toString(),
@@ -278,8 +268,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
 
                }
-                break;
-            case R.id.btn_save_bank:
+
                 if(validateBank()){
                     showMessage("Bank data Saved successfully");
                     updateUserInfoPresenter.saveBankDetails(userSession.getUserId(),edt_iban.getText().toString(),edt_bic_swift.getText().toString(),edt_acc_owner.getText().toString(),edt_bank_name.getText().toString());

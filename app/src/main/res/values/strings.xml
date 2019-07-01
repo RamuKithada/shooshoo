@@ -38,7 +38,7 @@
     <string name="next">Next</string>
     <string name="more_companies">More Companies</string>
     <string name="private_sponsor">Private Sponsor</string>
-    <string name="more_categories">More Categories</string>
+    <string name="more_categories">More</string>
     <string name="more_prices">More Prizes</string>
     <string name="challenge_radar">Challenge Radar</string>
     <string name="categories">Categories</string>
@@ -74,7 +74,7 @@
     <string name="draw">Draw</string>
     <string name="submit">Submit</string>
     <string name="write_msg">Write message here</string>
-    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile">Profile Settings</string>
     <string name="title_activity_drawer">DrawerActivity</string>
     <string name="winners_list">Winners List</string>
     <string name="winners_title"><![CDATA[H & M Hamburg Reopening]]></string>
@@ -100,10 +100,27 @@
     <string name="chlengetab">Create your own Challenge for millioins of people!</string>
     <string name="h_m"><![CDATA[H&M]]></string>
     <string name="notifications">Push Notifications</string>
-    <string name="others_can_use_my_profile_info">View My Profile to others</string>
+    <string name="profile_line">Others can see that you visited their profiles</string>
+    <string name="rewards_line">Reveals the prize amount next to you won \n challenges</string>
+    <string name="friends_line">Others can see who your followers are</string>
+    <string name="radar_line">Enables the new friends option in the radar and  \n others can see you on the map</string>
     <string name="permission_denied_explanation" >Permission was denied, but is needed for core
         functionality.</string>
     <string name="settings" >Settings</string>
     <string name="permission_rationale" >Location permission is needed for core functionality </string>
     <string name="ok">Ok</string>
+    <string name="all">All</string>
+    <string name="mygifts">MyGifts</string>
+    <string name="edit">EDIT</string>
+    <string name="profile_visits">Profile visits</string>
+    <string name="rewards">Rewards</string>
+    <string name="show_me_on_radar">Show me on radar</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="age">Age</string>
+<string name="some_text"> <![CDATA[normal color <font color=\'#06a7eb\'>special color</font>]]>    </string>
+    <string name="profile_preview">profile preview</string>
+    <string name="search_filter">search filter</string>
+    <string name="search_line" >Choose the information other users can find you with in the search filter</string>
+    <string name="profile_visibility">Visibility</string>
 </resources>

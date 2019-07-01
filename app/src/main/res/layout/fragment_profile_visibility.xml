@@ -7,45 +7,64 @@
     android:background="@drawable/gradiant_home"
     android:padding="10dp"
     tools:context=".fragment.ProfileVisibilityFragment">
+    <LinearLayout
+        android:id="@+id/top_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+
+        >
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/private_text"
+            android:layout_margin="5dp"
+            android:textColor="@color/white_text"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="public"
+            android:layout_margin="5dp"
+            android:textColor="@color/pink_lite"
+            />
+
+    </LinearLayout>
     <ScrollView
+        android:layout_below="@+id/top_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
         >
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="10dp"
-    >
 
     <android.support.v7.widget.SwitchCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/SCBSwitch"
-        android:checked="true"
+        android:checked="false"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/profile"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/profile_visits"
         android:textColor="@color/white_text"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:layout_alignParentRight="true"
         />
-</RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
+            android:text="@string/profile_line"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_medium"
+
+            />
+
+
+
 
             <android.support.v7.widget.SwitchCompat
                 android:layout_width="match_parent"
@@ -53,24 +72,19 @@
                 android:theme="@style/SCBSwitch"
                 android:checked="true"
                 android:textColor="@color/white_text"
-                android:text="@string/notifications"
+                android:text="@string/rewards"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_alignParentRight="true"
                 />
-        </RelativeLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white_text"
-            />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rewards_line"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_medium"
+
+            />
 
         <android.support.v7.widget.SwitchCompat
             android:layout_width="match_parent"
@@ -81,177 +95,113 @@
             android:layout_marginBottom="10dp"
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
-            android:text="@string/trophies"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/friends"
             android:textColor="@color/white_text"
-            android:layout_alignParentRight="true"
             />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
-
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"
-            android:checked="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/coins"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white_text"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
-
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/winning_challenges"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white_text"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
-
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"
-            android:checked="true"
-            android:text="@string/sponser_brands"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white_text"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/friends"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/friends_line"
             android:textColor="@color/white_text"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:layout_alignParentLeft="true"
-            />
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/SCBSwitch"
-            android:textColor="@color/white_text"
-            android:text="@string/friends"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_alignParentRight="true"
-            />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
+            android:fontFamily="@font/raleway_medium"
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        >
-
+            />
         <android.support.v7.widget.SwitchCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
             android:checked="true"
-            android:textColor="@color/white_text"
-            android:text="@string/macth_req"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-
-            android:layout_alignParentRight="true"
+            android:text="@string/show_me_on_radar"
+            android:textColor="@color/white_text"
+            android:layout_centerVertical="true"
             />
-    </RelativeLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_text"
-        />
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
+            android:text="@string/radar_line"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_medium"
 
-            <android.support.v7.widget.SwitchCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/SCBSwitch"
-                android:checked="false"
-                android:textColor="@color/white_text"
-                android:text="@string/others_can_use_my_profile_info"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_alignParentRight="true"
-                />
-        </RelativeLayout>
+            />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/white_text"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_filter"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textSize="18sp"
+            android:textAllCaps="true"
+            android:layout_marginBottom="10dp"
+            android:textColor="#85868A"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_line"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_medium"
+
+            />
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/country"
+            android:textColor="@color/white_text"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            />
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"
+            android:checked="true"
+            android:text="@string/city"
+            android:textColor="@color/white_text"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+
+            />
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"
+            android:textColor="@color/white_text"
+            android:text="@string/categories"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            />
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/SCBSwitch"
+            android:checked="true"
+            android:textColor="@color/white_text"
+            android:text="@string/age"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            />
+
     </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>
