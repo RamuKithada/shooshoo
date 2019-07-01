@@ -66,7 +66,7 @@
         >
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/edt_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
@@ -80,7 +80,7 @@
             />
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/edt_user_email"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
@@ -410,7 +410,7 @@
             >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_acc_owner"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

@@ -84,11 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     UserSession userSession;
 
     public HomeFragment() {
-        jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
-        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
-        //new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands);
-        homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
+
     }
 
     /**
@@ -117,6 +113,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -146,6 +143,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         setLayoutManager(brandsList);
         setLayoutManager(jackpotList);
         setLayoutManager(catList);
+        jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
+        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
+        //new SponsorChallengersAdapter(getContext(),null);
+        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands);
+        homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);
         jackpotList.setAdapter(jackpotChallengersAdapter);

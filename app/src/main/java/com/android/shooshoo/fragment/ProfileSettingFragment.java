@@ -592,8 +592,9 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void showMessage(int stringId) {
-        if(baseView!=null)
+        if(baseView!=null )
             baseView.showMessage(stringId);
+
     }
 
     @Override
@@ -601,12 +602,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         if(baseView!=null)
             baseView.showMessage(message);
 
+
     }
 
     @Override
     public void showProgressIndicator(Boolean show) {
         if(baseView!=null)
         baseView.showProgressIndicator(show);
+
 
     }
 
