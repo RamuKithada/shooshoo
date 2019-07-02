@@ -9,12 +9,16 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="end">
 
-
-    <include layout="@layout/content_drawer"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <android.support.design.widget.NavigationView
+        <include layout="@layout/content_drawer" />
+    </LinearLayout>
+
+   <!-- <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -26,6 +30,155 @@
         app:headerLayout="@layout/dawar_header"
         app:itemBackground="@drawable/drawer_item_bg"
         android:background="#111111"
-        />
+        />-->
+    <LinearLayout
+        android:id="@+id/drawer"
+        android:orientation="vertical"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="#000000"
+        android:layout_gravity="end">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/pink_drak"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:padding="15dp"
+            android:text="@string/settings" />
+        <TextView
+            android:id="@+id/profile_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/visibility_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_visibility"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/notification_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notifications"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/legal_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_legal"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/license_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_Licenses"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/user_agreement_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_user_agreement"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/terms_of_use_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_tc"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/change_pws_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/change_pws"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+        <TextView
+            android:id="@+id/logout_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_logout"
+            android:padding="15dp"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+
+
+
+
+
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>
