@@ -1,5 +1,7 @@
 package com.android.shooshoo.fragment;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,12 +9,15 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +47,7 @@ import com.android.shooshoo.views.UpdateUserInfoView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,6 +81,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     EditText edt_user_name;
     @BindView(R.id.edt_user_email)
     EditText edt_user_email;
+    @BindView(R.id.edt_dob)
+    AppCompatEditText edt_dob;
     @BindView(R.id.edt_first_name)
     EditText edt_first_name;
     @BindView(R.id.edt_last_name)
@@ -181,6 +189,12 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         connectionDetector=new ConnectionDetector(getActivity());
         userSession=new UserSession(getActivity());
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
+        edt_dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDate(edt_dob);
+            }
+        });
         edt_gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,7 +295,29 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         }
 
     }
+    DatePickerDialog datePickerDialog;
 
+    private void setDate(final AppCompatEditText edt_dob) {
+
+        Calendar c = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(getContext(), R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                edt_dob.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+
+            }
+        },
+                c.get(Calendar.YEAR), c.get(Calendar.MONTH),
+                c.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+        datePickerDialog.show();
+        hideKeyboard(getContext(), edt_dob);
+
+    }
+    public static void hideKeyboard(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private boolean validateBank() {
         if(!ApiUrls.validateString(edt_acc_owner.getText().toString())){
 
@@ -525,7 +561,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     public void onAllCategories(List<Category> categories) {
         if(categories==null)
             return;
-
         Category category = new Category();
         category.setCategoryName("Category");
         Brand brand = new Brand();
@@ -730,6 +765,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             edt_first_name.setText(userInfo.getFirstName());
             edt_last_name.setText(userInfo.getLastName());
             edt_city.setText(userInfo.getCity());
+            edt_dob.setText(userInfo.getDob());
             edt_country.setText(userInfo.getCountry());
             edt_street_name.setText(userInfo.getStreet());
             edt_street_number.setText(userInfo.getStreetNum());

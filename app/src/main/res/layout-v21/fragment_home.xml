@@ -98,7 +98,9 @@
                        android:textColor="@color/white_text"
                        android:text="@string/sponsor_challengers"
                        android:layout_margin="5dp"
-                       android:textSize="22sp"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
+
                        android:fontFamily="@font/raleway_extrabold"
                        />
 
@@ -112,7 +114,8 @@
                    android:layout_centerVertical="true"
                    android:layout_alignParentRight="true"
                    android:fontFamily="@font/raleway_extrabold"
-                   android:textSize="22sp"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
                    android:layout_margin="2dp"
                    android:gravity="center_vertical"
 
@@ -141,7 +144,6 @@
                    android:text="@string/s_challengers_result"
                    android:textColor="#FFF"
                    android:gravity="center"
-                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                    android:fontFamily="@font/raleway_extrabold"
                    android:layout_below="@+id/sponsor_challengers_list"
                    android:background="@color/pink_drak"
@@ -171,8 +173,9 @@
                    android:textColor="@color/white_text"
                    android:text="@string/jackpot_challengers"
                    android:layout_margin="5dp"
-                   android:textSize="22sp"
+
                    android:fontFamily="@font/raleway_extrabold"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                    />
                <android.support.v7.widget.AppCompatTextView
                    android:id="@+id/jackpot_viewall"
@@ -183,9 +186,10 @@
                    android:layout_centerVertical="true"
                    android:layout_alignParentRight="true"
                    android:fontFamily="@font/raleway_extrabold"
-                   android:textSize="22sp"
+
                    android:layout_margin="2dp"
                    android:gravity="center_vertical"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
 
                    />
 
@@ -228,7 +232,7 @@
                    android:text="@string/categories_title"
                    android:layout_margin="5dp"
                    android:layout_centerVertical="true"
-                   android:textSize="22sp"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                    android:fontFamily="@font/raleway_extrabold"
                    />
 
@@ -248,7 +252,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:fontFamily="@font/raleway_extrabold"
-        android:textSize="22sp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
@@ -303,6 +307,7 @@
                android:layout_marginTop="5dp"
                android:nestedScrollingEnabled="false"
                tools:listitem="@layout/list_of_list_item"
+
                >
            </android.support.v7.widget.RecyclerView>
 

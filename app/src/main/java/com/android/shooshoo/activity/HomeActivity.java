@@ -296,7 +296,6 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
         navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
-
         int icon=getIntent().getIntExtra("icon",0);
         switch (icon){
             case 0:
@@ -313,6 +312,12 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 break;
             case 4:
                 bottomNavigationOnClickListener.onClick(navigation_radar);
+                break;
+            case 6:
+                onClick(iv_profile);
+                break;
+            case 7:
+                onClick(iv_chat);
                 break;
         }
 
@@ -331,7 +336,6 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         {
             case R.id.iv_profile:
                 FragmentManager fragmentManager=getSupportFragmentManager();
-
                 fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ProfileFragment.newInstance(userSession.getUserId(),"Ram")).commit();
                 mTextMessage.setText(R.string.profile);
                 iv_chat.setVisibility(View.VISIBLE);

@@ -1,23 +1,31 @@
 package com.android.shooshoo.activity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +37,7 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.presenters.FeedsPresenter;
+import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.utils.UserSession;
@@ -44,7 +53,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import im.ene.toro.CacheManager;
 import im.ene.toro.widget.Container;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -64,14 +72,14 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  *
  */
 
-public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView {
+public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView ,View.OnClickListener{
+
+
     Container container;
     FullVideoAdapter adapter;
     LinearLayoutManager layoutManager;
     RelativeLayout bottom_view;
     private ArrayList<Feed> modelArrayList=new ArrayList<>();
-
-
 
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
@@ -83,6 +91,52 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     LinearLayout navigation_winners;
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
+
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+
+    @BindView(R.id.iv_grid_toggle)
+    ImageView iv_grid_toggle;
+
+    @BindView(R.id.iv_chat)
+    ImageView iv_chat;
+
+    @BindView(R.id.iv_profile)
+    ImageView iv_profile;
+
+    @BindView(R.id.full_view_layout)
+    RelativeLayout full_view_layout;
+
+    @BindView(R.id.grid_layout)
+    RelativeLayout grid_layout;
+
+    @BindView(R.id.full_view_tabs)
+    LinearLayout full_view_tabs;
+
+    @BindView(R.id.grid_tabs)
+    LinearLayout grid_tabs;
+
+    @BindView(R.id.bottom_view)
+    RelativeLayout bottomNavigation;
+
+    @BindView(R.id.new_lay)
+    LinearLayout new_lay;
+
+    @BindView(R.id.popular_lay)
+    LinearLayout popular_lay;
+
+    @BindView(R.id.random_lay)
+    LinearLayout random_lay;
+
+    @BindView(R.id.sponsor_lay)
+    LinearLayout sponsor_lay;
+
+    @BindView(R.id.jackpot_lay)
+    LinearLayout jackpot_lay;
+
+    @BindView(R.id.friends_lay)
+    LinearLayout friends_lay;
+
     /**
      * feedsPresenter is used to load the data;
      */
@@ -93,7 +147,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-           view=v;
+            view=v;
             Intent intent=new Intent(FeedsActivity.this,HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
@@ -104,7 +158,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                     intent.putExtra("icon",1);
                     break;
                 case R.id.navigation_feed:
-                   ImageView imageView= navigation_feed.findViewById(R.id.iv_navigation_feed);
+                    ImageView imageView= navigation_feed.findViewById(R.id.iv_navigation_feed);
                     TextView textView= navigation_feed.findViewById(R.id.tv_navigation_feed);
                     imageView.setImageResource(R.mipmap.feed_active);
                     textView.setTextColor(getResources().getColor(R.color.pink_drak));
@@ -119,7 +173,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             if(!userSession.isLogin())
             {
                 Intent loginIntent=new Intent(FeedsActivity.this,LoginActivity.class);
-                  startActivityForResult(loginIntent,150);
+                startActivityForResult(loginIntent,150);
             }
             else
             {
@@ -130,6 +184,80 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
         }
     };
+
+    View.OnClickListener fullFeedListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+            ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+
+            ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+       switch (v.getId()){
+              case R.id.sponsor_lay:
+                  ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                  sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+               break;
+               case R.id.jackpot_lay:
+                   ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                   jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
+               break;
+               case R.id.friends_lay:
+                   ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                   friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+               break;
+
+       }
+
+
+        }
+    };
+    View.OnClickListener gridFeedListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+            ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+
+            ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+            random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+
+
+
+            switch (v.getId()){
+                case R.id.new_lay:
+                    ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                    new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    break;
+                case R.id.popular_lay:
+                    ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                    popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    break;
+                case R.id.random_lay:
+                    ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                    random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    break;
+
+            }
+
+
+        }
+    };
+
+
+
+
 
 
     @Override
@@ -143,35 +271,48 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         detector=new ConnectionDetector(this);
         feedsPresenter=new FeedsPresenter();
         feedsPresenter.attachView(this);
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         SnapHelper snapHelper = new PagerSnapHelper();
         container.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(container);
         adapter = new FullVideoAdapter(this,modelArrayList,this);
         container.setAdapter(adapter);
         container.setCacheManager(adapter);
+
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
+
         if(detector.isConnectingToInternet())
-            feedsPresenter.loadFeeds();
+             feedsPresenter.loadFeeds();
         else {
             showMessage("Check internet connection");
         }
-//        setDataToContainer();
+
+        setTagClickListener();
+    }
+
+    private void setTagClickListener() {
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
         navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
         bottomNavigationOnClickListener.onClick(navigation_feed);
+
+        sponsor_lay.setOnClickListener(fullFeedListener);
+        jackpot_lay.setOnClickListener(fullFeedListener);
+        friends_lay.setOnClickListener(fullFeedListener);
+        new_lay.setOnClickListener(gridFeedListener);
+        popular_lay.setOnClickListener(gridFeedListener);
+        random_lay.setOnClickListener(gridFeedListener);
+        iv_help.setOnClickListener(this);
+        iv_chat.setOnClickListener(this);
+        iv_grid_toggle.setOnClickListener(this);
+        iv_profile.setOnClickListener(this);
+
+
     }
-/*    private void setDataToContainer()
-    {
-        for (String s:urls) {
-            VideoModel videoModel = new VideoModel();
-            videoModel.setVideo(s);
-            modelArrayList.add(videoModel);
-            adapter.notifyDataSetChanged();
-        }
-    }*/
+
 
     @Override
     public void onClick(View v,Feed feed) {
@@ -183,8 +324,8 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,100);
                 else {
-                       onActivityResult(100,RESULT_OK,null);
-                      }
+                    onActivityResult(100,RESULT_OK,null);
+                }
 
                 break;
             case R.id.donation_view:
@@ -215,8 +356,8 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             case R.id.share_view:
                 String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
 
-                     onDownloadImage(url,null);
-                      break;
+                onDownloadImage(url,null);
+                break;
             case R.id.plus_mark:
                 if(!userSession.isLogin())
                     startActivityForResult(intent,103);
@@ -224,11 +365,11 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                     feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
                 }
                 break;
-                case R.id.profile_lay:
-                    Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
-                    userProfileIntent.putExtra("userId",feed.getUserId());
-                      startActivity(userProfileIntent);
-                    break;
+            case R.id.profile_lay:
+                Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
+                userProfileIntent.putExtra("userId",feed.getUserId());
+                startActivity(userProfileIntent);
+                break;
 
 
 
@@ -244,32 +385,37 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     /***
      * Feed to hold the reference of the selected
      */
-   public Feed feed=null;
+    public Feed feed=null;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             Intent intent;
-                switch (requestCode){
-                    case 100:
-                        intent=new Intent(this,FeedCommentsActivity.class);
-                        intent.putExtra("feedId",feed.getId());
-                        startActivity(intent);
-                        break;
-                    case 101:
+            switch (requestCode){
+                case 100:
+                    intent=new Intent(this,FeedCommentsActivity.class);
+                    intent.putExtra("feedId",feed.getId());
+                    startActivity(intent);
+                    break;
+                case 101:
 
-                        break;
-                    case 102:
+                    break;
+                case 102:
 
-                        break;
-                    case 103:
+                    break;
+                case 103:
 
-                        break;
-                    case 150:
-                        if(bottomNavigationOnClickListener!=null&&view!=null)
-                           bottomNavigationOnClickListener.onClick(view);
-                        break;
-                }
+                    break;
+                case 150:
+                    if(bottomNavigationOnClickListener!=null&&view!=null)
+                        bottomNavigationOnClickListener.onClick(view);
+                    break;
+                case 151:
+                    if(view!=null)
+                       onClick(view);
+                    break;
+
+            }
         }
     }
 
@@ -286,9 +432,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             try {
                 int likes = Integer.parseInt(feed.getLikes());
                 if(feed.isLike())
-                        likes--;
-                    else
-                        likes++;
+                    likes--;
+                else
+                    likes++;
                 feed.setLike(!feed.isLike());
                 feed.setLikes(String.valueOf(likes));
                 adapter.notifyDataSetChanged();
@@ -385,6 +531,21 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                                 progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                                 progressDialog.setCancelable(false);
                                 progressDialog.show();
+                                progressDialog.setOnKeyListener(new Dialog.OnKeyListener() {
+
+                                    @Override
+                                    public boolean onKey(DialogInterface arg0, int keyCode,
+                                                         KeyEvent event) {
+                                        // TODO Auto-generated method stub
+                                        if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                            progressDialog.dismiss();
+                                            cancel(true);
+
+                                        }
+                                        return true;
+                                    }
+                                });
+
                             }
 
                             @Override
@@ -393,7 +554,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                                 showMessage(s);
                                 if(s!=null)
                                     shareFile(packageName,s);
-                                progressDialog.dismiss();
+                                     progressDialog.dismiss();
                             }
 
                             @Override
@@ -546,7 +707,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
-             if(permissions.length>0&&permissions[0].equalsIgnoreCase(WRITE_EXTERNAL_STORAGE)){
+                if(permissions.length>0&&permissions[0].equalsIgnoreCase(WRITE_EXTERNAL_STORAGE)){
                     if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     {
                         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
@@ -561,7 +722,69 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
 
 
+    @Override
+    public void onClick(View v) {
+        view=v;
+
+        switch (v.getId()){
+            case R.id.iv_help:
+
+            break;
+            case R.id.iv_chat:
+                if(!userSession.isLogin())
+                {
+                    Intent intent=new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent,151);
+                }
+                else {
+                    Intent intent=new Intent(FeedsActivity.this,HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("icon",7);
+                    startActivity(intent);
+                    finish();
+                }
+
+                break;
+
+            case R.id.iv_grid_toggle:
+                if(grid_layout.getVisibility()==View.VISIBLE){
+                    grid_layout.setVisibility(View.GONE);
+                    grid_tabs.setVisibility(View.GONE);
+                    full_view_layout.setVisibility(View.VISIBLE);
+                    full_view_tabs.setVisibility(View.VISIBLE);
+                }else{
+                    full_view_layout.setVisibility(View.GONE);
+                    full_view_tabs.setVisibility(View.GONE);
+                    grid_tabs.setVisibility(View.VISIBLE);
+                    grid_layout.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            case R.id.iv_profile:
+                if(!userSession.isLogin())
+                {
+                    Intent intent=new Intent(this, LoginActivity.class);
+                    startActivityForResult(intent,151);
+                }
+                else {
+                    Intent intent=new Intent(FeedsActivity.this,HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.putExtra("icon",6);
+                    startActivity(intent);
+                    finish();
+                }
+                break;
+
+        }
 
 
 
+
+        }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.e("onBackPressed","onBackPressed");
+    }
 }

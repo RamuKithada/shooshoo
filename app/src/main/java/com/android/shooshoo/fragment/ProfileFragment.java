@@ -19,6 +19,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.shooshoo.models.DemoItem;
+import com.felipecsl.asymmetricgridview.AGVRecyclerViewAdapter;
+import com.felipecsl.asymmetricgridview.AsymmetricItem;
+import com.felipecsl.asymmetricgridview.AsymmetricRecyclerView;
+
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.SupportNowActivity;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
@@ -33,6 +38,8 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.ProfileView;
+import com.felipecsl.asymmetricgridview.AsymmetricRecyclerViewAdapter;
+import com.felipecsl.asymmetricgridview.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -60,9 +67,10 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     private String mParam2;
     //Here we declare layouts
     RecyclerView brandRecyclerView;
-    RecyclerView feedsRecyclerView;
+//    RecyclerView feedsRecyclerView;
+    AsymmetricRecyclerView recyclerView;
     ProfileBrandAdapter profileBrandAdapter;
-    ProfileFeedsAdapter profileFeedsAdapter;
+//    ProfileFeedsAdapter profileFeedsAdapter;
     TextView profile_name,profile_quotes;
     //,profile_status,profile_age;
 //    LinearLayout show_hide;
@@ -74,6 +82,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     BaseView baseView;
     List<Brand> brandList=new ArrayList<Brand>();
     List<Post> posts=new ArrayList<Post>();
+    private final DemoUtils demoUtils = new DemoUtils();
 //    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 //    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
 //            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
@@ -120,7 +129,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         brandRecyclerView=view.findViewById(R.id.rv_list_brand);
-        feedsRecyclerView=view.findViewById(R.id.rv_list_feed);
+//        feedsRecyclerView=view.findViewById(R.id.rv_list_feed);
 //        show_hide=view.findViewById(R.id.show_hide_lay);
 //        toggleBtn=view.findViewById(R.id.toggle_btn);
 //        toggleBtn.setOnClickListener(this);
@@ -128,15 +137,23 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         iv_profile_pic=view.findViewById(R.id.iv_profile_pic);
         profile_name=view.findViewById(R.id.profile_name);
         profile_quotes=view.findViewById(R.id.profile_description);
+        recyclerView=view.findViewById(R.id.recyclerView);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(demoUtils.moarItems(50));
+        recyclerView.setRequestedColumnCount(3);
+        recyclerView.setDebugging(true);
+        recyclerView.setRequestedHorizontalSpacing(Utils.dpToPx(getContext(), 3));
+        recyclerView.addItemDecoration(
+                new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.recycler_padding)));
+        recyclerView.setAdapter(new AsymmetricRecyclerViewAdapter<>(getContext(), recyclerView, adapter));
 //        profile_status=view.findViewById(R.id.profile_status);
 //        profile_age=view.findViewById(R.id.profile_age);
 //        support_now.setOnClickListener(this);
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-        feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+     //feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
-        profileFeedsAdapter=new ProfileFeedsAdapter(getContext(),posts);
+       /* profileFeedsAdapter=new ProfileFeedsAdapter(getContext(),posts);
         brandRecyclerView.setAdapter(profileBrandAdapter);
-        feedsRecyclerView.setAdapter(profileFeedsAdapter);
+        feedsRecyclerView.setAdapter(profileFeedsAdapter);*/
         presenter=new ProfilePresenter();
 
         presenter.attachView(this);
@@ -225,12 +242,59 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         if(posts!=null)
         {
             this.posts.addAll(posts);
-            profileFeedsAdapter.notifyDataSetChanged();
+//            profileFeedsAdapter.notifyDataSetChanged();
         }
     }
 
     @Override
     public void onBankDetails(UserBankDetails bankDetails) {
 
+    }
+    class RecyclerViewAdapter extends AGVRecyclerViewAdapter<ViewHolder> {
+        private final List<DemoItem> items;
+
+        RecyclerViewAdapter(List<DemoItem> items) {
+            this.items = items;
+        }
+
+        @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            Log.d("RecyclerViewActivity", "onCreateView");
+            return new ViewHolder(parent, viewType);
+        }
+
+        @Override public void onBindViewHolder(ViewHolder holder, int position) {
+            Log.d("RecyclerViewActivity", "onBindView position=" + position);
+            holder.bind(items.get(position));
+        }
+
+        @Override public int getItemCount() {
+            return items.size();
+        }
+
+        @Override public AsymmetricItem getItem(int position) {
+            return items.get(position);
+        }
+
+        @Override public int getItemViewType(int position) {
+            return position % 2 == 0 ? 1 : 0;
+        }
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        private final TextView textView;
+
+        ViewHolder(ViewGroup parent, int viewType) {
+            super(LayoutInflater.from(parent.getContext()).inflate(
+                    viewType == 0 ? R.layout.adapter_item : R.layout.adapter_item_odd, parent, false));
+            if (viewType == 0) {
+                textView = (TextView) itemView.findViewById(R.id.textview);
+            } else {
+                textView = (TextView) itemView.findViewById(R.id.textview_odd);
+            }
+        }
+
+        void bind(DemoItem item) {
+            textView.setText(String.valueOf(item.getPosition()));
+        }
     }
 }

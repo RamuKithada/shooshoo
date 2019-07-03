@@ -46,13 +46,14 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public Uri mediaUri;
     public boolean isPlay=true;
     public LinearLayout comment_view,likes_view,share_view,donation_view;
-    public LinearLayout options_lay;
+    public RelativeLayout options_lay;
     public LinearLayout message_lay;
     public LinearLayout profile_lay;
     public TextView tv_video_des,tv_name,tv_time,tv_like_count,tv_views_count;
     public CircleImageView profile_pic;
     public ImageView iv_like;
     public ImageView plus_mark,imageView;
+    public RelativeLayout upper_layer;
 
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
@@ -67,7 +68,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         iv_pauseresume=(ImageView)itemView.findViewById(R.id.iv_pauseresume);
         plus_mark=(ImageView)itemView.findViewById(R.id.plus_mark);
         profile_lay=(LinearLayout)itemView.findViewById(R.id.profile_lay);
-        options_lay=(LinearLayout)itemView.findViewById(R.id.options_layout);
+        options_lay=(RelativeLayout)itemView.findViewById(R.id.options_layout);
         message_lay=(LinearLayout)itemView.findViewById(R.id.message_layout);
         tv_video_des=(TextView)itemView.findViewById(R.id.tv_video_des);
         profile_pic=itemView.findViewById(R.id.profile_pic);
@@ -76,11 +77,18 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         iv_like=itemView.findViewById(R.id.iv_like);
         tv_like_count=itemView.findViewById(R.id.tv_like_count);
         tv_views_count=itemView.findViewById(R.id.tv_views_count);
+        upper_layer=itemView.findViewById(R.id.upper_layer);
 
         progress_circular=(ProgressBar)itemView.findViewById(R.id.progress_circular);
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(upper_layer.getVisibility()==View.VISIBLE){
+                     upper_layer.setVisibility(View.GONE);
+                }else {
+                    upper_layer.setVisibility(View.VISIBLE);
+                }
+
 
                 if(helper==null)
                     return;

@@ -18,7 +18,7 @@
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         >
         <com.google.android.exoplayer2.ui.SimpleExoPlayerView
             android:id="@+id/player"
@@ -45,6 +45,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/upper_layer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -90,7 +91,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:padding="5dp"
-                    android:layout_alignTop="@+id/profile_pic"
+                    android:layout_alignBottom="@+id/profile_pic"
                     android:layout_marginLeft="-13dp"
                     android:layout_marginTop="-5dp"
                     android:layout_toRightOf="@+id/profile_pic"
@@ -102,135 +103,197 @@
             </RelativeLayout>
 
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/options_layout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="25dp"
+            android:layout_marginRight="10dp"
             android:layout_above="@+id/message_layout"
-            android:layout_gravity="right|center_vertical"
-            android:padding="5dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/feed_options"
             >
+
+
             <LinearLayout
-                android:id="@+id/donation_view"
+                android:id="@+id/options_layout_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="#BE000000"
                 >
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/donations"
-                    android:padding="5dp"
-                    android:layout_gravity="center"
-                    />
-                <TextView
+                <LinearLayout
+                    android:id="@+id/comment_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:orientation="vertical"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/white_text"
-                    android:text="Donations"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/comments"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:text="Comments"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
 
-                    />
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/donation_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/donations"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:text="Donations"
+
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/likes_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/like"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:text="80.06K"
+                        android:textSize="12sp"
+
+                        />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/comment_view"
+                android:id="@+id/options_layout_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_gravity="right|center_vertical"
+                android:padding="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_above="@+id/options_layout_horizontal"
+                android:background="#BE000000"
                 >
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/comments"
-                    android:padding="5dp"
-                    android:layout_gravity="center"
-                    />
-                <TextView
+
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white_text"
-                    android:text="Comments"
-                    android:gravity="center"
+                    android:orientation="vertical"
                     android:layout_gravity="center"
-                    android:textSize="12sp"
+                    android:layout_margin="5dp"
 
-                    />
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/tag"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:text="Tag"
+                        android:textSize="12sp"
 
-            </LinearLayout>
+                        />
 
-            <LinearLayout
-                android:id="@+id/likes_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                >
-                <ImageView
-                    android:id="@+id/iv_like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/like_normal"
-                    android:layout_gravity="center"
-                    android:padding="5dp"
-                    />
-                <TextView
-                    android:id="@+id/tv_like_count"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/share_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/white_text"
-                    android:text="80.06K"
-                    android:textSize="12sp"
+                    android:layout_margin="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/share_icon"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:text="Share"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        />
 
-                    />
+                </LinearLayout>
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/share_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                >
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/share_icon"
-                    android:padding="5dp"
-                    android:layout_gravity="center"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white_text"
-                    android:text="Share"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    />
+
 
             </LinearLayout>
 
 
+        </RelativeLayout>
 
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_video_des"
@@ -249,7 +312,6 @@
             android:orientation="vertical"
             android:visibility="visible"
             android:layout_alignParentBottom="true"
-            android:background="#cc000000"
             >
 
             <RelativeLayout
@@ -263,6 +325,8 @@
                     android:text="1 week ago"
                     android:textColor="#FFFFFF"
                     android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_time_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <ImageView
@@ -270,7 +334,7 @@
                     android:layout_height="20dp"
                     android:layout_toLeftOf="@+id/tv_views_count"
                     android:layout_margin="5dp"
-                    app:srcCompat="@drawable/ic_remove_red_eye_black_24dp"
+                    app:srcCompat="@drawable/username_normal"
                     />
                 <TextView
                     android:id="@+id/tv_views_count"

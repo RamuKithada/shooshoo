@@ -149,17 +149,15 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
     logout_item.setOnClickListener(this);
     change_pws_item.setOnClickListener(this);
     notification_item.setOnClickListener(this);
+        profileSettingFragment=ProfileSettingFragment.newInstance("hai","sai");
+        getSupportFragmentManager().beginTransaction().add(R.id.profile_fragment_container,profileSettingFragment).commit();
     }
 
 
     @Override
     public void onEditView(int view, int pos) {
-//        viewPager.getCurrentItem();
-//       Fragment fragment= profileViewPagerAdapter.getItem(viewPager.getCurrentItem());
-//       if(fragment!=null)
-//           if(fragment instanceof ProfileSettingFragment){
-//               ((ProfileSettingFragment) fragment).onEditView(view,pos);
-//           }
+       if(profileSettingFragment!=null)
+               profileSettingFragment.onEditView(view,pos);
     }
     ProfileSettingFragment profileSettingFragment;
     ProfileVisibilityFragment visibilityFragment;

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="@color/bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <TextView
@@ -55,7 +56,6 @@
             android:fontFamily="@font/raleway_extrabold"
             android:layout_marginTop="1dp"
             android:lineSpacingMultiplier="0.8"
-            android:textSize="16sp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:textColor="#FFF" />
@@ -71,7 +71,7 @@
         android:maxLines="1"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:text="Subtitle"
         />
     <RelativeLayout
@@ -91,7 +91,6 @@
             android:padding="1dp"
             android:background="@color/pink_drak"
             android:fontFamily="@font/raleway_extrabold"
-            android:textSize="16sp"
             android:layout_alignParentLeft="true"
             android:textColor="@color/white_text"
             />

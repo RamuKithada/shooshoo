@@ -43,13 +43,14 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#575A65</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">18sp</item>
 
     </style>
     <style name="MyEditTextTheme">
         <item name="colorControlNormal">@color/white_text</item>
         <item name="colorControlActivated">@color/white_text</item>
         <item name="colorControlHighlight">@color/white_text</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Small</item>
     </style>
 
 

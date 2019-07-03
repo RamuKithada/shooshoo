@@ -15,7 +15,7 @@
         android:textColor="@color/white_text"
         android:text="Challenge Title"
         android:layout_margin="5dp"
-        android:textSize="22sp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
         app:textAllCaps="true"
         android:fontFamily="@font/raleway_extrabold"
 
@@ -30,7 +30,7 @@
         android:textColor="@color/white_text"
         android:text="@string/all"
         android:fontFamily="@font/raleway_extrabold"
-        android:textSize="22sp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
 
 
         />

@@ -43,13 +43,13 @@
         />
 
     <ImageView
-        android:id="@+id/iv_edit_profile"
+        android:id="@+id/iv_search"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:background="#00FFFFFF"
         android:padding="5dp"
-        app:srcCompat="@drawable/ic_edit_profile" />
+        app:srcCompat="@drawable/ic_search_notification_icon" />
     <ImageView
         android:id="@+id/iv_filters"
         android:layout_width="40dp"
@@ -90,16 +90,6 @@
             android:layout_height="1dp"
             android:layout_weight="1"/>
         <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#00FFFFFF"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_search_notification_icon"
-            />
-
-        <ImageView
             android:id="@+id/iv_chat"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -108,6 +98,17 @@
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_chat_notification_icon"
             />
+        <ImageView
+            android:id="@+id/iv_edit_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            app:srcCompat="@drawable/ic_edit_profile"
+            />
+
+
         <ImageView
             android:id="@+id/iv_profile"
             android:layout_width="40dp"
