@@ -17,6 +17,14 @@ public class LoginSuccess{
     @Expose
     private UserInfo userInfo;
 
+    @SerializedName("notification")
+    @Expose
+    private NotificationSettings notificationSettings;
+
+    @SerializedName("visibility")
+    @Expose
+    private Visibility visibility;
+
     public Integer getStatus() {
         return status;
     }
@@ -47,5 +55,21 @@ public class LoginSuccess{
 
     public void setUserInfo(UserInfo userInfo) {
         this.userInfo = userInfo;
+    }
+
+    public NotificationSettings getNotificationSettings() {
+        return notificationSettings;
+    }
+
+    public void setNotificationSettings(NotificationSettings notificationSettings) {
+        this.notificationSettings = notificationSettings;
+    }
+
+    public Visibility getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Visibility visibility) {
+        this.visibility = visibility;
     }
 }

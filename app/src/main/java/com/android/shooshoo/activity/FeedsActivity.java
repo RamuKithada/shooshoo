@@ -35,7 +35,11 @@ import android.widget.Toast;
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FullVideoAdapter;
+import com.android.shooshoo.adapter.ImageListAdapter;
+import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.Feed;
+import com.android.shooshoo.models.ImagesModel;
+import com.android.shooshoo.models.ImagesSublistModel;
 import com.android.shooshoo.presenters.FeedsPresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
@@ -143,6 +147,18 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
     ConnectionDetector detector;
     View view=null;
+
+    /**
+     * random View setting and variables
+     *
+     *
+     *
+     */
+    @BindView(R.id.rv_list)
+    RecyclerView rv_list;
+    private ImageListAdapter imageListAdapter;
+    private ArrayList<ImagesModel> imagesModelArrayList=new ArrayList<>();
+
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -201,16 +217,38 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
               case R.id.sponsor_lay:
                   ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                   sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                  modelArrayList.clear();
+                  if(challengeFeeds!=null)
+                      if(challengeFeeds.getFeedList()!=null)
+                      if(challengeFeeds.getFeedList().getSponsor()!=null)
+                           modelArrayList.addAll(challengeFeeds.getFeedList().getSponsor());
+                      adapter.notifyDataSetChanged();
+
+
                break;
                case R.id.jackpot_lay:
                    ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                    jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                   modelArrayList.clear();
+                   if(challengeFeeds!=null)
+                       if(challengeFeeds.getFeedList()!=null)
+                           if(challengeFeeds.getFeedList().getJackpot()!=null)
+                               modelArrayList.addAll(challengeFeeds.getFeedList().getJackpot());
+                   adapter.notifyDataSetChanged();
 
-               break;
+
+                   break;
                case R.id.friends_lay:
                    ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                    friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-               break;
+                   modelArrayList.clear();
+                   if(challengeFeeds!=null)
+                       if(challengeFeeds.getFeedList()!=null)
+                           if(challengeFeeds.getFeedList().getFriends()!=null)
+                               modelArrayList.addAll(challengeFeeds.getFeedList().getFriends());
+                   adapter.notifyDataSetChanged();
+
+                   break;
 
        }
 
@@ -238,14 +276,32 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 case R.id.new_lay:
                     ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                     new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    modelArrayList.clear();
+                    if(feedsList!=null)
+                        if(feedsList.getFeedList()!=null)
+                            if(feedsList.getFeedList().getNewList()!=null)
+                                modelArrayList.addAll(feedsList.getFeedList().getNewList());
+                    adapter.notifyDataSetChanged();
                     break;
                 case R.id.popular_lay:
                     ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                     popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    modelArrayList.clear();
+                    if(feedsList!=null)
+                        if(feedsList.getFeedList()!=null)
+                            if(feedsList.getFeedList().getPopular()!=null)
+                                modelArrayList.addAll(feedsList.getFeedList().getPopular());
+                    adapter.notifyDataSetChanged();
                     break;
                 case R.id.random_lay:
                     ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                     random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                    modelArrayList.clear();
+                    if(feedsList!=null)
+                        if(feedsList.getFeedList()!=null)
+                            if(feedsList.getFeedList().getRandom()!=null)
+                                modelArrayList.addAll(feedsList.getFeedList().getFriends());
+                    adapter.notifyDataSetChanged();
                     break;
 
             }
@@ -282,12 +338,13 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         if(detector.isConnectingToInternet())
-             feedsPresenter.loadFeeds();
+             feedsPresenter.challengeFeeds();
         else {
-            showMessage("Check internet connection");
+             showMessage("Check internet connection");
         }
 
         setTagClickListener();
+        init();
     }
 
     private void setTagClickListener() {
@@ -419,12 +476,30 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
 
 
-    @Override
+  /*  @Override
     public void onFeedsLoaded(List<Feed> feeds) {
         modelArrayList.addAll(feeds);
         adapter.notifyDataSetChanged();
 
+    }*/
+  ChallengeFeeds challengeFeeds;
+  ChallengeFeeds feedsList;
+
+
+    @Override
+    public void onFeedsLoaded(ChallengeFeeds feeds) {
+        if(feeds.getType()==1){
+            this.feedsList=feeds;
+            gridFeedListener.onClick(new_lay);
+        }else if(feeds.getType()==2){
+            {
+                this.challengeFeeds=feeds;
+                fullFeedListener.onClick(sponsor_lay);
+            }
+        }
+
     }
+
     @Override
     public void onFeedLike(int status,String message){
         if(status==1) {
@@ -438,7 +513,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 feed.setLikes(String.valueOf(likes));
                 adapter.notifyDataSetChanged();
             } catch (Exception e) {
-
+                  e.printStackTrace();
             }
         }
 
@@ -751,11 +826,20 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                     grid_tabs.setVisibility(View.GONE);
                     full_view_layout.setVisibility(View.VISIBLE);
                     full_view_tabs.setVisibility(View.VISIBLE);
+                    if(detector.isConnectingToInternet())
+                        feedsPresenter.loadFeeds();
+                    else {
+                        showMessage("Check internet connection");}
                 }else{
                     full_view_layout.setVisibility(View.GONE);
                     full_view_tabs.setVisibility(View.GONE);
                     grid_tabs.setVisibility(View.VISIBLE);
                     grid_layout.setVisibility(View.VISIBLE);
+                    if(detector.isConnectingToInternet())
+                        feedsPresenter.challengeFeeds();
+                    else {
+                        showMessage("Check internet connection");
+                    }
                 }
                 break;
 
@@ -786,4 +870,49 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         super.onBackPressed();
         Log.e("onBackPressed","onBackPressed");
     }
+    private void init()
+    {
+        rv_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        imageListAdapter=new ImageListAdapter(this,imagesModelArrayList);
+        rv_list.setAdapter(imageListAdapter);
+        setDataToList();
+    }
+
+    private void setDataToList()
+    {
+        imagesModelArrayList.clear();
+        for(int i=0;i<10;i++)
+        {
+            ImagesModel model=new ImagesModel();
+            ArrayList<ImagesSublistModel> sublistModels=new ArrayList<>();
+
+            ImagesSublistModel sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.beard_challange);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context1);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context2);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context3);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context4);
+            sublistModels.add(sublistModel);
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.blackfly_challange);
+            sublistModels.add(sublistModel);
+
+            model.setSublistModels(sublistModels);
+            imagesModelArrayList.add(model);
+        }
+        imageListAdapter.notifyDataSetChanged();
+    }
+
 }

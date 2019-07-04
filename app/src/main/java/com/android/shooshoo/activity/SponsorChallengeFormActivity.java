@@ -13,13 +13,14 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -54,7 +55,12 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SponsorChallengeFormActivity extends BaseActivity implements View.OnClickListener , SponsorChallengeView , FragmentListDialogListener {
     @BindView(R.id.btn_next)
-    TextView btn_next;
+    AppCompatTextView btn_next;
+
+
+    @BindView(R.id.btn_preview)
+    AppCompatTextView btn_preview;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
@@ -64,27 +70,27 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     TextView title;
 
     @BindView(R.id.edt_challenge_name)
-    EditText edt_challenge_name;
+    AppCompatEditText edt_challenge_name;
 
     @BindView(R.id.edt_startdate)
-    EditText edt_startdate;
+    AppCompatEditText edt_startdate;
 
     @BindView(R.id.edt_start_time)
-    EditText edt_start_time;
+    AppCompatEditText edt_start_time;
 
     @BindView(R.id.edt_enddate)
-    EditText edt_enddate;
+    AppCompatEditText edt_enddate;
 
     @BindView(R.id.edt_end_time)
-    EditText edt_end_time;
+    AppCompatEditText edt_end_time;
 
     @BindView(R.id.edt_challenge_des)
-    EditText edt_challenge_des;
+    AppCompatEditText edt_challenge_des;
 
 
 
     @BindView(R.id.edit_video_sizes)
-    EditText edt_video_sizes;
+    AppCompatEditText edt_video_sizes;
 
     @BindView(R.id.banner_card)
     CardView bannerCard;
@@ -189,11 +195,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.edt_start_time:
             case R.id.edt_end_time:
-                setTime((EditText) view);
+                setTime((AppCompatEditText) view);
                 break;
             case R.id.edt_startdate:
             case R.id.edt_enddate:
-                setDate((EditText) view);
+                setDate((AppCompatEditText) view);
                 break;
             case R.id.banner_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
@@ -311,7 +317,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     }
 
     String active="#FFFFFF",inactive="#CCCCCC";
-    void setFocusChange(EditText editText, int id){
+    void setFocusChange(AppCompatEditText editText, int id){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -439,7 +445,6 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             if(index==i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
@@ -448,7 +453,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
     int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
-    private void setDate(final EditText edt_dob) {
+    private void setDate(final AppCompatEditText edt_dob) {
 
         Calendar c = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
@@ -480,7 +485,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     }
 
     TimePickerDialog timePickerDialog;
-    private void setTime(final EditText time) {
+    private void setTime(final AppCompatEditText time) {
 
         Calendar c = Calendar.getInstance();
         timePickerDialog = new TimePickerDialog(this, R.style.datepicker, new TimePickerDialog.OnTimeSetListener() {

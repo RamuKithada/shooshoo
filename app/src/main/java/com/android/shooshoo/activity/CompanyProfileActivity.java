@@ -8,11 +8,12 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,39 +56,39 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
      */
 
     @BindView(R.id.edt_company_name)
-    EditText edt_company_name;
+    AppCompatEditText edt_company_name;
 
 
 
     @BindView(R.id.edt_user_email)
-    EditText edt_user_email;
+    AppCompatEditText edt_user_email;
 
     @BindView(R.id.edt_zipcode)
-    EditText edt_zipcode;
+    AppCompatEditText edt_zipcode;
 
     @BindView(R.id.edt_Street)
-    EditText edt_Street;
+    AppCompatEditText edt_Street;
 
-    @BindView(R.id.edt_number)
-    EditText edt_number;
+    @BindView(R.id.edt_street_number)
+    AppCompatEditText edt_number;
 
     @BindView(R.id.edt_mobile)
-    EditText edt_mobile;
+    AppCompatEditText edt_mobile;
 
     @BindView(R.id.edt_country_code)
-    EditText edt_country_code;
+    AppCompatEditText edt_country_code;
 
     @BindView(R.id.edt_tax_number)
-    EditText edt_tax_number;
+    AppCompatEditText edt_tax_number;
 
     @BindView(R.id.edt_first_name)
-    EditText edt_first_name;
+    AppCompatEditText edt_first_name;
 
     @BindView(R.id.edt_last_name)
-    EditText edt_last_name;
+    AppCompatEditText edt_last_name;
 
     @BindView(R.id.btn_next)
-    TextView btn_next;
+    AppCompatTextView btn_next;
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
@@ -108,48 +109,16 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     CheckBox private_sponsor;
 
     @BindView(R.id.btn_more_companies)
-    TextView btn_more_companies;
+    AppCompatTextView btn_more_companies;
 
-    @BindView(R.id.iv_user_fname)
-    ImageView iv_user_fname;
-
-    @BindView(R.id.iv_user_lname)
-    ImageView iv_user_lname;
-
-
-    @BindView(R.id.iv_country)
-    ImageView iv_country;
-
-    @BindView(R.id.iv_city)
-    ImageView iv_city;
-
-    @BindView(R.id.iv_company_name)
-    ImageView iv_company_name;
-
-    @BindView(R.id.iv_zip_code)
-    ImageView iv_zip_code;
-
-    @BindView(R.id.iv_street_name)
-    ImageView iv_street_name;
-
-    @BindView(R.id.iv_street_no)
-    ImageView iv_street_no;
-
-    @BindView(R.id.iv_mobile)
-    ImageView iv_mobile;
-
-    @BindView(R.id.iv_email_icon)
-    ImageView iv_email_icon;
-
-
-    @BindView(R.id.iv_tax_no)
-    ImageView iv_tax_no;
+    @BindView(R.id.btn_preview)
+    AppCompatTextView btn_preview;
 
     @BindView(R.id.edt_country)
-    EditText edt_country;
+    AppCompatEditText edt_country;
 
     @BindView(R.id.edt_city)
-    EditText edt_city;
+    AppCompatEditText edt_city;
 
 
 
@@ -187,18 +156,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         btn_more_companies.setOnClickListener(this);
         title.setText("Company Profile");
         setStage(0);
-        setFoucusChange(edt_company_name,R.id.company_name_line,iv_company_name,new int[]{R.drawable.company_name_active,R.drawable.company_name_normal});
-        setFoucusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.username_active,R.drawable.username_normal});
-        setFoucusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
-        setFoucusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
-        setFoucusChange(edt_country,R.id.country_line,iv_country,new int[]{R.drawable.country_active,R.drawable.country_normal});
-        setFoucusChange(edt_city,R.id.city_line,iv_city,new int[]{R.drawable.city_active,R.drawable.city_normal});
-        setFoucusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
-        setFoucusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
-        setFoucusChange(edt_mobile,R.id.country_code_line,iv_mobile,new int[]{R.drawable.mobile_active,R.drawable.mobile_normal});
-        setFoucusChange(edt_user_email,R.id.user_mail_line,iv_email_icon,new int[]{R.drawable.email_active,R.drawable.email_normal});
-        setFoucusChange(edt_tax_number,R.id.tax_number_line,iv_tax_no,new int[]{R.drawable.tax_active,R.drawable.tax_normal});
-    }
+  }
 
     @Override
     public void onClick(View view) {
@@ -477,7 +435,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
      * @param imageView is the image view
      * @param res are the image references of drawables
      */
-    void setFoucusChange(EditText editText, int id, final ImageView imageView, final int[] res){
+    void setFoucusChange(AppCompatEditText editText, int id, final ImageView imageView, final int[] res){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -579,7 +537,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
      * @param dropDownItems are the list of countries to show the user
      * @param editText is the country field to fill after selection of one country
      */
-    private void displayList(final List<Country> dropDownItems, final EditText editText)
+    private void displayList(final List<Country> dropDownItems, final AppCompatEditText editText)
     {
         if(dropDownItems==null)
             return;
@@ -610,7 +568,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
      * @param editText is the country field to fill after selection of one city
      *                 if there is no city under contry selection is shows no cities in the country
      */
-    private void displayListCity(final List<City> dropDownItems, final EditText editText)
+    private void displayListCity(final List<City> dropDownItems, final AppCompatEditText editText)
     {
         if(dropDownItems==null)
         {

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CreateSponsorChallengeActivity;
+import com.android.shooshoo.activity.SponsorChallenge;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 
@@ -95,15 +96,16 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent(getActivity(), CreateSponsorChallengeActivity.class);
+
         switch (v.getId()) {
             case R.id.tv_sponsor_challenge:
-                intent.putExtra("challenge_type",1);
-                startActivity(intent);
+                Intent intentSponsor=new Intent(getActivity(), SponsorChallenge.class);
+                startActivity(intentSponsor);
                 break;
             case R.id.tv_jackpot_challenge:
-                intent.putExtra("challenge_type",2);
-                startActivity(intent);
+                Intent intentJackpot=new Intent(getActivity(), CreateSponsorChallengeActivity.class);
+                intentJackpot.putExtra("challenge_type",2);
+                startActivity(intentJackpot);
                 break;
 
         }

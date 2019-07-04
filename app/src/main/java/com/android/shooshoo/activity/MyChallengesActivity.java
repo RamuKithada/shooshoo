@@ -67,8 +67,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
      * {@link MyChallengesActivity} shows the  challenge and posts of the recent challenge
       *
      */
-    @BindView(R.id.iv_back)
-    ImageView iv_back;
+
     @BindView(R.id.rv_recnet_posts)
     RecyclerView rv_recnet_posts;
     @BindView(R.id.camera)
@@ -77,8 +76,8 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     LinearLayout rules;
     @BindView(R.id.brand)
     LinearLayout brand;
-    @BindView(R.id.created_at)
-    TextView created_at;
+    /*@BindView(R.id.created_at)
+    TextView created_at;*/
     @BindView(R.id.tv_key_des)
     TextView tv_key_des;
     @BindView(R.id.participants)
@@ -152,7 +151,6 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
         brand.setOnClickListener(this);
         camera.setOnClickListener(this);
         rules.setOnClickListener(this);
-        iv_back.setOnClickListener(this);
         playerView.setUseController(false);
         connectionDetector=new ConnectionDetector(this);
         challengePresenter=new PostChallengePresenter();
@@ -208,7 +206,7 @@ Challenge challenge;
         this.challenge=challenge;
         title.setText(challenge.getChallengeName());
         sub_title.setText(challenge.getDescription());
-        created_at.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+//        created_at.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
         tv_key_des.setText(challenge.getKeyDescription());
         participants.setText(challenge.getParticipants());
         if(getIntent().getIntExtra("type",0)==1)
@@ -243,9 +241,7 @@ Challenge challenge;
             startActivityForResult(intent, 1);
 //            startActivity(new Intent(this,CameraActivity.class));
             break;
-        case R.id.iv_back:
-            finish();
-            break;
+
         case R.id.brand:
             Intent intentBrand=new Intent(this,BrandProfileActivity.class);
             intentBrand.putExtra("companyId",challenge.getBrands());

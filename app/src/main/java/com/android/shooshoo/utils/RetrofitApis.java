@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
+import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CityResult;
@@ -221,7 +222,11 @@ public interface RetrofitApis {
 
 
     @GET("feeds")
-    Call<FeedsResponse> getFeeds();
+    Call<ChallengeFeeds> getFeeds();
+
+    @GET("challengefeeds")
+    Call<ChallengeFeeds> getChallengeFeeds();
+
 
     @FormUrlEncoded
     @POST("likeFeed")

@@ -20,6 +20,9 @@ public class Feed {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("thumbnail")
+    @Expose
+    private String thumbnail;
     @SerializedName("postDescription")
     @Expose
     private String postDescription;
@@ -90,6 +93,14 @@ public class Feed {
 
     public void setPostDescription(String postDescription) {
         this.postDescription = postDescription;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getCreatedOn() {

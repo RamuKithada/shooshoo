@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_home"
     tools:context=".activity.PostVideoActivity">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/tool_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -16,25 +16,47 @@
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
         <ImageView
-            android:id="@+id/iv_back"
+            android:id="@+id/iv_help"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
             android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_help_notification_icon"
             />
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:text="@string/post_video"
-            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:textSize="18sp"
-            android:fontFamily="@font/futura_medium_bt"
+            app:textAllCaps="true"
+
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/raleway_extrabold"
             android:textColor="#ffffff"
+            />
+        <ImageView
+            android:id="@+id/iv_chat"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_profile"
+            app:srcCompat="@drawable/ic_chat_notification_icon"
+            />
+        <ImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_profile_notification_icon"
             />
         <View
             android:layout_width="wrap_content"
@@ -42,7 +64,7 @@
             android:layout_weight="1"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -77,132 +99,13 @@
             android:orientation="horizontal"
             android:weightSum="2"
             >
-<android.support.v7.widget.CardView
-    android:layout_width="0dp"
-    android:layout_height="280dp"
-    app:cardBackgroundColor="#8a8a8a8a"
-    android:layout_weight="1"
-    >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        >
-        <FrameLayout
-            android:id="@+id/challenge_video_layout"
-            android:layout_width="match_parent"
-            android:layout_height="120dp">
-        <ImageView
-            android:id="@+id/player_challenge"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside"
-            android:src="@drawable/young_challange"
 
-            />
-        <ImageView
-            android:id="@+id/iv_playpause"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="10dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
-            android:background="@drawable/circler_view_bg"
-            android:visibility="visible"/>
-        </FrameLayout>
-        <TextView
-            android:id="@+id/sub_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Alles was du brauchst"
-            android:textColor="@color/white_text"
-            android:layout_alignParentLeft="true"
-            android:gravity="center"
-            android:padding="5dp"
-            android:minLines="1"
-            android:maxLines="2"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_below="@id/challenge_video_layout"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_below="@+id/sub_title"
-            >
-            <LinearLayout
-                android:id="@+id/rules"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp"
-                >
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/rules"
-                    android:layout_gravity="center"
-
-
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white_text"
-                    android:text="los gehfs"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/brand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp"
-                >
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/h_m"
-                    android:layout_gravity="center"
-
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white_text"
-                    android:text="@string/h_m"
-
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    />
-            </LinearLayout>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/video_thumb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/hotel_challange"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        />
-
-
-</android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="280dp"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="1"
-                app:cardBackgroundColor="#8a8a8a8a"
+                app:cardBackgroundColor="#008a8a8a"
                 >
                 <FrameLayout
                     android:id="@+id/video_post_layout"
@@ -214,8 +117,9 @@
                     android:id="@+id/video_thumb_post"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:src="@drawable/food_context1"
-                    android:scaleType="centerCrop"
+                    android:scaleType="centerInside"
                     />
                 <ImageView
                     android:id="@+id/iv_playpause_post"
@@ -226,41 +130,69 @@
                     app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
                     android:background="@drawable/circler_view_bg"
                     android:visibility="visible"/>
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/about_video"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center"
+                        android:hint="Say something about your video"
+                        android:textColorHint="@color/white_text"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/raleway_medium"
+                        android:background="#6D6F77"
+                        android:maxLines="1"
+                        android:paddingLeft="30dp"
+                        android:paddingRight="30dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        />
 
                 </FrameLayout>
             </android.support.v7.widget.CardView>
 
         </LinearLayout>
-<EditText
-    android:id="@+id/about_video"
-    android:layout_width="match_parent"
+<android.support.v7.widget.AppCompatTextView
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:minLines="8"
-    android:maxLines="8"
-    android:layout_marginTop="15dp"
-    android:background="@drawable/view_more_btn_shape"
-    android:hint="write something about your video"
-    android:gravity="left|top"
+    android:text="@string/invite_friends"
+    app:textAllCaps="true"
     android:textColor="@color/white_text"
-    android:textColorHint="@color/white_text"
+    app:fontFamily="@font/raleway_extrabold"
     android:padding="5dp"
+    android:layout_margin="5dp"
+
     />
-        <Button
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_friends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                tools:listitem="@layout/invite_friends_item"
+                android:orientation="horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                >
+
+            </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/btn_publish"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/submit_btn_shape"
             android:text="@string/publish"
-            android:textSize="18sp"
-            android:textAllCaps="false"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="20dp"
+            app:textAllCaps="true"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="5dp"
-            android:textColor="#FFF"
+            android:layout_margin="10dp"
+            android:textColor="@color/white_text"
+            android:background="@drawable/submit_button"
+
+
+
 
             />
     </LinearLayout>

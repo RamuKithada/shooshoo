@@ -196,6 +196,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         if(loginSuccess.getStatus()==1){
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
+                userSession.setVisibility(loginSuccess.getVisibility());
+                userSession.setNotification(loginSuccess.getNotificationSettings());
                 userSession.login();
                 /*Intent signupIntent=new Intent(LoginActivity.this,Fe.class);
                 startActivity(signupIntent);*/

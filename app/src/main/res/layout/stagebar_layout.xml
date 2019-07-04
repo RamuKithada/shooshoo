@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="#0025ffff"
+    android:background="@color/bg_color"
     android:layout_gravity="center_horizontal"
     >
     <LinearLayout
@@ -21,7 +21,8 @@
             android:layout_height="@dimen/edit_icon"
             android:layout_alignParentLeft="true"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            app:srcCompat="@drawable/back_arrow"
+            android:padding="8dp"
             />
 
         <TextView
@@ -32,7 +33,7 @@
             android:layout_centerInParent="true"
             android:textColor="#FFFFFF"
             android:fontFamily="@font/futura_medium_bt"
-            android:gravity="left|center_vertical"
+            android:gravity="center"
             android:layout_gravity="center"
             android:textSize="20sp"
             android:padding="2dp"
@@ -40,9 +41,9 @@
             />
 
         <ImageView
-            android:id="@+id/iv_help"
             android:layout_width="@dimen/edit_icon"
             android:layout_height="@dimen/edit_icon"
+            android:visibility="invisible"
             android:layout_alignParentRight="true"
             app:srcCompat="@drawable/ic_help_notification_icon"
             android:padding="8dp"

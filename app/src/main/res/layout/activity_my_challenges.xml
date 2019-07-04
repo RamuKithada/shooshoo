@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/gradiant_home"
+    android:background="@color/bg_color"
     tools:context=".activity.MyChallengesActivity">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,50 +17,33 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#00FFFFFF"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
-            />
-        <TextView
+
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="@string/title_challengers"
-            android:layout_gravity="center_vertical"
+            android:text="Challenge"
+            app:textAllCaps="true"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:textSize="18sp"
-            android:fontFamily="@font/futura_medium_bt"
+            android:fontFamily="@font/raleway_extrabold"
             android:textColor="#ffffff"
             />
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            />
+
         <ImageView
-            android:id="@+id/iv_help"
+            android:id="@+id/iv_chat"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
             android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_profile"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_help_notification_icon"
+            app:srcCompat="@drawable/ic_chat_notification_icon"
             />
-        <ImageView
-            android:id="@+id/iv_wallet"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="#00FFFFFF"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_wallet_notification_icon"
-            />
+
 
         <ImageView
             android:id="@+id/iv_profile"
@@ -68,11 +51,13 @@
             android:layout_height="40dp"
             android:background="#00FFFFFF"
             android:padding="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
             android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_profile_notification_icon"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
     <View
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -82,7 +67,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -105,10 +90,10 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#8a8a8a8a"
+            app:cardBackgroundColor="#008a8a8a"
             app:cardCornerRadius="5dp"
             android:padding="5dp"
-            android:layout_margin="10dp"
+
             >
             <LinearLayout
                 android:layout_width="match_parent"
@@ -117,36 +102,16 @@
                 android:layout_margin="5dp"
                 android:padding="2dp"
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
 
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="H M Hamburg Neueroffnung"
-                        android:textColor="@color/white_text"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        />
-                    <TextView
-                        android:id="@+id/created_at"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2 weeks "
-                        android:textColor="@color/white_text"
-                        android:layout_alignParentRight="true"
-                        />
-
-                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/video_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="400dp"
                     android:padding="5dp"
                     >
+
+
                     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                         android:id="@+id/player"
                         android:layout_width="match_parent"
@@ -154,6 +119,20 @@
                         app:resize_mode="fit"
                         app:surface_type="texture_view"
                         app:use_controller="false"
+                        />
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/pink_drak"
+                        android:src="@drawable/save_icon"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="centerInside"
                         />
                     <ImageView
                         android:id="@+id/iv_playpause"
@@ -173,10 +152,45 @@
                         android:visibility="gone"
                         />
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:text="H M Hamburg Neueroffnung"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="5000 €"
+                        android:layout_alignParentRight="true"
+                        android:padding="2dp"
+                        android:background="@color/pink_drak"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textColor="@color/white_text"
+                        />
+
+
+                </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     >
                     <TextView
                         android:id="@+id/sub_title"
@@ -185,7 +199,9 @@
                         android:text="Alles was du brauchst"
                         android:textColor="@color/white_text"
                         android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/raleway_medium"
                         android:layout_toLeftOf="@+id/participants"
+                        android:padding="2dp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         />
                     <TextView
@@ -194,6 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="win da 500 $ coupon "
+                        android:padding="2dp"
                         android:textColor="@color/white_text"
                         android:layout_alignParentLeft="true"
 
@@ -201,6 +218,7 @@
                         />
                     <TextView
                         android:id="@+id/participants"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4373 participants "
@@ -209,6 +227,7 @@
                         android:gravity="center_vertical"
                         android:drawableLeft="@drawable/ic_participants"
                         />
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -222,7 +241,7 @@
     android:layout_margin="5dp"
     android:orientation="horizontal"
     android:layout_gravity="center"
-    android:gravity="center"
+    android:gravity="left"
     >
 <LinearLayout
     android:id="@+id/camera"
@@ -245,7 +264,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white_text"
-        android:text="Camera"
+        android:text="Let’s start"
+        android:fontFamily="@font/raleway_medium"
         android:layout_gravity="center"
         android:gravity="center"
         />
@@ -273,6 +293,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white_text"
             android:text="Rules"
+            android:fontFamily="@font/raleway_medium"
             android:layout_gravity="center"
             android:gravity="center"
             />
@@ -299,7 +320,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white_text"
             android:text="@string/h_m"
-
+            android:fontFamily="@font/raleway_medium"
             android:layout_gravity="center"
             android:gravity="center"
             />
@@ -336,14 +357,14 @@
     </LinearLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="5dp"
+            android:layout_height="1dp"
             android:background="@color/color_gray"
             />
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textColor="@color/white_text"
-          android:fontFamily="@font/futura_medium_bt"
+          android:fontFamily="@font/raleway_medium"
           android:padding="5dp"
           android:layout_gravity="left"
           android:gravity="center"
@@ -365,7 +386,7 @@
     </LinearLayout>
         </ScrollView>
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

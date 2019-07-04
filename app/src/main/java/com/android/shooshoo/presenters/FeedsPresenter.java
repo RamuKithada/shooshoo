@@ -2,6 +2,7 @@ package com.android.shooshoo.presenters;
 
 import android.util.Log;
 
+import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.FeedsView;
@@ -36,16 +37,17 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
         if(view!=null){
 
             view.showProgressIndicator(true);
-            retrofitApis.getFeeds().enqueue(new Callback<FeedsResponse>() {
+            retrofitApis.getFeeds().enqueue(new Callback<ChallengeFeeds>() {
                 @Override
-                public void onResponse(Call<FeedsResponse> call, Response<FeedsResponse> response) {
+                public void onResponse(Call<ChallengeFeeds> call, Response<ChallengeFeeds> response) {
                     if(view!=null){
                         view.showProgressIndicator(false);
                         if(response.isSuccessful()){
-                            FeedsResponse feedsResponse=response.body();
+                            ChallengeFeeds feedsResponse=response.body();
                             view.showMessage(feedsResponse.getMessage());
                             if(feedsResponse.getStatus()==1){
-                                view.onFeedsLoaded(feedsResponse.getFeeds());
+                                feedsResponse.setType(1);
+                                view.onFeedsLoaded(feedsResponse);
                             }
 
                         }
@@ -56,7 +58,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                 }
 
                 @Override
-                public void onFailure(Call<FeedsResponse> call, Throwable t) {
+                public void onFailure(Call<ChallengeFeeds> call, Throwable t) {
                     if(view!=null) {
                         view.showProgressIndicator(false);
                         view.showMessage(t.getMessage());
@@ -67,6 +69,44 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
 
 
     }
+
+     public void challengeFeeds(){
+         if(view!=null){
+             view.showProgressIndicator(true);
+             retrofitApis.getChallengeFeeds().enqueue(new Callback<ChallengeFeeds>() {
+                 @Override
+                 public void onResponse(Call<ChallengeFeeds> call, Response<ChallengeFeeds> response) {
+                     if(view!=null){
+                         view.showProgressIndicator(false);
+                         if(response.isSuccessful()){
+                             ChallengeFeeds feedsResponse=response.body();
+                             view.showMessage(feedsResponse.getMessage());
+                             if(feedsResponse.getStatus()==1){
+                                 feedsResponse.setType(2);
+                                 view.onFeedsLoaded(feedsResponse);
+                             }
+
+                         }
+
+                     }
+
+
+                 }
+
+                 @Override
+                 public void onFailure(Call<ChallengeFeeds> call, Throwable t) {
+                     if(view!=null) {
+                         view.showProgressIndicator(false);
+                         view.showMessage(t.getMessage());
+                     }
+                 }
+             });
+         }
+
+
+     }
+
+
 
     /**
      * Like the feed user watch

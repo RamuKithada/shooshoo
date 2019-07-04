@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.GameMaster;
+import com.android.shooshoo.models.NotificationSettings;
+import com.android.shooshoo.models.Visibility;
 import com.google.gson.Gson;
 
 import java.util.HashSet;
@@ -210,4 +212,21 @@ public  void logout(){
     public  String getAudSize() {
         return getString(AUD_SIZE) ;
     }
+    public void setVisibility(Visibility visibility){
+        putString("visibility", new Gson().toJson((Object) visibility));
+
+    }
+
+    public Visibility getVisibility() {
+        return (Visibility) new Gson().fromJson(getString("visibility"), Visibility.class);
+    }
+    public void setNotification(NotificationSettings visibility){
+        putString("notification_settings", new Gson().toJson((Object) visibility));
+
+    }
+
+    public NotificationSettings getNotification() {
+        return (NotificationSettings) new Gson().fromJson(getString("notification_settings"), NotificationSettings.class);
+    }
+
 }

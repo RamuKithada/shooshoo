@@ -422,7 +422,6 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
             if(index==step){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(step+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 

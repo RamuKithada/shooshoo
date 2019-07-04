@@ -24,6 +24,9 @@ public class Post {
     @SerializedName("likes")
     @Expose
     private String likes;
+    @SerializedName("thumbnail")
+    @Expose
+    private String thumbnail;
     @SerializedName("views")
     @Expose
     private String views;
@@ -80,6 +83,14 @@ public class Post {
 
     public void setLikes(String likes) {
         this.likes = likes;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public String getViews() {
