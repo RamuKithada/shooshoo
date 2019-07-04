@@ -74,7 +74,6 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
 public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView ,View.OnClickListener{
 
-
     Container container;
     FullVideoAdapter adapter;
     LinearLayoutManager layoutManager;
