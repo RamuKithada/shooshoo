@@ -3,9 +3,13 @@ package com.android.shooshoo.activity;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +33,7 @@ import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.RuleListFragmentDialog;
+import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.PostChallengeView;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -59,6 +64,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.Manifest.permission.RECORD_AUDIO;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static com.android.shooshoo.utils.ApiUrls.JACKPOT_VIDEO_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_VIDEO_URL;
 
@@ -67,7 +75,6 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
      * {@link MyChallengesActivity} shows the  challenge and posts of the recent challenge
       *
      */
-
     @BindView(R.id.rv_recnet_posts)
     RecyclerView rv_recnet_posts;
     @BindView(R.id.camera)
@@ -91,7 +98,6 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.title)
     TextView title;
     int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
-
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
     @BindView(R.id.navigation_challengers)
@@ -115,6 +121,8 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     PostChallengePresenter challengePresenter=null;
     RecentPostAdapter recentPostAdapter;
     ArrayList<String> ruleList=new ArrayList<>();
+    UserSession userSession;
+
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -157,6 +165,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
         challengePresenter.attachView(this);
         recentPostAdapter=new RecentPostAdapter(images);
         rv_recnet_posts.setAdapter(new RecentPostAdapter(images));
+        userSession=new UserSession(this);
         if(getIntent().hasExtra("challenge")){
             Challenge challenge=getIntent().getParcelableExtra("challenge");
             setChallenge(challenge);
@@ -175,9 +184,6 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
             videoUri ="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
             setUpVideo();
         }
-
-
-
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
@@ -227,19 +233,11 @@ Challenge challenge;
     public void onClick(View v) {
     switch (v.getId()){
         case R.id.camera:
-            Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//            Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
-//            Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//            contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-//            contentSelectionIntent.setType("*/*");
-//            Intent[] intentArray = new Intent[]{takePictureIntent,takeVideoIntent};
-//            chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
-//            chooserIntent.putExtra(Intent.EXTRA_TITLE, "Choose an action");
-//            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray);
-            startActivityForResult(intent, 1);
-//            startActivity(new Intent(this,CameraActivity.class));
+           if(checkingPermissionAreEnabledOrNot()) {
+               Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+               startActivityForResult(intent, 1);
+           }else requestMultiplePermission();
+
             break;
 
         case R.id.brand:
@@ -296,7 +294,6 @@ Challenge challenge;
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this, getString(R.string.app_name)), bandwidthMeter);
         DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-
         MediaSource mediaSource = new ExtractorMediaSource(mUri,
                 dataSourceFactory, extractorsFactory, null, null);
         player.prepare(mediaSource);
@@ -442,5 +439,48 @@ Challenge challenge;
     public void onRules(List<String> rules) {
     if(rules!=null)
         ruleList.addAll(rules);
+    }
+    public boolean checkingPermissionAreEnabledOrNot() {
+        int camera = ContextCompat.checkSelfPermission(this, CAMERA);
+        int write = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE);
+        int read = ContextCompat.checkSelfPermission(this, RECORD_AUDIO);
+        return camera == PackageManager.PERMISSION_GRANTED && write == PackageManager.PERMISSION_GRANTED && read==PackageManager.PERMISSION_GRANTED;
+    }
+    private void requestMultiplePermission() {
+        ActivityCompat.requestPermissions(this, new String[]
+                {
+                        CAMERA,
+                        WRITE_EXTERNAL_STORAGE,
+                        RECORD_AUDIO
+                }, 100);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+switch (requestCode){
+    case 100:
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if(grantResults.length>=3)
+            {
+                if(checkingPermissionAreEnabledOrNot())
+                {
+                    if(userSession.isLogin()) {
+                        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                        startActivityForResult(intent, 1);
+                    }
+                    else
+                        startActivity(new Intent(this,LoginActivity.class));
+                }
+                else
+                    requestMultiplePermission();
+            }
+        } else {
+            requestMultiplePermission();
+        }
+        break;
+}
+
+
     }
 }

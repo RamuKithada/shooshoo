@@ -48,6 +48,7 @@
             android:layout_marginLeft="30dp"
             >
     <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_profile_visits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/SCBSwitch"
@@ -72,6 +73,7 @@
 
 
             <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_rewards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/SCBSwitch"
@@ -92,6 +94,7 @@
             />
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -114,6 +117,7 @@
 
             />
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_show_me_radar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -173,6 +177,7 @@
             />
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_country"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -186,6 +191,7 @@
 
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -199,6 +205,7 @@
 
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_cat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -210,6 +217,7 @@
 
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"

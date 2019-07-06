@@ -11,15 +11,165 @@
         android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/main_list"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            tools:listitem="@layout/list_of_list_item"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             >
-        </android.support.v7.widget.RecyclerView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_color"
+                    android:padding="5dp">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_title_entered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="Entered"
+                        android:layout_margin="5dp"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        app:textAllCaps="true"
+                        android:fontFamily="@font/raleway_extrabold"
+
+
+                        />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_all_entered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="@string/all"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
+
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list_entered"
+                        android:layout_below="@+id/tv_title_entered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/challengers_item"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        >
+
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+                </RelativeLayout>
+                      <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_color"
+                    android:padding="5dp">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_title_created"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="created"
+                        android:layout_margin="5dp"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        app:textAllCaps="true"
+                        android:fontFamily="@font/raleway_extrabold"
+
+
+                        />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_all_created"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="@string/all"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
+
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list_created"
+                        android:layout_below="@+id/tv_title_created"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/challengers_item"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        >
+
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+                </RelativeLayout>
+                      <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bg_color"
+                    android:padding="5dp">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_title_saved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="Challenge Title"
+                        android:layout_margin="5dp"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        app:textAllCaps="true"
+                        android:fontFamily="@font/raleway_extrabold"
+
+
+                        />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_all_saved"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:textColor="@color/white_text"
+                        android:text="@string/all"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        />
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list_saved"
+                        android:layout_below="@+id/tv_title_saved"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:listitem="@layout/challengers_item"
+                        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                        >
+
+
+                    </android.support.v7.widget.RecyclerView>
+
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

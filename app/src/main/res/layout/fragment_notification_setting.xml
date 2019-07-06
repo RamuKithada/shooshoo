@@ -63,6 +63,7 @@
             />
 
     <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_follows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/SCBSwitch"
@@ -87,6 +88,7 @@
 
 
             <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_likes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/SCBSwitch"
@@ -108,6 +110,7 @@
             />
 
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_comments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -130,6 +133,7 @@
 
             />
         <android.support.v7.widget.SwitchCompat
+            android:id="@+id/switch_messages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/SCBSwitch"
@@ -180,6 +184,7 @@
                     />
 
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_cat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/SCBSwitch"
@@ -200,6 +205,7 @@
 
                     />
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_radar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/SCBSwitch"
@@ -219,8 +225,30 @@
                     android:layout_marginRight="40dp"
 
                     />
-
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_cfollows"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/SCBSwitch"
+                    android:checked="false"
+                    android:text="@string/follows"
+                    android:textColor="@color/white_text"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cfollower_line"
+                    android:textColor="@color/white_text"
+                    android:fontFamily="@font/raleway_medium"
+                    android:layout_marginRight="40dp"
+
+                    />
+                <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_invitation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/SCBSwitch"
@@ -274,6 +302,7 @@
                     />
 
                 <android.support.v7.widget.SwitchCompat
+                    android:id="@+id/switch_people"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="@style/SCBSwitch"

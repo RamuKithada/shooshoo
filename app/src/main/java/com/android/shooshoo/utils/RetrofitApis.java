@@ -271,7 +271,18 @@ public interface RetrofitApis {
     @POST("companyInfo")
     Call<CompanyDetails> getCompanyDetails(@Field("companyId") String companyId);
 
-
+    @FormUrlEncoded
+    @POST("profileVisibility")
+    Call<LoginSuccess> changeVisibility(@Field("userId") String userId,@Field("profileVisits") String profileVisits,
+                                     @Field("rewards") String rewards,@Field("friends") String friends,
+                                     @Field("showmeRadar") String showmeRadar,@Field("country") String country,
+                                     @Field("city") String city,@Field("categories") String categories,@Field("age") String age);
+    @FormUrlEncoded
+    @POST("notification")
+    Call<LoginSuccess> changeNotification(@Field("userId") String userId,@Field("pFollows") String pFollows,
+                                     @Field("pLikes") String pLikes,@Field("pComments") String pComments,
+                                     @Field("pMessages") String pMessages,@Field("cCategory") String cCategory,
+                                     @Field("cRadar") String cRadar,@Field("cFollows") String cFollows,@Field("cInvitation") String cInvitation,@Field("rPeople") String rPeople);
 
 }
 
