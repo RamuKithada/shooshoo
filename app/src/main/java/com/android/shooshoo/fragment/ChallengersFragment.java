@@ -1,5 +1,6 @@
 package com.android.shooshoo.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,13 +22,24 @@ import com.android.shooshoo.activity.CreateSponsorChallengeActivity;
 import com.android.shooshoo.activity.SponsorChallenge;
 import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
 import com.android.shooshoo.adapter.ChallengesMainListAdapter;
+import com.android.shooshoo.adapter.WinnersListAdapter;
+import com.android.shooshoo.adapter.WinnersMyChallengersAdapter;
+import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.presenters.ChallengesPresenter;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.BaseView;
+import com.android.shooshoo.views.ChallengesView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**Use the {@link ChallengersFragment#newInstance} factory method to
  * create an instance of this fragment.
  * To show the Challenges screen in Home Activity.This is the Challenges Tab result view
  */
 
-public class ChallengersFragment extends Fragment implements View.OnClickListener{
+public class ChallengersFragment extends Fragment implements View.OnClickListener, ChallengesView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -37,9 +49,13 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
     private String mParam1;
     private String mParam2;
     RecyclerView list_entered,list_created,list_saved;
+    WinnersMyChallengersAdapter enteredListAdapter,createdListAdapter,savedListAdapter;
+    List<Challenge> entered=new ArrayList<Challenge>(),created=new ArrayList<Challenge>(),saved=new ArrayList<Challenge>();
+    UserSession userSession;
+    ConnectionDetector connectionDetector;
+    private BaseView mListener;
 
-
-
+    ChallengesPresenter challengesPresenter;
     public ChallengersFragment() {
         // Required empty public constructor
     }
@@ -84,11 +100,21 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
          list_entered=view.findViewById(R.id.list_entered);
          list_created=view.findViewById(R.id.list_created);
          list_saved=view.findViewById(R.id.list_saved);
-
+         createdListAdapter=new WinnersMyChallengersAdapter(getContext(),created);
+         enteredListAdapter=new WinnersMyChallengersAdapter(getContext(),entered);
+         savedListAdapter=new WinnersMyChallengersAdapter(getContext(),saved);
+         list_created.setAdapter(createdListAdapter);
+         list_saved.setAdapter(savedListAdapter);
+         list_entered.setAdapter(enteredListAdapter);
         AppCompatTextView tv_sponsor_challenge=view.findViewById(R.id.tv_sponsor_challenge);
         AppCompatTextView tv_jackpot_challenge=view.findViewById(R.id.tv_jackpot_challenge);
         tv_sponsor_challenge.setOnClickListener(this);
         tv_jackpot_challenge.setOnClickListener(this);
+        if(connectionDetector.isConnectingToInternet())
+        {
+            challengesPresenter.getChallenges(userSession.getUserId());
+        }  else
+            showMessage("No Internet Connection");
 //
 
 
@@ -112,5 +138,66 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
                 break;
 
         }
+    }
+
+    @Override
+    public void onSavedChallenges(List<Challenge> challengeList) {
+saved.addAll(challengeList);
+savedListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onEnteredChallenges(List<Challenge> challengeList) {
+        entered.addAll(challengeList);
+        enteredListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCreatedChallenges(List<Challenge> challengeList) {
+        created.addAll(challengeList);
+        createdListAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BaseView) {
+            mListener = (BaseView) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement HomeView");
+        }
+      challengesPresenter=new ChallengesPresenter();
+        challengesPresenter.attachView(this);
+        connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
+
+    }
+
+    @Override
+    public void onDetach() {
+        challengesPresenter.detachView();
+        mListener = null;
+        super.onDetach();
+    }
+
+
+
+    @Override
+    public void showMessage(int stringId) {
+        if(mListener!=null)
+            mListener.showMessage(stringId);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if(mListener!=null)
+            mListener.showMessage(message);
+    }
+
+    @Override
+    public void showProgressIndicator(Boolean show) {
+        if(mListener!=null)
+            mListener.showProgressIndicator(show);
     }
 }

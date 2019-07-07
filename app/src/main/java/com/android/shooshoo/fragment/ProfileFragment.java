@@ -19,7 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.shooshoo.adapter.ImageListAdapter;
 import com.android.shooshoo.models.DemoItem;
+import com.android.shooshoo.models.ImagesModel;
+import com.android.shooshoo.models.ImagesSublistModel;
 import com.felipecsl.asymmetricgridview.AGVRecyclerViewAdapter;
 import com.felipecsl.asymmetricgridview.AsymmetricItem;
 import com.felipecsl.asymmetricgridview.AsymmetricRecyclerView;
@@ -45,6 +48,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
@@ -68,7 +72,10 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     //Here we declare layouts
     RecyclerView brandRecyclerView;
 //    RecyclerView feedsRecyclerView;
-    AsymmetricRecyclerView recyclerView;
+    RecyclerView rv_list;
+
+    private ImageListAdapter imageListAdapter;
+    private ArrayList<ImagesModel> imagesModelArrayList=new ArrayList<>();
     ProfileBrandAdapter profileBrandAdapter;
 //    ProfileFeedsAdapter profileFeedsAdapter;
     TextView profile_name,profile_quotes;
@@ -137,17 +144,8 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         iv_profile_pic=view.findViewById(R.id.iv_profile_pic);
         profile_name=view.findViewById(R.id.profile_name);
         profile_quotes=view.findViewById(R.id.profile_description);
-        recyclerView=view.findViewById(R.id.recyclerView);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(demoUtils.moarItems(50));
-        recyclerView.setRequestedColumnCount(3);
-        recyclerView.setDebugging(true);
-        recyclerView.setRequestedHorizontalSpacing(Utils.dpToPx(getContext(), 3));
-        recyclerView.addItemDecoration(
-                new SpacesItemDecoration(getResources().getDimensionPixelSize(R.dimen.recycler_padding)));
-        recyclerView.setAdapter(new AsymmetricRecyclerViewAdapter<>(getContext(), recyclerView, adapter));
-//        profile_status=view.findViewById(R.id.profile_status);
-//        profile_age=view.findViewById(R.id.profile_age);
-//        support_now.setOnClickListener(this);
+        rv_list=view.findViewById(R.id.rv_list_feed);
+
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
      //feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
@@ -160,9 +158,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         if(connectionDetector.isConnectingToInternet()){
             presenter.loadProfile(mParam1);
         }
-
-
-
+        init();
 
     }
 
@@ -250,51 +246,49 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     public void onBankDetails(UserBankDetails bankDetails) {
 
     }
-    class RecyclerViewAdapter extends AGVRecyclerViewAdapter<ViewHolder> {
-        private final List<DemoItem> items;
 
-        RecyclerViewAdapter(List<DemoItem> items) {
-            this.items = items;
-        }
-
-        @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            Log.d("RecyclerViewActivity", "onCreateView");
-            return new ViewHolder(parent, viewType);
-        }
-
-        @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Log.d("RecyclerViewActivity", "onBindView position=" + position);
-            holder.bind(items.get(position));
-        }
-
-        @Override public int getItemCount() {
-            return items.size();
-        }
-
-        @Override public AsymmetricItem getItem(int position) {
-            return items.get(position);
-        }
-
-        @Override public int getItemViewType(int position) {
-            return position % 2 == 0 ? 1 : 0;
-        }
+    private void init()
+    {
+        rv_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+        imageListAdapter=new ImageListAdapter(getActivity(),imagesModelArrayList);
+        rv_list.setAdapter(imageListAdapter);
+        setDataToList();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+    private void setDataToList()
+    {
+        imagesModelArrayList.clear();
+        for(int i=0;i<10;i++)
+        {
+            ImagesModel model=new ImagesModel();
+            ArrayList<ImagesSublistModel> sublistModels=new ArrayList<>();
 
-        ViewHolder(ViewGroup parent, int viewType) {
-            super(LayoutInflater.from(parent.getContext()).inflate(
-                    viewType == 0 ? R.layout.adapter_item : R.layout.adapter_item_odd, parent, false));
-            if (viewType == 0) {
-                textView = (TextView) itemView.findViewById(R.id.textview);
-            } else {
-                textView = (TextView) itemView.findViewById(R.id.textview_odd);
-            }
-        }
+            ImagesSublistModel sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.beard_challange);
+            sublistModels.add(sublistModel);
 
-        void bind(DemoItem item) {
-            textView.setText(String.valueOf(item.getPosition()));
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context1);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context2);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context3);
+            sublistModels.add(sublistModel);
+
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.food_context4);
+            sublistModels.add(sublistModel);
+            sublistModel=new ImagesSublistModel();
+            sublistModel.setImage(R.drawable.blackfly_challange);
+            sublistModels.add(sublistModel);
+
+            model.setSublistModels(sublistModels);
+            imagesModelArrayList.add(model);
         }
+        imageListAdapter.notifyDataSetChanged();
     }
 }

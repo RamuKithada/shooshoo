@@ -116,7 +116,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     JackpotChallengePresenter sponcerChallengePresenter;
     String  challengeImageUri=null;
     String challengeVideoUri=null;
-    private int sizePos=0;
+    private int sizePos=-1;
     final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
 
     @Override
@@ -272,7 +272,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         }
 
 
-        if(sizePos==0){
+        if(sizePos<0){
             edt_video_sizes.requestFocus();
             edt_video_sizes.setError("Please set Limit?");
             return false;

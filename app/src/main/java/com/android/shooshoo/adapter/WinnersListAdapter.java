@@ -14,14 +14,23 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.EditModel;
+import com.android.shooshoo.models.Winner;
+import com.android.shooshoo.utils.ApiUrls;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
 public class WinnersListAdapter extends RecyclerView.Adapter<WinnersListAdapter.WinnerViewHolder> {
 
+Context context;
+List<Winner> winners;
 
-
-    public WinnersListAdapter(Context ctx){
+    public WinnersListAdapter(Context ctx,List<Winner> winners){
+        this.winners=winners;
+        this.context=ctx;
 
     }
 
@@ -38,12 +47,17 @@ public class WinnersListAdapter extends RecyclerView.Adapter<WinnersListAdapter.
     public void onBindViewHolder(final WinnerViewHolder holder, final int position) {
                 holder.rank.setText((position+3)+"th");
                 holder.prizeMoney.setText(1000+"E Cash");
+                Winner winner=winners.get(position);
+        Picasso.with(context).load(PROFILE_IMAGE_URL+winner.getImage()).error(R.drawable.profile_1).into(holder.image);
+        holder.name.setText(winner.getUserName());
 
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        if(winners==null)return 0;
+
+        return winners.size();
     }
 
     class WinnerViewHolder extends RecyclerView.ViewHolder{

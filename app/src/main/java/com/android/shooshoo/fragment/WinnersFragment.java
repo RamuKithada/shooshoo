@@ -1,6 +1,8 @@
 package com.android.shooshoo.fragment;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,9 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.WinnersListActivity;
 import com.android.shooshoo.adapter.WinnersMyChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.models.HomeResponse;
+import com.android.shooshoo.presenters.HomePresenter;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.HomeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +36,7 @@ import java.util.List;
  * create an instance of this fragment.
  * This is used to show the List Challenges that are completed
  */
-public class WinnersFragment extends Fragment {
+public class WinnersFragment extends Fragment implements HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +50,13 @@ public class WinnersFragment extends Fragment {
     WinnersMyChallengersAdapter myChallengersAdapter;
     List<Challenge> challenges=new ArrayList<Challenge>();
     ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
+
+    HomePresenter homePresenter;
+    ConnectionDetector connectionDetector;
+    UserSession userSession;
+    //  jackpoy challengeModels is used to hold Sponsor challenges list
+    ArrayList<Challenge> myChallenges=new ArrayList<Challenge>();
+    private HomeView mListener;
 
 
     public WinnersFragment() {
@@ -99,8 +117,109 @@ public class WinnersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         myChallengesList =view.findViewById(R.id.my_challenges_list);
         myChallengesList.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        myChallengersAdapter=new WinnersMyChallengersAdapter(getActivity(),schallengeModels);
+        myChallengersAdapter=new WinnersMyChallengersAdapter(getActivity(),myChallenges);
         myChallengesList.setAdapter(myChallengersAdapter);
 
+        /**
+         * to get item from the sponsor list when selected one item.
+         */
+
+        myChallengesList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), myChallengesList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), WinnersListActivity.class);
+                intent.putExtra("challenge",myChallenges.get(position));
+                if(myChallenges.get(position).getCompanies()!=null)
+                    intent.putExtra("type","sponsor");
+                else
+                    intent.putExtra("type","jackpot");
+//                intent.putExtra("image",schallengeModels.get(position).getImage());
+//                intent.putExtra("name",schallengeModels.get(position).getTitle());
+//                intent.putExtra("des",schallengeModels.get(position).getDescription());
+//                // to  open Challenge details  activity
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+
+
+        homePresenter.attachView(this);
+        if(connectionDetector.isConnectingToInternet())
+            homePresenter.loadHome(userSession.getUserId());
+        else
+            showMessage("No Internet Connection");
+
     }
+
+
+    /**
+     *
+     * @param context is used to interact with Home activity
+     *                Home Activity must implement OnFragmentInteractionListener
+     *                else it throws Runtime error
+     */
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof HomeView) {
+            mListener = (HomeView) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement HomeView");
+        }
+        homePresenter=new HomePresenter();
+        connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
+
+    }
+
+    @Override
+    public void onDetach() {
+        homePresenter.detachView();
+        mListener = null;
+        super.onDetach();
+    }
+
+    /**
+     *
+     * @param response are the data fron server to show list of sponsor challenges
+     *
+     */
+
+    @Override
+    public void onLoadService(HomeResponse response) {
+        if(mListener!=null)
+            mListener.onLoadService(response);
+        if(response.getStatus()==1) {
+            myChallenges.addAll(response.getSponsorChallenges());
+            myChallenges.addAll(response.getJackpotsChallenges());
+            myChallengersAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+    @Override
+    public void showMessage(int stringId) {
+        if(mListener!=null)
+            mListener.showMessage(stringId);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if(mListener!=null)
+            mListener.showMessage(message);
+    }
+
+    @Override
+    public void showProgressIndicator(Boolean show) {
+        if(mListener!=null)
+            mListener.showProgressIndicator(show);
+    }
+
 }

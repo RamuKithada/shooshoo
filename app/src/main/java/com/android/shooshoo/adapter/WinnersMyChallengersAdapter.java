@@ -22,9 +22,9 @@ import java.util.List;
 
 public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyChallengersAdapter.CatViewHolder> {
     Context context;
-    List<ChallengeModel> challenges=new ArrayList<ChallengeModel>();
+    List<Challenge> challenges=new ArrayList<Challenge>();
 
-    public WinnersMyChallengersAdapter(Context context, List<ChallengeModel> challenges) {
+    public WinnersMyChallengersAdapter(Context context, List<Challenge> challenges) {
         this.challenges=challenges;
         this.context=context;
     }
@@ -39,18 +39,25 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-          if(challenges!=null){
-               ChallengeModel challenge=challenges.get(i);
-               catViewHolder.title.setText(challenge.getTitle());
-               catViewHolder.imageView.setImageResource(challenge.getImage());
-               catViewHolder.subtitle.setText(challenge.getDescription());
-//              Picasso.with(context)
-//                      .load(ApiUrls.SPONSOR_BANNER_IMAGE_URL+challenge.getBannerImage())
-//                      .error(R.drawable.rose)
-//                      .placeholder(R.drawable.rose)
-//                      .into(catViewHolder.imageView);
-//              catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
-          }
+        if (challenges != null) {
+            Challenge challenge = challenges.get(i);
+            catViewHolder.title.setText(challenge.getChallengeName());
+
+            String url;
+            if(challenge.getCompanies()!=null){
+                url=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
+            }else {
+                url=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+            }
+
+            Picasso.with(context)
+                    .load(url+ challenge.getBannerImage())
+                    .error(R.drawable.rose)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .into(catViewHolder.imageView);
+            catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+            catViewHolder.subtitle.setText(challenge.getDescription());
+        }
           catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View v) {
@@ -66,7 +73,7 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
     @Override
     public int getItemCount() {
         if(challenges==null)
-        return 16;
+        return 0;
 
         return challenges.size();
     }

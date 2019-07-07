@@ -8,6 +8,7 @@ import com.android.shooshoo.models.CategoryList;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
+import com.android.shooshoo.models.ChallengesResponse;
 import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CommentsResponce;
 import com.android.shooshoo.models.CompanyDetails;
@@ -20,6 +21,7 @@ import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RulesResponse;
+import com.android.shooshoo.models.WinnersResponce;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -283,6 +285,15 @@ public interface RetrofitApis {
                                      @Field("pLikes") String pLikes,@Field("pComments") String pComments,
                                      @Field("pMessages") String pMessages,@Field("cCategory") String cCategory,
                                      @Field("cRadar") String cRadar,@Field("cFollows") String cFollows,@Field("cInvitation") String cInvitation,@Field("rPeople") String rPeople);
+    @FormUrlEncoded
+    @POST("winners")
+    Call<WinnersResponce> getWinnersList(@Field("challengeId") String challengeId,@Field("type") String type);
+
+     @FormUrlEncoded
+    @POST("userchallenges")
+    Call<ChallengesResponse> getMyChallenges(@Field("userId") String userId);
+
+
 
 }
 

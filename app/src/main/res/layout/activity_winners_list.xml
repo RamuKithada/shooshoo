@@ -85,10 +85,11 @@
         android:layout_marginTop="1dp"
         >
         <TextView
+            android:id="@+id/challenge_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="@string/winners_title"
+            android:text=""
             android:layout_gravity="center"
             android:gravity="center"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -96,17 +97,23 @@
             android:textColor="#ffffff"
             />
        <LinearLayout
+
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="5dp"
            android:layout_marginBottom="5dp"
            android:padding="5dp"
+
            >
            <LinearLayout
+               android:id="@+id/second_winner"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:layout_weight="1"
                android:orientation="vertical"
+               android:paddingTop="10dp"
+               android:visibility="invisible"
+               android:gravity="bottom|center_horizontal"
                >
                <RelativeLayout
                    android:layout_width="60dp"
@@ -114,6 +121,7 @@
                    android:layout_gravity="center"
                    >
                <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/second_winner_image"
                    android:layout_width="50dp"
                    android:layout_height="50dp"
                   android:layout_centerInParent="true"
@@ -133,17 +141,19 @@
                    />
 
                <TextView
+                   android:id="@+id/second_winner_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
                    android:gravity="center"
                    android:textColor="@color/gray_text"
-                   android:text="Krik Edwards"
+                   android:text=""
                    android:textAppearance="?android:attr/textAppearanceSmall"
                    android:fontFamily="@font/futura_book_font"
                    />
 
                <TextView
+                   android:id="@+id/second_winner_prize"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
@@ -155,10 +165,13 @@
                    />
            </LinearLayout>
            <LinearLayout
+               android:id="@+id/first_winner"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:layout_weight="1"
+               android:gravity="top|center_horizontal"
                android:orientation="vertical"
+               android:visibility="invisible"
                >
                <RelativeLayout
                    android:layout_width="60dp"
@@ -166,8 +179,9 @@
                    android:layout_gravity="center"
                    >
                <de.hdodenhof.circleimageview.CircleImageView
-                   android:layout_width="60dp"
-                   android:layout_height="60dp"
+                   android:id="@+id/first_winner_image"
+                   android:layout_width="80dp"
+                   android:layout_height="80dp"
                    app:civ_border_color="@color/white_text"
                    app:civ_border_width="1dp"
                    android:src="@drawable/portrait"
@@ -187,32 +201,37 @@
                    />
 
                <TextView
+                   android:id="@+id/first_winner_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
                    android:gravity="center"
                    android:textColor="@color/gray_text"
-                   android:text="Jhon Bairstow"
+                   android:text=""
                    android:textAppearance="?android:attr/textAppearanceSmall"
                    android:fontFamily="@font/futura_book_font"
                    />
 
                <TextView
+                   android:id="@+id/first_winner_prize"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
-                   android:gravity="center"
                    android:textColor="@color/gray_text"
                    android:text="7500E Cash"
+                   android:paddingTop="10dp"
+                   android:gravity="bottom|center_horizontal"
                    android:textAppearance="?android:attr/textAppearanceSmall"
                    android:fontFamily="@font/futura_book_font"
                    />
            </LinearLayout>
            <LinearLayout
+               android:id="@+id/third_winner"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:layout_weight="1"
                android:orientation="vertical"
+               android:visibility="invisible"
                >
                <RelativeLayout
                    android:layout_width="60dp"
@@ -220,6 +239,7 @@
                    android:layout_gravity="center"
                    >
                <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/third_winner_image"
                    android:layout_width="50dp"
                    android:layout_height="50dp"
                    app:civ_border_color="@color/white_text"
@@ -240,17 +260,19 @@
                    />
 
                <TextView
+                   android:id="@+id/third_winner_name"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
                    android:gravity="center"
                    android:textColor="@color/gray_text"
-                   android:text="Shane Philips"
+                   android:text=""
                    android:textAppearance="?android:attr/textAppearanceSmall"
                    android:fontFamily="@font/futura_book_font"
                    />
 
                <TextView
+                   android:id="@+id/third_winner_prize"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_gravity="center"
