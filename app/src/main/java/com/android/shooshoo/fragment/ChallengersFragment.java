@@ -97,15 +97,15 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-         list_entered=view.findViewById(R.id.list_entered);
-         list_created=view.findViewById(R.id.list_created);
-         list_saved=view.findViewById(R.id.list_saved);
-         createdListAdapter=new WinnersMyChallengersAdapter(getContext(),created);
-         enteredListAdapter=new WinnersMyChallengersAdapter(getContext(),entered);
-         savedListAdapter=new WinnersMyChallengersAdapter(getContext(),saved);
-         list_created.setAdapter(createdListAdapter);
-         list_saved.setAdapter(savedListAdapter);
-         list_entered.setAdapter(enteredListAdapter);
+        list_entered=view.findViewById(R.id.list_entered);
+        list_created=view.findViewById(R.id.list_created);
+        list_saved=view.findViewById(R.id.list_saved);
+        createdListAdapter=new WinnersMyChallengersAdapter(getContext(),created);
+        enteredListAdapter=new WinnersMyChallengersAdapter(getContext(),entered);
+        savedListAdapter=new WinnersMyChallengersAdapter(getContext(),saved);
+        list_created.setAdapter(createdListAdapter);
+        list_saved.setAdapter(savedListAdapter);
+        list_entered.setAdapter(enteredListAdapter);
         AppCompatTextView tv_sponsor_challenge=view.findViewById(R.id.tv_sponsor_challenge);
         AppCompatTextView tv_jackpot_challenge=view.findViewById(R.id.tv_jackpot_challenge);
         tv_sponsor_challenge.setOnClickListener(this);
@@ -142,8 +142,8 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onSavedChallenges(List<Challenge> challengeList) {
-saved.addAll(challengeList);
-savedListAdapter.notifyDataSetChanged();
+        saved.addAll(challengeList);
+        savedListAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -167,7 +167,7 @@ savedListAdapter.notifyDataSetChanged();
             throw new RuntimeException(context.toString()
                     + " must implement HomeView");
         }
-      challengesPresenter=new ChallengesPresenter();
+        challengesPresenter=new ChallengesPresenter();
         challengesPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(context);
         userSession=new UserSession(context);

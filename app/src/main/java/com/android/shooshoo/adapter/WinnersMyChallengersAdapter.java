@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
             }else {
                 url=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
             }
-
+            Log.e("url ",url+ challenge.getBannerImage());
             Picasso.with(context)
                     .load(url+ challenge.getBannerImage())
                     .error(R.drawable.rose)
@@ -77,10 +78,7 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
 
         return challenges.size();
     }
-   /* public void setSponsorChallenges(List<Challenge> challenges){
-       this.challenges=challenges;
-       notifyDataSetChanged();
-    }*/
+
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
       ImageView imageView;

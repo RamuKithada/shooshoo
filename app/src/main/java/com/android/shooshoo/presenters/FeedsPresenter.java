@@ -2,6 +2,7 @@ package com.android.shooshoo.presenters;
 
 import android.util.Log;
 
+import com.android.shooshoo.activity.FeedsActivity;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -33,7 +34,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
       this.retrofitApis=null;
       view=null;
     }
-    public void loadFeeds(){
+    public void fullFeeds(){
         if(view!=null){
 
             view.showProgressIndicator(true);
@@ -46,7 +47,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                             ChallengeFeeds feedsResponse=response.body();
                             view.showMessage(feedsResponse.getMessage());
                             if(feedsResponse.getStatus()==1){
-                                feedsResponse.setType(1);
+                                feedsResponse.setType(FeedsActivity.GRID);
                                 view.onFeedsLoaded(feedsResponse);
                             }
 
@@ -70,7 +71,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
 
     }
 
-     public void challengeFeeds(){
+     public void gridFeeds(){
          if(view!=null){
              view.showProgressIndicator(true);
              retrofitApis.getChallengeFeeds().enqueue(new Callback<ChallengeFeeds>() {
@@ -82,7 +83,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                              ChallengeFeeds feedsResponse=response.body();
                              view.showMessage(feedsResponse.getMessage());
                              if(feedsResponse.getStatus()==1){
-                                 feedsResponse.setType(2);
+                                 feedsResponse.setType(FeedsActivity.FULL);
                                  view.onFeedsLoaded(feedsResponse);
                              }
 

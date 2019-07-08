@@ -61,6 +61,10 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         return cutPos;
     }
 
+    public void setCurrentPosition(int cutPos) {
+        this.cutPos = cutPos;
+    }
+
     @Override public void onBindViewHolder(final SimplePlayerViewHolder holder, final int position) {
         final Feed feed=modelArrayList.get(position);
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
@@ -143,6 +147,15 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     }
 
     @Override public int getItemCount() {
+        if(modelArrayList==null)
+        {
+            cutPos=-1;
+            return 0;
+        }
+
+        if(modelArrayList.size()==0)
+            cutPos=-1;
+
         return modelArrayList.size();
     }
 

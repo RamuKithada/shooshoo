@@ -37,8 +37,8 @@ public class ViewAllChallengersAdapter extends RecyclerView.Adapter<ViewAllChall
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         if(i==getItemCount()-1) {
-            catViewHolder.viewall.setVisibility(View.VISIBLE);
-            catViewHolder.card.setVisibility(View.INVISIBLE);
+            catViewHolder.viewall.setVisibility(View.INVISIBLE);
+            catViewHolder.card.setVisibility(View.VISIBLE);
         }else {
             ChallengeModel model = challengeModels.get(i);
             catViewHolder.image.setImageResource(model.getImage());

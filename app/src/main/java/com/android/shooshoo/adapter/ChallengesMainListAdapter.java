@@ -13,6 +13,7 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.models.ChallengeModel;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class ChallengesMainListAdapter extends RecyclerView.Adapter<ChallengesMainListAdapter.MainListHolder> {
 
@@ -47,16 +48,18 @@ public class ChallengesMainListAdapter extends RecyclerView.Adapter<ChallengesMa
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_of_list_item,viewGroup,false);
         return new MainListHolder(view);
     }
-
+        Random random=new Random();
     @Override
     public void onBindViewHolder(@NonNull MainListHolder mainListHolder, int i) {
-        ViewAllChallengersAdapter viewAllChallengersAdapter=new ViewAllChallengersAdapter(context,challengeModels);
+        ArrayList<ChallengeModel> chmodels=new ArrayList<ChallengeModel>();
+        chmodels.addAll(this.challengeModels.subList(i,10-i));
+        ViewAllChallengersAdapter viewAllChallengersAdapter=new ViewAllChallengersAdapter(context, chmodels);
         mainListHolder.rv_list.setAdapter(viewAllChallengersAdapter);
     }
 
     @Override
     public int getItemCount() {
-        return 16;
+        return 5;
     }
 
     public class MainListHolder extends RecyclerView.ViewHolder{
