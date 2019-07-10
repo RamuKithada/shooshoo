@@ -47,7 +47,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                             ChallengeFeeds feedsResponse=response.body();
                             view.showMessage(feedsResponse.getMessage());
                             if(feedsResponse.getStatus()==1){
-                                feedsResponse.setType(FeedsActivity.GRID);
+//                                feedsResponse.setType(FeedsActivity.GRID);
                                 view.onFeedsLoaded(feedsResponse);
                             }
 
@@ -83,7 +83,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                              ChallengeFeeds feedsResponse=response.body();
                              view.showMessage(feedsResponse.getMessage());
                              if(feedsResponse.getStatus()==1){
-                                 feedsResponse.setType(FeedsActivity.FULL);
+//                                 feedsResponse.setType(FeedsActivity.FULL);
                                  view.onFeedsLoaded(feedsResponse);
                              }
 
@@ -105,6 +105,35 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
          }
 
 
+     }
+     public void loadFeeds(String type,int limit,int offset){
+         if(view!=null) {
+             view.showProgressIndicator(true);
+             retrofitApis.loadFeeds(type, ""+offset, ""+limit).enqueue(new Callback<FeedsResponse>() {
+                 @Override
+                 public void onResponse(Call<FeedsResponse> call, Response<FeedsResponse> response) {
+                     if(view!=null)
+                      view.showProgressIndicator(false);
+                     if(response.isSuccessful()){
+                         if(view!=null){
+                             FeedsResponse feedsResponse=response.body();
+                             if(feedsResponse.getStatus()==1)
+                             view.onFeedsLoaded(feedsResponse.getFeeds(),feedsResponse.getCount());
+                         }
+                     }
+
+                 }
+
+                 @Override
+                 public void onFailure(Call<FeedsResponse> call, Throwable t) {
+                     if(view!=null)
+                     {
+                         view.showProgressIndicator(false);
+                         view.showMessage(t.getMessage());
+                     }
+                 }
+             });
+         }
      }
 
 
@@ -164,12 +193,13 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
      */
     public void viewFeed(String userId,String feedId){
         Log.e("userid :"+userId,"feedId : "+feedId);
-        if(view!=null){
+//        if(view!=null){
 //            view.showProgressIndicator(true);
             retrofitApis.feedViewed(userId,feedId).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if(view!=null)
+                 /*
+//                    if(view!=null)
 //                        view.showProgressIndicator(false);
 
                     if(response.isSuccessful()){
@@ -178,8 +208,8 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
                             JSONObject object=new JSONObject(res);
                             String msg=object.optString("message");
                             int status=object.optInt("status");
-                            if(view!=null)
-                                 view.onFeedViewed(status,msg);
+//                            if(view!=null)
+//                                 view.onFeedViewed(status,msg);
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -190,22 +220,22 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
 
                     }
 
-
+*/
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    if(view!=null)
+                 /*   if(view!=null)
                     {
                         view.showProgressIndicator(false);
                         view.showMessage(t.getMessage());
-                    }
+                    }*/
 
                 }
             });
 
 
-        }
+//        }
 
     }
     /**

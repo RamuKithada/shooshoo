@@ -80,11 +80,15 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     @BindView(R.id.button3)
     Button button3;
 
-
-
     @BindView(R.id.edt_user_name)
     AppCompatEditText edt_user_name;
 
+
+    @BindView(R.id.edt_cnf_pws)
+    AppCompatEditText edt_cnf_pws;
+
+    @BindView(R.id.edt_pws)
+    AppCompatEditText edt_pws;
 
     @BindView(R.id.edt_first_name)
     AppCompatEditText edt_first_name;
@@ -105,9 +109,13 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     @BindView(R.id.edt_street_number)
     AppCompatEditText edt_street_number;
 
-
     @BindView(R.id.edt_mobile)
     AppCompatEditText edt_mobile;
+
+
+    @BindView(R.id.edt_user_email)
+    AppCompatEditText edt_user_email;
+
 
 
     @BindView(R.id.next_lay)
@@ -302,7 +310,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
             case R.id.next_lay:
                 if (connectionDetector.isConnectingToInternet()) {
                     if (validateInputs()) {
-                        updateProfile();
+                            updateProfile();
 
                     }
                 } else showMessage("Please check internet connection");
@@ -326,13 +334,18 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
     private void updateProfile() {
         if (newsImage != null)
-            updateUserInfoPresenter.updateUserProfile(newsImage, userSession.getUserId(),
+        {
+            updateUserInfoPresenter.updateUserProfile(newsImage,
+                    edt_user_name.getText().toString(), edt_cnf_pws.getText().toString(),
                     edt_first_name.getText().toString(), edt_last_name.getText().toString(),
                     edt_dob.getText().toString(), country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(),
                     edt_Street.getText().toString(), edt_street_number.getText().toString(),
-                    edt_mobile.getText().toString(), gender.toLowerCase(),
-                    lat, lng, userSession.getToken());
+                    edt_mobile.getText().toString(),edt_user_email.getText().toString(),
+                    gender.toLowerCase(),lat, lng, userSession.getToken());
+        }else {
+            showMessage("Please Select Profile image ");
+        }
     }
 
 
@@ -600,18 +613,53 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
     }
    public  boolean validateInputs(){
-        if(!ApiUrls.validateString(edt_first_name.getText().toString())){
-            edt_first_name.setError("Enter First Name");
-            edt_first_name.requestFocus();
+
+        edt_user_email.setError(null);
+        edt_first_name.setError(null);
+        edt_last_name.setError(null);
+        edt_pws.setError(null);
+        edt_cnf_pws.setError(null);
+        edt_dob.setError(null);
+        edt_zipcode.setError(null);
+        edt_Street.setError(null);
+        edt_street_number.setError(null);
+        edt_mobile.setError(null);
+
+
+
+
+        if(!ApiUrls.validateString(edt_user_name.getText().toString())){
+            edt_user_name.setError("Enter Username");
+            edt_user_name.requestFocus();
             return false;
         }
-        if(edt_first_name.getText().toString().length()<2){
+        if(edt_user_name.getText().toString().length()<2){
 
-            edt_first_name.setError("First Name have at least 2 letters");
-            edt_first_name.requestFocus();
+            edt_user_name.setError("Username have at least 2 letters");
+            edt_user_name.requestFocus();
             return false;
 
         }
+       if(edt_user_name.getText().toString().length()>70){
+
+           edt_user_name.setError("Username have maximum 70 letters");
+           edt_user_name.requestFocus();
+           return false;
+
+       }
+
+       if(!ApiUrls.validateString(edt_first_name.getText().toString())){
+           edt_first_name.setError("Enter First Name");
+           edt_first_name.requestFocus();
+           return false;
+       }
+       if(edt_first_name.getText().toString().length()<2){
+
+           edt_first_name.setError("First Name have at least 2 letters");
+           edt_first_name.requestFocus();
+           return false;
+
+       }
        if(edt_first_name.getText().toString().length()>70){
 
            edt_first_name.setError("First Name have maximum 70 letters");
@@ -619,6 +667,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            return false;
 
        }
+
 
 
        if(!ApiUrls.validateString(edt_last_name.getText().toString())){
@@ -642,6 +691,60 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            return false;
 
        }
+
+
+
+       String pws=edt_pws.getText().toString();
+       if(!ApiUrls.validateString(pws))
+       {
+
+           edt_pws.setError("Enter Password");
+           edt_pws.requestFocus();
+           return false;
+       }
+       if(pws.length()<6||pws.length()>12)
+       {
+           edt_pws.setError("Password is minimum 6 and maximum 12 Characters");
+           edt_pws.requestFocus();
+           return false;
+       }
+
+       String cnfpws=edt_cnf_pws.getText().toString();
+       if(!ApiUrls.validateString(cnfpws))
+       {
+
+           edt_cnf_pws.setError("Enter Password");
+           edt_cnf_pws.requestFocus();
+           return false;
+       }
+       if(cnfpws.length()<6||cnfpws.length()>12)
+       {
+           edt_cnf_pws.setError("Password is minimum 6 and maximum 12 Characters");
+           edt_cnf_pws.requestFocus();
+           return false;
+       }
+
+       if(!cnfpws.contentEquals(pws)){
+           edt_cnf_pws.setError("Password and Conform Password must be same");
+           edt_cnf_pws.requestFocus();
+           return false;
+       }
+
+       if(!ApiUrls.validateString(edt_dob.getText().toString())){
+
+           edt_dob.setError(" Select Birth date");
+           edt_dob.requestFocus();
+           return false;
+
+       }
+
+       if(gender_pos<0){
+           edt_gender.setError("Please Select Gender");
+           edt_gender.requestFocus();
+           return false;
+       }
+
+
        if(country_pos<0){
            edt_country.setError("Please Select Country");
            edt_country.requestFocus();
@@ -652,11 +755,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            edt_city.requestFocus();
            return false;
        }
-       if(gender_pos<0){
-           edt_gender.setError("Please Select Gender");
-           edt_gender.requestFocus();
-           return false;
-       }
+
 
 
        if(!ApiUrls.validateString(edt_zipcode.getText().toString())){
@@ -714,6 +813,31 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
        }
 
 
+       String email=edt_user_email.getText().toString();
+       if(!ApiUrls.validateString(email))
+       {
+
+           edt_user_email.setError("Enter email");
+           edt_user_email.requestFocus();
+           return false;
+       }
+
+       if(edt_user_email.getText().toString().length()<6){
+           edt_user_email.setError("Email  is minimum 6 letters");
+           edt_user_email.requestFocus();
+           return false;
+
+       }
+
+
+       if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+       {
+
+           edt_user_email.setError("Enter valid email");
+           edt_user_email.requestFocus();
+           return false;
+       }
+
        if(!ApiUrls.validateString(edt_mobile.getText().toString())){
            edt_mobile.setError("Enter Mobile Number");
            edt_mobile.requestFocus();
@@ -728,13 +852,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            return false;
 
        }
-       if(!ApiUrls.validateString(edt_dob.getText().toString())){
 
-           edt_dob.setError(" Select Birth date");
-           edt_dob.requestFocus();
-           return false;
-
-       }
        if(edt_mobile.getText().toString().length()>15){
            edt_mobile.setError("Mobile Number have maximum 15 digits");
            edt_mobile.requestFocus();
@@ -750,7 +868,20 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
 
 
+
+
+
+
+
+
+
+
+
+
         return true;
+
+
+
 
    }
     List<City> cities;
@@ -780,7 +911,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                 gender_pos=position;
                 gender=genders[position];
                 edt_gender.setText(gender);
-
+                edt_gender.setError(null);
                 break;
             case R.id.edt_country:
                  if(countries!=null)
@@ -790,13 +921,16 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                      edt_country.setText(countries.get(position).getCountryName());
                      country_pos=position;
                      country=countries.get(position);
+                     edt_country.setError(null);
                  }
                 break;
             case R.id.edt_city:
                 if(cities!=null)
                 {edt_city.setText(cities.get(position).getCityName());
                     city=cities.get(position);
-                city_pos=position;}
+                city_pos=position;
+                edt_city.setError(null);
+                }
                 break;
         }
 
@@ -879,5 +1013,18 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                       e.printStackTrace();
                   }
               }
+    }
+
+    @Override
+    public void loginDetails(LoginSuccess loginSuccess) {
+        if(loginSuccess!=null){
+            showMessage(loginSuccess.getMessage());
+                if(loginSuccess.getStatus()==1){
+                    userSession.setUserId(loginSuccess.getUserInfo().getUserId());
+                    userSession.login();
+                    Intent intent=new Intent(this,CategoryChooseActivity.class);
+                    startActivity(intent);
+                }
+        }
     }
 }

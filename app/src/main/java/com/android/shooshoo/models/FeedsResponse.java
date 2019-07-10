@@ -10,6 +10,9 @@ public class FeedsResponse {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("count")
+    @Expose
+    private Integer count;
     @SerializedName("feeds")
     @Expose
     private List<Feed> feeds = null;
@@ -38,4 +41,11 @@ public class FeedsResponse {
         this.feeds = feeds;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 }

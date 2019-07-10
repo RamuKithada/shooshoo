@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,8 +32,11 @@ import android.widget.Toast;
 
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.FeedsGridListAdapter;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
+import com.android.shooshoo.fragment.FeedsGridFragment;
+import com.android.shooshoo.fragment.FeedsListFragment;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
@@ -50,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,16 +77,7 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  *
  */
 
-public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView ,View.OnClickListener{
-
-
-    public final static int GRID=1;
-    public final static int FULL=2;
-    Container container;
-    FullVideoAdapter adapter;
-    LinearLayoutManager layoutManager;
-    RelativeLayout bottom_view;
-    private ArrayList<Feed> feedArrayList =new ArrayList<>();
+public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView , FeedsListFragment.OnFragmentInteractionListener, FeedsGridFragment.OnFragmentInteractionListener,View.OnClickListener{
 
 
     @BindView(R.id.navigation_home)
@@ -107,11 +103,11 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     @BindView(R.id.iv_profile)
     ImageView iv_profile;
 
-    @BindView(R.id.full_view_layout)
+/*    @BindView(R.id.full_view_layout)
     RelativeLayout full_view_layout;
 
     @BindView(R.id.grid_layout)
-    RelativeLayout grid_layout;
+    RelativeLayout grid_layout;*/
 
     @BindView(R.id.full_view_tabs)
     LinearLayout full_view_tabs;
@@ -143,10 +139,10 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     /**
      * feedsPresenter is used to load the data;
      */
-    FeedsPresenter feedsPresenter;
 
     ConnectionDetector detector;
     View view=null;
+    FeedsPresenter feedsPresenter;
 
     /**
      * random View setting and variables
@@ -154,8 +150,8 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
      *
      *
      */
-    @BindView(R.id.rv_list)
-    RecyclerView rv_list;
+ /*   @BindView(R.id.rv_list)
+    RecyclerView rv_list;*/
 //    FeedsGridListAdapter feedsGridListAdapter;
 //    private ArrayList<Feed> gridFeedsList =new ArrayList<>();
 
@@ -167,33 +163,13 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feeds);
         ButterKnife.bind(this);
-        container = findViewById(R.id.player_container);
-        bottom_view=findViewById(R.id.bottom_view);
-        userSession=new UserSession(this);
-        detector=new ConnectionDetector(this);
-        feedsPresenter=new FeedsPresenter();
-        feedsPresenter.attachView(this);
-        layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        SnapHelper snapHelper = new PagerSnapHelper();
-        container.setLayoutManager(layoutManager);
-        snapHelper.attachToRecyclerView(container);
-        adapter = new FullVideoAdapter(this, feedArrayList,this);
-        container.setAdapter(adapter);
-        container.setCacheManager(adapter);
+
+          feedsPresenter=new FeedsPresenter();
+          feedsPresenter.attachView(this);
 
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         setTagClickListener();
-        init();
-
-
-        if(detector.isConnectingToInternet())
-             feedsPresenter.gridFeeds();
-        else {
-             showMessage("Check internet connection");
-        }
-
-
 
     }
 
@@ -215,6 +191,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         iv_chat.setOnClickListener(this);
         iv_grid_toggle.setOnClickListener(this);
         iv_profile.setOnClickListener(this);
+        showFullFragment();
 
 
     }
@@ -262,51 +239,16 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     View.OnClickListener fullFeedListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-            ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-
-            ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
+            if(feedsListFragment!=null)
             switch (v.getId()){
                 case R.id.sponsor_lay:
-                    ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-                    feedArrayList.clear();
-                    if(challengeFeeds!=null)
-                        if(challengeFeeds.getFeedList()!=null)
-                            if(challengeFeeds.getFeedList().getSponsor()!=null)
-                                feedArrayList.addAll(challengeFeeds.getFeedList().getSponsor());
-                    adapter.notifyDataSetChanged();
-
-
+                    feedsListFragment.changePage(0);
                     break;
                 case R.id.jackpot_lay:
-                    ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-                    feedArrayList.clear();
-                    if(challengeFeeds!=null)
-                        if(challengeFeeds.getFeedList()!=null)
-                            if(challengeFeeds.getFeedList().getJackpot()!=null)
-                                feedArrayList.addAll(challengeFeeds.getFeedList().getJackpot());
-                    adapter.notifyDataSetChanged();
-
-
+                    feedsListFragment.changePage(1);
                     break;
                 case R.id.friends_lay:
-                    ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-                    feedArrayList.clear();
-                    if(challengeFeeds!=null)
-                        if(challengeFeeds.getFeedList()!=null)
-                            if(challengeFeeds.getFeedList().getFriends()!=null)
-                                feedArrayList.addAll(challengeFeeds.getFeedList().getFriends());
-                    adapter.notifyDataSetChanged();
-
+                    feedsListFragment.changePage(2);
                     break;
 
             }
@@ -316,50 +258,16 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     View.OnClickListener gridFeedListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-            ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-
-            ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-
-
-
+            if(feedsGridFragment!=null)
             switch (v.getId()){
                 case R.id.new_lay:
-                    ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-//                    gridFeedsList.clear();
-//                    if(feedsList!=null)
-//                        if(feedsList.getFeedList()!=null)
-//                            if(feedsList.getFeedList().getNewList()!=null)
-//                                gridFeedsList.addAll(feedsList.getFeedList().getNewList());
-//                    feedsGridListAdapter.notifyDataSetChanged();
+                    feedsGridFragment.onChangePage(0);
                     break;
                 case R.id.popular_lay:
-                    ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-//                    gridFeedsList.clear();
-//                    if(feedsList!=null)
-//                        if(feedsList.getFeedList()!=null)
-//                            if(feedsList.getFeedList().getPopular()!=null)
-//                                gridFeedsList.addAll(feedsList.getFeedList().getPopular());
-//                    feedsGridListAdapter.notifyDataSetChanged();
+                    feedsGridFragment.onChangePage(1);
                     break;
                 case R.id.random_lay:
-                    ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                    random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-//                    gridFeedsList.clear();
-//                    if(feedsList!=null)
-//                        if(feedsList.getFeedList()!=null)
-//                            if(feedsList.getFeedList().getRandom()!=null)
-//                                gridFeedsList.addAll(feedsList.getFeedList().getFriends());
-//                    feedsGridListAdapter.notifyDataSetChanged();
+                    feedsGridFragment.onChangePage(2);
                     break;
 
             }
@@ -371,73 +279,6 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
 
 
-    @Override
-    public void onClick(View v,Feed feed) {
-        this.feed=feed;
-        Intent intent=new Intent(this, LoginActivity.class);
-
-        switch (v.getId()){
-            case R.id.comment_view:
-                if(!userSession.isLogin())
-                    startActivityForResult(intent,100);
-                else {
-                    onActivityResult(100,RESULT_OK,null);
-                }
-
-                break;
-            case R.id.donation_view:
-                if(!userSession.isLogin())
-                    startActivityForResult(intent,101);
-                else {
-                    onActivityResult(101,RESULT_OK,null);
-                }
-                break;
-            case R.id.likes_view:
-                if(!userSession.isLogin())
-                    startActivityForResult(intent,102);
-                else {
-
-
-                  /*  ImageView imageView=v.findViewById(R.id.iv_like);
-                    if(feed.isLike())
-                        imageView.setImageResource(R.drawable.like_active);
-                    else
-                        imageView.setImageResource(R.drawable.like_normal);*/
-                    feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
-
-
-//                   adapter.notifyDataSetChanged();
-//                     onActivityResult(102,RESULT_OK,null);
-                }
-                break;
-            case R.id.share_view:
-                String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
-
-                onDownloadImage(url,null);
-                break;
-            case R.id.plus_mark:
-                if(!userSession.isLogin())
-                    startActivityForResult(intent,103);
-                else {
-                    feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
-                }
-                break;
-            case R.id.profile_lay:
-                Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
-                userProfileIntent.putExtra("userId",feed.getUserId());
-                startActivity(userProfileIntent);
-                break;
-
-
-
-        }
-    }
-
-    @Override
-    public void onView(Feed feed) {
-        this.feed=feed;
-        feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
-    }
 
     /***
      * Feed to hold the reference of the selected
@@ -477,74 +318,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
 
 
-  /*  @Override
-    public void onFeedsLoaded(List<Feed> feeds) {
-        feedArrayList.addAll(feeds);
-        adapter.notifyDataSetChanged();
 
-    }*/
-  ChallengeFeeds challengeFeeds;
-  ChallengeFeeds feedsList;
-
-
-    @Override
-    public void onFeedsLoaded(ChallengeFeeds feeds) {
-        if(feeds.getType()==GRID){
-            this.feedsList=feeds;
-            gridFeedListener.onClick(new_lay);
-        }else if(feeds.getType()==FULL){
-            {
-                this.challengeFeeds=feeds;
-                fullFeedListener.onClick(sponsor_lay);
-            }
-        }
-
-    }
-
-    @Override
-    public void onFeedLike(int status,String message){
-        if(status==1) {
-            try {
-                int likes = Integer.parseInt(feed.getLikes());
-                if(feed.isLike())
-                    likes--;
-                else
-                    likes++;
-                feed.setLike(!feed.isLike());
-                feed.setLikes(String.valueOf(likes));
-                adapter.notifyDataSetChanged();
-            } catch (Exception e) {
-                  e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public void onFeedViewed(int status, String message) {
-        if(status==1) {
-            try {
-                int views = Integer.parseInt(feed.getViews());
-                views++;
-                feed.setViews(String.valueOf(views));
-
-
-            } catch (Exception e) {
-
-            }
-        }
-    }
-
-    @Override
-    public void onFollowed(int status, String message) {
-        showMessage(message);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        feedsPresenter.detachView();
-    }
 
 
     /***
@@ -822,28 +596,17 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 break;
 
             case R.id.iv_grid_toggle:
-                if(grid_layout.getVisibility()==View.VISIBLE){
-                    grid_layout.setVisibility(View.GONE);
+                if(grid_tabs.getVisibility()==View.VISIBLE){
                     grid_tabs.setVisibility(View.GONE);
-                    full_view_layout.setVisibility(View.VISIBLE);
                     full_view_tabs.setVisibility(View.VISIBLE);
-                    if(detector.isConnectingToInternet())
-                        feedsPresenter.gridFeeds();
-                    else {
-                        showMessage("Check internet connection");}
+                    full_view_tabs.setVisibility(View.VISIBLE);
+                    showFullFragment();
+
                 }else{
-                    full_view_layout.setVisibility(View.GONE);
                     full_view_tabs.setVisibility(View.GONE);
                     grid_tabs.setVisibility(View.VISIBLE);
-                    grid_layout.setVisibility(View.VISIBLE);
-                    if(detector.isConnectingToInternet())
-                        feedsPresenter.fullFeeds();
-                    else {
-                        showMessage("Check internet connection");
-                    }
-//                    feedArrayList.clear();
-//                    adapter.setCurrentPosition(-1);
-//                    adapter.notifyDataSetChanged();
+                    showGridFragment();
+
                 }
                 break;
 
@@ -869,55 +632,262 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
         }
 
+    FeedsListFragment feedsListFragment;
+    FeedsGridFragment feedsGridFragment;
+    private void showFullFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if(feedsListFragment==null)
+            feedsListFragment=FeedsListFragment.newInstance("hai","sai");
+
+        if(feedsListFragment.isAdded())
+            ft.show(feedsListFragment);
+        else
+            ft.add(R.id.feeds_fragment_container,feedsListFragment);
+
+        if(feedsGridFragment!=null)
+            if(feedsGridFragment.isAdded()){
+                ft.hide(feedsGridFragment);
+            }
+        ft.commit();
+
+    }
+    private void showGridFragment() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if(feedsGridFragment==null)
+            feedsGridFragment=FeedsGridFragment.newInstance("hai","sai");
+
+        if(feedsGridFragment.isAdded())
+            ft.show(feedsGridFragment);
+        else
+            ft.add(R.id.feeds_fragment_container,feedsGridFragment);
+
+        if(feedsListFragment!=null)
+            if(feedsListFragment.isAdded()){
+                ft.hide(feedsListFragment);
+            }
+        ft.commit();
+
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         Log.e("onBackPressed","onBackPressed");
     }
-    private void init()
-    {
-        rv_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-//        feedsGridListAdapter=new FeedsGridListAdapter(this,gridFeedsList);
-        imageListAdapter=new ImageListAdapter(this,imagesModelArrayList);
-        rv_list.setAdapter(imageListAdapter);
-        setDataToList();
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
-    private void setDataToList()
-    {
-        imagesModelArrayList.clear();
-        for(int i=0;i<10;i++)
-        {
-            ImagesModel model=new ImagesModel();
-            ArrayList<ImagesSublistModel> sublistModels=new ArrayList<>();
+    @Override
+    public void onGridPageChange(int pos) {
 
-            ImagesSublistModel sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.beard_challange);
-            sublistModels.add(sublistModel);
 
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context1);
-            sublistModels.add(sublistModel);
+        ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
 
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context2);
-            sublistModels.add(sublistModel);
+        ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
 
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context3);
-            sublistModels.add(sublistModel);
 
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context4);
-            sublistModels.add(sublistModel);
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.blackfly_challange);
-            sublistModels.add(sublistModel);
+        ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
 
-            model.setSublistModels(sublistModels);
-            imagesModelArrayList.add(model);
+
+        switch (pos){
+            case 0:
+                ((TextView) new_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                new_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
+                break;
+            case 1:
+                ((TextView) popular_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                popular_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                break;
+            case 2:
+                ((TextView) random_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                random_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
+                break;
+
         }
-        imageListAdapter.notifyDataSetChanged();
+
+
+
+
+
     }
+
+    @Override
+    public void onListPageSelected(int pos) {
+        ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+        ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+
+        ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+        switch (pos){
+            case 0:
+                ((TextView) sponsor_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                sponsor_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
+
+
+                break;
+            case 1:
+                ((TextView) jackpot_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                jackpot_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
+
+
+                break;
+            case 2:
+                ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                break;
+
+        }
+
+    }
+
+
+    @Override
+    public void onFeedsLoaded(ChallengeFeeds feeds) {
+
+    }
+
+    @Override
+    public void onFeedsLoaded(List<Feed> feeds, int count) {
+
+    }
+
+
+
+
+
+
+
+
+    @Override
+    public void onClick(View v,Feed feed) {
+        this.feed=feed;
+        Intent intent=new Intent(this, LoginActivity.class);
+
+        switch (v.getId()){
+            case R.id.comment_view:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,100);
+                else {
+                    onActivityResult(100,RESULT_OK,null);
+                }
+
+                break;
+            case R.id.donation_view:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,101);
+                else {
+                    onActivityResult(101,RESULT_OK,null);
+                }
+                break;
+            case R.id.likes_view:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,102);
+                else {
+
+
+
+                    feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
+
+
+
+                }
+                break;
+            case R.id.share_view:
+                String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
+
+                onDownloadImage(url,null);
+                break;
+            case R.id.plus_mark:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,103);
+                else {
+                    feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
+                }
+                break;
+            case R.id.profile_lay:
+                Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
+                userProfileIntent.putExtra("userId",feed.getUserId());
+                startActivity(userProfileIntent);
+                break;
+
+
+
+        }
+    }
+
+    @Override
+    public void onView(Feed feed) {
+        if(userSession.isLogin()){
+        this.feed=feed;
+        feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
+        }
+    }
+    @Override
+    public void onFeedLike(int status,String message){
+        if(status==1) {
+            try {
+                int likes = Integer.parseInt(feed.getLikes());
+                if(feed.isLike())
+                    likes--;
+                else
+                    likes++;
+                feed.setLike(!feed.isLike());
+                feed.setLikes(String.valueOf(likes));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+/*
+    @Override
+    public void onFeedViewed(int status, String message) {
+        if(status==1) {
+            try {
+                int views = Integer.parseInt(feed.getViews());
+                views++;
+                feed.setViews(String.valueOf(views));
+
+
+            } catch (Exception e) {
+
+            }
+        }
+    }*/
+
+    @Override
+    public void onFollowed(int status, String message) {
+        showMessage(message);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        feedsPresenter.detachView();
+    }
+
+
+
+
+
+
+
+
+
 
 }

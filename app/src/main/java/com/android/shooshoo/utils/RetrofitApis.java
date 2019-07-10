@@ -94,9 +94,10 @@ public interface RetrofitApis {
     Call<CountryResult> getCountries();
 
     @Multipart
-    @POST("editprofile")
-    Call<ResponseBody> updateProfile(@Part MultipartBody.Part imageFile,
-                                     @Part("userId") RequestBody userId,
+    @POST("signup")
+    Call<LoginSuccess> updateProfile(@Part MultipartBody.Part imageFile,
+                                     @Part("userName") RequestBody userName,
+                                     @Part("password") RequestBody password,
                                      @Part("firstName") RequestBody firstName,
                                      @Part("lastName") RequestBody lastName,
                                      @Part("dob") RequestBody dob,
@@ -106,6 +107,7 @@ public interface RetrofitApis {
                                      @Part("street") RequestBody street,
                                      @Part("streetNum") RequestBody streetNum,
                                      @Part("mobileNumber") RequestBody mobileNumber,
+                                     @Part("email") RequestBody email,
                                      @Part("gender") RequestBody gender,
                                      @Part("latitude") RequestBody latitude,
                                      @Part("longitude") RequestBody longitude,
@@ -228,8 +230,9 @@ public interface RetrofitApis {
 
     @GET("challengefeeds")
     Call<ChallengeFeeds> getChallengeFeeds();
-
-
+      @FormUrlEncoded
+     @POST("feeds")
+     Call<FeedsResponse> loadFeeds(@Field("type") String type ,@Field("offset") String offset,@Field("limit") String limit);
     @FormUrlEncoded
     @POST("likeFeed")
     Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId);

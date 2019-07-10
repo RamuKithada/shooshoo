@@ -52,11 +52,13 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public TextView tv_video_des,tv_name,tv_time,tv_like_count,tv_views_count;
     public CircleImageView profile_pic;
     public ImageView iv_like;
-    public ImageView plus_mark,imageView;
+    public ImageView plus_mark,imageView,iv_thumb;
     public RelativeLayout upper_layer;
 
     public SimplePlayerViewHolder(final View itemView) {
         super(itemView);
+        iv_thumb=(ImageView)itemView.findViewById(R.id.iv_thumb);
+        iv_thumb.setVisibility(View.VISIBLE);
         playerView = (SimpleExoPlayerView) itemView.findViewById(R.id.player);
         playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);
         card=(RelativeLayout) itemView.findViewById(R.id.card);
@@ -120,6 +122,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     @Override
     public void initialize(Container container, PlaybackInfo playbackInfo) {
+        iv_thumb.setVisibility(View.VISIBLE);
         if (helper == null) {
             helper = new ExoPlayerViewHelper(container, this, mediaUri);
         }
@@ -150,14 +153,14 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                 if(playerView.getPlayer()!=null) {
                     if (playerView.getPlayer().getRepeatMode() != Player.REPEAT_MODE_ALL)
                         playerView.getPlayer().setRepeatMode(Player.REPEAT_MODE_ALL);
-                    if (playWhenReady){
+                  /*  if (playWhenReady){
                         if(handler==null)
                         {
                             handler=new Handler();
                             handler.post(runnable);
                         }
 
-                }
+                }*/
                 }
 
 
@@ -329,16 +332,18 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     public void bind(Uri media) {
         this.mediaUri = media;
-        if(handler!=null){
+      /*  if(handler!=null){
         handler.removeCallbacks(runnable);
         handler=null;
-        }
+        }*/
 
     }
 
     @Override
     public void onFirstFrameRendered() {
-
+        iv_thumb.setVisibility(View.GONE);
+        if(listener!=null)
+            listener.viewed();
     }
 
     @Override
@@ -378,7 +383,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         this.listener = listener;
     }
 
-    public Handler handler=null;
+/*    public Handler handler=null;
     Runnable runnable=new Runnable() {
         @Override
         public void run() {
@@ -405,7 +410,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
                     listener.viewed();
             }
         }
-    }
+    }*/
 
     public  interface VideoViewedListener{
         void viewed();

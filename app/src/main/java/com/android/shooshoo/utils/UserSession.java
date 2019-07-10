@@ -114,7 +114,7 @@ public  void logout(){
 
     }
     public String getToken(){
-        return  pref.getString(TOKEN,null);
+        return  pref.getString(TOKEN,"abcdefghijklm");
 
     }
     public int getNotificationState(){

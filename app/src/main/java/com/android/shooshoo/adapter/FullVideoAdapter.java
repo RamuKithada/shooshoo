@@ -26,6 +26,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import im.ene.toro.CacheManager;
 
@@ -42,6 +43,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     private ArrayList<Feed> modelArrayList;
     private Context context;
     FeedClickListener clickListener;
+    private boolean isLoadingAdded=false;
 
 
     public FullVideoAdapter(Context context, ArrayList<Feed> modelArrayList,FeedClickListener clickListener)
@@ -67,25 +69,27 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
     @Override public void onBindViewHolder(final SimplePlayerViewHolder holder, final int position) {
         final Feed feed=modelArrayList.get(position);
-        String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/"+feed.getUrl();
+        String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/";//+feed.getUrl();
+        Picasso.with(context).load(url+feed.getThumbnail()).error(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).into(holder.iv_thumb);
+        Log.e("thumnailPath",""+url+feed.getThumbnail());
         if(feed.getUrl().endsWith(".jpg")||feed.getUrl().endsWith(".JPG")||feed.getUrl().endsWith(".jpeg")||feed.getUrl().endsWith(".png")||feed.getUrl().endsWith(".JPEG")||feed.getUrl().endsWith(".PNG"))
         {
             holder.imageView.setVisibility(View.VISIBLE);
-            Picasso.with(context).load(url).noPlaceholder().into(holder.imageView);
-            holder.bind(Uri.parse(url));
+            Picasso.with(context).load(url+feed.getUrl()).noPlaceholder().into(holder.imageView);
+            holder.bind(Uri.parse(url+feed.getUrl()));
             holder.card.setVisibility(View.GONE);
                if(!feed.isViewed())
                {
                 viewed();
                 feed.setViewed(true);
                }
-            Log.e("image_url",url);
+            Log.e("image_url",url+feed.getUrl());
         }else {
             holder.imageView.setVisibility(View.GONE);
             holder.card.setVisibility(View.VISIBLE);
-            holder.setListener(this);
-            holder.bind(Uri.parse(url));
-            Log.e("video_url",url);
+//            holder.setListener(this);
+            holder.bind(Uri.parse(url+feed.getUrl()));
+            Log.e("video_url",url+feed.getUrl());
         }
 
         cutPos=position;
@@ -157,6 +161,33 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             cutPos=-1;
 
         return modelArrayList.size();
+    }
+
+    public void addAll(List<Feed> mcList) {
+        if(mcList!=null)
+            modelArrayList.addAll(mcList);
+        notifyDataSetChanged();
+
+    }
+
+
+
+    public void clear() {
+        isLoadingAdded = false;
+        while (getItemCount() > 0) {
+            modelArrayList.clear();
+            notifyDataSetChanged();
+        }
+    }
+
+    public boolean isEmpty() { return getItemCount() == 0; }
+
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
     }
 
 

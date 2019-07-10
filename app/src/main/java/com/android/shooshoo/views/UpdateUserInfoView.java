@@ -1,5 +1,7 @@
 package com.android.shooshoo.views;
 
+import com.android.shooshoo.models.LoginSuccess;
+
 import okhttp3.ResponseBody;
 
 /**
@@ -12,4 +14,5 @@ public interface UpdateUserInfoView extends BaseView {
      * @param responseBody is response of the service
      */
     void onUpdateUserInfo(ResponseBody responseBody);
+    void loginDetails(LoginSuccess loginSuccess);
 }

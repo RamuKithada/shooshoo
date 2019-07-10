@@ -1,54 +1,35 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.adapter.ImageListAdapter;
-import com.android.shooshoo.models.DemoItem;
 import com.android.shooshoo.models.ImagesModel;
 import com.android.shooshoo.models.ImagesSublistModel;
-import com.felipecsl.asymmetricgridview.AGVRecyclerViewAdapter;
-import com.felipecsl.asymmetricgridview.AsymmetricItem;
-import com.felipecsl.asymmetricgridview.AsymmetricRecyclerView;
-
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.SupportNowActivity;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
-import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
-import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.ProfileView;
-import com.felipecsl.asymmetricgridview.AsymmetricRecyclerViewAdapter;
-import com.felipecsl.asymmetricgridview.Utils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
@@ -89,7 +70,6 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     BaseView baseView;
     List<Brand> brandList=new ArrayList<Brand>();
     List<Post> posts=new ArrayList<Post>();
-    private final DemoUtils demoUtils = new DemoUtils();
 //    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 //    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
 //            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};

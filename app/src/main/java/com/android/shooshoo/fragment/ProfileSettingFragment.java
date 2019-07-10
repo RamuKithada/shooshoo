@@ -29,6 +29,7 @@ import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
@@ -809,6 +810,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onUpdateUserInfo(ResponseBody responseBody) {
+
+    }
+
+    @Override
+    public void loginDetails(LoginSuccess loginSuccess) {
 
     }
 }

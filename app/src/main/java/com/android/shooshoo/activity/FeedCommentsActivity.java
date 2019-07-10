@@ -161,6 +161,7 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         feedCommentsAdapter.addAll(comments);
         currentPage=feedCommentsAdapter.getItemCount();
         total_comments.setText("All Comments("+totalPages+")");
+//        feedCommentsAdapter.removeLoadingFooter();
     }
 
     Comment comment;

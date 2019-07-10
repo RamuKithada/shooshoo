@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         sign_up_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupIntent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent signupIntent=new Intent(LoginActivity.this,ProfileFillingFormActivity.class);
                 startActivity(signupIntent);
                 finish();
 

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -161,6 +162,11 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void loginDetails(LoginSuccess loginSuccess) {
+
     }
 
     @Override

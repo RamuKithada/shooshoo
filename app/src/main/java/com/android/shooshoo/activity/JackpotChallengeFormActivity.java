@@ -37,7 +37,7 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.views.JackpotChallengeView;
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 

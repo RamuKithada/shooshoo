@@ -1,6 +1,8 @@
 package com.android.shooshoo.presenters;
 
 import android.net.Uri;
+
+import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.UpdateUserInfoView;
 
@@ -32,9 +34,9 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
        this.view=null;
        retrofitApis=null;
     }
-    public void updateUserProfile(Uri newsImage, String userId, String firstName, String lastName, String dob,
+    public void updateUserProfile(Uri newsImage, String userName,String password,String firstName, String lastName, String dob,
                                   String countryId, String cityId, String zipcode, String streetName, String streetNumber,
-                                  String mobile, String gender, String lat, String lng, String token){
+                                  String mobile,String email, String gender, String lat, String lng, String token){
         File file = null;
         MultipartBody.Part body = null;
         if (newsImage != null) {
@@ -44,29 +46,33 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
         }
         if(view!=null)
             view.showProgressIndicator(true);
-        retrofitApis.updateProfile(body, getTextPart(userId),
+        retrofitApis.updateProfile(body,
+                getTextPart(userName),
+                getTextPart(password),
                 getTextPart(firstName), getTextPart(lastName),
                 getTextPart(dob), getTextPart(countryId),
                 getTextPart(cityId), getTextPart(zipcode),
                 getTextPart(streetName), getTextPart(streetNumber),
-                getTextPart(mobile), getTextPart(gender.toLowerCase()),
+                getTextPart(mobile),
+                getTextPart(email),
+                getTextPart(gender.toLowerCase()),
                 getTextPart(lat),
                 getTextPart(lng),
                 getTextPart("android"),
-                getTextPart(token)).enqueue(new Callback<ResponseBody>() {
+                getTextPart(token)).enqueue(new Callback<LoginSuccess>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<LoginSuccess> call, Response<LoginSuccess> response) {
                 if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
                     if(view!=null)
-                        view.onUpdateUserInfo(response.body());
+                        view.loginDetails(response.body());
                 }
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<LoginSuccess> call, Throwable t) {
                 if(view!=null)
                     view.showProgressIndicator(false);
             }
