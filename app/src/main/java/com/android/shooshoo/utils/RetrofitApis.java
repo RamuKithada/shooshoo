@@ -208,7 +208,7 @@ public interface RetrofitApis {
                                              @Field("brands") String brands,
                                              @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
    @FormUrlEncoded
-   @POST("home ")
+   @POST("home")
     Call<HomeResponse> getHomeData(@Field("userId") String userId);
    /* @GET("jackpots")
     Call<HomeResponse> getHomeJackpots();*/

@@ -638,16 +638,16 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(feedsListFragment==null)
             feedsListFragment=FeedsListFragment.newInstance("hai","sai");
-
-        if(feedsListFragment.isAdded())
-            ft.show(feedsListFragment);
-        else
-            ft.add(R.id.feeds_fragment_container,feedsListFragment);
-
-        if(feedsGridFragment!=null)
-            if(feedsGridFragment.isAdded()){
-                ft.hide(feedsGridFragment);
-            }
+      ft.replace(R.id.feeds_fragment_container,feedsListFragment);
+//        if(feedsListFragment.isAdded())
+//            ft.show(feedsListFragment);
+//        else
+//            ft.add(R.id.feeds_fragment_container,feedsListFragment);
+//
+//        if(feedsGridFragment!=null)
+//            if(feedsGridFragment.isAdded()){
+//                ft.hide(feedsGridFragment);
+//            }
         ft.commit();
 
     }
@@ -655,8 +655,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         if(feedsGridFragment==null)
             feedsGridFragment=FeedsGridFragment.newInstance("hai","sai");
+        ft.replace(R.id.feeds_fragment_container,feedsGridFragment);
 
-        if(feedsGridFragment.isAdded())
+    /*    if(feedsGridFragment.isAdded())
             ft.show(feedsGridFragment);
         else
             ft.add(R.id.feeds_fragment_container,feedsGridFragment);
@@ -664,7 +665,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         if(feedsListFragment!=null)
             if(feedsListFragment.isAdded()){
                 ft.hide(feedsListFragment);
-            }
+            }*/
         ft.commit();
 
     }

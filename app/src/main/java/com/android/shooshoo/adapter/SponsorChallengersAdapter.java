@@ -43,17 +43,23 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                catViewHolder.title.setText(challenge.getChallengeName());
                String uri=null;
                if(challenge.getSponsoredBy()!=null)
-                     uri=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
+               {
+                   uri=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
+
+               }
                  else
-                     uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+               {
+                   uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+
+               }
 
               Picasso.with(context)
                       .load(uri+challenge.getBannerImage())
                       .error(R.drawable.rose)
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);
-              catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
-              catViewHolder.subtitle.setText(challenge.getDescription());
+              catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
+              catViewHolder.subtitle.setText(challenge.getFirstName()==null?challenge.getLastName():challenge.getFirstName());
           }
 
     }

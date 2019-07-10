@@ -132,7 +132,7 @@ public class GridFragment extends Fragment implements FeedsView {
         list.setLayoutManager(layoutManager);
         adapter = new GridAdapter(getContext(), feeds);
         list.setAdapter(adapter);
-        snapHelper.attachToRecyclerView(list);
+//        snapHelper.attachToRecyclerView(list);
         feedsPresenter=new FeedsPresenter();
         feedsPresenter.attachView(this);
         list.addOnScrollListener(new PaginationScrollListener(layoutManager) {

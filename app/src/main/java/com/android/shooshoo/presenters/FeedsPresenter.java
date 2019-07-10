@@ -30,6 +30,7 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
 
     @Override
     public void detachView() {
+        if(view!=null)
         view.showProgressIndicator(false);
       this.retrofitApis=null;
       view=null;

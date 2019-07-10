@@ -234,8 +234,7 @@ Challenge challenge;
     switch (v.getId()){
         case R.id.camera:
            if(checkingPermissionAreEnabledOrNot()) {
-               Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-               startActivityForResult(intent, 1);
+                startCemara();
            }else requestMultiplePermission();
 
             break;
@@ -466,8 +465,7 @@ switch (requestCode){
                 if(checkingPermissionAreEnabledOrNot())
                 {
                     if(userSession.isLogin()) {
-                        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                        startActivityForResult(intent, 1);
+                        startCemara();
                     }
                     else
                         startActivity(new Intent(this,LoginActivity.class));
@@ -482,5 +480,11 @@ switch (requestCode){
 }
 
 
+    }
+
+    private void startCemara() {
+        Intent intent = new Intent(this,CameraActivity.class);
+//        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        startActivityForResult(intent, 1);
     }
 }

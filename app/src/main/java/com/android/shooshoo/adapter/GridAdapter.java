@@ -22,10 +22,12 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
     List<Feed> feeds;
     Context context;
     private boolean isLoadingAdded=false;
-
+int width,height;
     public GridAdapter(Context context,List<Feed> feeds) {
         this.context=context;
         this.feeds = feeds;
+        height=context.getResources().getDisplayMetrics().heightPixels;
+        width=context.getResources().getDisplayMetrics().widthPixels;
     }
 
     @NonNull
@@ -198,6 +200,9 @@ public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder
 
         public GridViewHolder(@NonNull View itemView) {
             super(itemView);
+//            itemView.getLayoutParams().width=width;
+            itemView.getLayoutParams().height=width*3/4;
+
             iv_image1=itemView.findViewById(R.id.iv_image1);
             iv_image2=itemView.findViewById(R.id.iv_image2);
             iv_image3=itemView.findViewById(R.id.iv_image3);

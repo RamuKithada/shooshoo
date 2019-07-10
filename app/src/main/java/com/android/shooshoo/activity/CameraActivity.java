@@ -3,6 +3,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.os.Environment;
@@ -14,19 +15,23 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.widget.SampleGLView;
 import com.daasuu.camerarecorder.CameraRecordListener;
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
+import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.IntBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,8 +42,13 @@ import javax.microedition.khronos.opengles.GL10;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
+import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
+
+public class CameraActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.layout_camera)
     RelativeLayout layout_camera;
@@ -51,6 +61,11 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     @BindView(R.id.layout_gallery)
     RelativeLayout layout_gallery;
 
+    @BindView(R.id.camera_icon)
+    CircleImageView camera_icon;
+    @BindView(R.id.image_view)
+    ImageView image_view;
+
     private SampleGLView sampleGLView;
     protected CameraRecorder cameraRecorder;
     private String filepath;
@@ -61,6 +76,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     protected int videoHeight = 720;
     private boolean toggleClick = false;
     private boolean isRecordingvideo=false;
+    private boolean isImageChallenge=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +114,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                              String imagePath = getImageFilePath();
                              saveAsPngImage(bitmap, imagePath);
                              exportPngToGallery(getApplicationContext(), imagePath);
+
                          }
                      });
                     }
@@ -117,9 +134,11 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                     filepath = getVideoFilePath();
                     cameraRecorder.start(filepath);
                     isRecordingvideo=true;
+                    camera_icon.setImageResource(R.drawable.exo_icon_pause);
                 } else {
                     cameraRecorder.stop();
                     isRecordingvideo=false;
+                    camera_icon.setImageResource(R.drawable.exo_icon_play);
                 }
                 break;
             case R.id.layout_flash:
@@ -129,9 +148,15 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.layout_gallery:
+              if(isImageChallenge)
+                  getGalleryImages();
+              else
+                  getGalleryVideos();
                 break;
         }
     }
+
+
 
     @Override
     protected void onResume() {
@@ -298,14 +323,25 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    public static void exportMp4ToGallery(Context context, String filePath) {
+    public  void exportMp4ToGallery(Context context,  String filePath) {
         final ContentValues values = new ContentValues(2);
         values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
         values.put(MediaStore.Video.Media.DATA, filePath);
         context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 values);
+        final Uri contentUri= Uri.parse("file://" + filePath);
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                Uri.parse("file://" + filePath)));
+               contentUri));
+        showProgressIndicator(true);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setVideo(contentUri);
+                showProgressIndicator(false);
+            }
+        },2000);
+
+
     }
 
     public static String getVideoFilePath() {
@@ -316,12 +352,13 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
     }
 
-    private static void exportPngToGallery(Context context, String filePath) {
+    private  void exportPngToGallery(Context context, String filePath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(filePath);
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
+        setImage(contentUri);
     }
 
     public static String getImageFilePath() {
@@ -330,5 +367,82 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
     public static File getAndroidImageFolder() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+    }
+
+    private void getGalleryImages() {
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    private void getGalleryVideos() {
+
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri imageUri = data.getData();
+            CropImage.activity(imageUri)
+                    .start(this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+
+                setImage(resultUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+
+        if (requestCode == RESULT_LOAD_VIDEO && resultCode == RESULT_OK && null != data) {
+            Uri videoUri = data.getData();
+               setVideo(videoUri);
+
+
+            /*CropImage.activity(imageUri).setAspectRatio(4,3)
+                    .start(this);*/
+        }
+    }
+
+    private void setImage(Uri resultUri) {
+        image_view.setImageURI(resultUri);
+        image_view.setVisibility(View.VISIBLE);
+    }
+    private void setVideo(Uri videoUri) {
+        try {
+
+           String challengeVideoUri= ApiUrls.getFilePath(this,videoUri);
+            Log.e("Video path",""+challengeVideoUri);
+            if(challengeVideoUri!=null) {
+                Bitmap bMap = ThumbnailUtils.createVideoThumbnail(challengeVideoUri, MediaStore.Video.Thumbnails.MICRO_KIND);
+                if(bMap!=null){
+                    image_view.setImageBitmap(bMap);
+                    image_view.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(image_view.getVisibility()==View.VISIBLE)
+        {
+            image_view.setVisibility(View.GONE);
+            image_view.setImageBitmap(null);
+            return;
+        }
+
+        super.onBackPressed();
     }
 }

@@ -129,7 +129,6 @@ public class ApiUrls {
     public  synchronized static String getDurationTimeStamp(String newsdatetime) {
        if(newsdatetime==null)
            return null;
-
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date=simpleDateFormat.parse(newsdatetime);
@@ -143,6 +142,7 @@ public class ApiUrls {
         }
 
     }
+
     public  synchronized static String getAge(String newsdatetime) {
        if(newsdatetime==null)
            return null;
@@ -161,5 +161,28 @@ public class ApiUrls {
         }
 
     }
+/*
+    public synchronized static String getRemaingTime(){
+        String dateStart = "01/14/2012 09:29:58";
+        String dateStop = "01/15/2012 10:31:48";
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+        Date d1 = null;
+        Date d2 = null;
+
+        try {
+            d1 = format.parse(dateStart);
+            d2 = format.parse(dateStop);
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+*/
+
 
 }

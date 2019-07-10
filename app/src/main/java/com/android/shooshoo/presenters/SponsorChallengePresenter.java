@@ -37,6 +37,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
             view.showProgressIndicator(false);
         this.view=null;
         this.retrofitApis=null;
+
     }
     Callback<CompanyResponse> companyResponseCallback=new Callback<CompanyResponse>() {
         @Override
