@@ -15,7 +15,7 @@ public class RecentPostsResponce {
     private Integer status;
     @SerializedName("recent")
     @Expose
-    private List<Post> post = null;
+    private List<Feed> post = null;
 
     public String getMessage() {
         return message;
@@ -33,11 +33,11 @@ public class RecentPostsResponce {
         this.status = status;
     }
 
-    public List<Post> getPost() {
+    public List<Feed> getPost() {
         return post;
     }
 
-    public void setPost(List<Post> post) {
+    public void setPost(List<Feed> post) {
         this.post = post;
     }
 

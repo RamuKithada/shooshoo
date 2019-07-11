@@ -183,28 +183,10 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
             @Override
             public void onPositionDiscontinuity(int reason) {
-                if(playerView.getPlayer()!=null)
-                {
-                    long c_pos=  playerView.getPlayer().getCurrentPosition();
-                    long duration=playerView.getPlayer().getDuration();
-                    if(duration>0&&c_pos>0){
-                        float percentage=(c_pos*100)/duration;
-                        Log.e("c : "+c_pos,"duration: "+duration+" "+"percentage :"+percentage);
-                        if(percentage>30){
-
-                            Log.e("VIews","Viewed");
-                        }
-                    }
-
-
-
-                }
-
             }
 
             @Override
             public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
-
             }
 
             @Override
@@ -332,11 +314,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 
     public void bind(Uri media) {
         this.mediaUri = media;
-      /*  if(handler!=null){
-        handler.removeCallbacks(runnable);
-        handler=null;
-        }*/
-
     }
 
     @Override
@@ -358,6 +335,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
 //        fadeOut();
         iv_pauseresume.setVisibility(View.GONE);
         progress_circular.setVisibility(View.GONE);
+        iv_thumb.setVisibility(View.GONE);
 
 
     }
@@ -382,35 +360,6 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public void setListener(VideoViewedListener listener) {
         this.listener = listener;
     }
-
-/*    public Handler handler=null;
-    Runnable runnable=new Runnable() {
-        @Override
-        public void run() {
-            calculateDuration();
-            if(handler!=null) {
-                handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 2000);
-            }
-        }
-    };
-    public  void calculateDuration(){
-        if(playerView==null)
-            return;
-        if(playerView.getPlayer()==null)
-            return;
-
-        long c_pos = playerView.getPlayer().getCurrentPosition();
-        long duration = playerView.getPlayer().getDuration();
-        if (duration > 0 && c_pos > 0) {
-            float percentage = (c_pos * 100) / duration;
-            Log.e("c : " + c_pos, "duration: " + duration + " " + "percentage :" + percentage);
-            if (percentage > 30) {
-                if(listener!=null)
-                    listener.viewed();
-            }
-        }
-    }*/
 
     public  interface VideoViewedListener{
         void viewed();

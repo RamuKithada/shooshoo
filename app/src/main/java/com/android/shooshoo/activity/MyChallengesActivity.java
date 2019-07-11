@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
 import com.android.shooshoo.adapter.RulesListAdapter;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -75,8 +77,8 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
      * {@link MyChallengesActivity} shows the  challenge and posts of the recent challenge
       *
      */
-    @BindView(R.id.rv_recnet_posts)
-    RecyclerView rv_recnet_posts;
+    @BindView(R.id.rv_recent_posts)
+    RecyclerView rv_recent_posts;
     @BindView(R.id.camera)
     LinearLayout camera;
     @BindView(R.id.rules)
@@ -92,6 +94,9 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.video_thumb)
     ImageView video_thumb;
+    @BindView(R.id.save_challenge)
+    ImageView save_challenge;
+
 
     @BindView(R.id.sub_title)
     TextView sub_title;
@@ -122,6 +127,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     RecentPostAdapter recentPostAdapter;
     ArrayList<String> ruleList=new ArrayList<>();
     UserSession userSession;
+    ArrayList<Feed> feeds=new ArrayList<Feed>();
 
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
@@ -163,9 +169,11 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
         connectionDetector=new ConnectionDetector(this);
         challengePresenter=new PostChallengePresenter();
         challengePresenter.attachView(this);
-        recentPostAdapter=new RecentPostAdapter(images);
-        rv_recnet_posts.setAdapter(new RecentPostAdapter(images));
+        recentPostAdapter=new RecentPostAdapter(this,feeds);
+        rv_recent_posts.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        rv_recent_posts.setAdapter(recentPostAdapter);
         userSession=new UserSession(this);
+        save_challenge.setOnClickListener(this);
         if(getIntent().hasExtra("challenge")){
             Challenge challenge=getIntent().getParcelableExtra("challenge");
             setChallenge(challenge);
@@ -184,6 +192,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
             videoUri ="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
             setUpVideo();
         }
+        video_layout.getLayoutParams().height=getResources().getDisplayMetrics().heightPixels*3/4;
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
@@ -251,6 +260,9 @@ Challenge challenge;
             showFragment.setArguments(args);
             showFragment.show(getSupportFragmentManager(),"rules");
 
+            break;
+        case R.id.save_challenge:
+            challengePresenter.saveChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getCompanies()==null?"jackpot":"sponsor");
             break;
     }
     }
@@ -428,10 +440,14 @@ Challenge challenge;
     public void onSuccessfulUpload(String msg) {
 
     }
-    List<Post> posts;
     @Override
-    public void onRecentPosts(List<Post> posts) {
+    public void onRecentPosts(List<Feed> feeds) {
+    /*    if(feeds!=null)
+        feeds.addAll(feeds);
+        recentPostAdapter.notifyDataSetChanged();*/
+    rv_recent_posts.setAdapter(new RecentPostAdapter(this,feeds));
 
+//        Log.e("count",""+recentPostAdapter.getItemCount() );
     }
 
     @Override

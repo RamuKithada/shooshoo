@@ -131,7 +131,8 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
                       if(response.isSuccessful()){
                       RecentPostsResponce recentPostsResponce=response.body();
                           if(view!=null)
-                      view.onRecentPosts(recentPostsResponce.getPost());
+                              if(recentPostsResponce.getStatus()==1)
+                               view.onRecentPosts(recentPostsResponce.getPost());
                       }
 
                   }
@@ -147,4 +148,27 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
           }
 
     }
+    public void saveChallenge(String userid,String challengeId,String type) {
+        if (view != null) {
+            view.showProgressIndicator(true);
+            retrofitApis.saveToMyChallenges(userid, challengeId, type).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful())
+                        if (view != null) {
+                            view.showProgressIndicator(false);
+                        }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (view != null) {
+                        view.showProgressIndicator(false);
+                    }
+                }
+            });
+
+        }
+    }
+
 }

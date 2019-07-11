@@ -321,6 +321,10 @@ public interface RetrofitApis {
     @POST("newposts")
     Call<NewPostsResponse>    getNewPosts(@Field("userId") String userId, @Field("limit") String limit, @Field("offset") String offset);
 
+    @FormUrlEncoded
+    @POST("savechallenge")
+    Call<ResponseBody> saveToMyChallenges(@Field("userId") String userId,@Field("challengeId") String challengeId,@Field("type") String type );
+
 
 
 }

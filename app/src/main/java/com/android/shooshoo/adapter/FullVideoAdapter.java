@@ -67,6 +67,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             holder.imageView.setVisibility(View.VISIBLE);
             Picasso.with(context).load(url+feed.getUrl()).noPlaceholder().into(holder.imageView);
             holder.bind(Uri.parse(url+feed.getUrl()));
+            holder.setListener(this);
             holder.card.setVisibility(View.GONE);
                if(feed.getViewstatus().equalsIgnoreCase("0"))
                {
@@ -77,9 +78,8 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         }else {
             holder.imageView.setVisibility(View.GONE);
             holder.card.setVisibility(View.VISIBLE);
-//            holder.setListener(this);
+            holder.setListener(this);
             holder.bind(Uri.parse(url+feed.getUrl()));
-            Log.e("video_url",url+feed.getUrl());
         }
 
         cutPos=position;
@@ -210,7 +210,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
     @Override
     public void viewed() {
-  if(cutPos>=0){
+        if(cutPos>=0){
          if(clickListener!=null)
              if(modelArrayList.get(cutPos).getViewstatus().equalsIgnoreCase("0"))
              {

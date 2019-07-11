@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +40,7 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
 
         if (challenges != null) {
             Challenge challenge = challenges.get(i);
-            catViewHolder.subtitle.setText(challenge.getChallengeName());
+            catViewHolder.title.setText(challenge.getChallengeName());
 
             Picasso.with(context)
                     .load(ApiUrls.JACKPOT_BANNER_IMAGE_URL + challenge.getBannerImage())
@@ -47,7 +48,24 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
                     .placeholder(R.drawable.rose)
                     .into(catViewHolder.imageView);
             catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
-            catViewHolder.subtitle.setText(challenge.getDescription());
+            StringBuilder builder=new StringBuilder();
+            if(challenge.getFirstName()!=null)
+                builder.append(challenge.getFirstName());
+            if(challenge.getLastName()!=null)
+                builder.append(' ').append(challenge.getLastName());
+
+            catViewHolder.description.setText(builder.toString());
+            if(challenge.getCompanies()!=null)
+                for (Company company:challenge.getCompanies()) {
+                    if(company.getCompanyName()!=null)
+                    {
+                        if(builder.length()>0)
+                            builder.append(',').append(company.getCompanyName());
+                        else
+                            builder.append(company.getCompanyName());
+                    }
+
+                }
         }
     }
 
@@ -58,12 +76,12 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
-        TextView subtitle,description,time,brand;
+        TextView title,description,time,brand;
 
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView =itemView.findViewById(R.id.image);
-            subtitle =itemView.findViewById(R.id.title);
+            title =itemView.findViewById(R.id.title);
             description=itemView.findViewById(R.id.sub_title);
             time=itemView.findViewById(R.id.time);
             brand=itemView.findViewById(R.id.brand);

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
 
@@ -42,14 +43,31 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                Challenge challenge=challenges.get(i);
                catViewHolder.title.setText(challenge.getChallengeName());
                String uri=null;
+              StringBuilder builder=new StringBuilder();
                if(challenge.getSponsoredBy()!=null)
                {
                    uri=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
+                   if(challenge.getUserFirst()!=null)
+                       builder.append(challenge.getUserFirst());
+                   if(challenge.getUserLast()!=null)
+                       builder.append(challenge.getUserFirst());
 
                }
                  else
                {
                    uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+                   if(challenge.getCompanies()!=null)
+                       for (Company company:challenge.getCompanies()) {
+                           if(company.getCompanyName()!=null)
+                           {
+                               if(builder.length()>0)
+                                 builder.append(',').append(company.getCompanyName());
+                               else
+                                   builder.append(company.getCompanyName());
+                           }
+
+                       }
+
 
                }
 
@@ -59,7 +77,8 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);
               catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
-              catViewHolder.subtitle.setText(challenge.getFirstName()==null?challenge.getLastName():challenge.getFirstName());
+              builder.append(" gap ");
+              catViewHolder.subtitle.setText(builder.toString());
           }
 
     }

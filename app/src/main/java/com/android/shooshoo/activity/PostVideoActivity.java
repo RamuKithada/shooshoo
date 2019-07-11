@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -30,9 +31,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostVideoActivity extends BaseActivity implements View.OnClickListener, PostChallengeView {
-
-
+public class PostVideoActivity extends BaseActivity implements View.OnClickListener,PostChallengeView {
 //    @BindView(R.id.challenge_video_layout)
 //    FrameLayout challenge_video_layout;
     @BindView(R.id.video_post_layout)
@@ -109,7 +108,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     }
 
     @Override
-    public void onRecentPosts(List<Post> posts) {
+    public void onRecentPosts(List<Feed> posts) {
 
     }
 

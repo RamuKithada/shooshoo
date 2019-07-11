@@ -1,17 +1,21 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
@@ -24,6 +28,7 @@ import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.ProfileView;
 import com.squareup.picasso.Picasso;
@@ -31,6 +36,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
@@ -42,7 +49,7 @@ import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
  * this is Profile screen to show settings options
  */
 
-public class ProfileFragment extends Fragment implements ProfileView,View.OnClickListener{
+public class ProfileFragment extends Fragment implements ProfileView,View.OnClickListener, ViewPager.OnPageChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -52,28 +59,53 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     private String mParam1;
     private String mParam2;
     //Here we declare layouts
+    @BindView(R.id.rv_list_brand)
     RecyclerView brandRecyclerView;
-//    RecyclerView feedsRecyclerView;
-    RecyclerView rv_list;
+
 
     private ImageListAdapter imageListAdapter;
     private ArrayList<ImagesModel> imagesModelArrayList=new ArrayList<>();
     ProfileBrandAdapter profileBrandAdapter;
-//    ProfileFeedsAdapter profileFeedsAdapter;
-    TextView profile_name,profile_quotes;
-    //,profile_status,profile_age;
-//    LinearLayout show_hide;
-//    ImageView toggleBtn;
-//    ImageView support_now;
-    CircleImageView iv_profile_pic;
+
     ConnectionDetector connectionDetector;
     ProfilePresenter presenter;
     BaseView baseView;
     List<Brand> brandList=new ArrayList<Brand>();
-    List<Post> posts=new ArrayList<Post>();
-//    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
-//    int[] brandimgs=new int[]{R.drawable.adidas,R.drawable.benz,R.drawable.dmart,R.drawable.flipkar,
-//            R.drawable.hm,R.drawable.nike,R.drawable.pepsi,R.drawable.puma,R.drawable.vokes_wagon,R.drawable.wallmart,R.drawable.puma};
+
+    @BindView(R.id.profile_name)
+    TextView profile_name;
+
+    @BindView(R.id.profile_description)
+    TextView profile_quotes;
+
+    @BindView(R.id.iv_profile_pic)
+    CircleImageView iv_profile_pic;
+
+    @BindView(R.id.new_tab)
+    LinearLayout new_tab;
+
+    @BindView(R.id.best_tab)
+    LinearLayout best_tab;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    UserSession userSession;
+
+
+
+    View.OnClickListener tabsOnClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.new_tab:
+                    viewPager.setCurrentItem(0,true);
+                    break;
+                case R.id.best_tab:
+                    viewPager.setCurrentItem(1,true);
+                    break;
+            }
+        }
+    };
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -116,30 +148,20 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        brandRecyclerView=view.findViewById(R.id.rv_list_brand);
-//        feedsRecyclerView=view.findViewById(R.id.rv_list_feed);
-//        show_hide=view.findViewById(R.id.show_hide_lay);
-//        toggleBtn=view.findViewById(R.id.toggle_btn);
-//        toggleBtn.setOnClickListener(this);
-//        support_now=view.findViewById(R.id.support_now);
-        iv_profile_pic=view.findViewById(R.id.iv_profile_pic);
-        profile_name=view.findViewById(R.id.profile_name);
-        profile_quotes=view.findViewById(R.id.profile_description);
-        rv_list=view.findViewById(R.id.rv_list_feed);
-
+        ButterKnife.bind(this,view);
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
-     //feedsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
-       /* profileFeedsAdapter=new ProfileFeedsAdapter(getContext(),posts);
-        brandRecyclerView.setAdapter(profileBrandAdapter);
-        feedsRecyclerView.setAdapter(profileFeedsAdapter);*/
         presenter=new ProfilePresenter();
-
         presenter.attachView(this);
+        FeedProfileGridFragmentPagerAdapter feedViewPagerAdapter=new FeedProfileGridFragmentPagerAdapter(getContext(),getChildFragmentManager(),new String[]{"new","popular"},userSession.getUserId());
+        viewPager.setAdapter(feedViewPagerAdapter);
+        viewPager.addOnPageChangeListener(this);
+        best_tab.setOnClickListener(tabsOnClickListener);
+        new_tab.setOnClickListener(tabsOnClickListener);
         if(connectionDetector.isConnectingToInternet()){
             presenter.loadProfile(mParam1);
         }
-        init();
+
 
     }
 
@@ -147,6 +169,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     public void onAttach(Context context) {
         super.onAttach(context);
         connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
         if(context instanceof BaseView){
             baseView= (BaseView) context;
         }else throw new RuntimeException(context.toString()+" Must implement "+BaseView.class.getSimpleName());
@@ -214,52 +237,33 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
 
     }
 
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
 
-
-
-
-    private void init()
-    {
-        rv_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-        imageListAdapter=new ImageListAdapter(getActivity(),imagesModelArrayList);
-        rv_list.setAdapter(imageListAdapter);
-        setDataToList();
     }
 
-    private void setDataToList()
-    {
-        imagesModelArrayList.clear();
-        for(int i=0;i<10;i++)
-        {
-            ImagesModel model=new ImagesModel();
-            ArrayList<ImagesSublistModel> sublistModels=new ArrayList<>();
-
-            ImagesSublistModel sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.beard_challange);
-            sublistModels.add(sublistModel);
-
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context1);
-            sublistModels.add(sublistModel);
-
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context2);
-            sublistModels.add(sublistModel);
-
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context3);
-            sublistModels.add(sublistModel);
-
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.food_context4);
-            sublistModels.add(sublistModel);
-            sublistModel=new ImagesSublistModel();
-            sublistModel.setImage(R.drawable.blackfly_challange);
-            sublistModels.add(sublistModel);
-
-            model.setSublistModels(sublistModels);
-            imagesModelArrayList.add(model);
+    @Override
+    public void onPageSelected(int i) {
+        switch (i){
+            case 0:
+                ((TextView) new_tab.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                new_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                ((TextView) best_tab.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+                best_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+                break;
+            case 1:
+                ((TextView) best_tab.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                best_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                ((TextView) new_tab.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+                new_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+                break;
         }
-        imageListAdapter.notifyDataSetChanged();
+
     }
+
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
+    }
+
 }

@@ -3,6 +3,8 @@ package com.android.shooshoo.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
+
 public class Feed {
 
     @SerializedName("postId")
@@ -186,5 +188,9 @@ public class Feed {
 
     public void setViewstatus(String viewstatus) {
         this.viewstatus = viewstatus;
+    }
+
+    public String baseUrl(){
+        return SPONSOR_FEEDS_VIDEO_URL+getType()+"/"+getChallengeId()+"/";
     }
 }

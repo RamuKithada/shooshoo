@@ -2,9 +2,7 @@ package com.android.shooshoo.activity;
 
 import android.graphics.Color;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,25 +14,13 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
-import com.android.shooshoo.adapter.FeedsGridListAdapter;
-import com.android.shooshoo.adapter.GridAdapter;
-import com.android.shooshoo.adapter.ImageListAdapter;
-import com.android.shooshoo.adapter.PostsGridListAdapter;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
-import com.android.shooshoo.fragment.ProfileFragment;
 import com.android.shooshoo.models.Brand;
-import com.android.shooshoo.models.Feed;
-import com.android.shooshoo.models.ImagesModel;
-import com.android.shooshoo.models.ImagesSublistModel;
-import com.android.shooshoo.models.Post;
-import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.PaginationScrollListener;
 import com.android.shooshoo.utils.UserSession;
-import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.ProfileView;
 import com.squareup.picasso.Picasso;
 
@@ -88,19 +74,12 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
    View.OnClickListener tabsOnClickListener=new View.OnClickListener() {
        @Override
        public void onClick(View v) {
-           ((TextView) new_tab.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-           new_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
-
-           ((TextView) best_tab.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
-            best_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
            switch (v.getId()){
                   case R.id.new_tab:
-                      ((TextView) new_tab.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                      new_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                      viewPager.setCurrentItem(0,true);
                    break;
                    case R.id.best_tab:
-                       ((TextView) best_tab.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
-                       best_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                       viewPager.setCurrentItem(1,true);
                    break;
            }
        }
@@ -132,11 +111,9 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
         presenter.attachView(this);
         best_tab.setOnClickListener(tabsOnClickListener);
         new_tab.setOnClickListener(tabsOnClickListener);
-        viewPager=findViewById(R.id.view_pager);
         FeedProfileGridFragmentPagerAdapter feedViewPagerAdapter=new FeedProfileGridFragmentPagerAdapter(this,getSupportFragmentManager(),new String[]{"new","popular"},userId);
         viewPager.setAdapter(feedViewPagerAdapter);
         viewPager.addOnPageChangeListener(this);
-
         if(connectionDetector.isConnectingToInternet()){
             presenter.loadProfile(userId);
         }

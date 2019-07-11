@@ -107,11 +107,9 @@
                 <RelativeLayout
                     android:id="@+id/video_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="380dp"
                     android:padding="5dp"
                     >
-
-
                     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
                         android:id="@+id/player"
                         android:layout_width="match_parent"
@@ -122,6 +120,7 @@
                         />
 
                     <ImageView
+                        android:id="@+id/save_challenge"
                         android:layout_width="40dp"
                         android:layout_height="30dp"
                         android:layout_alignParentRight="true"
@@ -373,12 +372,9 @@
           />
 
 <android.support.v7.widget.RecyclerView
-    android:id="@+id/rv_recnet_posts"
+    android:id="@+id/rv_recent_posts"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    android:orientation="horizontal"
-    tools:listitem="@layout/profile_feed_list_item"
     >
 
 
