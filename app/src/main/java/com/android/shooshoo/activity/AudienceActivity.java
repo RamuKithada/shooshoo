@@ -312,12 +312,14 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                             Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
 
                             if(cats.length()>0){
+                                if(!cats.toString().contains(brand.getCategoryId()))
                                 cats.append(',').append(brand.getCategoryId());
                             }else
                                 cats.append(brand.getCategoryId());
 
                             if(brands.length()>0){
-                                brands.append(',').append(brand.getBrandId());
+                                if(!brands.toString().contains(brand.getCategoryId()))
+                                    brands.append(',').append(brand.getBrandId());
                             }else
                                 brands.append(brand.getBrandId());
 

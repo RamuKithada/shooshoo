@@ -44,8 +44,21 @@ public class Feed {
     @Expose
     private String views;
 
-    private boolean like;
-    private boolean viewed;
+    @SerializedName("followers")
+    @Expose
+    private  String followers;
+
+    @SerializedName("likestatus")
+    @Expose
+    private  String likestatus;
+
+    @SerializedName("follwerstatus")
+    @Expose
+    private  String follwerstatus;
+
+    @SerializedName("viewstatus")
+    @Expose
+    private  String viewstatus;
 
     public String getId() {
         return id;
@@ -143,19 +156,35 @@ public class Feed {
         this.views = views;
     }
 
-    public boolean isLike() {
-        return like;
+    public String getFollowers() {
+        return followers;
     }
 
-    public void setLike(boolean like) {
-        this.like = like;
+    public void setFollowers(String followers) {
+        this.followers = followers;
     }
 
-    public boolean isViewed() {
-        return viewed;
+    public String getLikestatus() {
+        return likestatus;
     }
 
-    public void setViewed(boolean viewed) {
-        this.viewed = viewed;
+    public void setLikestatus(String likestatus) {
+        this.likestatus = likestatus;
+    }
+
+    public String getFollwerstatus() {
+        return follwerstatus;
+    }
+
+    public void setFollwerstatus(String follwerstatus) {
+        this.follwerstatus = follwerstatus;
+    }
+
+    public String getViewstatus() {
+        return viewstatus;
+    }
+
+    public void setViewstatus(String viewstatus) {
+        this.viewstatus = viewstatus;
     }
 }

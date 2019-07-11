@@ -81,31 +81,57 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
 
     }
 
- public void updateProfile( String userId, String firstName, String lastName,String countryId,
+ public void updateProfile( Uri newsImage, String userId, String firstName, String lastName,String countryId,
                             String cityId, String zipcode, String streetName, String streetNumber,
                             String mobile, String gender, String token){
 
+
+
+     Callback<ResponseBody> bodyCallback=new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+             if(view!=null)
+                 view.showProgressIndicator(false);
+             if(response.isSuccessful()){
+                 if(view!=null)
+                     view.onUpdateUserInfo(response.body());
+             }
+
+         }
+
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+             if(view!=null)
+                 view.showProgressIndicator(false);
+         }
+     };
+
+
         if(view!=null)
             view.showProgressIndicator(true);
-        retrofitApis.updateProfile(userId,firstName,lastName,countryId,cityId,zipcode,streetName,streetNumber,mobile,gender,token)
-                .enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(view!=null)
-                view.showProgressIndicator(false);
-                if(response.isSuccessful()){
-                    if(view!=null)
-                        view.onUpdateUserInfo(response.body());
-                }
+     File file = null;
+     MultipartBody.Part body = null;
+     if (newsImage != null) {
+         file = new File(newsImage.getPath());
+         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+         body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
+     }
+          if(newsImage==null)
+           retrofitApis.updateProfile(userId,firstName,lastName,countryId,cityId,zipcode,streetName,streetNumber,mobile,gender,token)
+                .enqueue(bodyCallback);
+          else {
+              retrofitApis.updateProfileImage(body,
+                      getTextPart(userId),
+                      getTextPart(firstName),
+                      getTextPart(lastName), getTextPart(countryId),
+                      getTextPart(cityId), getTextPart(zipcode),
+                      getTextPart(streetName), getTextPart(streetNumber),
+                      getTextPart(mobile),
+                      getTextPart(gender.toLowerCase()),
+                      getTextPart(token)).enqueue(bodyCallback);
 
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if(view!=null)
-                    view.showProgressIndicator(false);
-            }
-        });
+          }
 
 
     }

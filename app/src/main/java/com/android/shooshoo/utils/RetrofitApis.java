@@ -2,6 +2,7 @@ package com.android.shooshoo.utils;
 
 import android.content.Context;
 
+import com.android.shooshoo.models.BestPostsResponse;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.CategoryList;
@@ -18,6 +19,7 @@ import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.models.LoginSuccess;
+import com.android.shooshoo.models.NewPostsResponse;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RulesResponse;
@@ -128,6 +130,21 @@ public interface RetrofitApis {
                                      @Field("mobileNumber") String mobileNumber,
                                      @Field("gender") String gender,
                                      @Field("deviceToken") String deviceToken);
+
+    @Multipart
+    @POST("editprofile")
+    Call<ResponseBody> updateProfileImage(@Part MultipartBody.Part imageFile,
+                                     @Part("userId") RequestBody userId,
+                                     @Part("firstName") RequestBody firstName,
+                                     @Part("lastName") RequestBody lastName,
+                                     @Part("country") RequestBody country,
+                                     @Part("city") RequestBody city,
+                                     @Part("zipcode") RequestBody zipcode,
+                                     @Part("street") RequestBody street,
+                                     @Part("streetNum") RequestBody streetNum,
+                                     @Part("mobileNumber") RequestBody mobileNumber,
+                                     @Part("gender") RequestBody gender,
+                                     @Part("deviceToken") RequestBody deviceToken);
     @FormUrlEncoded
     @POST("bankDetails")
     Call<ResponseBody> saveBankDetails(@Field("userId") String userId,@Field("iban") String iban,@Field("bic_swift") String bic_swift,@Field("accountOwner") String accountOwner,
@@ -295,6 +312,14 @@ public interface RetrofitApis {
      @FormUrlEncoded
     @POST("userchallenges")
     Call<ChallengesResponse> getMyChallenges(@Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("bestposts")
+    Call<BestPostsResponse>   getBestPosts(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
+
+    @FormUrlEncoded
+    @POST("newposts")
+    Call<NewPostsResponse>    getNewPosts(@Field("userId") String userId, @Field("limit") String limit, @Field("offset") String offset);
 
 
 

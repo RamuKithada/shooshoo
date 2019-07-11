@@ -3,7 +3,9 @@ package com.android.shooshoo.fragment;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -29,6 +32,7 @@ import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.Post;
 import com.android.shooshoo.models.UserBankDetails;
@@ -45,6 +49,9 @@ import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.ProfileView;
 import com.android.shooshoo.views.UpdateUserInfoView;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +60,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
+
+import static android.app.Activity.RESULT_OK;
+import static com.android.shooshoo.activity.ProfileFillingFormActivity.RESULT_LOAD_IMAGE;
+import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
 /**
  *
@@ -105,6 +117,10 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     @BindView(R.id.edt_bank_name)
     EditText edt_bank_name;
 
+    @BindView(R.id.iv_profile_pic)
+    CircleImageView iv_profile_pic;
+
+
     @BindView(R.id.edt_country)
     EditText edt_country;
 
@@ -121,6 +137,9 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 //    TextView btn_save;
     @BindView(R.id.btn_more_categories)
     ImageView btn_more_categories;
+
+    @BindView(R.id.ll_upload_photo_layout)
+    LinearLayout ll_upload_photo_layout;
     ConnectionDetector connectionDetector;
 
     final String genders[]=new String[]{"Male","Female","Others"};
@@ -210,6 +229,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(connectionDetector.isConnectingToInternet())
             loadData();
+
+        ll_upload_photo_layout.setOnClickListener(this);
     }
 
     private void loadData() {
@@ -241,7 +262,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             case R.id.btn_save_bank:
                if(validateSave()){
                    showMessage("Saved successfully");
-                   updateUserInfoPresenter.updateProfile(userSession.getUserId(),edt_first_name.getText().toString(),
+                   updateUserInfoPresenter.updateProfile(newsImage,userSession.getUserId(),edt_first_name.getText().toString(),
                            edt_last_name.getText().toString(),country.getCountryId(),city.getCityId(),edt_zipcode.getText().toString()
                    ,edt_street_name.getText().toString(),edt_street_number.getText().toString(),edt_mobile_number.getText().toString()
                    ,gender,ApiUrls.DEVICE_TOKEN);
@@ -254,19 +275,18 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                                    Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
 
                                    if(cats.length()>0){
-                                       if(!cats.toString().contains(brand.getCategoryId()))
+
+                                       if(brand.getCategoryId()!=null&&!cats.toString().contains(brand.getCategoryId()))
                                        cats.append(',').append(brand.getCategoryId());
                                    }else
                                    {
-                                       if(!cats.toString().contains(brand.getCategoryId()))
                                        cats.append(brand.getCategoryId());
                                    }
 
                                    if(brands.length()>0){
-                                       if(!brands.toString().contains(brand.getBrandId()))
+                                       if(brand.getBrandId()!=null&&!brands.toString().contains(brand.getBrandId()))
                                         brands.append(',').append(brand.getBrandId());
                                    }else{
-                                       if(!brands.toString().contains(brand.getBrandId()))
                                           brands.append(brand.getBrandId());
                                    }
 
@@ -284,14 +304,28 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
                }
 
-                if(validateBank()){
+               /* if(validateBank()){
                     showMessage("Bank data Saved successfully");
                     updateUserInfoPresenter.saveBankDetails(userSession.getUserId(),edt_iban.getText().toString(),edt_bic_swift.getText().toString(),edt_acc_owner.getText().toString(),edt_bank_name.getText().toString());
-                }
+                }*/
                 break;
             case R.id.btn_more_categories:
                 if(categorySelectionAdapter!=null)
                 categorySelectionAdapter.add();
+                break;
+            case R.id.ll_upload_photo_layout:
+                        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropMenuCropButtonTitle("Choose a Picture")
+                .start(getActivity(),this);
+
+//                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"Select Picture"), RESULT_LOAD_IMAGE);
+
+//                startActivityForResult(i, RESULT_LOAD_IMAGE);
                 break;
         }
 
@@ -772,6 +806,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             edt_street_number.setText(userInfo.getStreetNum());
             edt_zipcode.setText(userInfo.getZipcode());
             edt_mobile_number.setText(userInfo.getMobileNumber());
+            Picasso.with(getContext()).load(PROFILE_IMAGE_URL+userInfo.getImage()).error(R.drawable.profile_1).into(iv_profile_pic);
             for(int index=0;index<genders.length;index++)
                    if(genders[index].equalsIgnoreCase(userInfo.getGender())){
                         gender_pos=index;
@@ -793,20 +828,17 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     }
 
-    @Override
-    public void onPosts(List<Post> posts) {
 
-    }
 
-    @Override
+  /*  @Override
     public void onBankDetails(UserBankDetails bankDetails) {
-        if(bankDetails!=null){
+      *//*  if(bankDetails!=null){
             edt_acc_owner.setText(bankDetails.getAccountOwner());
             edt_iban.setText(bankDetails.getIban());
             edt_bic_swift.setText(bankDetails.getBicSwift());
             edt_bank_name.setText(bankDetails.getBankName());
-        }
-    }
+        }*//*
+    }*/
 
     @Override
     public void onUpdateUserInfo(ResponseBody responseBody) {
@@ -817,4 +849,32 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     public void loginDetails(LoginSuccess loginSuccess) {
 
     }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri imageUri = data.getData();
+            setImage(imageUri);
+            CropImage.activity(imageUri).setAspectRatio(4,3)
+                    .start(getContext(), this);
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                setImage(resultUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+        }
+    }
+
+    Uri newsImage=null;
+    private void setImage(Uri picturePath) {
+        newsImage=picturePath;
+        Picasso.with(getContext()).load(picturePath).into(iv_profile_pic);
+    }
+
+
 }

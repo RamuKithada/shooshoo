@@ -35,6 +35,7 @@ import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -475,8 +476,14 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
      * getGalleryImages is used to call the gallery to select the images to select logo of the company .
      */
     private void getGalleryImages() {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropMenuCropButtonTitle("Choose a Picture")
+                .start(this);
+//
+//        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {

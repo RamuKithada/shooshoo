@@ -66,6 +66,15 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @BindView(R.id.image_view)
     ImageView image_view;
 
+    @BindView(R.id.ok_btn)
+    CircleImageView ok_btn;
+
+    @BindView(R.id.cancel_btn)
+    CircleImageView ok_cancel;
+
+    @BindView(R.id.result_layout)
+    RelativeLayout result_layout;
+
     private SampleGLView sampleGLView;
     protected CameraRecorder cameraRecorder;
     private String filepath;
@@ -77,6 +86,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     private boolean toggleClick = false;
     private boolean isRecordingvideo=false;
     private boolean isImageChallenge=false;
+
+    Intent setResult=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +109,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         layout_video.setOnClickListener(this);
         layout_flash.setOnClickListener(this);
         layout_gallery.setOnClickListener(this);
+        ok_btn.setOnClickListener(this);
+        ok_cancel.setOnClickListener(this);
     }
 
     @Override
@@ -153,6 +166,20 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
               else
                   getGalleryVideos();
                 break;
+            case R.id.ok_btn:
+                Intent intent = new Intent(this, PostVideoActivity.class);
+                intent.putExtra("post", getIntent().getStringExtra("post"));
+                intent.putExtra("mpost", videoFileUri);
+                intent.putExtra("challenge",getIntent().getParcelableExtra("challenge"));
+                startActivity(intent);
+                finish();
+
+                break;
+            case R.id.cancel_btn:
+                result_layout.setVisibility(View.GONE);
+                image_view.setImageBitmap(null);
+                break;
+
         }
     }
 
@@ -412,17 +439,20 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     private void setImage(Uri resultUri) {
         image_view.setImageURI(resultUri);
         image_view.setVisibility(View.VISIBLE);
+        result_layout.setVisibility(View.VISIBLE);
     }
+    Uri videoFileUri;
     private void setVideo(Uri videoUri) {
         try {
-
            String challengeVideoUri= ApiUrls.getFilePath(this,videoUri);
+            videoFileUri=videoUri;
             Log.e("Video path",""+challengeVideoUri);
             if(challengeVideoUri!=null) {
                 Bitmap bMap = ThumbnailUtils.createVideoThumbnail(challengeVideoUri, MediaStore.Video.Thumbnails.MICRO_KIND);
                 if(bMap!=null){
                     image_view.setImageBitmap(bMap);
                     image_view.setVisibility(View.VISIBLE);
+                    result_layout.setVisibility(View.VISIBLE);
                 }
 
 
@@ -440,6 +470,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         {
             image_view.setVisibility(View.GONE);
             image_view.setImageBitmap(null);
+            result_layout.setVisibility(View.GONE);
             return;
         }
 

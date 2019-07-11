@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.utils.ConnectionDetector;
-
 public class SplashActivity extends BaseActivity {
     ConnectionDetector detector;
 Runnable runnable=new Runnable() {

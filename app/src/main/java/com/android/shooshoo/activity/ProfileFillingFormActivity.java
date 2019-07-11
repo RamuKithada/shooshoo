@@ -49,6 +49,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -458,8 +459,12 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     }
     public final static int RESULT_LOAD_IMAGE = 100,PERMISSION_REQUEST_CODE=2;
     private void getGalleryImages() {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropMenuCropButtonTitle("Choose a Picture")
+                .start(this);
+      /*  Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);*/
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {

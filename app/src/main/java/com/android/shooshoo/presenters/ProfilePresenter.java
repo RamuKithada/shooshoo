@@ -1,5 +1,4 @@
 package com.android.shooshoo.presenters;
-
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.ProfileView;
@@ -39,8 +38,8 @@ public class ProfilePresenter implements BasePresenter<ProfileView>{
                     {
                         view.onProfileData(profileResponce.getUserInfo());
                         view.onBrands(profileResponce.getBrands());
-                        view.onPosts(profileResponce.getPosts());
-                        view.onBankDetails(profileResponce.getBankDetails());
+//                        view.onPosts(profileResponce.getPosts());
+//                        view.onBankDetails(profileResponce.getBankDetails());
                     }
                 }
 
@@ -58,4 +57,6 @@ public class ProfilePresenter implements BasePresenter<ProfileView>{
         });
 
     }
+
+
 }

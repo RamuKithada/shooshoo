@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedGridFragmentPagerAdapter;
-import com.android.shooshoo.adapter.FeedViewPagerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,7 +78,7 @@ public class FeedsGridFragment extends Fragment implements ViewPager.OnPageChang
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
           viewPager=view.findViewById(R.id.view_pager);
-        FeedGridFragmentPagerAdapter feedViewPagerAdapter=new FeedGridFragmentPagerAdapter(getActivity(),getChildFragmentManager(),new String[]{"New","Popular","Random"});
+        FeedGridFragmentPagerAdapter feedViewPagerAdapter=new FeedGridFragmentPagerAdapter(getActivity(),getChildFragmentManager(),new String[]{"new","popular","random"});
         viewPager.setAdapter(feedViewPagerAdapter);
         viewPager.addOnPageChangeListener(this);
     }

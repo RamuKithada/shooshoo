@@ -203,7 +203,7 @@
                         android:id="@+id/iv_like"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:src="@drawable/like"
+                        android:src="@drawable/like_normal"
                         android:layout_gravity="center"
                         android:padding="5dp"
                         />
@@ -310,7 +310,7 @@
             android:layout_toRightOf="@+id/profile_lay"
             android:layout_alignBottom="@+id/profile_lay"
             android:layout_marginLeft="15dp"
-            android:text="Hi Everybody, this my video H and M challenge.If you like it a like a comment "
+            android:text="Hi Everybody, this my video H and M challenge.If you liked it a liked a comment "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" />
         <LinearLayout

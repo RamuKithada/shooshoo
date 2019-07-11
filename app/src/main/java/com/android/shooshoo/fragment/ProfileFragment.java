@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.shooshoo.adapter.ImageListAdapter;
+import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
 import com.android.shooshoo.models.ImagesSublistModel;
 import com.android.shooshoo.R;
@@ -213,19 +214,9 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
 
     }
 
-    @Override
-    public void onPosts(List<Post> posts) {
-        if(posts!=null)
-        {
-            this.posts.addAll(posts);
-//            profileFeedsAdapter.notifyDataSetChanged();
-        }
-    }
 
-    @Override
-    public void onBankDetails(UserBankDetails bankDetails) {
 
-    }
+
 
     private void init()
     {

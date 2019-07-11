@@ -17,10 +17,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,7 +28,6 @@ import android.widget.Toast;
 
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.FeedsGridListAdapter;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
 import com.android.shooshoo.fragment.FeedsGridFragment;
@@ -40,12 +35,10 @@ import com.android.shooshoo.fragment.FeedsListFragment;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
-import com.android.shooshoo.models.ImagesSublistModel;
 import com.android.shooshoo.presenters.FeedsPresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
-import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.FeedsView;
 
 import java.io.File;
@@ -58,7 +51,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import im.ene.toro.widget.Container;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -799,13 +791,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,102);
                 else {
-
-
-
                     feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
-
-
-
                 }
                 break;
             case R.id.share_view:
@@ -817,6 +803,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,103);
                 else {
+
                     feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
                 }
                 break;
@@ -843,11 +830,16 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         if(status==1) {
             try {
                 int likes = Integer.parseInt(feed.getLikes());
-                if(feed.isLike())
+                if(feed.getLikestatus().equalsIgnoreCase("1"))
+                {
                     likes--;
+                    feed.setLikestatus("0");
+                }
                 else
+                {
                     likes++;
-                feed.setLike(!feed.isLike());
+                    feed.setLikestatus("1");
+                }
                 feed.setLikes(String.valueOf(likes));
             } catch (Exception e) {
                 e.printStackTrace();

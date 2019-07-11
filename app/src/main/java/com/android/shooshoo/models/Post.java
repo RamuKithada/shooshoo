@@ -1,6 +1,7 @@
 
 package com.android.shooshoo.models;
 
+import com.android.shooshoo.utils.ApiUrls;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -115,6 +116,16 @@ public class Post {
 
     public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
+    }
+
+    public  String getBaseUrl(){
+        String url;
+//        if(getType().equalsIgnoreCase("sponsor")){
+            url= "http://165.22.94.168/uploads/feeds/"+getType()+"/"+getChallengeId()+"/"+getThumbnail();
+//        }else if(getType().equalsIgnoreCase("jaclpot")){
+//
+//        }
+ return url;
     }
 
 }

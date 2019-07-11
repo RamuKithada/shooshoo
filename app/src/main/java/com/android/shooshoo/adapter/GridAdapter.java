@@ -33,7 +33,7 @@ int width,height;
     @NonNull
     @Override
     public GridAdapter.GridViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view=LayoutInflater.from(context).inflate(R.layout.grid_item,viewGroup,false);
+        View view=LayoutInflater.from(context).inflate(R.layout.image_model,viewGroup,false);
         return new GridViewHolder(view);
     }
 
@@ -201,7 +201,7 @@ int width,height;
         public GridViewHolder(@NonNull View itemView) {
             super(itemView);
 //            itemView.getLayoutParams().width=width;
-            itemView.getLayoutParams().height=width*3/4;
+//            itemView.getLayoutParams().height=height*3/4;
 
             iv_image1=itemView.findViewById(R.id.iv_image1);
             iv_image2=itemView.findViewById(R.id.iv_image2);

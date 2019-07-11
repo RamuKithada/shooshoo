@@ -358,6 +358,7 @@
             android:padding="5dp"
             app:textAllCaps="true"
             android:textColor="#85868A"
+            android:visibility="gone"
             />
 
 
@@ -366,6 +367,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         >
 
         <android.support.v7.widget.AppCompatEditText
@@ -406,6 +408,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
             >
             <android.support.v7.widget.AppCompatEditText
                 android:id="@+id/edt_acc_owner"

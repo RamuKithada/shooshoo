@@ -98,16 +98,40 @@
 
 </LinearLayout>
     <RelativeLayout
+        android:id="@+id/result_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/portrait"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:background="@color/bg_color"
             />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/cancel_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_close_white_24dp"
+            android:layout_margin="25dp"
+            app:civ_border_width="3dp"
+            app:civ_border_color="@color/pink_drak"
+            />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ok_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="25dp"
+            app:civ_border_width="3dp"
+            android:src="@drawable/ic_tick_white_24dp"
+            app:civ_border_color="@color/pink_drak"
+            android:layout_alignParentRight="true"
+            />
+
+
 
 
     </RelativeLayout>

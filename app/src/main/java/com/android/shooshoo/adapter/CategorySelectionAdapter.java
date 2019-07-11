@@ -36,7 +36,6 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
         for (Category category:categoryList) {
             catNames.add(category.getCategoryName());
         }
-
         categoryModels.add(new CategoryModel(0,0));
         categoryModels.add(new CategoryModel(0,0));
         categoryModels.add(new CategoryModel(0,0));

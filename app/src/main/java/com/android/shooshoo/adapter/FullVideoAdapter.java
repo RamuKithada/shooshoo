@@ -1,36 +1,26 @@
 package com.android.shooshoo.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.icu.util.Calendar;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.FeedCommentsActivity;
-import com.android.shooshoo.activity.LoginActivity;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.SimplePlayerViewHolder;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import im.ene.toro.CacheManager;
 
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
@@ -78,10 +68,10 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             Picasso.with(context).load(url+feed.getUrl()).noPlaceholder().into(holder.imageView);
             holder.bind(Uri.parse(url+feed.getUrl()));
             holder.card.setVisibility(View.GONE);
-               if(!feed.isViewed())
+               if(feed.getViewstatus().equalsIgnoreCase("0"))
                {
                 viewed();
-                feed.setViewed(true);
+                feed.setViewstatus("1");
                }
             Log.e("image_url",url+feed.getUrl());
         }else {
@@ -99,7 +89,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         if(ApiUrls.validateString(feed.getUserName()))
             holder.tv_name.setText(feed.getUserName());
       holder.tv_time.setText(ApiUrls.getDurationTimeStamp(feed.getCreatedOn()));
-      if(feed.isLike())
+      if(feed.getLikestatus().equalsIgnoreCase("1"))
             holder.iv_like.setImageResource(R.drawable.like_active);
       else
             holder.iv_like.setImageResource(R.drawable.like_normal);
@@ -115,8 +105,33 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         holder.likes_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(clickListener!=null)
-                    clickListener.onClick(v,feed);
+
+                    if(clickListener!=null)
+                        clickListener.onClick(v,feed);
+                        if(feed.getLikestatus().equalsIgnoreCase("0"))
+                        {
+                            holder.iv_like.setImageResource(R.drawable.like_active);
+                            feed.setLikestatus("1");
+                        }
+                        else
+                        {
+                            holder.iv_like.setImageResource(R.drawable.like_normal);
+                            feed.setLikestatus("0");
+                        }
+
+                    try {
+                        int likes = Integer.parseInt(feed.getLikes());
+                        if(feed.getLikestatus().equalsIgnoreCase("0"))
+                            likes++;
+                        else
+                            likes--;
+
+                        feed.setLikes(String.valueOf(likes));
+                        holder.tv_like_count.setText(feed.getLikes());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
             }
         });
         holder.share_view.setOnClickListener(new View.OnClickListener() {
@@ -137,15 +152,16 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         holder.plus_mark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(clickListener!=null)
-                     clickListener.onClick(v,feed);
+                if(feed.getFollwerstatus().equalsIgnoreCase("0"))
+                    if(clickListener!=null)
+                         clickListener.onClick(v,feed);
             }
         });
         holder.profile_lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(clickListener!=null)
-                    clickListener.onClick(v,feed);
+                     clickListener.onClick(v,feed);
             }
         });
     }
@@ -196,7 +212,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     public void viewed() {
   if(cutPos>=0){
          if(clickListener!=null)
-             if(!modelArrayList.get(cutPos).isViewed())
+             if(modelArrayList.get(cutPos).getViewstatus().equalsIgnoreCase("0"))
              {
                  clickListener.onView(modelArrayList.get(cutPos));
              }

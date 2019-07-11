@@ -1,6 +1,7 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -264,5 +265,10 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
         }
         mDrawerLayout.closeDrawer(GravityCompat.END);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

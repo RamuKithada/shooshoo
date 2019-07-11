@@ -143,4 +143,6 @@
     <string name="people">People</string>
     <string name="invite_friends">Invite Friends</string>
     <string name="cfollower_line">Get Notification if people you follow create new challenge</string>
+    <string name="book">Book</string>
+    <string name="follow">Follow</string>
 </resources>
