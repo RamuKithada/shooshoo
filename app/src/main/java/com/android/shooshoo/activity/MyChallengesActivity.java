@@ -1,39 +1,29 @@
 package com.android.shooshoo.activity;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.ProfileFeedsAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
-import com.android.shooshoo.adapter.RulesListAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
-import com.android.shooshoo.models.Post;
 import com.android.shooshoo.presenters.PostChallengePresenter;
-import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.RuleListFragmentDialog;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.PostChallengeView;
@@ -59,13 +49,10 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -156,6 +143,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
 
         }
     };
+    private boolean both=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,6 +217,11 @@ Challenge challenge;
         else if(getIntent().getIntExtra("type",0)==2)
             videoUri =JACKPOT_VIDEO_URL+challenge.getChallengeVideo();
         setUpVideo();
+        if(challenge.getVideoEntries().equalsIgnoreCase("yes")&&challenge.getPhotoEntries().equalsIgnoreCase("yes"))
+            both=true;
+
+
+
         if(connectionDetector.isConnectingToInternet())
         {
             challengePresenter.getRecentPosts(challenge.getChallengeId(),"sponsor");
@@ -243,13 +236,18 @@ Challenge challenge;
     switch (v.getId()){
         case R.id.camera:
            if(checkingPermissionAreEnabledOrNot()) {
-                startCamera();
+                if(!both)
+                {
+                    startCamera(false);
+                }else {
+                    showAlert();
+                }
            }else requestMultiplePermission();
 
             break;
 
         case R.id.brand:
-            Intent intentBrand=new Intent(this,BrandProfileActivity.class);
+            Intent intentBrand=new Intent(this,CompanyDetailsActivity.class);
             intentBrand.putExtra("companyId",challenge.getBrands());
             startActivity(intentBrand);
             break;
@@ -265,6 +263,28 @@ Challenge challenge;
             challengePresenter.saveChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getCompanies()==null?"jackpot":"sponsor");
             break;
     }
+    }
+
+    private void showAlert() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this,R.style.datepicker);
+        builder.setTitle("Challenge Post");
+        builder.setMessage("This Challenge have both video and image challenges.Choose one of them");
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setPositiveButton("Image", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startCamera(true);
+            }
+        });
+        builder.setNegativeButton("Video", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startCamera(false);
+
+            }
+        });
+        builder.create().show();
+
     }
 
     /**
@@ -481,7 +501,10 @@ switch (requestCode){
                 if(checkingPermissionAreEnabledOrNot())
                 {
                     if(userSession.isLogin()) {
-                        startCamera();
+                        if(!both)
+                            startCamera(false);
+                        else
+                            showAlert();
                     }
                     else
                         startActivity(new Intent(this,LoginActivity.class));
@@ -498,11 +521,14 @@ switch (requestCode){
 
     }
 
-    private void startCamera() {
+    private void startCamera(boolean image) {
+
+
         Intent intent = new Intent(this,CameraActivity.class);
 //        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         intent.putExtra("post", videoUri);
         intent.putExtra("challenge", challenge);
+        intent.putExtra("image",image);
         startActivity(intent);
     }
 }

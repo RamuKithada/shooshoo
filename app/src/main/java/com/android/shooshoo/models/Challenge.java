@@ -15,6 +15,9 @@ public class Challenge implements Parcelable {
     @SerializedName("challengeName")
     @Expose
     private String challengeName;
+    @SerializedName("type")
+    @Expose
+    private String type;
     @SerializedName("startDate")
     @Expose
     private String startDate;
@@ -175,6 +178,7 @@ public class Challenge implements Parcelable {
     protected Challenge(Parcel in) {
         challengeId = in.readString();
         challengeName = in.readString();
+        type = in.readString();
         startDate = in.readString();
         startTime = in.readString();
         endDate = in.readString();
@@ -253,6 +257,14 @@ public class Challenge implements Parcelable {
         this.challengeName = challengeName;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getStartDate() {
         return startDate;
     }
@@ -294,6 +306,9 @@ public class Challenge implements Parcelable {
     }
 
     public String getPhotoEntries() {
+        if(photoEntries==null)
+            return " ";
+
         return photoEntries;
     }
 
@@ -302,6 +317,9 @@ public class Challenge implements Parcelable {
     }
 
     public String getVideoEntries() {
+        if(videoEntries==null)
+            return "";
+
         return videoEntries;
     }
 
@@ -654,6 +672,7 @@ public class Challenge implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(challengeId);
         dest.writeString(challengeName);
+        dest.writeString(type);
         dest.writeString(startDate);
         dest.writeString(startTime);
         dest.writeString(endDate);

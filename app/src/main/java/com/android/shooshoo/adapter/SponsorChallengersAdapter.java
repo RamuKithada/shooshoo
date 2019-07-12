@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,34 +40,38 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
+
           if(challenges!=null){
+              Log.e("challenge type",""+challenges.get(i).getType());
                Challenge challenge=challenges.get(i);
                catViewHolder.title.setText(challenge.getChallengeName());
                String uri=null;
               StringBuilder builder=new StringBuilder();
-               if(challenge.getSponsoredBy()!=null)
+               if(challenge.getType().equalsIgnoreCase("sponsor"))
                {
                    uri=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
-                   if(challenge.getUserFirst()!=null)
-                       builder.append(challenge.getUserFirst());
-                   if(challenge.getUserLast()!=null)
-                       builder.append(challenge.getUserFirst());
-
-               }
-                 else
-               {
-                   uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
                    if(challenge.getCompanies()!=null)
                        for (Company company:challenge.getCompanies()) {
                            if(company.getCompanyName()!=null)
                            {
                                if(builder.length()>0)
-                                 builder.append(',').append(company.getCompanyName());
+                                   builder.append(',').append(company.getCompanyName());
                                else
                                    builder.append(company.getCompanyName());
                            }
 
                        }
+
+               }
+                 else if(challenge.getType().equalsIgnoreCase("jackpot"))
+               {
+                   uri=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+
+                   if(challenge.getFirstName()!=null)
+                       builder.append(challenge.getFirstName());
+                   if(challenge.getLastName()!=null)
+                       builder.append(' ').append(challenge.getLastName());
+
 
 
                }
@@ -77,7 +82,6 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                       .placeholder(R.drawable.rose)
                       .into(catViewHolder.imageView);
               catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
-              builder.append(" gap ");
               catViewHolder.subtitle.setText(builder.toString());
           }
 

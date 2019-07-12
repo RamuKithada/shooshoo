@@ -201,7 +201,7 @@ int width,height;
         public GridViewHolder(@NonNull View itemView) {
             super(itemView);
 //            itemView.getLayoutParams().width=width;
-//            itemView.getLayoutParams().height=height*3/4;
+            itemView.getLayoutParams().height=height;
 
             iv_image1=itemView.findViewById(R.id.iv_image1);
             iv_image2=itemView.findViewById(R.id.iv_image2);

@@ -49,6 +49,9 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     //    ProfileFeedsAdapter profileFeedsAdapter;
     @BindView(R.id.profile_name)
     TextView profile_name;
+    @BindView(R.id.followers_count)
+    TextView followers_count;
+
 
     @BindView(R.id.profile_description)
     TextView profile_quotes;
@@ -107,6 +110,7 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
         layoutParams.setBehavior(new BottomNavigationBehavior());
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
+        brandRecyclerView.setAdapter(profileBrandAdapter);
         presenter=new ProfilePresenter();
         presenter.attachView(this);
         best_tab.setOnClickListener(tabsOnClickListener);
@@ -142,7 +146,8 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
         if(userInfo!=null) {
             this.userInfo=userInfo;
             profile_name.setText(userInfo.getUserName());
-            profile_quotes.setText(userInfo.getDob());//ApiUrls.getAge(userInfo.getDob()));
+            profile_quotes.setText(userInfo.getDescription());
+            followers_count.setText(userInfo.getFollowers());
             Picasso.with(getContext()).load(PROFILE_IMAGE_URL+userInfo.getImage()).error(R.drawable.profile_1).into(iv_profile_pic);
         }
     }

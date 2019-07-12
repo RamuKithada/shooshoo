@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.opengl.GLException;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -16,9 +17,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.widget.SampleGLView;
 import com.daasuu.camerarecorder.CameraRecordListener;
@@ -60,7 +63,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     RelativeLayout layout_flash;
     @BindView(R.id.layout_gallery)
     RelativeLayout layout_gallery;
-
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
     @BindView(R.id.camera_icon)
     CircleImageView camera_icon;
     @BindView(R.id.image_view)
@@ -86,15 +90,19 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     private boolean toggleClick = false;
     private boolean isRecordingvideo=false;
     private boolean isImageChallenge=false;
+    private boolean wantToSave=false;
 
-    Intent setResult=null;
 
+Challenge mChallenge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
         init();
+       mChallenge=getIntent().getParcelableExtra("challenge");
+       isImageChallenge=getIntent().getBooleanExtra("image",false);
+
     }
 
     private void init()
@@ -118,20 +126,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         switch (view.getId())
         {
             case R.id.layout_camera:
-                captureBitmap(new BitmapReadyCallbacks() {
-                    @Override
-                    public void onBitmapReady(final Bitmap bitmap) {
-                     new Handler().post(new Runnable() {
-                         @Override
-                         public void run() {
-                             String imagePath = getImageFilePath();
-                             saveAsPngImage(bitmap, imagePath);
-                             exportPngToGallery(getApplicationContext(), imagePath);
+                tackPicture();
 
-                         }
-                     });
-                    }
-                });
                 break;
             case R.id.layout_frontback:
                 releaseCamera();
@@ -143,15 +139,41 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                 toggleClick = true;
                 break;
             case R.id.layout_video:
+                if(!isImageChallenge){
                 if (!isRecordingvideo) {
                     filepath = getVideoFilePath();
                     cameraRecorder.start(filepath);
                     isRecordingvideo=true;
-                    camera_icon.setImageResource(R.drawable.exo_icon_pause);
+                    camera_icon.setImageResource(R.drawable.ic_stop_black_24dp);
+                    if(mChallenge!=null)
+                    {
+                      String length=mChallenge.getMaxLength();
+                      if(length!=null)
+                      if(length.equalsIgnoreCase("1"))
+                          startTimer(60000);
+                      else if(length.equalsIgnoreCase("50"))
+                          startTimer(50000);
+                      else if(length.equalsIgnoreCase("40"))
+                          startTimer(40000);
+                      else if(length.equalsIgnoreCase("30"))
+                          startTimer(30000);
+                      else if(length.equalsIgnoreCase("20"))
+                          startTimer(20000);
+
+                    }
                 } else {
                     cameraRecorder.stop();
+                    if(isRecordingvideo)
+                    {
+                        mCountDownTimer.cancel();
+                        mProgressBar.setProgress(0);
+                    }
+
                     isRecordingvideo=false;
-                    camera_icon.setImageResource(R.drawable.exo_icon_play);
+                    camera_icon.setImageResource(R.drawable.ic_camera_black_24dp);
+
+                }}else {
+                    tackPicture();
                 }
                 break;
             case R.id.layout_flash:
@@ -169,6 +191,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             case R.id.ok_btn:
                 Intent intent = new Intent(this, PostVideoActivity.class);
                 intent.putExtra("post", getIntent().getStringExtra("post"));
+                if(isImageChallenge)
+                intent.putExtra("mpost", imageUri);
+                else
                 intent.putExtra("mpost", videoFileUri);
                 intent.putExtra("challenge",getIntent().getParcelableExtra("challenge"));
                 startActivity(intent);
@@ -176,6 +201,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
                 break;
             case R.id.cancel_btn:
+                mProgressBar.setProgress(0);
                 result_layout.setVisibility(View.GONE);
                 image_view.setImageBitmap(null);
                 break;
@@ -183,6 +209,22 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+    private void tackPicture() {
+        captureBitmap(new BitmapReadyCallbacks() {
+            @Override
+            public void onBitmapReady(final Bitmap bitmap) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String imagePath = getImageFilePath();
+                        saveAsPngImage(bitmap, imagePath);
+                        exportPngToGallery(getApplicationContext(), imagePath);
+
+                    }
+                });
+            }
+        });
+    }
 
 
     @Override
@@ -252,7 +294,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
                     @Override
                     public void onRecordComplete() {
-                        exportMp4ToGallery(getApplicationContext(), filepath);
+                        if(wantToSave)
+                             exportMp4ToGallery(getApplicationContext(), filepath);
                     }
 
                     @Override
@@ -351,6 +394,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
 
     public  void exportMp4ToGallery(Context context,  String filePath) {
+        wantToSave=false;
         final ContentValues values = new ContentValues(2);
         values.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
         values.put(MediaStore.Video.Media.DATA, filePath);
@@ -359,6 +403,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         final Uri contentUri= Uri.parse("file://" + filePath);
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
                contentUri));
+
         showProgressIndicator(true);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -437,11 +482,12 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void setImage(Uri resultUri) {
+        this.imageUri=resultUri;
         image_view.setImageURI(resultUri);
         image_view.setVisibility(View.VISIBLE);
         result_layout.setVisibility(View.VISIBLE);
     }
-    Uri videoFileUri;
+    Uri videoFileUri,imageUri;
     private void setVideo(Uri videoUri) {
         try {
            String challengeVideoUri= ApiUrls.getFilePath(this,videoUri);
@@ -473,7 +519,53 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             result_layout.setVisibility(View.GONE);
             return;
         }
+        if(isRecordingvideo){
+            cameraRecorder.stop();
+            isRecordingvideo=false;
+            camera_icon.setImageResource(R.drawable.ic_camera_black_24dp);
+
+            if(wantToSave){
+                mProgressBar.setProgress(0);
+                if(mCountDownTimer!=null)
+                    mCountDownTimer.cancel();
+                return;
+            }
+        }
 
         super.onBackPressed();
     }
+    // TODO Here doing timer task to stop video recording
+    CountDownTimer mCountDownTimer;
+    int i=0;
+public  void startTimer(final long duration){
+    Log.e("Log_tag", "Tick of Progress"+ i+ duration);
+    i=0;
+    final int interval=1000;
+    wantToSave=true;
+    mProgressBar.setProgress(i);
+    mCountDownTimer=new CountDownTimer(duration,interval) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            i++;
+            long  completedTime=i*interval;
+            int percentage=(int)(completedTime*100/duration);
+            Log.v("Log_tag", "percentage"+percentage);
+            mProgressBar.setProgress(percentage);
+        }
+
+        @Override
+        public void onFinish() {
+            //Do what you want
+            i++;
+            mProgressBar.setProgress(100);
+            if(isRecordingvideo){
+                cameraRecorder.stop();
+                isRecordingvideo=false;
+                camera_icon.setImageResource(R.drawable.ic_stop_black_24dp);
+            }
+        }
+    };
+    mCountDownTimer.start();
+}
+
 }

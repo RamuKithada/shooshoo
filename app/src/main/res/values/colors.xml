@@ -11,4 +11,5 @@
     <color name="color_text">#FFFFFF</color>
     <color name="white_text">#FFFFFF</color>
     <color name="bg_color">#242529</color>
+    <color name="blue_color">#80C4FF</color>
 </resources>

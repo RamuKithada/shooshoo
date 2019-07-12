@@ -22,10 +22,6 @@ public class ProfileResponse {
     @SerializedName("brands")
     @Expose
     private List<Brand> brands = null;
-    @SerializedName("posts")
-    @Expose
-    private List<Post> posts = null;
-
     public String getMessage() {
         return message;
     }
@@ -66,12 +62,6 @@ public class ProfileResponse {
         this.brands = brands;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
-    }
 
 }

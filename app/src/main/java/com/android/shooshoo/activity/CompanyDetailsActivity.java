@@ -1,37 +1,32 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.BrandProfilePagerAdapter;
-import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
+import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.presenters.BrandDetailsPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.BrandProfileView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/***
- * {@link BrandProfileActivity} is used to show the challenges of the related Brand
- *
- */
-public class BrandProfileActivity extends BaseActivity implements BrandProfileView, View.OnClickListener {
-
-
+public class CompanyDetailsActivity extends BaseActivity implements BrandProfileView {
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
     @BindView(R.id.navigation_challengers)
@@ -43,13 +38,33 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
 
-    String comapnyId=null;
+    @BindView(R.id.rv_challenge_list)
+    RecyclerView rv_challenge_list;
 
+    @BindView(R.id.save_brand)
+    ImageView save_brand;
+
+    @BindView(R.id.sub_title)
+    TextView sub_title;
+    @BindView(R.id.company_name)
+    TextView company_name;
+
+    @BindView(R.id.tv_link)
+    TextView tv_link;
+    //  sponsor challengeModels is used to hold jackpot challenges list
+    ArrayList<Challenge> sponsorChallenges=new ArrayList<Challenge>();
+
+    //Sponsor challenge List adapter
+    SponsorChallengersAdapter sponsorChallengersAdapter;
+
+    ConnectionDetector connectionDetector;
+    BrandDetailsPresenter brandDetailsPresenter;
+    String comapnyId;
 
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(BrandProfileActivity.this,HomeActivity.class);
+            Intent intent=new Intent(CompanyDetailsActivity.this,HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
                 case R.id.navigation_home:
@@ -73,73 +88,43 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
 
         }
     };
-
-    ConnectionDetector connectionDetector;
-    BrandDetailsPresenter brandDetailsPresenter;
-    BrandProfilePagerAdapter brandProfilePagerAdapter;
-    TabLayout tabLayout=null;
-    ViewPager viewPager=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brand_profile);
+        setContentView(R.layout.activity_company_details);
         ButterKnife.bind(this);
         connectionDetector=new ConnectionDetector(this);
         brandDetailsPresenter=new BrandDetailsPresenter();
         brandDetailsPresenter.attachView(this);
-          tabLayout=findViewById(R.id.tab_layout);
-          viewPager=findViewById(R.id.view_pager);
-          comapnyId=getIntent().getStringExtra("companyId");
-        TextView tv_categories=findViewById(R.id.tv_categories);
-        TextView tv_follow=findViewById(R.id.tv_follow);
-        tv_categories.setOnClickListener(this);
-        tv_follow.setOnClickListener(this);
-        ImageView back=findViewById(R.id.iv_back);
-        back.setOnClickListener(this);
+        comapnyId=getIntent().getStringExtra("companyId");
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
         navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
         navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
-
+        sponsorChallengersAdapter=new SponsorChallengersAdapter(this,sponsorChallenges);
+        rv_challenge_list.setLayoutManager(new GridLayoutManager(this, 2));
+        rv_challenge_list.setAdapter(sponsorChallengersAdapter);
         if(connectionDetector.isConnectingToInternet()){
             brandDetailsPresenter.getBrandDetails(comapnyId);
-         }
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.tv_categories:
-//                Intent intent=new Intent(this, CreateSponsorChallengeActivity.class);
-//                intent.putExtra("challenge_type",1);
-//                startActivity(intent);
-                break;
-            case R.id.tv_follow:
-
-                break;
-            case R.id.iv_back:
-                    finish();
-                break;
-
         }
     }
 
     @Override
     public void onBrandDetails(CompanyDetails details) {
-        tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#FFFFFF"));
-        tabLayout.setTabTextColors(Color.parseColor("#CCCCCC"), Color.parseColor("#ffffff"));
-        brandProfilePagerAdapter=new BrandProfilePagerAdapter(this,getSupportFragmentManager(),new String[]{"Recent ","Finished ","Profile"},details);
-        viewPager.setAdapter(brandProfilePagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
-}
+          if(details.getStatus()==1){
+              if(details.getChallenges()!=null)
+              {
+                  sponsorChallenges.addAll(details.getChallenges());
+                  sponsorChallengersAdapter.notifyDataSetChanged();
+              }
 
-
-
+          }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
         brandDetailsPresenter.detachView();
     }
+
 }

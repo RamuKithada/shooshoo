@@ -96,6 +96,10 @@ public class UserInfo{
     @Expose
     private String status;
 
+    @SerializedName("description")
+    @Expose
+    private String description;
+
     public String getUserId() {
         return userId;
     }
@@ -318,5 +322,13 @@ public class UserInfo{
 
     public void setFollowers(String followers) {
         this.followers = followers;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

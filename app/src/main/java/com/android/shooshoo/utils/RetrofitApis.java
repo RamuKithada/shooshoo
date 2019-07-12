@@ -130,6 +130,10 @@ public interface RetrofitApis {
                                      @Field("mobileNumber") String mobileNumber,
                                      @Field("gender") String gender,
                                      @Field("deviceToken") String deviceToken);
+    @FormUrlEncoded
+    @POST("editprofile")
+    Call<ResponseBody> updateProfile(@Field("userId") String userId,
+                                     @Field("description") String firstName);
 
     @Multipart
     @POST("editprofile")
@@ -145,6 +149,7 @@ public interface RetrofitApis {
                                      @Part("mobileNumber") RequestBody mobileNumber,
                                      @Part("gender") RequestBody gender,
                                      @Part("deviceToken") RequestBody deviceToken);
+
     @FormUrlEncoded
     @POST("bankDetails")
     Call<ResponseBody> saveBankDetails(@Field("userId") String userId,@Field("iban") String iban,@Field("bic_swift") String bic_swift,@Field("accountOwner") String accountOwner,
@@ -224,11 +229,10 @@ public interface RetrofitApis {
                                               @Field("audMiles") String audMiles,@Field("address") String personalAddress,@Field("categories") String categories,
                                              @Field("brands") String brands,
                                              @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
-   @FormUrlEncoded
-   @POST("home")
-    Call<HomeResponse> getHomeData(@Field("userId") String userId);
-   /* @GET("jackpots")
-    Call<HomeResponse> getHomeJackpots();*/
+     @FormUrlEncoded
+     @POST("home")
+     Call<HomeResponse> getHomeData(@Field("userId") String userId);
+
 
     @Multipart
     @POST("addFeed")
@@ -324,8 +328,6 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("savechallenge")
     Call<ResponseBody> saveToMyChallenges(@Field("userId") String userId,@Field("challengeId") String challengeId,@Field("type") String type );
-
-
 
 }
 

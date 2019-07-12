@@ -12,11 +12,12 @@
         android:layout_height="match_parent"
         />
     <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:progress="80"
         android:layout_gravity="bottom"
-        android:progressTint="#FF0000"
+        android:progress="0"
+        android:progressTint="@color/colorPrimary"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         />
 <LinearLayout
@@ -38,7 +39,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:src="@drawable/photo_upload"
+            android:src="@drawable/camera_icon"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
@@ -51,7 +52,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:src="@drawable/upload_video"
+            android:src="@drawable/video_icon"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
@@ -64,9 +65,9 @@
             android:id="@+id/camera_icon"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/exo_icon_play"
+            android:src="@drawable/ic_camera_black_24dp"
             app:civ_border_width="3dp"
-            app:civ_border_color="#FF0000"
+            app:civ_border_color="@color/pink_drak"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
@@ -79,7 +80,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:src="@mipmap/challenges_normal"
+            android:src="@drawable/flash_icon"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>
@@ -92,7 +93,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp"
-            android:src="@drawable/gallery_button"
+            android:src="@drawable/gallery_icon"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
 

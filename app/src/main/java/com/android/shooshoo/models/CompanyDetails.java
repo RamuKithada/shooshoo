@@ -2,9 +2,7 @@ package com.android.shooshoo.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
 public class CompanyDetails {
 
     @SerializedName("message")
@@ -19,9 +17,15 @@ public class CompanyDetails {
     @SerializedName("recent")
     @Expose
     private List<Challenge> recent = null;
+    @SerializedName("challenges")
+    @Expose
+    private List<Challenge> challenges = null;
     @SerializedName("finished")
     @Expose
     private List<Challenge> finished = null;
+
+
+
 
     public String getMessage() {
         return message;
@@ -63,4 +67,11 @@ public class CompanyDetails {
         this.finished = finished;
     }
 
+    public List<Challenge> getChallenges() {
+        return challenges;
+    }
+
+    public void setChallenges(List<Challenge> challenges) {
+        this.challenges = challenges;
+    }
 }

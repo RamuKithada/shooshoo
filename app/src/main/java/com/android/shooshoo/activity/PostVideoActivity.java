@@ -7,24 +7,15 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
-import com.android.shooshoo.models.Post;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.CustomFragmentVideoDialog;
-import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.PostChallengeView;
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-
 import java.net.URISyntaxException;
 import java.util.List;
 

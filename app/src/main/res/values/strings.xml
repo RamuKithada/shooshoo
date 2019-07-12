@@ -145,4 +145,5 @@
     <string name="cfollower_line">Get Notification if people you follow create new challenge</string>
     <string name="book">Book</string>
     <string name="follow">Follow</string>
+    <string name="brand">Brand</string>
 </resources>

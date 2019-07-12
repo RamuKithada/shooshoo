@@ -12,19 +12,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
-import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
-import com.android.shooshoo.models.ImagesSublistModel;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
 import com.android.shooshoo.models.Brand;
-import com.android.shooshoo.models.Post;
-import com.android.shooshoo.models.UserBankDetails;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
@@ -75,8 +71,8 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     @BindView(R.id.profile_name)
     TextView profile_name;
 
-    @BindView(R.id.profile_description)
-    TextView profile_quotes;
+    @BindView(R.id.followers_count)
+    TextView followers_count;
 
     @BindView(R.id.iv_profile_pic)
     CircleImageView iv_profile_pic;
@@ -88,6 +84,17 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     LinearLayout best_tab;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+
+    @BindView(R.id.edit_description)
+     TextView edit_description;
+
+    @BindView(R.id.profile_description)
+    TextView profile_description;
+
+    @BindView(R.id.et_description)
+    EditText et_description;
+
+
 
     UserSession userSession;
 
@@ -151,6 +158,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         ButterKnife.bind(this,view);
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
         profileBrandAdapter=new ProfileBrandAdapter(getContext(),brandList);
+        brandRecyclerView.setAdapter(profileBrandAdapter);
         presenter=new ProfilePresenter();
         presenter.attachView(this);
         FeedProfileGridFragmentPagerAdapter feedViewPagerAdapter=new FeedProfileGridFragmentPagerAdapter(getContext(),getChildFragmentManager(),new String[]{"new","popular"},userSession.getUserId());
@@ -161,7 +169,27 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         if(connectionDetector.isConnectingToInternet()){
             presenter.loadProfile(mParam1);
         }
+        edit_description.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView view=(TextView)v;
+                if(view.getText().toString().equalsIgnoreCase("edit")){
+                    view.setText("Save");
+                    et_description.setVisibility(View.VISIBLE);
+                    et_description.setText(profile_description.getText().toString());
+                    profile_description.setVisibility(View.GONE);
 
+                }else if(view.getText().toString().equalsIgnoreCase("Done")){
+                    view.setText("Edit");
+
+                    profile_description.setVisibility(View.VISIBLE);
+                    profile_description.setText(et_description.getText().toString());
+                    et_description.setVisibility(View.GONE);
+                    presenter.saveDescription(userSession.getUserId(),et_description.getText().toString());
+                }
+
+            }
+        });
 
     }
 
@@ -221,7 +249,8 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         if(userInfo!=null) {
             this.userInfo=userInfo;
             profile_name.setText(userInfo.getUserName());
-            profile_quotes.setText(userInfo.getDob());//ApiUrls.getAge(userInfo.getDob()));
+            followers_count.setText(userInfo.getFollowers());
+            profile_description.setText(userInfo.getDescription());//ApiUrls.getAge(userInfo.getDob()));
             Picasso.with(getContext()).load(PROFILE_IMAGE_URL+userInfo.getImage()).error(R.drawable.profile_1).into(iv_profile_pic);
         }
     }
