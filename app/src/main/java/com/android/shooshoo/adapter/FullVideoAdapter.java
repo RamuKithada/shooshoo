@@ -1,5 +1,4 @@
 package com.android.shooshoo.adapter;
-
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.utils.ApiUrls;
@@ -48,7 +46,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
                 .inflate(R.layout.view_feed_list_item, parent, false);
         return new SimplePlayerViewHolder(view);
     }
- int cutPos=-1;
+    int cutPos=-1;
     public int getCurrentPosition(){
         return cutPos;
     }
@@ -62,6 +60,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/";//+feed.getUrl();
         Picasso.with(context).load(url+feed.getThumbnail()).error(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).into(holder.iv_thumb);
         Log.e("thumnailPath",""+url+feed.getThumbnail());
+        holder.tv_report.setVisibility(View.GONE);
         if(feed.getUrl().endsWith(".jpg")||feed.getUrl().endsWith(".JPG")||feed.getUrl().endsWith(".jpeg")||feed.getUrl().endsWith(".png")||feed.getUrl().endsWith(".JPEG")||feed.getUrl().endsWith(".PNG"))
         {
             holder.imageView.setVisibility(View.VISIBLE);
@@ -102,6 +101,22 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
                     clickListener.onClick(v,feed);
             }
         });
+        holder.tv_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
+        holder.iv_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.tv_report.getVisibility()==View.GONE)
+                     holder.tv_report.setVisibility(View.VISIBLE);
+                else
+                     holder.tv_report.setVisibility(View.GONE);
+            }
+        });
         holder.likes_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,7 +136,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
 
                     try {
                         int likes = Integer.parseInt(feed.getLikes());
-                        if(feed.getLikestatus().equalsIgnoreCase("0"))
+                        if(feed.getLikestatus().equalsIgnoreCase("1"))
                             likes++;
                         else
                             likes--;

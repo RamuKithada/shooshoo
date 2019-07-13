@@ -306,8 +306,17 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
            StringBuilder cats=new StringBuilder();
                 StringBuilder brands=new StringBuilder();
                     for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
-                        if(categoryArrayList.size()>categoryModel.getCategory())
-                        if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
+                        if(categoryArrayList.size()>categoryModel.getCategory()){
+                            Category mCategory= categoryArrayList.get(categoryModel.getCategory());
+                            if (cats.length() > 0) {
+                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                    cats.append(',').append(mCategory.getCategoryId());
+                            } else {
+                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                    cats.append(mCategory.getCategoryId());
+                            }
+                        }
+                   /*     if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
                         if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
                             Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
 
@@ -323,7 +332,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                             }else
                                 brands.append(brand.getBrandId());
 
-                        }
+                        }*/
                     }
 
                     if(prices!=null){

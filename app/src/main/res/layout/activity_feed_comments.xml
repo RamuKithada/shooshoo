@@ -36,7 +36,7 @@
             android:gravity="center"
             android:textColor="@color/white_text"
             android:fontFamily="@font/futura_medium_bt"
-            android:text="All Comments(16)"
+            android:text="All Comments(0)"
             android:layout_margin="5dp"
             />
 

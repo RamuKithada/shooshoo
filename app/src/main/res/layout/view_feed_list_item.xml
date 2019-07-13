@@ -301,17 +301,52 @@
         </RelativeLayout>
 
 
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@+id/profile_lay"
+          android:layout_alignBottom="@+id/profile_lay"
+          android:layout_marginLeft="15dp"
+          android:orientation="vertical"
+          >
+          <LinearLayout
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_gravity="right|center_vertical"
+              android:gravity="center"
+              android:orientation="horizontal">
+              <TextView
+                  android:id="@+id/tv_report"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="@string/report"
+                  android:textColor="@color/white_text"
+                  android:fontFamily="@font/raleway_bold"
+                  android:paddingTop="2dp"
+                  android:paddingBottom="2dp"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp"
+                  android:background="#575A65"
+                  android:visibility="gone"
+
+                  />
+              <ImageView
+                  android:id="@+id/iv_report"
+                  android:layout_width="40dp"
+                  android:layout_height="40dp"
+                  android:src="@drawable/three_dots_icon"
+                  />
+          </LinearLayout>
 
         <TextView
             android:id="@+id/tv_video_des"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/profile_lay"
-            android:layout_alignBottom="@+id/profile_lay"
             android:layout_marginLeft="15dp"
             android:text="Hi Everybody, this my video H and M challenge.If you liked it a liked a comment "
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#FFFFFF" />
+      </LinearLayout>
         <LinearLayout
             android:id="@+id/message_layout"
             android:layout_width="match_parent"

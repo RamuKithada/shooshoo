@@ -44,10 +44,13 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
             Challenge challenge = challenges.get(i);
             catViewHolder.title.setText(challenge.getChallengeName());
 
-            String url;
-            if(challenge.getCompanies()!=null){
+            String url="";
+            if(challenge.getType().equalsIgnoreCase("sponsor"))
+            {
                 url=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
-            }else {
+            }else
+                if(challenge.getType().equalsIgnoreCase("jackpot"))
+            {
                 url=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
             }
             Log.e("url ",url+ challenge.getBannerImage());
@@ -56,7 +59,7 @@ public class WinnersMyChallengersAdapter extends RecyclerView.Adapter<WinnersMyC
                     .error(R.drawable.rose)
                     .placeholder(R.mipmap.ic_launcher)
                     .into(catViewHolder.imageView);
-            catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+            catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
             catViewHolder.subtitle.setText(challenge.getDescription());
         }
           catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {

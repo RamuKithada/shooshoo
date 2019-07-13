@@ -34,7 +34,7 @@ public class HomePresenter implements BasePresenter<HomeView> {
     public void loadHome(String userId){
 
         homeView.showProgressIndicator(true);
-        retrofitApis.getHomeData(userId)
+        retrofitApis.getHomeData()
                 .enqueue(new Callback<HomeResponse>() {
                     @Override
                     public void onResponse(Call<HomeResponse> call, Response<HomeResponse> response) {

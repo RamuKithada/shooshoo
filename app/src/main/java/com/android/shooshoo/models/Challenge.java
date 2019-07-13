@@ -174,6 +174,12 @@ public class Challenge implements Parcelable {
     @Expose
     private List<Company> companies = null;
 
+    @SerializedName("userName")
+    @Expose
+    private String userName;
+    @SerializedName("fullName")
+    @Expose
+    private String fullName;
 
     protected Challenge(Parcel in) {
         challengeId = in.readString();
@@ -213,20 +219,22 @@ public class Challenge implements Parcelable {
         status = in.readString();
         userFirst = in.readString();
         userLast = in.readString();
-        masterLogo=in.readString();
-        firstName=in.readString();
-        lastName=in.readString();
-        dob=in.readString();
-        country=in.readString();
-        city=in.readString();
-        zipcode=in.readString();
-        street=in.readString();
-        streetNumber=in.readString();
-        mobileNumber=in.readString();
-        miniGame=in.readString();
-        limited=in.readString();
-        address=in.readString();
-        audGender=in.readString();
+        masterLogo = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        dob = in.readString();
+        country = in.readString();
+        city = in.readString();
+        zipcode = in.readString();
+        street = in.readString();
+        streetNumber = in.readString();
+        mobileNumber = in.readString();
+        miniGame = in.readString();
+        limited = in.readString();
+        address = in.readString();
+        audGender = in.readString();
+        userName = in.readString();
+        fullName = in.readString();
     }
 
     public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
@@ -306,9 +314,6 @@ public class Challenge implements Parcelable {
     }
 
     public String getPhotoEntries() {
-        if(photoEntries==null)
-            return " ";
-
         return photoEntries;
     }
 
@@ -317,9 +322,6 @@ public class Challenge implements Parcelable {
     }
 
     public String getVideoEntries() {
-        if(videoEntries==null)
-            return "";
-
         return videoEntries;
     }
 
@@ -543,14 +545,6 @@ public class Challenge implements Parcelable {
         this.userLast = userLast;
     }
 
-    public List<Company> getCompanies() {
-        return companies;
-    }
-
-    public void setCompanies(List<Company> companies) {
-        this.companies = companies;
-    }
-
     public String getMasterLogo() {
         return masterLogo;
     }
@@ -663,6 +657,30 @@ public class Challenge implements Parcelable {
         this.audGender = audGender;
     }
 
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -707,6 +725,9 @@ public class Challenge implements Parcelable {
         dest.writeString(status);
         dest.writeString(userFirst);
         dest.writeString(userLast);
+        dest.writeString(masterLogo);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
         dest.writeString(dob);
         dest.writeString(country);
         dest.writeString(city);
@@ -718,6 +739,7 @@ public class Challenge implements Parcelable {
         dest.writeString(limited);
         dest.writeString(address);
         dest.writeString(audGender);
-
+        dest.writeString(userName);
+        dest.writeString(fullName);
     }
 }

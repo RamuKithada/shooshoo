@@ -296,6 +296,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 case 103:
 
                     break;
+                case 110:
+                     onClick(view,feed);
+                    break;
                 case 150:
                     if(bottomNavigationOnClickListener!=null&&view!=null)
                         bottomNavigationOnClickListener.onClick(view);
@@ -768,6 +771,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
     @Override
     public void onClick(View v,Feed feed) {
+        this.view=v;
         this.feed=feed;
         Intent intent=new Intent(this, LoginActivity.class);
 
@@ -807,6 +811,13 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                     feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
                 }
                 break;
+            case R.id.tv_report:
+                if(!userSession.isLogin())
+                    startActivityForResult(intent,110);
+                else {
+                    feedsPresenter.reportPost(userSession.getUserId(),feed.getId());
+                }
+                break;
             case R.id.profile_lay:
                 Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
                 userProfileIntent.putExtra("userId",feed.getUserId());
@@ -827,7 +838,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
     @Override
     public void onFeedLike(int status,String message){
-        if(status==1) {
+   /*     if(status==1) {
             try {
                 int likes = Integer.parseInt(feed.getLikes());
                 if(feed.getLikestatus().equalsIgnoreCase("1"))
@@ -844,7 +855,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
     }
 /*

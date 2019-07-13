@@ -29,6 +29,13 @@ import static android.text.format.DateUtils.YEAR_IN_MILLIS;
  *
  */
 public class ApiUrls {
+
+    public static final String SPONSERS="sponsors";
+    public static final String JACKPOTS="jackpots";
+    public static final String ENTERED="entered";
+    public static final String SAVED="saved";
+    public static final String CREATED="created";
+
     public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
@@ -36,6 +43,7 @@ public class ApiUrls {
     public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
     public static final String JACKPOT_BANNER_IMAGE_URL="http://165.22.94.168/uploads/jackpots/banners/";
     public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
+    public static final String VIDEO_URL="http://165.22.94.168/uploads/";
     public static final String JACKPOT_VIDEO_URL="http://165.22.94.168/uploads/jackpots/videos/";
     public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/feeds/";
     public static final String PROFILE_IMAGE_URL="http://165.22.94.168/uploads/profiles/";

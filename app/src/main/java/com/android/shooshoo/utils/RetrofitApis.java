@@ -23,6 +23,7 @@ import com.android.shooshoo.models.NewPostsResponse;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RulesResponse;
+import com.android.shooshoo.models.ViewAllChallengesResponse;
 import com.android.shooshoo.models.WinnersResponce;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,7 +51,9 @@ import retrofit2.http.Url;
  */
 public interface RetrofitApis {
 
-        class Factory {
+
+
+    class Factory {
             public static RetrofitApis create(Context contextOfApplication) {
                 // default time out is 15 seconds
                 OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -81,12 +84,14 @@ public interface RetrofitApis {
         @FormUrlEncoded
         @POST("login")
         Call<LoginSuccess> loginUser(@Field("userName") String userName,@Field("password") String password,@Field("deviceType") String deviceType,@Field("deviceToken") String deviceToken );
-       @GET("categories")
-       Call<CatResult> getCategories();
 
-       @FormUrlEncoded
-    @POST("brands")
-    Call<BrandsResult> getBrands(@Field("categoryIds") String categoryIds);
+        @FormUrlEncoded
+        @POST("categories")
+        Call<CatResult> getCategories(@Field("limit") String limit,@Field("offset") String offset);
+
+        @FormUrlEncoded
+        @POST("brands")
+        Call<BrandsResult> getBrands(@Field("categoryIds") String categoryIds,@Field("limit") String limit,@Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("cities")
@@ -229,9 +234,8 @@ public interface RetrofitApis {
                                               @Field("audMiles") String audMiles,@Field("address") String personalAddress,@Field("categories") String categories,
                                              @Field("brands") String brands,
                                              @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
-     @FormUrlEncoded
-     @POST("home")
-     Call<HomeResponse> getHomeData(@Field("userId") String userId);
+     @GET("home")
+     Call<HomeResponse> getHomeData();
 
 
     @Multipart
@@ -315,7 +319,7 @@ public interface RetrofitApis {
 
      @FormUrlEncoded
     @POST("userchallenges")
-    Call<ChallengesResponse> getMyChallenges(@Field("userId") String userId);
+    Call<ChallengesResponse> getMyChallenges(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("bestposts")
@@ -329,5 +333,20 @@ public interface RetrofitApis {
     @POST("savechallenge")
     Call<ResponseBody> saveToMyChallenges(@Field("userId") String userId,@Field("challengeId") String challengeId,@Field("type") String type );
 
+
+    @FormUrlEncoded
+    @POST("reportChallenge")
+    Call<ResponseBody> reportChallenge(@Field("userId") String userId,@Field("challengeId") String challengeId,@Field("type") String type );
+
+    @FormUrlEncoded
+    @POST("reportFeed")
+    Call<ResponseBody> reportFeed(@Field("userId") String userId,@Field("postId") String postId );
+
+    @FormUrlEncoded
+    @POST()
+    Call<ViewAllChallengesResponse> viewAllChallenges(@Url String apiname,
+                                                      @Field("userId") String userId,
+                                                      @Field("limit") String limit,
+                                                      @Field("offset") String offset);
 }
 

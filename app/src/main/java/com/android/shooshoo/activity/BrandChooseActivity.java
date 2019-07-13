@@ -95,7 +95,7 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
 
     private void loadData(String ids) {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getBrands(ids).enqueue(new Callback<BrandsResult>() {
+        RetrofitApis.Factory.create(this).getBrands(ids,"100","0").enqueue(new Callback<BrandsResult>() {
             @Override
             public void onResponse(Call<BrandsResult> call, Response<BrandsResult> response) {
                 showProgressIndicator(false);

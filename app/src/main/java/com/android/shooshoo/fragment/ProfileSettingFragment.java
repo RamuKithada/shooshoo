@@ -264,15 +264,23 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                    ,edt_street_name.getText().toString(),edt_street_number.getText().toString(),edt_mobile_number.getText().toString()
                    ,gender,ApiUrls.DEVICE_TOKEN);
                    StringBuilder cats=new StringBuilder();
-                   StringBuilder brands=new StringBuilder();
+//                   StringBuilder brands=new StringBuilder();
                    for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
-                       if(categoryArrayList.size()>categoryModel.getCategory())
-                           if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
-                               if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
+                       if(categoryArrayList.size()>categoryModel.getCategory()) {
+                          Category mCategory= categoryArrayList.get(categoryModel.getCategory());
+                           if (cats.length() > 0) {
+                               if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                   cats.append(',').append(mCategory.getCategoryId());
+                           } else {
+                               if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                    cats.append(mCategory.getCategoryId());
+                           }
+                       }
+
+//                           if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
+                         /*      if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
                                    Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
-
                                    if(cats.length()>0){
-
                                        if(brand.getCategoryId()!=null&&!cats.toString().contains(brand.getCategoryId()))
                                        cats.append(',').append(brand.getCategoryId());
                                    }else
@@ -280,23 +288,23 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                                        cats.append(brand.getCategoryId());
                                    }
 
-                                   if(brands.length()>0){
+                                 *//*  if(brands.length()>0){
                                        if(brand.getBrandId()!=null&&!brands.toString().contains(brand.getBrandId()))
                                         brands.append(',').append(brand.getBrandId());
                                    }else{
                                           brands.append(brand.getBrandId());
-                                   }
+                                   }*//*
 
 
-                               }
+                               }*/
                    }
 
 
                              Log.e("cats",cats.toString());
-                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),cats.toString());
+                             updateUserInfoPresenter.updateUserCat(userSession.getUserId(),cats.toString());
 
-                           Log.e("brands",brands.toString());
-                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),brands.toString());
+//                           Log.e("brands",brands.toString());
+//                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),brands.toString());
 
 
                }
@@ -620,7 +628,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                               categorySelectionAdapter.getCategoryModels().add(0,new CategoryModel(index,0));
                           }
                       }
-                      if(userInfo.getBrands()!=null) {
+                 /*     if(userInfo.getBrands()!=null) {
                           int noOfBrands=0;
                           String brandss = userInfo.getBrands();
                           String[] brandsList = brandss.split(",");
@@ -642,7 +650,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                                   }
                               }
                           }
-                      }
+                      }*/
 
                    }
 

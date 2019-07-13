@@ -27,12 +27,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.CompanyDetailsActivity"></activity>
-        <activity android:name=".activity.EnteredChallengeViewActivity" />
-        <activity android:name=".activity.CreatedChallengeViewActivity" />
-        <activity android:name=".activity.SponsorChallenge" />
-        <activity android:name=".activity.UserProfileActivity" />
-        <activity android:name=".activity.SingleVideoViewActivity" />
+        <activity android:name=".activity.CompanyDetailsActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+        <activity android:name=".activity.EnteredChallengeViewActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.CreatedChallengeViewActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.SponsorChallenge"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.UserProfileActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.SingleVideoViewActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.ViewAllChallengesActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.CategoryWiseChallengerActivity"
             android:screenOrientation="portrait" />

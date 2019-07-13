@@ -146,4 +146,12 @@
     <string name="book">Book</string>
     <string name="follow">Follow</string>
     <string name="brand">Brand</string>
+    <string name="report">report</string>
+    <string name="filter">Filter</string>
+    <string name="type">Type</string>
+    <string name="prize">Prize</string>
+    <string name="entry">Entry</string>
+    <string name="time">Time</string>
+    <string name="language">Language</string>
+    <string name="interaction">Interaction</string>
 </resources>

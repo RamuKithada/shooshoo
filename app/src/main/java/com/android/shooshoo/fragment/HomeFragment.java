@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.ViewAllChallengesActivity;
 import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
@@ -28,6 +29,7 @@ import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.presenters.HomePresenter;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
@@ -35,6 +37,8 @@ import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.HomeView;
 
 import java.util.ArrayList;
+
+import static com.android.shooshoo.fragment.ViewAllChallenges_Fragment.SERVICE_TYPE;
 
 /**
  * This is fragment to present Home tab view
@@ -247,15 +251,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         Intent intent;
         switch (v.getId()){
             case R.id.sponsor_viewall:
-         intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
-         intent.putExtra("title","Sponsor Challenges");
-         intent.putExtra("catId",1);
+
+         intent=new Intent(getActivity(), ViewAllChallengesActivity.class);
+               intent.putExtra(SERVICE_TYPE, ApiUrls.SPONSERS);
+                intent.putExtra("title","Sponsor Challenges");
         startActivity(intent);
         break;
             case R.id.jackpot_viewall:
-                 intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
+                 intent=new Intent(getActivity(),  ViewAllChallengesActivity.class);
+                intent.putExtra(SERVICE_TYPE,ApiUrls.JACKPOTS);
                 intent.putExtra("title","Jackpot Challenges");
-                intent.putExtra("catId",2);
                 startActivity(intent);
                 break;
             case R.id.category_viewall:

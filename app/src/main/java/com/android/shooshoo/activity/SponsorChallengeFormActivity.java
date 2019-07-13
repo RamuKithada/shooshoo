@@ -140,12 +140,12 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     }
 
     private void viewInitilization() {
-        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
-        setFocusChange(edt_startdate,R.id.startdate_line);
-        setFocusChange(edt_start_time,R.id.starttime_line);
-        setFocusChange(edt_enddate,R.id.enddate_line);
-        setFocusChange(edt_end_time,R.id.endtime_line);
-        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
+//        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
+//        setFocusChange(edt_startdate,R.id.startdate_line);
+//        setFocusChange(edt_start_time,R.id.starttime_line);
+//        setFocusChange(edt_enddate,R.id.enddate_line);
+//        setFocusChange(edt_end_time,R.id.endtime_line);
+//        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
         edt_video_sizes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,7 +316,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         return true;
     }
 
-    String active="#FFFFFF",inactive="#CCCCCC";
+   /* String active="#FFFFFF",inactive="#CCCCCC";
     void setFocusChange(AppCompatEditText editText, int id){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -330,7 +330,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             }
         });
 
-    }
+    }*/
     ///////////image Picker tool//////////
     private boolean checkPermission(String permission) {
         if (Build.VERSION.SDK_INT >= 23) {

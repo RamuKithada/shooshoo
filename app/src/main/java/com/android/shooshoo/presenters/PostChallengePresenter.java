@@ -1,20 +1,13 @@
 package com.android.shooshoo.presenters;
 
-import android.net.Uri;
-
-import com.android.shooshoo.models.GameMasterResult;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RulesResponse;
 import com.android.shooshoo.utils.RetrofitApis;
-import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.PostChallengeView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
-
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -22,7 +15,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 public class PostChallengePresenter implements BasePresenter<PostChallengeView> {
     PostChallengeView view;
     private RetrofitApis retrofitApis;
@@ -152,6 +144,28 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
         if (view != null) {
             view.showProgressIndicator(true);
             retrofitApis.saveToMyChallenges(userid, challengeId, type).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful())
+                        if (view != null) {
+                            view.showProgressIndicator(false);
+                        }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (view != null) {
+                        view.showProgressIndicator(false);
+                    }
+                }
+            });
+
+        }
+    }
+    public void reportChallenge(String userid,String challengeId,String type) {
+        if (view != null) {
+            view.showProgressIndicator(true);
+            retrofitApis.reportChallenge(userid, challengeId, type).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful())

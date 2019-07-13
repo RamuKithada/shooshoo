@@ -1,8 +1,9 @@
 package com.android.shooshoo.activity;
-
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +14,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
@@ -56,8 +60,7 @@ import butterknife.ButterKnife;
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static com.android.shooshoo.utils.ApiUrls.JACKPOT_VIDEO_URL;
-import static com.android.shooshoo.utils.ApiUrls.SPONSOR_VIDEO_URL;
+import static com.android.shooshoo.utils.ApiUrls.VIDEO_URL;
 
 public class MyChallengesActivity extends BaseActivity implements View.OnClickListener, PostChallengeView, SimpleExoPlayer.EventListener{
     /***
@@ -83,6 +86,13 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     ImageView video_thumb;
     @BindView(R.id.save_challenge)
     ImageView save_challenge;
+
+    @BindView(R.id.iv_report)
+    ImageView iv_report;
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
+
+
 
 
     @BindView(R.id.sub_title)
@@ -203,6 +213,9 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
                 }
             }
         });
+        iv_report.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
+
     }
 Challenge challenge;
     private void setChallenge(Challenge challenge) {
@@ -212,10 +225,7 @@ Challenge challenge;
 //        created_at.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
         tv_key_des.setText(challenge.getKeyDescription());
         participants.setText(challenge.getParticipants());
-        if(getIntent().getIntExtra("type",0)==1)
-            videoUri =SPONSOR_VIDEO_URL+challenge.getChallengeVideo();
-        else if(getIntent().getIntExtra("type",0)==2)
-            videoUri =JACKPOT_VIDEO_URL+challenge.getChallengeVideo();
+        videoUri =VIDEO_URL+challenge.getType()+"s/videos/"+challenge.getChallengeVideo();
         setUpVideo();
         if(challenge.getVideoEntries().equalsIgnoreCase("yes")&&challenge.getPhotoEntries().equalsIgnoreCase("yes"))
             both=true;
@@ -224,7 +234,7 @@ Challenge challenge;
 
         if(connectionDetector.isConnectingToInternet())
         {
-            challengePresenter.getRecentPosts(challenge.getChallengeId(),"sponsor");
+            challengePresenter.getRecentPosts(challenge.getChallengeId(),challenge.getType());
             challengePresenter.getRules();
         }
          else
@@ -261,6 +271,14 @@ Challenge challenge;
             break;
         case R.id.save_challenge:
             challengePresenter.saveChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getCompanies()==null?"jackpot":"sponsor");
+            break;
+        case R.id.iv_report:
+
+                    showPopup(v);
+
+            break;
+        case R.id.iv_back:
+           finish();
             break;
     }
     }
@@ -519,6 +537,25 @@ switch (requestCode){
 }
 
 
+    }
+    PopupWindow popupWindow;
+    private void showPopup(View view) {
+             TextView textView=new TextView(this);
+             textView.setPadding(15,2,15,2);
+             textView.setText("report");
+             textView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+             textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupWindow.dismiss();
+                    popupWindow=null;
+                    challengePresenter.reportChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getType());
+                }
+            });
+            //instantiate popup window
+            popupWindow = new PopupWindow(textView, RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            //display the popup window
+            popupWindow.showAsDropDown(view, -view.getWidth(),0, Gravity.LEFT);
     }
 
     private void startCamera(boolean image) {

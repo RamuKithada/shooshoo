@@ -146,7 +146,6 @@ public class RadarFragment extends Fragment implements OnRadarListener {
         if(popupWindow!=null)
             if(popupWindow.isShowing())
                 popupWindow.dismiss();
-
         showDialog((int) x,(int) y);
     }
 

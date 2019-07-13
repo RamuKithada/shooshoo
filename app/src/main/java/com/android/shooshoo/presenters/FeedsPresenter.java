@@ -289,5 +289,54 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
         }
 
     }
+    /**
+     * Follow the user watch
+     * @param userId,profileId
+     */
+    public void reportPost(String userId,String postId){
+        if(view!=null){
+            view.showProgressIndicator(true);
+            retrofitApis.reportFeed(userId,postId).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if(view!=null)
+                        view.showProgressIndicator(false);
+
+                    if(response.isSuccessful()){
+                        try {
+                            String res=  response.body().string();
+                            JSONObject object=new JSONObject(res);
+                            String msg=object.optString("message");
+                            int status=object.optInt("status");
+                            if(view!=null)
+                                view.onFollowed(status,msg);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if(view!=null)
+                    {
+                        view.showProgressIndicator(false);
+                        view.showMessage(t.getMessage());
+                    }
+
+                }
+            });
+
+
+        }
+
+    }
 
 }

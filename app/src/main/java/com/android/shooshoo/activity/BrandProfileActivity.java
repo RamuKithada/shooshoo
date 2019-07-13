@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.BrandProfilePagerAdapter;
-import com.android.shooshoo.adapter.ChallengerViewPagerAdapter;
-import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.presenters.BrandDetailsPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;

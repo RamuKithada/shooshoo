@@ -1,7 +1,6 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatTextView;
@@ -13,17 +12,13 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.fragment.ChallengersFragment;
 import com.android.shooshoo.fragment.ChatsFragment;
-import com.android.shooshoo.fragment.FeedFragment;
 import com.android.shooshoo.fragment.HomeFragment;
 import com.android.shooshoo.fragment.ProfileFragment;
 import com.android.shooshoo.fragment.RadarFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
-import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.HomeResponse;
-import com.android.shooshoo.presenters.HomePresenter;
 import com.android.shooshoo.views.HomeView;
 
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -199,75 +194,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         }
     }
 
-/*    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentManager fragmentManager=getSupportFragmentManager();
-
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    iv_chat.setVisibility(View.VISIBLE);
-                    iv_help.setVisibility(View.VISIBLE);
-                    iv_search.setVisibility(View.VISIBLE);
-                    iv_wallet.setVisibility(View.VISIBLE);
-                    iv_filters.setVisibility(View.GONE);
-                    iv_edit_profile.setVisibility(View.GONE);
-                    iv_profile.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
-                    return true;
-                case R.id.navigation_challengers:
-                    mTextMessage.setText(R.string.title_challengers);
-                    iv_chat.setVisibility(View.VISIBLE);
-                    iv_help.setVisibility(View.VISIBLE);
-                    iv_search.setVisibility(View.GONE);
-                    iv_wallet.setVisibility(View.GONE);
-                    iv_filters.setVisibility(View.GONE);
-                    iv_edit_profile.setVisibility(View.GONE);
-                    iv_profile.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ChallengersFragment.newInstance("Hi","Ram")).commit();
-
-
-                    return true;
-                case R.id.navigation_feed:
-                    mTextMessage.setText(R.string.title_feed);
-                    iv_chat.setVisibility(View.VISIBLE);
-                    iv_help.setVisibility(View.GONE);
-                    iv_search.setVisibility(View.GONE);
-                    iv_wallet.setVisibility(View.GONE);
-                    iv_filters.setVisibility(View.VISIBLE);
-                    iv_edit_profile.setVisibility(View.GONE);
-                    iv_profile.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, FeedFragment.newInstance("Hi","Ram")).commit();
-                    return true;
-                case R.id.navigation_winners:
-                    mTextMessage.setText(R.string.title_winners);
-                    iv_chat.setVisibility(View.VISIBLE);
-                    iv_help.setVisibility(View.VISIBLE);
-                    iv_search.setVisibility(View.GONE);
-                    iv_wallet.setVisibility(View.GONE);
-                    iv_filters.setVisibility(View.GONE);
-                    iv_edit_profile.setVisibility(View.GONE);
-                    iv_profile.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, WinnersFragment.newInstance("Hi","Ram")).commit();
-                    return true;
-                case R.id.navigation_radar:
-                    mTextMessage.setText(R.string.title_radar);
-                    iv_chat.setVisibility(View.GONE);
-                    iv_help.setVisibility(View.GONE);
-                    iv_search.setVisibility(View.GONE);
-                    iv_wallet.setVisibility(View.GONE);
-                    iv_filters.setVisibility(View.GONE);
-                    iv_edit_profile.setVisibility(View.GONE);
-                    iv_profile.setVisibility(View.VISIBLE);
-                    fragmentManager.beginTransaction().replace(R.id.home_fragment_container, RadarFragment.newInstance("Hi","Ram")).commit();
-                    return true;
-            }
-            return false;
-        }
-    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,8 +210,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         iv_filters.setVisibility(View.GONE);
         iv_edit_profile.setVisibility(View.GONE);
         bottom_navi_view.setOnClickListener(bottomNavigationOnClickListener);
-    /*    BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
+
         FragmentManager fragmentManager=getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
         iv_profile.setOnClickListener(this);

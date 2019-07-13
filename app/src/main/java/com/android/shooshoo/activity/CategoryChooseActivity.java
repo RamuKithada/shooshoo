@@ -87,16 +87,16 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         iv_back.setOnClickListener(this);
 
         if(connectionDetector.isConnectingToInternet()){
-            loadCategory();
+            loadCategory(0);
 
         }else showMessage("Please Check Internet connection ");
 
 
     }
 
-    private void loadCategory() {
+    private void loadCategory(int offset) {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getCategories().enqueue(new Callback<CatResult>() {
+        RetrofitApis.Factory.create(this).getCategories("30",""+offset).enqueue(new Callback<CatResult>() {
             @Override
             public void onResponse(Call<CatResult> call, Response<CatResult> response) {
                 showProgressIndicator(false);

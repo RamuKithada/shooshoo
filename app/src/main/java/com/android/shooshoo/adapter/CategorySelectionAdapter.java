@@ -80,12 +80,13 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.e("position", "" + position);
                     categoryModel.setCategory(position);
-                    Category category = categoryList.get(position);
-                    List<String> list=category.getBrandNames();
+//                    Category category = categoryList.get(position);
+
+                   /* List<String> list=category.getBrandNames();
                     if (list.size()==0){
                         list.add("No Subcategory");
-                    }
-                    ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
+                    }*/
+                 /*   ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
                     brandArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     viewHolder.subcategorySpinner.setAdapter(brandArrayAdapter);
                     if(category.getBrandNames().size()>categoryModel.getSubcategory())
@@ -100,7 +101,7 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
-                    });
+                    });*/
 
                 }
 
@@ -135,12 +136,12 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     public class CategoryHolder extends RecyclerView.ViewHolder{
          Spinner categorySpinner;
-         Spinner subcategorySpinner;
+//         Spinner subcategorySpinner;
          ImageView iv_remove;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             categorySpinner=itemView.findViewById(R.id.spinner_category);
-            subcategorySpinner=itemView.findViewById(R.id.spinner_subcategory);
+//            subcategorySpinner=itemView.findViewById(R.id.spinner_subcategory);
             iv_remove=itemView.findViewById(R.id.iv_remove);
 
         }
