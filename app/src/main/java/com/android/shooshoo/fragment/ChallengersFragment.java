@@ -220,18 +220,21 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onSavedChallenges(List<Challenge> challengeList) {
+        if(challengeList!=null)
         saved.addAll(challengeList);
         savedListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onEnteredChallenges(List<Challenge> challengeList) {
+        if(challengeList!=null)
         entered.addAll(challengeList);
         enteredListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onCreatedChallenges(List<Challenge> challengeList) {
+        if(challengeList!=null)
         created.addAll(challengeList);
         createdListAdapter.notifyDataSetChanged();
     }

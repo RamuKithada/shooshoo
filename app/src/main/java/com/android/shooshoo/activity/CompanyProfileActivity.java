@@ -652,8 +652,7 @@ View view=null;
                     view.setVisibility(View.GONE);
                 }
             }else if(view.getId()==R.id.btn_next){
-                Intent intent=new Intent(this,TheChallengeActivity.class);
-                intent.putExtra("challenge_type",1);
+//                intent.putExtra("challenge_type",1);
                 StringBuilder ids=new StringBuilder();
                 for(int index=0;index<sponsorIds.size();index++)
                 {
@@ -664,6 +663,7 @@ View view=null;
 
                 }
                 userSession.setSponsorIds(ids.toString());
+                Intent intent=new Intent(this,TheChallengeActivity.class);
                 startActivity(intent);
             }
             }

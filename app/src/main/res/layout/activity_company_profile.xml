@@ -146,6 +146,7 @@
                     android:textColor="@color/white_text"
                     android:theme="@style/MyEditTextTheme"
                     />
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"

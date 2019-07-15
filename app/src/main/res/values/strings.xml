@@ -52,7 +52,7 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="audience_size_lable">Size of your Audience</string>
-    <string name="audience_size_lable2">Due to your criteria \n The size of Your audience is</string>
+    <string name="audience_size_lable2">Possible participants</string>
     <string name="forget_pws_label">Please enter your registered Email Id \n and verification mail will be send</string>
     <string name="send">Send</string>
     <string name="define_your_budget">Define your budget</string>
@@ -154,4 +154,5 @@
     <string name="time">Time</string>
     <string name="language">Language</string>
     <string name="interaction">Interaction</string>
+    <string name="outreach">Outreach</string>
 </resources>

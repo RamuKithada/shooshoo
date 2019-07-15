@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
@@ -42,9 +41,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -524,9 +521,10 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         userSession.setSponsorChallenge(company.getChallengeId());
         userSession.savaChallenge(company);
         userSession.setSponsorIds(null);
-        Intent intent=new Intent(this, AudienceInstructionActivity.class);
-        intent.putExtra("challenge_type",1);
+        Intent intent=new Intent(this, SponsorAudienceActivity.class);
         startActivity(intent);
+//        intent.putExtra("challenge_type",1);
+//        startActivity(intent);
 
     }
 

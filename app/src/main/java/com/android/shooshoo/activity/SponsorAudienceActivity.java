@@ -1,40 +1,44 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
-import com.android.shooshoo.adapter.PriceWorthAdapter;
+import com.android.shooshoo.adapter.PrizeListAdapter;
 import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.CashModel;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
-import com.android.shooshoo.models.EditModel;
+import com.android.shooshoo.models.PrizeBaseModel;
+import com.android.shooshoo.models.PrizeModel;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
-import org.json.JSONArray;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -48,10 +52,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 /**
- * This {@link AudienceActivity} is used to show the sponsor challenge target Audience selection functionality
+ * This {@link SponsorAudienceActivity} is used to show the sponsor challenge target Audience selection functionality
  * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
  */
-public class AudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener{
+public class SponsorAudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener,FragmentListDialogListener {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -59,76 +63,102 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
     TextView title;
 
-    @BindView(R.id.edt_amount)
-    EditText edt_amount;
+    @BindView(R.id.national_lay)
+    RelativeLayout national_lay;
 
-    @BindView(R.id.edt_key_des)
-    EditText edt_key_des;
-
-    @BindView(R.id.edt_price_worth)
-    EditText edt_price_worth;
-
-    @BindView(R.id.edt_price_total)
-    EditText edt_price_total;
-
-    @BindView(R.id.edt_zipcode)
-    EditText edt_zipcode;
+    @BindView(R.id.international_lay)
+    RelativeLayout international_lay;
 
     @BindView(R.id.tv_national)
-    RelativeLayout tv_national;
+    TextView tv_national;
 
     @BindView(R.id.tv_international)
-    RelativeLayout tv_international;
-
-    @BindView(R.id.spinner_winner)
-    Spinner spinner_winner;
-
-    @BindView(R.id.spinner_miles)
-    Spinner spinner_miles;
-
-    @BindView(R.id.spinner_min_age)
-    Spinner spinner_min_age;
-
-    @BindView(R.id.spinner_max_age)
-    Spinner spinner_max_age;
-
-
-    @BindView(R.id.edt_address)
-    EditText edt_address;
+    TextView tv_international;
 
     @BindView(R.id.cat_subcat_list)
     RecyclerView cat_subcat_list;
 
     @BindView(R.id.btn_more_categories)
-    TextView btn_more_categories;
+    ImageView btn_more_categories;
 
-    @BindView(R.id.checkbox_male)
-    CheckBox checkbox_male;
-
-    @BindView(R.id.checkbox_female)
-    CheckBox checkbox_female;
 
     @BindView(R.id.rv_price_list)
             RecyclerView rv_price_list;
 
     @BindView(R.id.btn_more_prizes)
-    TextView btn_more_prizes;
+    ImageView btn_more_prizes;
 
     @BindView(R.id.audience_size)
-    TextView audience_size;
+    AppCompatTextView audience_size;
+
+    @BindView(R.id.product_lay)
+    LinearLayout product_lay;
+
+    @BindView(R.id.cash_lay)
+    LinearLayout cash_lay;
+
+    @BindView(R.id.et_prize_type)
+    AppCompatEditText et_prize_type;
+    @BindView(R.id.et_cash_amount)
+    AppCompatEditText et_cash_amount;
+    @BindView(R.id.et_cash_currency)
+    AppCompatEditText et_cash_currency;
+    @BindView(R.id.et_prize_name)
+    AppCompatEditText et_prize_name;
+    @BindView(R.id.et_prize_worth)
+    AppCompatEditText et_prize_worth;
+    @BindView(R.id.et_prize_number)
+    AppCompatEditText et_prize_number;
+
+    @BindView(R.id.no_of_winners)
+    AppCompatEditText no_of_winners;
+    @BindView(R.id.edt_country)
+    AppCompatEditText edt_country;
+
+
+    @BindView(R.id.edt_city)
+    AppCompatEditText edt_city;
+
+    @BindView(R.id.edt_zipcode)
+    AppCompatEditText edt_zipcode;
+
+
+    @BindView(R.id.edt_miles)
+    AppCompatEditText edt_miles;
+
+    @BindView(R.id.edt_gender)
+    AppCompatEditText edt_gender;
+
+    @BindView(R.id.edt_min_age)
+    AppCompatEditText edt_min_age;
+
+
+    @BindView(R.id.edt_max_age)
+    AppCompatEditText edt_max_age;
+
+
+
+
+    @BindView(R.id.tv_price_total)
+    AppCompatTextView tv_price_total;
+
+
+
 
     /** winners,miles,age are lists set them to FragmentDialog to show to choose one of the them.
      */
 
-    ArrayList<String> winners=new ArrayList<String>();
-    ArrayList<String> miles=new ArrayList<String>();
-    ArrayList<String> age=new ArrayList<String>();
+
+
 
     DataLoadPresenter dataLoadPresenter;
     ConnectionDetector connectionDetector;
@@ -138,13 +168,13 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
     List<Category> categoryArrayList=new ArrayList<Category>();
 
 
-    ArrayList<EditModel> prices=new ArrayList<EditModel>();
-    PriceWorthAdapter priceWorthAdapter=null;
+    ArrayList<PrizeBaseModel> prices=new ArrayList<PrizeBaseModel>();
+    PrizeListAdapter priceWorthAdapter=null;
     int total=0;
     RecyclerView.AdapterDataObserver  adapterDataObserver=new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
-            total=0;
+         /*   total=0;
             for (EditModel model:prices){
                 try {
                     int price=Integer.valueOf(model.getEditTextValue());
@@ -153,7 +183,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     e.printStackTrace();
                 }
           }
-          edt_price_total.setText(String.valueOf(total));
+          edt_price_total.setText(String.valueOf(total));*/
         }
     };
 
@@ -161,30 +191,43 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_audience);
+        setContentView(R.layout.activity_sponsor_audience);
         ButterKnife.bind(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         btn_more_categories.setOnClickListener(this);
-        title.setText("Audience");
+        title.setText("PRIZE & Outreach");
+        iv_help.setVisibility(View.VISIBLE);
         tv_national.setBackgroundResource(R.drawable.cat_selected);
         tv_international.setBackgroundResource(R.drawable.cat_unselected);
         setStage(2);
         spinnersInti();
         categorySelectionAdapter=new CategorySelectionAdapter(this,categoryArrayList);
-        priceWorthAdapter=new PriceWorthAdapter(this,prices);
+        priceWorthAdapter=new PrizeListAdapter(this,prices);
         priceWorthAdapter.registerAdapterDataObserver(adapterDataObserver);
         btn_more_prizes.setOnClickListener(this);
         rv_price_list.setAdapter(priceWorthAdapter);
+        rv_price_list.setLayoutManager(new LinearLayoutManager(this));
         rv_price_list.setNestedScrollingEnabled(false);
                 dataLoadPresenter=new DataLoadPresenter();
         dataLoadPresenter.attachView(this);
         sponsorChallengePresenter =new SponsorChallengePresenter();
         sponsorChallengePresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
-        checkbox_male.setOnCheckedChangeListener(this);
-        checkbox_female.setOnCheckedChangeListener(this);
-        edt_price_worth.addTextChangedListener(new TextWatcher() {
+
+        et_prize_type.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",new String[]{"Cash","Product"});
+                args.putInt("view",et_prize_type.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"Prize Type");
+
+            }
+        });
+/*        edt_price_worth.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -206,7 +249,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
             public void afterTextChanged(Editable s) {
 
             }
-        });
+        });*/
         if(connectionDetector.isConnectingToInternet()){
             dataLoadPresenter.loadAllcategoriesList();
         }
@@ -217,33 +260,8 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
 
     private void spinnersInti() {
 
-        for(int i=1;i<=10;i++){
-            winners.add("Top "+i);
-            miles.add(i+" Miles");
-        }
-        for(int i=18;i<60;i++)
-            age.add(i+" Years");
-
-        ArrayAdapter<String> winnerAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, winners);
-        winnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_winner.setAdapter(winnerAdapter);
-        spinner_winner.setOnItemSelectedListener(this);
-
-        ArrayAdapter<String> ageAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, age);
-        ageAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_min_age.setAdapter(ageAdapter);
-        spinner_min_age.setOnItemSelectedListener(this);
-
-        spinner_max_age.setAdapter(ageAdapter);
-        spinner_max_age.setOnItemSelectedListener(this);
-
-        ArrayAdapter<String> milesAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, miles);
-        milesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_miles.setAdapter(milesAdapter);
-        spinner_miles.setOnItemSelectedListener(this);
-
-        tv_national.setOnClickListener(radioClickListener);
-        tv_international.setOnClickListener(radioClickListener);
+        national_lay.setOnClickListener(radioClickListener);
+        international_lay.setOnClickListener(radioClickListener);
     }
 
     int nationalization=0;
@@ -252,14 +270,14 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
         public void onClick(View v) {
 
             switch (v.getId()){
-                case R.id.tv_national:
-          tv_national.setBackgroundResource(R.drawable.cat_selected);
-          tv_international.setBackgroundResource(R.drawable.cat_unselected);
+                case R.id.national_lay:
+          tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+          tv_international.setTextColor(Color.parseColor("#85868A"));
           nationalization=0;
             break;
                 case R.id.tv_international:
-          tv_national.setBackgroundResource(R.drawable.cat_unselected);
-          tv_international.setBackgroundResource(R.drawable.cat_selected);
+                    tv_international.setTextColor(Color.parseColor("#FFFFFF"));
+                    tv_national.setTextColor(Color.parseColor("#85868A"));
           nationalization=1;
             break;
         }
@@ -267,6 +285,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
             getSizeofAudience();
         }
     };
+
 
     @Override
     public void onClick(View view) {
@@ -292,7 +311,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     }
 
                 }
-                StringBuilder stringBuilder=new StringBuilder();
+/*                StringBuilder stringBuilder=new StringBuilder();
 //                    JSONArray jsonArray=new JSONArray();
                 for (int index=0;index<prices.size();index++){
                     EditModel model=prices.get(index);
@@ -301,7 +320,7 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     }else stringBuilder.append(model.getEditTextValue());
 
                 }
-                    stringBuilder.append(',').append(edt_price_worth.getText().toString());
+                    stringBuilder.append(',').append(edt_price_worth.getText().toString());*/
 
            StringBuilder cats=new StringBuilder();
                 StringBuilder brands=new StringBuilder();
@@ -347,11 +366,11 @@ public class AudienceActivity extends BaseActivity implements DataLoadView,Spons
                     {
                         showMessage("Please check internet connection !");
                         return;
-                    }
+                    }/*
 sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
         stringBuilder.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
         edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
-        ,age.get(minAgePos),age.get(maxAgePos),gender.toString());
+        ,age.get(minAgePos),age.get(maxAgePos),gender.toString());*/
         }
 
 //
@@ -364,11 +383,33 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                 break;
             case R.id.btn_more_prizes:
                 if(priceWorthAdapter.getItemCount()<4) {
-                    EditModel model=new EditModel();
-                    model.setEditTextValue(edt_price_worth.getText().toString());
-                    prices.add(model);
-                    priceWorthAdapter.notifyDataSetChanged();
-                    edt_price_worth.setText(null);
+
+                    PrizeBaseModel prizeBaseModel=null;
+                    if(prizetype==0)
+                        {
+                        CashModel cashModel=new CashModel();
+                        cashModel.setAmount(et_cash_amount.getText().toString());
+                        cashModel.setCurrency(et_cash_currency.getText().toString());
+                        prizeBaseModel=cashModel;
+                        }
+                    else
+                        {
+                        PrizeModel  prizeModel=new PrizeModel();
+                        prizeModel.setName(et_prize_name.getText().toString());
+                        prizeModel.setWorth(et_prize_worth.getText().toString());
+                        prizeModel.setNumber(et_prize_number.getText().toString());
+                        prizeBaseModel=prizeModel;
+                        }
+                    if(prizeBaseModel!=null)
+                    priceWorthAdapter.addItem(prizeBaseModel);
+                    et_prize_type.setText("Cash");
+                    cash_lay.setVisibility(View.VISIBLE);
+                    et_cash_amount.setText(null);
+                    et_cash_currency.setText(null);
+                    et_prize_name.setText(null);
+                    et_prize_number.setText(null);
+                    et_prize_worth.setText(null);
+
                 }
                 break;
 
@@ -386,11 +427,11 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
             edt_key_des.requestFocus();
             return false;
         }
-        if(!ApiUrls.validateString(edt_price_worth.getText().toString())) {
+     /*   if(!ApiUrls.validateString(edt_price_worth.getText().toString())) {
             edt_price_worth.setError("Enter price");
             edt_price_worth.requestFocus();
             return false;
-        }
+        }*/
 
         if(!ApiUrls.validateString(edt_price_total.getText().toString())) {
             edt_price_total.setError("Enter Total price");
@@ -581,5 +622,29 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         getSizeofAudience();
+    }
+
+    int prizetype=0;
+    @Override
+    public void onEditView(int view, int position) {
+        if(view==R.id.et_prize_type){
+            if(position==0)
+            {
+                prizetype=0;
+                et_prize_type.setText("Cash");
+                cash_lay.setVisibility(View.VISIBLE);
+                product_lay.setVisibility(View.GONE);
+
+
+            }
+            else
+            {
+                prizetype=1;
+                et_prize_type.setText("Product");
+                cash_lay.setVisibility(View.GONE);
+                product_lay.setVisibility(View.VISIBLE);
+            }
+        }
+
     }
 }

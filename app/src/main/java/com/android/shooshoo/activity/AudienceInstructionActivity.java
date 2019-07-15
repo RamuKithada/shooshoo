@@ -60,7 +60,7 @@ public class AudienceInstructionActivity extends AppCompatActivity {
 
 
                 if(type==1){
-                    Intent intent=new Intent(AudienceInstructionActivity.this,AudienceActivity.class);
+                    Intent intent=new Intent(AudienceInstructionActivity.this, SponsorAudienceActivity.class);
                     startActivity(intent);
                 }else if(type==2){
                     Intent intent=new Intent(AudienceInstructionActivity.this,JackpotAudienceActivity.class);
