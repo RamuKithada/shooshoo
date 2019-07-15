@@ -16,11 +16,11 @@ public class CategoryModel {
         this.category = category;
     }
 
-    public int getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(int subcategory) {
-        this.subcategory = subcategory;
-    }
+//    public int getSubcategory() {
+//        return subcategory;
+//    }
+//
+//    public void setSubcategory(int subcategory) {
+//        this.subcategory = subcategory;
+//    }
 }

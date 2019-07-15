@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D2308A</color>
+    <color name="colorPrimary">#F31F68</color>
     <color name="colorPrimaryDark">#232323</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="pink_drak">#D2308A</color>
-    <color name="pink_lite">#D2308A</color>
-    <color name="gray_text">#cccccc</color>
-    <color name="color_gray">#99dfdfdf</color>
+    <color name="pink_drak">#F31F68</color>
+    <color name="pink_lite">#F31F68</color>
+    <color name="gray_text">#99cccccc</color>
+    <color name="color_gray">#77dfdfdf</color>
+    <color name="color_hint">#FFFFFF</color>
+    <color name="color_text">#FFFFFF</color>
     <color name="white_text">#FFFFFF</color>
+    <color name="bg_color">#242529</color>
+    <color name="blue_color">#80C4FF</color>
 </resources>

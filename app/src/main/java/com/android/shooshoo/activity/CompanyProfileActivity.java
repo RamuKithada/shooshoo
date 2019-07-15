@@ -8,18 +8,14 @@ import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +26,16 @@ import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.presenters.DataLoadPresenter;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,47 +47,49 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class CompanyProfileActivity extends BaseActivity implements View.OnClickListener, DataLoadView , SponsorChallengeView {
+public class CompanyProfileActivity extends BaseActivity implements View.OnClickListener, DataLoadView , SponsorChallengeView , FragmentListDialogListener {
 
+    /**
+     *{@link CompanyProfileActivity} is used to create a company profile to sponsor challenge in the process of the   sponsor challenge
+     * registration
+     *
+     *
+     */
 
     @BindView(R.id.edt_company_name)
-    EditText edt_company_name;
+    AppCompatEditText edt_company_name;
 
-    @BindView(R.id.spinner_country)
-    Spinner spinner_country;
 
-    @BindView(R.id.spinner_city)
-    Spinner spinner_city;
 
     @BindView(R.id.edt_user_email)
-    EditText edt_user_email;
+    AppCompatEditText edt_user_email;
 
     @BindView(R.id.edt_zipcode)
-    EditText edt_zipcode;
+    AppCompatEditText edt_zipcode;
 
     @BindView(R.id.edt_Street)
-    EditText edt_Street;
+    AppCompatEditText edt_Street;
 
-    @BindView(R.id.edt_number)
-    EditText edt_number;
+    @BindView(R.id.edt_street_number)
+    AppCompatEditText edt_number;
 
     @BindView(R.id.edt_mobile)
-    EditText edt_mobile;
+    AppCompatEditText edt_mobile;
 
     @BindView(R.id.edt_country_code)
-    EditText edt_country_code;
+    AppCompatEditText edt_country_code;
 
     @BindView(R.id.edt_tax_number)
-    EditText edt_tax_number;
+    AppCompatEditText edt_tax_number;
 
     @BindView(R.id.edt_first_name)
-    EditText edt_first_name;
+    AppCompatEditText edt_first_name;
 
     @BindView(R.id.edt_last_name)
-    EditText edt_last_name;
+    AppCompatEditText edt_last_name;
 
     @BindView(R.id.btn_next)
-    TextView btn_next;
+    AppCompatTextView btn_next;
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
@@ -109,55 +110,35 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     CheckBox private_sponsor;
 
     @BindView(R.id.btn_more_companies)
-    TextView btn_more_companies;
+    AppCompatTextView btn_more_companies;
 
-    @BindView(R.id.iv_user_fname)
-    ImageView iv_user_fname;
+    @BindView(R.id.btn_preview)
+    AppCompatTextView btn_preview;
 
-    @BindView(R.id.iv_user_lname)
-    ImageView iv_user_lname;
+    @BindView(R.id.edt_country)
+    AppCompatEditText edt_country;
+
+    @BindView(R.id.edt_city)
+    AppCompatEditText edt_city;
 
 
-    @BindView(R.id.iv_country)
-    ImageView iv_country;
-
-    @BindView(R.id.iv_city)
-    ImageView iv_city;
-
-    @BindView(R.id.iv_company_name)
-    ImageView iv_company_name;
-
-    @BindView(R.id.iv_zip_code)
-    ImageView iv_zip_code;
-
-    @BindView(R.id.iv_street_name)
-    ImageView iv_street_name;
-
-    @BindView(R.id.iv_street_no)
-    ImageView iv_street_no;
-
-    @BindView(R.id.iv_mobile)
-    ImageView iv_mobile;
-
-    @BindView(R.id.iv_email_icon)
-    ImageView iv_email_icon;
 
     DataLoadPresenter dataLoadPresenter;
-    SponcerChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
     ConnectionDetector connectionDetector;
 
-    int no_of_companies=0;
+    ArrayList<String> sponsorIds=new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_company_profile);
-        ButterKnife.bind(this);
+       super.onCreate(savedInstanceState);
+       setContentView(R.layout.activity_company_profile);
+       ButterKnife.bind(this);
   dataLoadPresenter=new DataLoadPresenter();
   dataLoadPresenter.attachView(this);
-  sponcerChallengePresenter=new SponcerChallengePresenter();
-  sponcerChallengePresenter.attachView(this);
+  sponsorChallengePresenter =new SponsorChallengePresenter();
+  sponsorChallengePresenter.attachView(this);
   connectionDetector=new ConnectionDetector(this);
   if(connectionDetector.isConnectingToInternet())
       loadData();
@@ -176,15 +157,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         btn_more_companies.setOnClickListener(this);
         title.setText("Company Profile");
         setStage(0);
-        setFoucusChange(edt_company_name,R.id.company_name_line,iv_company_name,new int[]{R.drawable.company_name_active,R.drawable.company_name_normal});
-        setFoucusChange(edt_first_name,R.id.firstname_line,iv_user_fname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
-        setFoucusChange(edt_last_name,R.id.lastname_line,iv_user_lname,new int[]{R.drawable.lastname_active,R.drawable.lastname_normal});
-        setFoucusChange(edt_zipcode,R.id.zipcode_line,iv_zip_code,new int[]{R.drawable.zipcode_active,R.drawable.zipcode_normal});
-        setFoucusChange(edt_Street,R.id.street_line,iv_street_name,new int[]{R.drawable.street_active,R.drawable.street_normal});
-        setFoucusChange(edt_number,R.id.number_line,iv_street_no,new int[]{R.drawable.streetno_active,R.drawable.streetno_normal});
-        setFoucusChange(edt_mobile,R.id.country_code_line,iv_mobile,new int[]{R.drawable.mobile_active,R.drawable.mobile_normal});
-        setFoucusChange(edt_user_email,R.id.user_mail_line,iv_email_icon,new int[]{R.drawable.email_active,R.drawable.email_normal});
-    }
+  }
 
     @Override
     public void onClick(View view) {
@@ -197,7 +170,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                     sponsorType=1;
             if(connectionDetector.isConnectingToInternet()) {
                 this.view=view;
-                sponcerChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
+                sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
                         edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
@@ -223,7 +196,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                         sponsorType=1;
                     if(connectionDetector.isConnectingToInternet()) {
                         this.view=view;
-                        sponcerChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
+                        sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                                 city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
                                 edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
@@ -252,11 +225,14 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         edt_user_email.setText(null);
         iv_profile_pic.setImageResource(R.drawable.photo_upload);
         newsImage=null;
-        spinner_country.setSelection(0);
-        spinner_city.setSelection(0);
+        edt_country.setText(null);
+        edt_city.setText(null);
+        country_pos=-1;
+        city_pos=-1;
+        city=null;
+        country=null;
     }
 
-    int country_pos=0,city_pos=0;
     private boolean validate() {
         if(newsImage==null){
             showMessage("Please Select logo for your company");
@@ -280,16 +256,16 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
             return false;
         }
 
-        if(country_pos==0)
+        if(country_pos<0)
         {
-            spinner_country.requestFocus();
-            showMessage("Please select Your Country");
+            edt_country.requestFocus();
+            edt_country.setError("Please select your Country");
             return false;
         }
-        if(city_pos==0)
+        if(city_pos<0)
         {
-            spinner_city.requestFocus();
-            showMessage("Please select Your City");
+            edt_city.requestFocus();
+            edt_city.setError("Please select your City");
             return false;
         }
         if(!ApiUrls.validateString(edt_zipcode.getText().toString()))
@@ -449,9 +425,18 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
         }
     }
-
+    /**
+     * active,inactive are the color codes of the highlighting colors of input fields
+     */
     String active="#FFFFFF",inactive="#CCCCCC";
-    void setFoucusChange(EditText editText, int id, final ImageView imageView, final int[] res){
+    /**
+     *
+     * @param editText is the input field
+     * @param id is the viewid of underline view
+     * @param imageView is the image view
+     * @param res are the image references of drawables
+     */
+    void setFoucusChange(AppCompatEditText editText, int id, final ImageView imageView, final int[] res){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -460,11 +445,6 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                 {
                     view.setBackgroundColor(Color.parseColor(active));
                     imageView.setImageResource(res[0]);
-//                    if(v.getId()==R.id.edt_dob){
-//                        edt_dob.setRawInputType(InputType.TYPE_CLASS_TEXT);
-//                        setDate(edt_dob);
-//                    }
-
                 }
                 else
                 {
@@ -476,6 +456,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     }
     ///////////image Picker tool//////////
+    /** Checking runtime permission related to this screen
+    */
     private boolean checkPermission(String permission) {
         if (Build.VERSION.SDK_INT >= 23) {
             int result = ContextCompat.checkSelfPermission(this, permission);
@@ -489,9 +471,19 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         }
     }
     public final static int RESULT_LOAD_IMAGE = 100,PERMISSION_REQUEST_CODE=2;
+
+    /**
+     * getGalleryImages is used to call the gallery to select the images to select logo of the company .
+     */
     private void getGalleryImages() {
-        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(i, RESULT_LOAD_IMAGE);
+
+        CropImage.activity()
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropMenuCropButtonTitle("Choose a Picture")
+                .start(this);
+//
+//        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
@@ -541,116 +533,137 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     }
 
     Country country=new Country();
-    private void displayList(final List<Country> dropDownItems, final Spinner spinner)
-    {
-        Country country1 = new Country();
-        country1.setCountryName("Select Country");
-        if(dropDownItems!=null)
-        dropDownItems.add(0, country1);
-        final List<String> lables=new ArrayList<String>();
-        for(Country dropDownItem:dropDownItems){
-            lables.add(dropDownItem.getCountryName());
-        }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
-                country=dropDownItems.get(i);
-                if(dropDownItems.get(i).getPhoneCode()!=null)
-                edt_country_code.setText("+ "+dropDownItems.get(i).getPhoneCode());
-                country_pos=i;
-                if(i>0)
-                dataLoadPresenter.loadCites(dropDownItems.get(i).getCountryId());
-                else
-                  onCitiesData(null);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-    }
     City city=new City();
-    private void displayListCity(final List<City> dropDownItems, final Spinner spinner)
+
+    int country_pos=-1,city_pos=-1;
+
+    /**
+     *  country_pos is used to hold the selected country position and city_pos is used to hold the selected country position
+     *  country is used to hold selected country object and   city is used to hold selected city object
+     * @param dropDownItems are the list of countries to show the user
+     * @param editText is the country field to fill after selection of one country
+     */
+    private void displayList(final List<Country> dropDownItems, final AppCompatEditText editText)
     {
-        final List<String> lables=new ArrayList<String>();
-        City city1 = new City();
-        city1.setCityName("Select City");
+        if(dropDownItems==null)
+            return;
 
-        if(dropDownItems!=null) {
-            dropDownItems.add(0, city1);
-            for (City dropDownItem : dropDownItems) {
-                lables.add(dropDownItem.getCityName());
-            }
-        }else {
-            lables.add("No Cities");
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCountryName();
         }
-
-
-
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        editText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.e("onItemSelected",""+lables.get(i));
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
 
-                city_pos=i;
-                if(dropDownItems!=null)
-                    city=dropDownItems.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
+                showFragment.show(getSupportFragmentManager(),"country");
 
             }
         });
 
+
+
+    }/**
+     * @param dropDownItems are the list of cites to show the user
+     * @param editText is the country field to fill after selection of one city
+     *                 if there is no city under contry selection is shows no cities in the country
+     */
+    private void displayListCity(final List<City> dropDownItems, final AppCompatEditText editText)
+    {
+        if(dropDownItems==null)
+        {
+            city_pos=-1;
+            editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showMessage("No Cites");
+                }
+            });
+            return;
+        }
+
+        final String[] lables=new String[dropDownItems.size()];
+        for(int index=0;index<dropDownItems.size();index++)
+        {
+            lables[index]=dropDownItems.get(index).getCityName();
+        }
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",editText.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"city");
+            }
+        });
+
+
     }
 
-
+    List<City> cities;
     @Override
     public void onCitiesData(List<City> cities) {
-
-        displayListCity(cities,spinner_city);
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
+        displayListCity(cities,edt_city);
     }
-
+    List<Country> countries;
     @Override
     public void onCountryData(List<Country> countries) {
-        displayList(countries,spinner_country);
-
+        this.countries=countries;
+        displayList(countries,edt_country);
     }
 
     @Override
     public void onAllCategories(List<Category> categories) {
 
     }
+
 View view=null;
+
+    /**
+     * the view is use  to  hold whether user is clicked on next or more company button
+     * for prepare for next step or create more companies to sponsor the challenge
+      *
+     * @param company is after successful registration of company
+     */
     @Override
     public void onCompanyRegister(Company company) {
-        userSession.addSponsor(company.getCompanyId());
+
+        sponsorIds.add(company.getCompanyId());
+
+
         if(view!=null){
             if(view.getId()==R.id.btn_more_companies){
-                no_of_companies++;
                 clearAll();
 
                 iv_profile_pic.requestFocus();
-                if(no_of_companies==2){
+                if(sponsorIds.size()==2){
                     view.setVisibility(View.GONE);
                 }
             }else if(view.getId()==R.id.btn_next){
+//                intent.putExtra("challenge_type",1);
+                StringBuilder ids=new StringBuilder();
+                for(int index=0;index<sponsorIds.size();index++)
+                {
+                    if(index>0)
+                        ids.append(',').append(sponsorIds.get(index));
+                      else
+                        ids.append(sponsorIds.get(index));
+
+                }
+                userSession.setSponsorIds(ids.toString());
                 Intent intent=new Intent(this,TheChallengeActivity.class);
-                intent.putExtra("challenge_type",1);
                 startActivity(intent);
             }
             }
@@ -662,6 +675,29 @@ View view=null;
 
     }
 
-//        userSession.setSponsorChallenge(company.getId());
+    @Override
+    public void onEditView(int view, int position) {
+        switch (view){
+            case R.id.edt_country:
+                if(countries!=null)
+                {
+                    dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                    edt_country_code.setText("+"+countries.get(position).getPhoneCode());
+                    edt_country.setText(countries.get(position).getCountryName());
+                    edt_city.setError(null);
+                    country_pos=position;
+                    country=countries.get(position);
+                }
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {
+                    edt_city.setText(cities.get(position).getCityName());
+                    edt_city.setError(null);
+                    city=cities.get(position);
+                    city_pos=position;}
+                break;
+        }
 
+    }
 }

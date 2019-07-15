@@ -3,13 +3,11 @@
    >
 
     <solid android:color="#FFCCCCCC"/>
-    <stroke android:color="#00FFFFFF"
-        android:width="8dp"
-        />
+
     <padding
-        android:top="5dp"
-        android:right="5dp"
-        android:left="5dp"
-        android:bottom="5dp"
+        android:top="13dp"
+        android:right="13dp"
+        android:left="13dp"
+        android:bottom="13dp"
         />
 </shape>

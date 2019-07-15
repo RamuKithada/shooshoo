@@ -9,7 +9,14 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AnotherEncryptClass {
-
+    /**
+     * used to encrypt the data to sote in preferences
+     * @param ivStr STring i.e, encrypted
+     * @param keyStr is key to encript
+     * @param bytes  Charecter set
+     * @return  result bytes of the string
+     * @throws Exception
+     */
     public static byte[] encrypt(String ivStr, String keyStr, byte[] bytes) throws Exception{
         MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(ivStr.getBytes());

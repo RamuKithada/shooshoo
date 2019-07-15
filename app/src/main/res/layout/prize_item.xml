@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_prize_product"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Product"
+        android:enabled="false"
+        android:text=""
+        android:fontFamily="@font/raleway_medium"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_prize_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Name"
+        android:enabled="false"
+        android:text=""
+        android:fontFamily="@font/raleway_medium"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_prize_worth"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:hint="Currency"
+
+        android:fontFamily="@font/raleway_medium"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_prize_number"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:hint="Number"
+        android:fontFamily="@font/raleway_medium"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+
+        />
+</LinearLayout>

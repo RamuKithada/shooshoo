@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_color"
+    android:padding="5dp">
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/white_text"
+        android:text="Challenge Title"
+        android:layout_margin="5dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        app:textAllCaps="true"
+        android:fontFamily="@font/raleway_extrabold"
+
+
+        />
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:textColor="@color/white_text"
+        android:text="@string/all"
+        android:fontFamily="@font/raleway_extrabold"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
+
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_below="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:listitem="@layout/challengers_item"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        >
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+
+</RelativeLayout>

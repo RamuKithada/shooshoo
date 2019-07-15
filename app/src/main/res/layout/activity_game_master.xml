@@ -96,7 +96,7 @@
                         android:layout_width="@dimen/edit_icon"
                         android:layout_height="@dimen/edit_icon"
                         android:padding="8dp"
-                        android:src="@drawable/lastname_normal"
+                        android:src="@drawable/username_normal"
                         android:layout_gravity="center_vertical"
                         />
                     <EditText
@@ -143,6 +143,8 @@
                         android:textColor="#FFFFFF"
                         android:textColorHint="#CCCCCC"
                         android:layout_margin="5dp"
+                        android:focusable="false"
+                        android:clickable="true"
                         android:hint="Date of Birth"
                         />
                 </LinearLayout>
@@ -167,32 +169,28 @@
                         android:src="@drawable/country_normal"
                         android:layout_gravity="center_vertical"
                         />
+
                     <RelativeLayout
                         android:id="@+id/country_lay"
-                        android:layout_height="wrap_content"
                         android:layout_width="match_parent"
-                        android:layout_weight="1"
-
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        >
-                        <Spinner
-                            android:id="@+id/spinner_country"
-                            android:layout_toLeftOf="@+id/iv_dropdown_county"
+
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/edt_country"
                             android:layout_width="match_parent"
-                            android:layout_centerInParent="true"
                             android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
                             android:layout_margin="5dp"
-                            android:background="#00FFFFFF"
-                            />
-                        <ImageView
-                            android:id="@+id/iv_dropdown_county"
-                            android:layout_width="@dimen/dropdown_icon"
-                            android:layout_height="@dimen/dropdown_icon"
-                            android:padding="8dp"
-                            android:layout_alignParentRight="true"
-                            android:src="@drawable/down_angel"
-                            android:layout_gravity="center_vertical"
-                            />
+                            android:hint="Country"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#CCCCCC"
+                            android:drawableRight="@drawable/ic_spinner_icon"
+                            android:background="#00FFFFFF" />
 
                     </RelativeLayout>
 
@@ -222,8 +220,8 @@
                         android:src="@drawable/city_normal"
                         android:layout_gravity="center_vertical"
                         />
-                    <Spinner
-                        android:id="@+id/spinner_city"
+                    <EditText
+                        android:id="@+id/edt_city"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -231,19 +229,15 @@
                         android:background="#00FFFFFF"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#CCCCCC"
+                        android:focusable="false"
+                        android:clickable="true"
                         android:layout_margin="5dp"
                         android:hint="City"
+                        android:drawableRight="@drawable/ic_spinner_icon"
                         />
 
 
-                    <ImageView
-                        android:id="@+id/iv_dropdown_city"
-                        android:layout_width="@dimen/dropdown_icon"
-                        android:layout_height="@dimen/dropdown_icon"
-                        android:padding="8dp"
-                        android:src="@drawable/down_angel"
-                        android:layout_gravity="center_vertical"
-                        />
+
                 </LinearLayout>
                 <View
                     android:id="@+id/city_line"
@@ -387,7 +381,7 @@
                                 android:textColor="#FFFFFF"
                                 android:textColorHint="#CCCCCC"
                                 android:layout_margin="6dp"
-                                android:hint="+91"
+                                android:hint=""
                                 />
                         </LinearLayout>
 
@@ -455,23 +449,23 @@
                         android:src="@drawable/gender_normal"
                         android:layout_gravity="center_vertical"
                         />
-                    <Spinner
-                        android:id="@+id/spinner_gender"
+                    <EditText
+                        android:id="@+id/edt_gender"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:background="#00FFFFFF"
                         android:layout_weight="1"
+                        android:background="#00FFFFFF"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#CCCCCC"
+                        android:hint="Gender"
+                        android:layout_margin="5dp"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:drawableRight="@drawable/ic_spinner_icon"
                         />
 
-                    <ImageView
-                        android:id="@+id/iv_dropdown_gender"
-                        android:layout_width="@dimen/dropdown_icon"
-                        android:layout_height="@dimen/dropdown_icon"
-                        android:padding="8dp"
-                        android:src="@drawable/down_angel"
-                        android:layout_gravity="center_vertical"
-                        />
+
                 </LinearLayout>
                 <View
                     android:id="@+id/gender_line"

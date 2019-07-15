@@ -3,36 +3,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp"
-
     >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/home_cat_shape"
+        android:layout_margin="2dp"
         >
 <ImageView
     android:id="@+id/image"
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:layout_margin="5dp"
-    android:scaleType="fitXY"
-    android:src="@drawable/rose"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:scaleType="centerCrop"
+    android:src="@drawable/h_m"
+    android:background="@color/white_text"
     android:layout_gravity="center"
     />
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Category"
             android:textSize="10sp"
+            android:maxLines="1"
+            android:maxEms="10"
+            android:text="category"
+            android:visibility="gone"
             android:textColor="#96918F"
-            android:layout_margin="5dp"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
 
             />
 

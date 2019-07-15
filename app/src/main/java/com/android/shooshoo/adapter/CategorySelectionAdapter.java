@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.android.shooshoo.R;
@@ -18,6 +19,9 @@ import com.android.shooshoo.models.CategoryModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is used in Audience activity in Jackpot challenge registration Process
+ */
 public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelectionAdapter.CategoryHolder> {
     Context context;
     List<Category> categoryList;
@@ -32,7 +36,6 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
         for (Category category:categoryList) {
             catNames.add(category.getCategoryName());
         }
-
         categoryModels.add(new CategoryModel(0,0));
         categoryModels.add(new CategoryModel(0,0));
         categoryModels.add(new CategoryModel(0,0));
@@ -47,10 +50,18 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategorySelectionAdapter.CategoryHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull CategorySelectionAdapter.CategoryHolder viewHolder, final int position) {
 
-       CategoryModel categoryModel=categoryModels.get(i);
+       final CategoryModel categoryModel=categoryModels.get(position);
         setAdapters(categoryModel,viewHolder);
+        viewHolder.iv_remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoryModels.remove(position);
+                notifyDataSetChanged();
+
+            }
+        });
 
 
 
@@ -58,7 +69,6 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     private void setAdapters(final CategoryModel categoryModel, final CategoryHolder viewHolder) {
         if(categoryList.size()>categoryModel.getCategory()) {
-
             ArrayAdapter<String> catArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, catNames);
             catArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -70,12 +80,13 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.e("position", "" + position);
                     categoryModel.setCategory(position);
-                    Category category = categoryList.get(position);
-                    List<String> list=category.getBrandNames();
+//                    Category category = categoryList.get(position);
+
+                   /* List<String> list=category.getBrandNames();
                     if (list.size()==0){
                         list.add("No Subcategory");
-                    }
-                        ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
+                    }*/
+                 /*   ArrayAdapter<String> brandArrayAdapter = new ArrayAdapter<String>(context, R.layout.spinnet_text, list);
                     brandArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     viewHolder.subcategorySpinner.setAdapter(brandArrayAdapter);
                     if(category.getBrandNames().size()>categoryModel.getSubcategory())
@@ -90,7 +101,7 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
-                    });
+                    });*/
 
                 }
 
@@ -109,9 +120,14 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
     public int getItemCount() {
         return categoryModels.size();
     }
+
+    /**
+     * It is called to add new item to list
+     */
     public void add(){
+        int pos=categoryModels.size();
         categoryModels.add(new CategoryModel(0,0));
-        notifyDataSetChanged();
+        notifyItemInserted(pos);
     }
 
     public List<CategoryModel> getCategoryModels() {
@@ -120,11 +136,13 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
 
     public class CategoryHolder extends RecyclerView.ViewHolder{
          Spinner categorySpinner;
-         Spinner subcategorySpinner;
+//         Spinner subcategorySpinner;
+         ImageView iv_remove;
         public CategoryHolder(@NonNull View itemView) {
             super(itemView);
             categorySpinner=itemView.findViewById(R.id.spinner_category);
-            subcategorySpinner=itemView.findViewById(R.id.spinner_subcategory);
+//            subcategorySpinner=itemView.findViewById(R.id.spinner_subcategory);
+            iv_remove=itemView.findViewById(R.id.iv_remove);
 
         }
     }

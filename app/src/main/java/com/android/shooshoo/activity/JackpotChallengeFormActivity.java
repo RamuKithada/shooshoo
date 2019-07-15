@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,15 +30,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.views.JackpotChallengeView;
-import com.android.shooshoo.views.SponsorChallengeView;
+//import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -45,9 +45,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -56,7 +54,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView {
+/**{@link JackpotChallengeFormActivity} is The
+ * Challenge screen in process of jackpot challenge creation.
+ * Here we show the challenge name and audience size from previous screen and for name challenge is stored in preferences
+ *
+ *
+ */
+public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView, FragmentListDialogListener {
+
     @BindView(R.id.btn_next)
     TextView btn_next;
     @BindView(R.id.iv_back)
@@ -85,14 +90,10 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     @BindView(R.id.edt_challenge_des)
     EditText edt_challenge_des;
 
-//    @BindView(R.id.edt_photo_entries)
-//    EditText edt_photo_entries;
-//
-//    @BindView(R.id.edt_video_entries)
-//    EditText edt_video_entries;
+    @BindView(R.id.edt_video_sizes)
+    EditText edt_video_sizes;
 
-    @BindView(R.id.spinner_video_sizes)
-    Spinner spinner_video_sizes;
+
 
     @BindView(R.id.banner_card)
     CardView bannerCard;
@@ -115,8 +116,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     JackpotChallengePresenter sponcerChallengePresenter;
     String  challengeImageUri=null;
     String challengeVideoUri=null;
-    private int sizePos=0;
-    final String[] lables=new String[]{"Max Length","1 min","50 sec","40 sec","30 sec","20 sec"};
+    private int sizePos=-1;
+    final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,17 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         edt_startdate.setOnClickListener(this);
         edt_enddate.setOnClickListener(this);
         edt_end_time.setOnClickListener(this);
-
+      edt_video_sizes.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+              Bundle args = new Bundle();
+              args.putStringArray("list",lables);
+              args.putInt("view",edt_video_sizes.getId());
+              showFragment.setArguments(args);
+              showFragment.show(getSupportFragmentManager(),"limit");
+          }
+      });
         connectionDetector=new ConnectionDetector(this);
         sponcerChallengePresenter=new JackpotChallengePresenter();
         sponcerChallengePresenter.attachView(this);
@@ -151,22 +162,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
 //        setFocusChange(edt_photo_entries,R.id.edt_photo_entries_line);
 //        setFocusChange(edt_video_entries,R.id.edt_video_entries_line);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_video_sizes.setAdapter(dataAdapter);
-        spinner_video_sizes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sizePos=position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
     }
 
     @Override
@@ -187,9 +182,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
                         if(ch_mini_game.isChecked())
                             minigame="yes";
-
-
-
                         sponcerChallengePresenter.createChallenge(userSession.getUserId(),userSession.getSponsorChallenge(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
@@ -206,6 +198,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                 setTime((EditText) view);
                 break;
             case R.id.edt_startdate:
+                setDate((EditText) view);
+                break;
             case R.id.edt_enddate:
                 setDate((EditText) view);
                 break;
@@ -216,7 +210,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.video_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
-                    getGalleryVideos();
+                       getGalleryVideos();
                 else requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
         }
@@ -250,32 +244,43 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             edt_end_time.requestFocus();
             return false;
         }
+
+            try
+            {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
+                String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
+                Date date1 = format.parse(dateStr);
+                Date date2 = format.parse(dateEnd);
+
+                if(date2.before(date1)){
+                    showMessage("Please select End time  after the Start time");
+                    return false;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
             edt_challenge_des.setError("Provide Description");
             edt_challenge_des.requestFocus();
             return false;
         }
 
-        /*if(!ApiUrls.validateString(edt_photo_entries.getText().toString())){
-            edt_photo_entries.setError("Enter a number");
-            edt_photo_entries.requestFocus();
-            return false;
-        }
 
-        if(!ApiUrls.validateString(edt_video_entries.getText().toString())){
-            edt_video_entries.setError("Enter a number");
-            edt_video_entries.requestFocus();
-            return false;
-        }*/
-        if(sizePos==0){
-            spinner_video_sizes.requestFocus();
-            showMessage("Please set Limit?");
+        if(sizePos<0){
+            edt_video_sizes.requestFocus();
+            edt_video_sizes.setError("Please set Limit?");
             return false;
         }
 
 
         if(!ch_video_entites.isChecked()&&!ch_photo_entites.isChecked()){
-            showMessage("Select atleast one type from videos Entries and Photo Entries");
+            showMessage("Select at least one type from videos Entries and Photo Entries");
             return false;
         }
 
@@ -334,16 +339,15 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     }
 
     private void getGalleryVideos() {
+
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-//        intent.setType("video/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), RESULT_LOAD_VIDEO);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
 
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-            Toast.makeText(this, "Get account permission allows us to get your email",
-                    Toast.LENGTH_LONG).show();
+         /*   Toast.makeText(this, "Get account permission allows us to get your email",
+                    Toast.LENGTH_LONG).show();*/
         }
         ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSION_REQUEST_CODE);
     }
@@ -434,7 +438,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
         }
     }
-
+int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
     private void setDate(final EditText edt_dob) {
 
@@ -442,6 +446,9 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                startYear=year;
+                startDate=dayOfMonth;
+                startMonth=month;
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);
@@ -450,6 +457,17 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        if(edt_dob.getId()==R.id.edt_enddate)
+        {
+            if(startDate>0&&startMonth>0&&startYear>0) {
+                c.set(startYear, startMonth, startDate);
+                edt_startdate.getText();
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            }else {
+                showMessage("Please select first Starting date and time");
+                return;
+        }
+        }
         datePickerDialog.show();
     }
 
@@ -468,6 +486,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                     Date date = calendar.getTime();
+
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
                     simpleDateFormat.applyPattern("HH:mm:ss");
                     time.setText(simpleDateFormat.format(date));
@@ -489,5 +508,12 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         Intent intent=new Intent(this, AudienceInstructionActivity.class);
         intent.putExtra("challenge_type",2);
         startActivity(intent);
+    }
+
+    @Override
+    public void onEditView(int view, int position) {
+          sizePos=position;
+        if(lables.length>position)
+        edt_video_sizes.setText(lables[position]);
     }
 }

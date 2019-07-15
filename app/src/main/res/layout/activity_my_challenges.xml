@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
+    tools:context=".activity.MyChallengesActivity">
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="Challenge"
+            app:textAllCaps="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="#ffffff"
+            />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/back_arrow"
+            />
+
+        <ImageView
+            android:id="@+id/iv_report"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:rotation="90"
+            app:srcCompat="@drawable/three_dots_icon"
+            />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="5dp"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottom_navi_view">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants"
+            >
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#008a8a8a"
+            app:cardCornerRadius="5dp"
+            android:padding="5dp"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="5dp"
+                android:padding="2dp"
+                >
+
+
+                <RelativeLayout
+                    android:id="@+id/video_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="380dp"
+                    android:padding="5dp"
+                    >
+                    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+                        android:id="@+id/player"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:resize_mode="fit"
+                        app:surface_type="texture_view"
+                        app:use_controller="false"
+                        />
+
+                    <ImageView
+                        android:id="@+id/save_challenge"
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@color/pink_drak"
+                        android:src="@drawable/save_icon"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="centerInside"
+                        />
+                    <ImageView
+                        android:id="@+id/iv_playpause"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/circler_view_bg"
+                        android:visibility="gone"/>
+                    <ImageView
+                        android:id="@+id/video_thumb"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/hotel_challange"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        />
+                </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="2dp"
+                        android:text="H M Hamburg Neueroffnung"
+                        android:textColor="@color/white_text"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="5000 €"
+                        android:layout_alignParentRight="true"
+                        android:padding="2dp"
+                        android:background="@color/pink_drak"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textColor="@color/white_text"
+                        />
+
+
+                </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    >
+                    <TextView
+                        android:id="@+id/sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alles was du brauchst"
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:layout_toLeftOf="@+id/participants"
+                        android:padding="2dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+                    <TextView
+                        android:id="@+id/tv_key_des"
+                        android:layout_below="@+id/sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="win da 500 $ coupon "
+                        android:padding="2dp"
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentLeft="true"
+
+
+                        />
+                    <TextView
+                        android:id="@+id/participants"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4373 participants "
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_participants"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+
+        </android.support.v7.widget.CardView>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center"
+    android:gravity="left"
+    >
+<LinearLayout
+    android:id="@+id/camera"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+
+    >
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/upload"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_text"
+        android:text="Let’s start"
+        android:fontFamily="@font/raleway_medium"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/rules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/rules"
+            android:layout_gravity="center"
+
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_text"
+            android:text="Rules"
+            android:fontFamily="@font/raleway_medium"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/h_m"
+            android:layout_gravity="center"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_text"
+            android:text="@string/h_m"
+            android:fontFamily="@font/raleway_medium"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:background="#FFC107"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_text"
+            android:text="Member Points"
+            android:textSize="12dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white_text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 100 "
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_gray"
+            />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="@color/white_text"
+          android:fontFamily="@font/raleway_medium"
+          android:padding="5dp"
+          android:layout_gravity="left"
+          android:gravity="center"
+          android:textAppearance="?android:attr/textAppearanceMedium"
+          android:text="Recent Posts"
+          />
+
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_recent_posts"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+
+</android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradiant_home_bottom_navi"
+        android:layout_alignParentBottom="true"
+        >
+        <include layout="@layout/bottom_navi"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

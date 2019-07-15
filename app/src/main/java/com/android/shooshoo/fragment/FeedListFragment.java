@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,8 @@ public class FeedListFragment extends Fragment implements View.OnClickListener{
     private static final String ARG_PARAM2 = "param2";
     RecyclerView list;
     FeedsImagesAdapter adapter;
-    LinearLayoutManager layoutManager;
+    GridLayoutManager layoutManager;
+    int[] images=new int[]{R.drawable.food_context1,R.drawable.food_context2,R.drawable.food_context3,R.drawable.food_context4,R.drawable.food_context5};
 
 
     // TODO: Rename and change types of parameters
@@ -66,11 +68,11 @@ public class FeedListFragment extends Fragment implements View.OnClickListener{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         list = view.findViewById(R.id.list);
-        layoutManager = new LinearLayoutManager(getActivity());
-        SnapHelper snapHelper = new PagerSnapHelper();
+        layoutManager = new GridLayoutManager(getActivity(),2);
+//        SnapHelper snapHelper = new PagerSnapHelper();
         list.setLayoutManager(layoutManager);
-        snapHelper.attachToRecyclerView(list);
-        adapter = new FeedsImagesAdapter();
+//        snapHelper.attachToRecyclerView(list);
+        adapter = new FeedsImagesAdapter(images);
         adapter.setListener(this);
         list.setAdapter(adapter);
     }

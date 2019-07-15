@@ -17,19 +17,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/***
+ * CategoryChooseAdapter is used to present the list of Categories When the user registration process
+ */
 public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAdapter.CatViewHolder> {
     String active="#CCCCCC",inactive="#FFFFFF";
    int[] isActive=new int[0];
    List<Category> categories=new ArrayList<Category>();
    Context context;
-   int width=100;
 
     public CategoryChooseAdapter(Context context) {
         this.context = context;
-        width=context.getResources().getDisplayMetrics().widthPixels;
     }
 
+    /***
+     *  to attach categories
+     * @param categories list of categories
+     */
     public void setCategories(List<Category> categories) {
 
         if(categories!=null) {
@@ -51,27 +55,37 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         Category category=categories.get(i);
         catViewHolder.textView.setText(category.getCategoryName());
-        Picasso.with(context).load(ApiUrls.IMAGE_URL+"category/"+category.getIcon()).into(catViewHolder.imageView);
+        /**
+         * here change color of the selected background
+         */
+
         if(isActive[i]==1)
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
+            catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
         }
         else
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_unselected);
+            catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.bg_color));
         }
 
         catViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            /**
+             * here change color of the selected background
+             */
               @Override
               public void onClick(View v) {
                   isActive[i]=Math.abs(isActive[i]-1);
                   if(isActive[i]==1)
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
+                      catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
                   }
                   else
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_unselected);
+                      catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.bg_color));
                   }
               }
           });
@@ -86,6 +100,10 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
 
         return categories.size();
     }
+    /**
+     * get list selected categories id in String format
+     * @return the selected categories ids
+     */
     public String getCats(){
 StringBuilder builder=new StringBuilder();
         if(categories!=null&&categories.size()>0)
@@ -105,6 +123,10 @@ StringBuilder builder=new StringBuilder();
         return builder.toString();
 
     }
+    /**
+     * get list selected categories size
+     * @return size of the selected categories
+     */
     public int selectedSize(){
         int selected_size=0;
         if(categories!=null&&categories.size()>0)
@@ -119,12 +141,10 @@ StringBuilder builder=new StringBuilder();
 
     public class CatViewHolder extends RecyclerView.ViewHolder{
          RelativeLayout cardView;
-         ImageView imageView;
          TextView textView;
         public CatViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView=itemView.findViewById(R.id.card);
-            imageView=itemView.findViewById(R.id.image);
             textView=itemView.findViewById(R.id.name);
 
         }

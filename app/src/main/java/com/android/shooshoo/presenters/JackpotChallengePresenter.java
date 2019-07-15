@@ -13,7 +13,9 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/** {@link JackpotChallengePresenter} is used to call web service related to create or save JackpotAudience challenge
+ * {@link JackpotChallengeView} is used by {@link JackpotChallengePresenter} to interact with activity that want use {@link JackpotChallengePresenter}
+ */
 public class JackpotChallengePresenter implements BasePresenter<JackpotChallengeView> {
   private   RetrofitApis retrofitApis;
   private   JackpotChallengeView view;
@@ -26,6 +28,8 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     @Override
     public void detachView() {
+        if(view!=null)
+        view.showProgressIndicator(false);
         retrofitApis=null;
         view =null;
 
@@ -33,19 +37,25 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
   Callback<GameMasterResult> callback=new Callback<GameMasterResult>() {
       @Override
       public void onResponse(Call<GameMasterResult> call, Response<GameMasterResult> response) {
-          view.showProgressIndicator(false);
-          if(response.isSuccessful()){
-              GameMasterResult companyResponse=response.body();
-                     view.showMessage(companyResponse.getMessage());
-              if(companyResponse.getStatus()==1)
-                  view.onGameMasterCreate(companyResponse.getGameMaster());
+          if (view != null) {
+              view.showProgressIndicator(false);
+              if (response.isSuccessful()) {
+                  GameMasterResult companyResponse = response.body();
+                  view.showMessage(companyResponse.getMessage());
+                  if (companyResponse.getStatus() == 1)
+                      view.onGameMasterCreate(companyResponse.getGameMaster());
+              }
           }
       }
 
       @Override
       public void onFailure(Call<GameMasterResult> call, Throwable t) {
-          view.showProgressIndicator(false);
-          view.showMessage(t.getMessage());
+
+          if (view != null) {
+              view.showProgressIndicator(false);
+              view.showMessage(t.getMessage());
+          }
+
       }
   };
 
@@ -62,18 +72,26 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
             RequestBody reqFile= RequestBody.create(MediaType.parse("image/*"), file);
             body = MultipartBody.Part.createFormData("masterLogo", file.getName(), reqFile);
         }
+        if(view!=null){
         view.showProgressIndicator(true);
         retrofitApis.saveGameMaster(body,getTextPart(userid),getTextPart(firstName),getTextPart(lastName),getTextPart(dob),
                 getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(streetName),getTextPart(streetNumber),
                 getTextPart(mobileNumber),getTextPart(gender))
-                .enqueue(callback);
+                .enqueue(callback);}
     }
 
 
 
     public void createChallenge(String  userId,String  challengeId,String  bannerImage,String challVideo,String challName,
                                 String  startDate,String  startTime,String  endDate,String  endtime,String  description,
-                                String  photoEntries, String  videoEntries,String miniGame,String  maxLength){
+                                String  photoEntries, String  videoEntries,String miniGame,String  videoLength){
+
+
+        String  maxLength=videoLength;
+        if(videoLength.toLowerCase().contains("sec"))
+            maxLength=videoLength.toLowerCase().replace("sec"," ").trim();
+        else if(videoLength.toLowerCase().contains("sec"))
+            maxLength=videoLength.toLowerCase().replace("min"," ").trim();
 
         File bannerImagefile=null;
         MultipartBody.Part bannerImageBody=null;
@@ -92,12 +110,14 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
             RequestBody reqFile= RequestBody.create(MediaType.parse("video/*"), challengeVideofile);
             challengeVideoBody = MultipartBody.Part.createFormData("challengeVideo", challengeVideofile.getName(), reqFile);
         }
+        if(view!=null){
         view.showProgressIndicator(true);
         retrofitApis.saveJackpotChallenge(getTextPart(userId),getTextPart(challengeId),bannerImageBody,challengeVideoBody,
                 getTextPart(challName),getTextPart(startDate),getTextPart(startTime),getTextPart(endDate),
                 getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),getTextPart(videoEntries),
                 getTextPart(miniGame),getTextPart(maxLength))
                 .enqueue(callback);
+        }
 
 
 
@@ -116,10 +136,17 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
                                String winners,String radar,String audZipcode,String audMiles, String personalAddress,
                                String categories,String brands,String ageStart, String ageEnd,String gender) {
 
-        view.showProgressIndicator(true);
-                retrofitApis.saveJackpotAudience(challenegId,userId,amount,keyDescription,priceWorth,
-                limitedAccess,winners,radar,audZipcode,audMiles,personalAddress,
-                categories,brands,ageStart,ageEnd,gender).enqueue(callback);
+        String mWinners=winners.toLowerCase().replace("top"," ").trim();
+        String mAudMiles=audMiles.toLowerCase().replace("miles"," ").trim();
+        String mAgeStart=ageStart.toLowerCase().replace("years"," ").trim();
+        String mAgeEnd=ageEnd.toLowerCase().replace("years"," ").trim();
+
+        if(view!=null) {
+            view.showProgressIndicator(true);
+            retrofitApis.saveJackpotAudience(challenegId, userId, amount, keyDescription, priceWorth,
+                    limitedAccess, mWinners, radar, audZipcode, mAudMiles, personalAddress,
+                    categories, brands, mAgeStart, mAgeEnd, gender).enqueue(callback);
+        }
 
     }
 }

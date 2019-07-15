@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant_home"
+    tools:context=".activity.SponsorAudienceActivity">
+<include layout="@layout/stagebar_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="2dp"
+                    android:gravity="center"
+                    android:textAllCaps="true"
+                    android:text="@string/prize"
+                    android:textColor="#85868A"
+                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total : "
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                    android:padding="2dp"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_price_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10,000 $"
+                    android:fontFamily="@font/raleway_extrabold"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:padding="2dp"
+                    android:background="@color/pink_drak"
+                    android:textColor="@color/white_text"
+                    />
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_price_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                tools:itemCount="3"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                tools:listitem="@layout/cash_item"
+                android:orientation="vertical"
+                >
+
+
+            </android.support.v7.widget.RecyclerView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="4"
+                        >
+
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/et_prize_type"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:hint="Cash"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/raleway_medium"
+                            android:text=""
+                            android:textColorHint="@color/white_text"
+                            android:textColor="@color/white_text"
+                            android:theme="@style/MyEditTextTheme"
+                            />
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="3"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:id="@+id/product_lay"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                >
+
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_prize_name"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="textPersonName"
+                                    android:hint="Name"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme" />
+
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_prize_worth"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="numberDecimal"
+                                    android:hint="Worth"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme"
+                                    />
+
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_prize_number"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="number"
+                                    android:hint="Number"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme"
+
+                                    />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:id="@+id/cash_lay"
+                                android:visibility="visible"
+                                >
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_cash_amount"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="numberDecimal"
+                                    android:hint="Amount"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme" />
+
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_cash_currency"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="textPersonName"
+                                    android:hint="Currency"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme"
+                                    />
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1"/>
+
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+                    <ImageView
+                        android:id="@+id/btn_more_prizes"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:padding="5dp"
+                        android:scaleType="centerInside"
+                        android:layout_margin="8dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/add_plus_icon"
+
+                        />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_text"
+                    android:text="Rewards selection"
+                    app:textAllCaps="true"
+                    android:textSize="14sp"
+                    />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    >
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:text="Top "
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        />
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/no_of_winners"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:fontFamily="@font/raleway_medium"
+                        android:text="100"
+                        android:minWidth="100dp"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme" />
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/challenge_radar"
+                android:textSize="18sp"
+                android:padding="5dp"
+                android:textColor="#FFF"
+                android:layout_margin="10dp"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                >
+                <RelativeLayout
+                  android:id="@+id/national_lay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_margin="5dp"
+                    >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_national"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="National"
+                    android:fontFamily="@font/raleway_extrabold"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/international_lay"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:layout_margin="5dp"
+                    >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_international"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="International"
+                    android:fontFamily="@font/raleway_extrabold"
+                    android:textAllCaps="true"
+                    android:textColor="#85868A"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edt_country"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:hint="Country"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        android:paddingRight="15dp"
+                        />
+                        <android.support.v7.widget.AppCompatEditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:fontFamily="@font/raleway_medium"
+                            android:gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:textColorHint="@color/white_text"
+                            android:textColor="@color/white_text"
+                            android:theme="@style/MyEditTextTheme"
+                            android:id="@+id/edt_zipcode"
+                            android:layout_gravity="center_vertical"
+                            android:paddingRight="20dp"
+                            android:hint="Zip Code"
+                        />
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edt_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:hint="City"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        />
+                    <android.support.v7.widget.AppCompatEditText
+
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:fontFamily="@font/raleway_medium"
+                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        android:id="@+id/edt_miles"
+                        android:layout_gravity="center_vertical"
+                        android:paddingRight="20dp"
+                        android:hint="Miles"
+                        />
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:visibility="gone"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_text"
+                    android:text="Personal Address"
+                    android:textSize="14sp"
+                    />
+
+                <EditText
+                    android:id="@+id/edt_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="#00FFFFFF"
+                    android:layout_margin="5dp"
+                    android:textColor="#FFFFFF"
+                    android:inputType="textPersonName"
+                    android:textColorHint="#CCCCCC"
+                    android:hint="Enter your address"
+                    />
+                <View
+                    android:id="@+id/edt_address_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_gray"
+                    />
+            </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/categories"
+                android:fontFamily="@font/raleway_extrabold"
+                android:textAllCaps="true"
+                android:textColor="#85868A"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                />
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cat_subcat_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="45dp"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="3"
+                tools:listitem="@layout/add_category_item"
+                >
+
+
+            </android.support.v7.widget.RecyclerView>
+
+                <ImageView
+                    android:id="@+id/btn_more_categories"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:layout_gravity="right|bottom"
+                    android:src="@drawable/add_plus_icon"
+                    />
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/target_audience"
+                android:fontFamily="@font/raleway_extrabold"
+                android:textAllCaps="true"
+                android:textColor="#85868A"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginTop="10dp"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:text="Age range"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:textColor="@color/white_text"
+                    android:layout_margin="10dp"
+                    />
+
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/edt_min_age"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="#00FFFFFF"
+                            android:layout_margin="5dp"
+                            android:text="13"
+                            android:inputType="number"
+                            android:gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:textColorHint="@color/white_text"
+                            android:textColor="@color/white_text"
+                            android:theme="@style/MyEditTextTheme" />
+<View
+    android:layout_width="20dp"
+    android:layout_height="1dp"
+    android:background="@color/white_text"
+    android:layout_gravity="center_vertical"
+    />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_max_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="#00FFFFFF"
+                    android:layout_margin="5dp"
+                    android:text="13"
+                    android:inputType="number"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:textColorHint="@color/white_text"
+                    android:textColor="@color/white_text"
+                    android:theme="@style/MyEditTextTheme" />
+
+
+
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edt_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:text="Male"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:inputType="text"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:textColorHint="@color/white_text"
+                android:textColor="@color/white_text"
+                android:theme="@style/MyEditTextTheme"
+                />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="#393738"
+                app:cardElevation="5dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"
+                    >
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/outreach"
+                        android:textColor="#FFFFFF"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textSize="18sp"
+                        android:fontFamily="@font/raleway_extrabold"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="horizontal">
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/audience_size_lable2"
+                        android:layout_margin="10dp"
+                        android:textColor="#939393"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/raleway_medium"
+
+                        />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/audience_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ca 1.121.132"
+                        android:textColor="#FFFFFF"
+                        android:fontFamily="@font/futura_medium_bt"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                        />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:id="@+id/btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="@string/next"
+                android:textSize="18sp"
+                android:textColor="#FFF"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:background="@drawable/submit_button"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+</LinearLayout>

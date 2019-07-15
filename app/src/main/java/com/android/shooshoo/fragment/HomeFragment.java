@@ -1,32 +1,50 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
+import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.ViewAllChallengesActivity;
+import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
+import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.Category;
+import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.models.HomeResponse;
+import com.android.shooshoo.presenters.HomePresenter;
+import com.android.shooshoo.utils.ApiUrls;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.HomeView;
+
+import java.util.ArrayList;
+
+import static com.android.shooshoo.fragment.ViewAllChallenges_Fragment.SERVICE_TYPE;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This is fragment to present Home tab view
+ *
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener,HomeView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,20 +54,41 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    /**
+     * sponsor_viewall,jackpot_viewall,category_viewall are view buttons in respective  categories sponsor challenges,jackpot challenges,categories
+     *
+     */
+    AppCompatTextView sponsor_viewall,jackpot_viewall,category_viewalll;
+
+    private HomeView mListener;
+    //Jackpot challenge List adapter
     JackpotChallengersAdapter jackpotChallengersAdapter;
+
+    //Sponsor challenge List adapter
     SponsorChallengersAdapter sponsorChallengersAdapter;
+
+    //Brand  List adapter to show brand list view
     HomeBrandAdapter homeBrandAdapter;
+
+    //Category  List adapter to show Category list view
     HomeCategoryAdapter homeCategoryAdapter;
 
+    //  sponsor challengeModels is used to hold jackpot challenges list
+    ArrayList<Challenge> sponsorChallenges=new ArrayList<Challenge>();
 
+    //  jackpoy challengeModels is used to hold Sponsor challenges list
+    ArrayList<Challenge> jackpotChallenges=new ArrayList<Challenge>();
+
+    ArrayList<Brand> brands=new ArrayList<Brand>();
+    ArrayList<Category> categories=new ArrayList<Category>();
+
+
+    HomePresenter homePresenter;
+    ConnectionDetector connectionDetector;
+    UserSession userSession;
 
     public HomeFragment() {
-        // Required empty public constructor
-        jackpotChallengersAdapter=new JackpotChallengersAdapter();
-        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter();
-        homeCategoryAdapter=new HomeCategoryAdapter();
+
     }
 
     /**
@@ -58,6 +97,7 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
+     *
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -77,6 +117,7 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -93,15 +134,76 @@ public class HomeFragment extends Fragment {
         RecyclerView sponsorList=view.findViewById(R.id.sponsor_challengers_list);
         RecyclerView jackpotList=view.findViewById(R.id.jackpot_challengers_list);
         RecyclerView catList=view.findViewById(R.id.category_challengers_list);
+        RecyclerView extralist=view.findViewById(R.id.extra_list);
+        extralist.setLayoutManager(new LinearLayoutManager(getContext()));
+        extralist.setAdapter(new ChallengesMainListAdapter(getContext()));
+        sponsor_viewall=view.findViewById(R.id.sponsor_viewall);
+        jackpot_viewall=view.findViewById(R.id.jackpot_viewall);
+        category_viewalll=view.findViewById(R.id.category_viewall);
+        sponsor_viewall.setOnClickListener(this);
+        jackpot_viewall.setOnClickListener(this);
+        category_viewalll.setOnClickListener(this);
         setLayoutManager(sponsorList);
         setLayoutManager(brandsList);
         setLayoutManager(jackpotList);
         setLayoutManager(catList);
+        jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
+        sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
+        //new SponsorChallengersAdapter(getContext(),null);
+        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands);
+        homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);
         jackpotList.setAdapter(jackpotChallengersAdapter);
         catList.setAdapter(homeCategoryAdapter);
+        /**
+         * to get item from the sponsor list when selected one item.
+         */
 
+        sponsorList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), sponsorList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("challenge",sponsorChallenges.get(position));
+                intent.putExtra("type",1);
+//                intent.putExtra("image",schallengeModels.get(position).getImage());
+//                intent.putExtra("name",schallengeModels.get(position).getTitle());
+//                intent.putExtra("des",schallengeModels.get(position).getDescription());
+//                // to  open Challenge details  activity
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        /**
+         * to get item from the jackpot challenges list when selected one item.
+         * onItemclick listener for Recyclerview.
+         */
+        jackpotList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), jackpotList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("challenge",jackpotChallenges.get(position));
+                intent.putExtra("type",2);
+//                intent.putExtra("image",challengeModels.get(position).getImage());
+//                intent.putExtra("name",challengeModels.get(position).getTitle());
+//                intent.putExtra("des",challengeModels.get(position).getDescription());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        homePresenter.attachView(this);
+        if(connectionDetector.isConnectingToInternet())
+        homePresenter.loadHome(userSession.getUserId());
+        else
+            showMessage("No Internet Connection");
     }
 
     private void setLayoutManager(RecyclerView brandsList) {
@@ -109,42 +211,108 @@ public class HomeFragment extends Fragment {
         brandsList.setLayoutManager(manager);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+
+    /**
+     *
+     * @param context is used to interact with Home activity
+     *                Home Activity must implement OnFragmentInteractionListener
+     *                else it throws Runtime error
+     */
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof HomeView) {
+            mListener = (HomeView) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement HomeView");
         }
+        homePresenter=new HomePresenter();
+        connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
+
     }
 
     @Override
     public void onDetach() {
-        super.onDetach();
+        homePresenter.detachView();
         mListener = null;
+        super.onDetach();
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     *
+     * onClick is used to click functionality of view all buttons
+     * @param v  is one of the sponsor_viewall,jackpot_viewall,category_viewall
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        switch (v.getId()){
+            case R.id.sponsor_viewall:
+
+         intent=new Intent(getActivity(), ViewAllChallengesActivity.class);
+               intent.putExtra(SERVICE_TYPE, ApiUrls.SPONSERS);
+                intent.putExtra("title","Sponsor Challenges");
+        startActivity(intent);
+        break;
+            case R.id.jackpot_viewall:
+                 intent=new Intent(getActivity(),  ViewAllChallengesActivity.class);
+                intent.putExtra(SERVICE_TYPE,ApiUrls.JACKPOTS);
+                intent.putExtra("title","Jackpot Challenges");
+                startActivity(intent);
+                break;
+            case R.id.category_viewall:
+                 intent=new Intent(getActivity(), CategoryWiseChallengerActivity.class);
+                intent.putExtra("title","My Categories");
+                intent.putExtra("catId",3);
+                startActivity(intent);
+                break;
+        }
+
     }
+
+    /**
+     *
+     * @param response are the data fron server to show list of sponsor challenges
+     *
+     */
+
+    @Override
+    public void onLoadService(HomeResponse response) {
+        if(mListener!=null)
+        mListener.onLoadService(response);
+        if(response.getStatus()==1) {
+            sponsorChallenges.addAll(response.getSponsorChallenges());
+            sponsorChallengersAdapter.notifyDataSetChanged();
+            jackpotChallenges.addAll(response.getJackpotsChallenges());
+            jackpotChallengersAdapter.notifyDataSetChanged();
+            brands.addAll(response.getBrands());
+            categories.addAll(response.getCategories());
+            homeBrandAdapter.notifyDataSetChanged();
+         homeCategoryAdapter.notifyDataSetChanged();
+
+        }
+    }
+
+    @Override
+    public void showMessage(int stringId) {
+        if(mListener!=null)
+     mListener.showMessage(stringId);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        if(mListener!=null)
+mListener.showMessage(message);
+    }
+
+    @Override
+    public void showProgressIndicator(Boolean show) {
+        if(mListener!=null)
+           mListener.showProgressIndicator(show);
+    }
+
+
 }

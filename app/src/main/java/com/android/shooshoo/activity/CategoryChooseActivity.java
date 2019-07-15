@@ -2,6 +2,7 @@ package com.android.shooshoo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -27,14 +29,23 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+/**{@link CategoryChooseActivity} is used to select Categories
+ *  the user select at least 3 Categories from the list then
+ *  he can complete the registration step 3 otherwise he can skip this process.
+ */
 
 public class CategoryChooseActivity extends BaseActivity implements UpdateUserInfoView,View.OnClickListener{
+
+
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;
 
     @BindView(R.id.next_lay)
-    RelativeLayout next_lay;
+    AppCompatTextView next_lay;
 
+    /***
+     * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
+     */
     @BindView(R.id.button1)
     Button button1;
 
@@ -44,14 +55,12 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     @BindView(R.id.button3)
     Button button3;
 
-    @BindView(R.id.button4)
-    Button button4;
+
 
     @BindView(R.id.tv_title)
     TextView tv_title;
 
-    @BindView(R.id.tv_skip)
-    TextView tv_skip;
+
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
@@ -75,20 +84,19 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         tv_title.setText("Choose Categories");
         next_lay.setOnClickListener(this);
         setState();
-        tv_skip.setOnClickListener(this);
         iv_back.setOnClickListener(this);
 
         if(connectionDetector.isConnectingToInternet()){
-            loadCategory();
+            loadCategory(0);
 
         }else showMessage("Please Check Internet connection ");
 
 
     }
 
-    private void loadCategory() {
+    private void loadCategory(int offset) {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getCatgories().enqueue(new Callback<CatResult>() {
+        RetrofitApis.Factory.create(this).getCategories("30",""+offset).enqueue(new Callback<CatResult>() {
             @Override
             public void onResponse(Call<CatResult> call, Response<CatResult> response) {
                 showProgressIndicator(false);
@@ -111,18 +119,14 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.next_lay:
-                   if(connectionDetector.isConnectingToInternet())
-                   {
-                       presenter.updateUserCat(userSession.getUserId(),chooseAdapter.getCats());
-                       userSession.setCats(chooseAdapter.getCats());
-                   }
-                   else showMessage("please check internet connection");
+                if(chooseAdapter.selectedSize()>=3) {
+                    if (connectionDetector.isConnectingToInternet()) {
+                        presenter.updateUserCat(userSession.getUserId(), chooseAdapter.getCats());
+                        userSession.setCats(chooseAdapter.getCats());
+                    } else showMessage("please check internet connection");
+                }else showMessage("Please select at least 3 categories ");
+                break;
 
-                break;
-            case R.id.tv_skip:
-                Intent homeIntent=new Intent(this,HomeActivity.class);
-                startActivity(homeIntent);
-                break;
             case R.id.iv_back:
                 finish();
                 break;
@@ -130,12 +134,11 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         }
 
     }
+    //To set the step of the registration process
     private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
+        button1.setBackgroundResource(R.drawable.unselected);
         button2.setBackgroundResource(R.drawable.selected);
-        button3.setBackgroundResource(R.drawable.selected);
-        button4.setBackgroundResource(R.drawable.unselected);
-
+        button3.setBackgroundResource(R.drawable.unselected);
 
     }
 
@@ -158,6 +161,11 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
             }
             showMessage(object.optString("message"));
         }
+    }
+
+    @Override
+    public void loginDetails(LoginSuccess loginSuccess) {
+
     }
 
     @Override

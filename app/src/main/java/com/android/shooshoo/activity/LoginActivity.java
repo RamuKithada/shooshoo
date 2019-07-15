@@ -2,6 +2,7 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
@@ -18,6 +19,13 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.views.LoginView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+/**
+ * {@link LoginActivity} is used to login the user
+ *
+ *
+ *
+ */
 
 public class LoginActivity extends BaseActivity implements LoginView {
 @BindView(R.id.edt_user_name)
@@ -42,7 +50,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     LinearLayout sign_up_layout;
 
     @BindView(R.id.btn_login)
-    Button btn_login;
+    AppCompatTextView btn_login;
 
     @BindView(R.id.user_name_layout)
     LinearLayout user_name_layout;
@@ -69,8 +77,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
-
-        edt_user_name.setOnFocusChangeListener( new View.OnFocusChangeListener(){
+    /*    edt_user_name.setOnFocusChangeListener( new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                     if(hasFocus)
@@ -101,7 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
                 }
 
             }
-        });
+        });*/
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,8 +135,9 @@ public class LoginActivity extends BaseActivity implements LoginView {
         sign_up_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupIntent=new Intent(LoginActivity.this,SignupActivity.class);
+                Intent signupIntent=new Intent(LoginActivity.this,ProfileFillingFormActivity.class);
                 startActivity(signupIntent);
+                finish();
 
             }
         });
@@ -146,19 +154,28 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     }
 
+    /**
+     * login is to call initiation of login process
+     *
+     */
     private void login() {
-        if(connectionDetector.isConnectingToInternet())
+        if(connectionDetector.isConnectingToInternet())//checking internet is available or not
            loginPresenter.loginUser(edt_user_name.getText().toString(),edt_pws.getText().toString());
         else showMessage("Please Check internet connection !");
 
     }
 
+    /***
+     * validation the input fields here locally
+     *
+     * @return true
+     */
     private boolean validateInput() {
           String name=edt_user_name.getText().toString();
           String pws=edt_pws.getText().toString();
           if(!ApiUrls.validateString(name)){
               edt_user_name.requestFocus();
-              edt_user_name.setError("Enter user name");
+              edt_user_name.setError("Enter User name");
               return false;
           }
         if(!ApiUrls.validateString(pws)){
@@ -179,9 +196,12 @@ public class LoginActivity extends BaseActivity implements LoginView {
         if(loginSuccess.getStatus()==1){
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
+                userSession.setVisibility(loginSuccess.getVisibility());
+                userSession.setNotification(loginSuccess.getNotificationSettings());
                 userSession.login();
-                Intent signupIntent=new Intent(LoginActivity.this,HomeActivity.class);
-                startActivity(signupIntent);
+                /*Intent signupIntent=new Intent(LoginActivity.this,Fe.class);
+                startActivity(signupIntent);*/
+                setResult(RESULT_OK);
                 showMessage(loginSuccess.getMessage());
                 finish();
             }catch (Exception e){

@@ -6,11 +6,16 @@ import android.content.SharedPreferences;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.GameMaster;
+import com.android.shooshoo.models.NotificationSettings;
+import com.android.shooshoo.models.Visibility;
 import com.google.gson.Gson;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/****
+ * Preference to store User data
+ */
 public class UserSession {
     private static final String PREF_NAME = "shooshoo";
     // Shared Preferences
@@ -30,6 +35,7 @@ public class UserSession {
     private static final String CAT_IDS="cat_ids";
     private static final String SPONSOR_CHALLENGE_ID="sponsor_challenge_id";
     private static final String SPONSOR_BY="sponsor_by";
+    private static final String AUD_SIZE="aud_size";
 
 
     public UserSession(Context context) {
@@ -38,8 +44,12 @@ public class UserSession {
         editor = pref.edit();
     }
 
-    public  void setUserId(String employeeId) {
-            putString(USER_ID,employeeId);
+    /**saved to future usage
+     *
+     * @param userId is logged in user id
+     */
+    public  void setUserId(String userId) {
+            putString(USER_ID,userId);
     }
 
     public  String getUserId() {
@@ -49,6 +59,8 @@ public class UserSession {
     public  Boolean isLogin() {
         return pref.getBoolean(IS_LOGIN,false);
     }
+
+
     public void  login(){
         editor.putBoolean(IS_LOGIN,true);
         editor.commit();
@@ -102,7 +114,7 @@ public  void logout(){
 
     }
     public String getToken(){
-        return  pref.getString(TOKEN,null);
+        return  pref.getString(TOKEN,"abcdefghijklm");
 
     }
     public int getNotificationState(){
@@ -113,6 +125,11 @@ public  void logout(){
 
         editor.commit();
     }
+
+    /**
+     *
+     * @param cats ids of the categories that are selected
+     */
     public void setCats(String cats){
         putString(CAT_IDS,cats);
     }
@@ -121,11 +138,18 @@ public  void logout(){
     }
     String SponsorChallenge;
 
+    /**
+     *
+     * @return JsonString of the Sponsor Challenge
+     */
     public String getSponsorChallenge() {
         return getString(SPONSOR_CHALLENGE_ID);
     }
 
-
+    /**
+     *
+     * @param sponsorChallenge Json Fromated String to store in preferences
+     */
     public void setSponsorChallenge(String sponsorChallenge) {
         if(sponsorChallenge==null)
             pref.edit().remove(SPONSOR_CHALLENGE_ID).commit();
@@ -143,29 +167,27 @@ public  void logout(){
         return (Challenge) new Gson().fromJson(getString("sponsor_challenge"), Challenge.class);
     }
 
+    /** add to preferences company ids
+     *
+     * @param sponsorIds Sponsored comapany id
+     */
+    public void setSponsorIds(String sponsorIds){
+            pref.edit().putString(SPONSOR_BY,sponsorIds).commit();
 
-    public void addSponsor(String sponsorId){
-        if(sponsorId==null){
-            pref.edit().putStringSet(SPONSOR_BY,null).commit();
-        }
-
-
-        if(pref.contains(SPONSOR_BY))
-        {
-           Set<String> sponsors=pref.getStringSet(SPONSOR_BY,null);
-           if(sponsors==null)
-               sponsors=new HashSet<String>();
-               sponsors.add(sponsorId);
-           pref.edit().putStringSet(SPONSOR_BY,sponsors).commit();
-        }else {
-            Set<String> sponsors=new HashSet<String>();
-            pref.edit().putStringSet(SPONSOR_BY,sponsors).commit();
-        }
-    }
-    public Set<String> getSponsors(){
-       return pref.getStringSet(SPONSOR_BY,null);
     }
 
+    /**
+     *
+     * @return ids of the companies ids those r sponsor the challenge
+     */
+    public String getSponsorIds(){
+       return pref.getString(SPONSOR_BY,null);
+    }
+
+    /***
+     *  save Jackpot challenge in preference
+     * @param master
+     */
     public void saveGameMaster(GameMaster master) {
 
         if(master==null)
@@ -174,7 +196,37 @@ public  void logout(){
         putString("jackpot_challenge", new Gson().toJson((Object) master));
     }
 
+
+    /***
+     * this is used to get the Jackpot challenge reference to use all over step of the Challenge registration
+     * @return Jackpot challenge
+     */
     public GameMaster getGameMaster() {
         return (GameMaster) new Gson().fromJson(getString("jackpot_challenge"), GameMaster.class);
     }
+
+    public void setAudSize(String audienceSize) {
+        putString(AUD_SIZE,audienceSize);
+    }
+
+    public  String getAudSize() {
+        return getString(AUD_SIZE) ;
+    }
+    public void setVisibility(Visibility visibility){
+        putString("visibility", new Gson().toJson((Object) visibility));
+
+    }
+
+    public Visibility getVisibility() {
+        return (Visibility) new Gson().fromJson(getString("visibility"), Visibility.class);
+    }
+    public void setNotification(NotificationSettings visibility){
+        putString("notification_settings", new Gson().toJson((Object) visibility));
+
+    }
+
+    public NotificationSettings getNotification() {
+        return (NotificationSettings) new Gson().fromJson(getString("notification_settings"), NotificationSettings.class);
+    }
+
 }

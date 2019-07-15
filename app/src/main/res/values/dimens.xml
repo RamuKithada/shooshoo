@@ -5,9 +5,16 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">11sp</dimen>
 
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">12sp</dimen>
-    <dimen name="stage_button">25dp</dimen>
+    <dimen name="stage_button">10dp</dimen>
     <dimen name="edit_icon">40dp</dimen>
     <dimen name="photo_upload_icon">80dp</dimen>
     <dimen name="dropdown_icon">30dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="chat_radius">50dp</dimen>
+    <dimen name="home_navi_icon">12sp</dimen>
+    <dimen name="botton_navi_icon">30dp</dimen>
+    <dimen name="botton_navi_icon_padding">3dp</dimen>
+    <dimen name="bottom_navi_icon_padding">10dp</dimen>
+    <dimen name="recycler_padding">3dp</dimen>
+
 </resources>

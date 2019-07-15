@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.net.URISyntaxException;
@@ -18,19 +19,45 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import static android.text.format.DateUtils.DAY_IN_MILLIS;
+import static android.text.format.DateUtils.WEEK_IN_MILLIS;
+import static android.text.format.DateUtils.YEAR_IN_MILLIS;
+
+/**
+ * Api call related constants i.e, end points of the urls
+ *
+ *
+ */
 public class ApiUrls {
-    public static final String BASE_URL="http://testingmadesimple.org/shooshoo/api/service/";
+
+    public static final String SPONSERS="sponsors";
+    public static final String JACKPOTS="jackpots";
+    public static final String ENTERED="entered";
+    public static final String SAVED="saved";
+    public static final String CREATED="created";
+
+    public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
-    public static final String IMAGE_URL = "http://www.testingmadesimple.org/shooshoo/uploads/";
-    public static final String SPONSOR_BANNER_IMAGE_URL="http://www.testingmadesimple.org/shooshoo/uploads/sponsors/banners/";
+    public static final String IMAGE_URL = "http://165.22.94.168/uploads/";
+    public static final String SPONSOR_BANNER_IMAGE_URL="http://165.22.94.168/uploads/sponsors/banners/";
+    public static final String JACKPOT_BANNER_IMAGE_URL="http://165.22.94.168/uploads/jackpots/banners/";
+    public static final String SPONSOR_VIDEO_URL="http://165.22.94.168/uploads/sponsors/videos/";
+    public static final String VIDEO_URL="http://165.22.94.168/uploads/";
+    public static final String JACKPOT_VIDEO_URL="http://165.22.94.168/uploads/jackpots/videos/";
+    public static final String SPONSOR_FEEDS_VIDEO_URL="http://165.22.94.168/uploads/feeds/";
+    public static final String PROFILE_IMAGE_URL="http://165.22.94.168/uploads/profiles/";
 
 
-
-   public static boolean validateString(String s){
-         if(s==null)
+    /**
+     * Validating the String object whether is empty or not
+     * @param string
+     * @return true if s has value
+     */
+   public static boolean validateString(String string){
+         if(string==null)
                return false;
-         if(s.trim().length()==0)
+         if(string.trim().length()==0)
                return false;
 
          return true;
@@ -108,41 +135,62 @@ public class ApiUrls {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
     public  synchronized static String getDurationTimeStamp(String newsdatetime) {
-        String timeDifference = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat timeformat = new SimpleDateFormat("hh:mm a");
-        SimpleDateFormat monthFormat = new SimpleDateFormat("MMM");
-
-        Date newsdate = null;
+       if(newsdatetime==null)
+           return null;
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
-            newsdate = sdf.parse(newsdatetime);
-        } catch (ParseException e) {
+            Date date=simpleDateFormat.parse(newsdatetime);
+            CharSequence relativeDate =
+                    DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
+                            0L,DateUtils.FORMAT_ABBREV_ALL);
+            return relativeDate.toString();
+        }catch (ParseException e){
+            e.printStackTrace();
+            return newsdatetime;
+        }
+
+    }
+
+    public  synchronized static String getAge(String newsdatetime) {
+       if(newsdatetime==null)
+           return null;
+        Calendar startDate=Calendar.getInstance();
+
+        Calendar endDate=Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date=simpleDateFormat.parse(newsdatetime);
+            startDate.setTime(date);
+            DateCalculator dateCaculator=DateCalculator.calculateAge(startDate,endDate);
+            return ""+dateCaculator.getYear()+" Years";
+        }catch (ParseException e){
+            e.printStackTrace();
+            return newsdatetime;
+        }
+
+    }
+/*
+    public synchronized static String getRemaingTime(){
+        String dateStart = "01/14/2012 09:29:58";
+        String dateStop = "01/15/2012 10:31:48";
+
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+        Date d1 = null;
+        Date d2 = null;
+
+        try {
+            d1 = format.parse(dateStart);
+            d2 = format.parse(dateStop);
+
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        Date currentDate = new Date();
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(newsdate);
-        int ndd=cal.get(Calendar.DAY_OF_MONTH);
-
-        cal.setTime(currentDate);
-        int cdd=cal.get(Calendar.DAY_OF_MONTH);
-
-        if(ndd!=cdd)
-            timeDifference=""+ndd+" "+monthFormat.format(newsdate);
-        else {
-            long duration = currentDate.getTime()-newsdate.getTime();
-            long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
-            long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
-            long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
-            if(diffInHours>=1)
-                timeDifference = timeformat.format(newsdate);
-            else if(diffInMinutes>=1)
-                timeDifference=""+diffInMinutes+"M "+"ago";
-            else
-                timeDifference=""+diffInSeconds+"S "+"ago";
-        }
-        return timeDifference;
     }
+*/
+
 
 }

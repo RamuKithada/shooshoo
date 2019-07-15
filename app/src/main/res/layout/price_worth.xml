@@ -21,7 +21,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:padding="2dp"
-        app:srcCompat="@drawable/ic_close_black_24dp"
+        app:srcCompat="@drawable/ic_close_white_24dp"
         android:layout_alignParentRight="true"
         />
    </RelativeLayout>

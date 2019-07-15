@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
@@ -13,17 +12,15 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -31,9 +28,11 @@ import android.widget.Toast;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -42,9 +41,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -53,9 +50,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class SponsorChallengeFormActivity extends BaseActivity implements View.OnClickListener , SponsorChallengeView {
+public class SponsorChallengeFormActivity extends BaseActivity implements View.OnClickListener , SponsorChallengeView , FragmentListDialogListener {
     @BindView(R.id.btn_next)
-    TextView btn_next;
+    AppCompatTextView btn_next;
+
+
+    @BindView(R.id.btn_preview)
+    AppCompatTextView btn_preview;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
@@ -65,31 +67,27 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     TextView title;
 
     @BindView(R.id.edt_challenge_name)
-    EditText edt_challenge_name;
+    AppCompatEditText edt_challenge_name;
 
     @BindView(R.id.edt_startdate)
-    EditText edt_startdate;
+    AppCompatEditText edt_startdate;
 
     @BindView(R.id.edt_start_time)
-    EditText edt_start_time;
+    AppCompatEditText edt_start_time;
 
     @BindView(R.id.edt_enddate)
-    EditText edt_enddate;
+    AppCompatEditText edt_enddate;
 
     @BindView(R.id.edt_end_time)
-    EditText edt_end_time;
+    AppCompatEditText edt_end_time;
 
     @BindView(R.id.edt_challenge_des)
-    EditText edt_challenge_des;
+    AppCompatEditText edt_challenge_des;
 
-//    @BindView(R.id.edt_photo_entries)
-//    EditText edt_photo_entries;
-//
-//    @BindView(R.id.edt_video_entries)
-//    EditText edt_video_entries;
 
-    @BindView(R.id.spinner_video_sizes)
-    Spinner spinner_video_sizes;
+
+    @BindView(R.id.edit_video_sizes)
+    AppCompatEditText edt_video_sizes;
 
     @BindView(R.id.banner_card)
     CardView bannerCard;
@@ -108,11 +106,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
 
     ConnectionDetector connectionDetector;
-    SponcerChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
     String  challengeImageUri=null;
     String challengeVideoUri=null;
-    private int sizePos=0;
-    final String[] lables=new String[]{"Max Length","1 min","50 sec","40 sec","30 sec","20 sec"};
+    private int sizePos=-1;
+    final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,8 +128,8 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         edt_end_time.setOnClickListener(this);
 
         connectionDetector=new ConnectionDetector(this);
-        sponcerChallengePresenter=new SponcerChallengePresenter();
-        sponcerChallengePresenter.attachView(this);
+        sponsorChallengePresenter =new SponsorChallengePresenter();
+        sponsorChallengePresenter.attachView(this);
         title.setText("The Challenge");
         setStage(1);
         viewInitilization();
@@ -139,27 +137,21 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     }
 
     private void viewInitilization() {
-        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
-        setFocusChange(edt_startdate,R.id.startdate_line);
-        setFocusChange(edt_start_time,R.id.starttime_line);
-        setFocusChange(edt_enddate,R.id.enddate_line);
-        setFocusChange(edt_end_time,R.id.endtime_line);
-        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
-//        setFocusChange(edt_photo_entries,R.id.edt_photo_entries_line);
-//        setFocusChange(edt_video_entries,R.id.edt_video_entries_line);
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, R.layout.spinnet_text, lables);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_video_sizes.setAdapter(dataAdapter);
-        spinner_video_sizes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
+//        setFocusChange(edt_startdate,R.id.startdate_line);
+//        setFocusChange(edt_start_time,R.id.starttime_line);
+//        setFocusChange(edt_enddate,R.id.enddate_line);
+//        setFocusChange(edt_end_time,R.id.endtime_line);
+//        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
+        edt_video_sizes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sizePos=position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_video_sizes.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"size");
             }
         });
 
@@ -180,22 +172,17 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                         if(ch_video_entites.isChecked())
                             videos="yes";
 
-                        Set<String> stringSet=userSession.getSponsors();
+                        String sponsorIds=userSession.getSponsorIds();
 
-                        Iterator<String> stringIterator=stringSet.iterator();
-                        StringBuilder builder=new StringBuilder();
-                        while (stringIterator.hasNext()){
-                            if(builder.length()==0){
-                                builder.append(stringIterator.next());
-                            }else {
-                                builder.append(',').append(stringIterator.next());
-                            }
-
+                        if(sponsorIds!=null&&sponsorIds.trim().length()==0){
+                            showMessage("Please save a company");
+                            return;
                         }
-                        sponcerChallengePresenter.createChallenge(userSession.getUserId(),builder.toString(), challengeImageUri, challengeVideoUri,
-                                edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
+
+                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,edt_challenge_name.getText().toString(),
+                                edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
-                                videos, lables[sizePos]);
+                                videos, lables[sizePos], challengeImageUri, challengeVideoUri);
 
                     } else showMessage("Please Check Internet connection");
                 }
@@ -205,11 +192,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.edt_start_time:
             case R.id.edt_end_time:
-                setTime((EditText) view);
+                setTime((AppCompatEditText) view);
                 break;
             case R.id.edt_startdate:
             case R.id.edt_enddate:
-                setDate((EditText) view);
+                setDate((AppCompatEditText) view);
                 break;
             case R.id.banner_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
@@ -221,6 +208,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                     getGalleryVideos();
                 else requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
+
         }
     }
 
@@ -252,6 +240,30 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             edt_end_time.requestFocus();
             return false;
         }
+
+
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
+            String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
+            Date date1 = format.parse(dateStr);
+            Date date2 = format.parse(dateEnd);
+
+            if(date2.before(date1)){
+                showMessage("Please select End time  after the Start time");
+                return false;
+            }
+
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
             edt_challenge_des.setError("Provide Description");
             edt_challenge_des.requestFocus();
@@ -269,9 +281,9 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             edt_video_entries.requestFocus();
             return false;
         }*/
-        if(sizePos==0){
-            spinner_video_sizes.requestFocus();
-            showMessage("Please set Limit?");
+        if(sizePos<0){
+            edt_video_sizes.requestFocus();
+            edt_video_sizes.setError("Please set Limit?");
             return false;
         }
 
@@ -301,8 +313,8 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         return true;
     }
 
-    String active="#FFFFFF",inactive="#CCCCCC";
-    void setFocusChange(EditText editText, int id){
+   /* String active="#FFFFFF",inactive="#CCCCCC";
+    void setFocusChange(AppCompatEditText editText, int id){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -315,7 +327,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             }
         });
 
-    }
+    }*/
     ///////////image Picker tool//////////
     private boolean checkPermission(String permission) {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -339,7 +351,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
 //        intent.setType("video/*");
 //        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Video"), RESULT_LOAD_VIDEO);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
 
     }
     private void requestPermission(String permission) {
@@ -430,20 +442,23 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             if(index==i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
         }
     }
 
+    int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
-    private void setDate(final EditText edt_dob) {
+    private void setDate(final AppCompatEditText edt_dob) {
 
         Calendar c = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                startYear=year;
+                startDate=dayOfMonth;
+                startMonth=month;
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);
@@ -452,11 +467,22 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
+        if(edt_dob.getId()==R.id.edt_enddate)
+        {
+            if(startDate>0&&startMonth>0&&startYear>0) {
+                c.set(startYear, startMonth, startDate);
+                edt_startdate.getText();
+                datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+            }else {
+                showMessage("Please select first Starting date and time");
+                return;
+            }
+        }
         datePickerDialog.show();
     }
 
     TimePickerDialog timePickerDialog;
-    private void setTime(final EditText time) {
+    private void setTime(final AppCompatEditText time) {
 
         Calendar c = Calendar.getInstance();
         timePickerDialog = new TimePickerDialog(this, R.style.datepicker, new TimePickerDialog.OnTimeSetListener() {
@@ -494,10 +520,18 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     public void onChallengeResponse(Challenge company) {
         userSession.setSponsorChallenge(company.getChallengeId());
         userSession.savaChallenge(company);
-        userSession.addSponsor(null);
-        Intent intent=new Intent(this, AudienceInstructionActivity.class);
-        intent.putExtra("challenge_type",1);
+        userSession.setSponsorIds(null);
+        Intent intent=new Intent(this, SponsorAudienceActivity.class);
         startActivity(intent);
+//        intent.putExtra("challenge_type",1);
+//        startActivity(intent);
 
     }
+
+    @Override
+    public void onEditView(int view, int pos) {
+               sizePos=pos;
+               edt_video_sizes.setText(lables[pos]);
+    }
+
 }

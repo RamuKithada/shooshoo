@@ -23,7 +23,6 @@ public class PriceWorthAdapter extends RecyclerView.Adapter<PriceWorthAdapter.Pr
 
 
     public PriceWorthAdapter(Context ctx, ArrayList<EditModel> editModelArrayList){
-
         inflater = LayoutInflater.from(ctx);
         this.editModelArrayList = editModelArrayList;
     }
@@ -78,8 +77,6 @@ public class PriceWorthAdapter extends RecyclerView.Adapter<PriceWorthAdapter.Pr
                 @Override
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     editModelArrayList.get(getAdapterPosition()).setEditTextValue(editText.getText().toString());
-
-
                 }
 
                 @Override

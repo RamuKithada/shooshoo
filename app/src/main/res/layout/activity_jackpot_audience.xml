@@ -5,14 +5,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#8e8e8e"
-    tools:context=".activity.AudienceActivity">
-<include layout="@layout/stagebar_layout"/>
+    android:background="@drawable/gradiant_home"
+    tools:context=".activity.SponsorAudienceActivity">
+   <include layout="@layout/stagebar_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradiant_home"
+
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_text"
-                    android:text="Winner Constallation"
+                    android:text="Winner Constellation"
                     android:textSize="14sp"
                     />
 
@@ -305,18 +305,18 @@
                         android:layout_marginRight="2dp"
 
                         >
-                    <EditText
-                        android:id="@+id/edt_zipcode"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="#00FFFFFF"
-                        android:layout_margin="5dp"
-                        android:textColor="#FFFFFF"
-                        android:inputType="textPersonName"
-                        android:textColorHint="#CCCCCC"
-                        android:hint="ZipCode"
-                        />
+
+                        <EditText
+                            android:id="@+id/edt_zipcode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_margin="5dp"
+                            android:background="#00FFFFFF"
+                            android:hint="Zip Code"
+                            android:inputType="textPersonName"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#CCCCCC" />
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

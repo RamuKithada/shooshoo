@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_profile"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#FFF"
+        android:src="@drawable/profile_2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/msg_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/image_profile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/image_pic"
+        android:text="Notification Title"
+        android:layout_marginTop="10dp"
+        android:padding="2dp"
+        android:minLines="1"
+        android:maxLines="2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:fontFamily="@font/futura_medium_bt"
+        android:textColor="#FFF"
+        />
+
+    <TextView
+        android:id="@+id/time_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/image_profile"
+        app:layout_constraintTop_toBottomOf="@+id/msg_text"
+        app:layout_constraintRight_toLeftOf="@+id/image_pic"
+        android:text="10mins ago"
+        android:padding="5dp"
+        android:textColor="@color/gray_text"
+        android:fontFamily="@font/futura_book_font"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+    <ImageView
+        android:id="@+id/image_pic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="5dp"
+        android:src="@drawable/drink_challange"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#AAFFFFFF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</android.support.constraint.ConstraintLayout>

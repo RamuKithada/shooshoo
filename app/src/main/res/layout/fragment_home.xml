@@ -5,31 +5,76 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment"
-    android:background="@drawable/gradiant_home">
+    android:background="@color/bg_color">
 
-    <!-- TODO: Update blank fragment layout -->
-   <ScrollView
+   <android.support.v4.widget.NestedScrollView
        android:layout_width="match_parent"
-       android:layout_height="match_parent">
+       android:layout_height="wrap_content">
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="vertical"
-           android:background="@drawable/gradiant_home"
            >
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/brands_list"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal"
-           app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-           tools:listitem="@layout/home_brand_item"
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               >
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/brands_list"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginLeft="5dp"
+                   android:layout_marginBottom="5dp"
+                   android:layout_toLeftOf="@+id/radar_icon"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/home_brand_item"
+                   >
 
-           >
+               </android.support.v7.widget.RecyclerView>
+               <View
+                   android:layout_width="2dp"
+                   android:layout_height="match_parent"
+                   android:layout_marginLeft="2dp"
+                   android:layout_marginRight="2dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginBottom="5dp"
+                   android:background="#FFFFFF"
+                   />
+               <LinearLayout
+                   android:id="@+id/radar_icon"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:layout_margin="5dp"
+                   android:layout_alignParentRight="true"
+                   >
+               <ImageView
+               android:id="@+id/image"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:layout_gravity="center"
+               android:src="@mipmap/radar_normal"
+               android:padding="10dp"
 
+                   />
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Radar"
+                   android:textSize="12sp"
+                   android:fontFamily="@font/raleway_light"
+                   android:layout_gravity="center"
+                   android:gravity="center"
+                   android:textColor="@color/white_text"
+                   />
+               </LinearLayout>
 
+           </LinearLayout>
 
-       </android.support.v7.widget.RecyclerView>
            <View
                android:layout_width="match_parent"
                android:layout_height="1dp"
@@ -39,48 +84,40 @@
                android:id="@+id/sponsor_layout"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
                >
                <RelativeLayout
                    android:id="@+id/sponsor_title_lay"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content">
-               <TextView
-                   android:id="@+id/sponsor_title"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/sponsor_challengers"
-                   android:textSize="18sp"
-                   android:padding="5dp"
-                   android:gravity="center_vertical"
-                   android:layout_centerVertical="true"
-                   android:textColor="#FFF"
-                   android:layout_margin="10dp"
-                   />
-               <RelativeLayout
+                   <android.support.v7.widget.AppCompatTextView
+                       android:id="@+id/sponsor_title"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:textColor="@color/white_text"
+                       android:text="@string/sponsor_challengers"
+                       android:layout_margin="5dp"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                       android:fontFamily="@font/raleway_extrabold"
+                       />
+
+
+               <android.support.v7.widget.AppCompatTextView
                    android:id="@+id/sponsor_viewall"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_alignParentRight="true"
+                   android:textColor="@color/white_text"
+                   android:text="All"
                    android:layout_centerVertical="true"
-                   android:layout_margin="10dp"
-                   android:paddingRight="10dp"
-                   android:paddingLeft="10dp"
-                   android:paddingTop="2dp"
-                   android:paddingBottom="2dp"
-                   android:background="@drawable/view_all_btn_shape"
-                   >
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/view_all"
-                   android:textColor="#FFF"
-                   android:textSize="10sp"
-
+                   android:layout_alignParentRight="true"
+                   android:fontFamily="@font/raleway_extrabold"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                    android:layout_margin="2dp"
                    android:gravity="center_vertical"
 
                    />
-               </RelativeLayout>
                </RelativeLayout>
                <android.support.v7.widget.RecyclerView
                    android:id="@+id/sponsor_challengers_list"
@@ -88,6 +125,9 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
                    >
 
 
@@ -95,14 +135,16 @@
                <TextView
                    android:id="@+id/challengers_note"
                    android:layout_width="match_parent"
-                   android:layout_height="@dimen/edit_icon"
+                   android:layout_height="wrap_content"
                    android:padding="10dp"
-                   android:layout_margin="5dp"
+                   android:layout_marginTop="5dp"
+                   android:layout_marginBottom="5dp"
                    android:text="@string/s_challengers_result"
                    android:textColor="#FFF"
                    android:gravity="center"
+                   android:fontFamily="@font/raleway_extrabold"
                    android:layout_below="@+id/sponsor_challengers_list"
-                   android:background="@drawable/zigzag_image"
+                   android:background="@color/pink_drak"
                    />
 
 
@@ -114,49 +156,40 @@
                android:id="@+id/jackpot_layout"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
                >
            <RelativeLayout
                android:id="@+id/jackpot_title_lay"
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-               <TextView
+               <android.support.v7.widget.AppCompatTextView
                    android:id="@+id/jackpot_title"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
+                   android:layout_alignParentLeft="true"
+                   android:layout_alignParentTop="true"
+                   android:textColor="@color/white_text"
                    android:text="@string/jackpot_challengers"
-                   android:textSize="18sp"
-                   android:padding="5dp"
-                   android:textColor="#FFF"
-                   android:layout_centerVertical="true"
-                   android:gravity="center_vertical"
-                   android:layout_margin="10dp"
+                   android:layout_margin="5dp"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                   android:fontFamily="@font/raleway_extrabold"
                    />
-               <RelativeLayout
+               <android.support.v7.widget.AppCompatTextView
                    android:id="@+id/jackpot_viewall"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:layout_alignParentRight="true"
+                   android:textColor="@color/white_text"
+                   android:text="All"
                    android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                   android:fontFamily="@font/raleway_extrabold"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                   android:layout_margin="2dp"
                    android:gravity="center_vertical"
-                   android:layout_margin="10dp"
-                   android:paddingRight="10dp"
-                   android:paddingLeft="10dp"
-                   android:paddingTop="2dp"
-                   android:paddingBottom="2dp"
-                   android:background="@drawable/view_all_btn_shape"
-                   >
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/view_all"
-                       android:textColor="#FFF"
-                       android:layout_margin="2dp"
-                       android:layout_centerVertical="true"
-                       android:textSize="10sp"
-                       android:gravity="center"
 
-                       />
-               </RelativeLayout>
+                   />
+
+
            </RelativeLayout>
 
                <android.support.v7.widget.RecyclerView
@@ -165,6 +198,9 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
                    >
 
 
@@ -175,62 +211,67 @@
                android:id="@+id/category_layout"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
                >
+
            <RelativeLayout
                android:id="@+id/category_title_lay"
                android:layout_width="match_parent"
                android:layout_height="wrap_content">
-               <TextView
+               <android.support.v7.widget.AppCompatTextView
                    android:id="@+id/category_title"
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
+                   android:layout_alignParentLeft="true"
+                   android:layout_alignParentTop="true"
+                   android:textColor="@color/white_text"
                    android:text="@string/categories_title"
-                   android:textSize="18sp"
-                   android:padding="5dp"
-                   android:textColor="#FFF"
-                   android:layout_margin="10dp"
+                   android:layout_margin="5dp"
                    android:layout_centerVertical="true"
-                   android:gravity="center"
+                   android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                   android:fontFamily="@font/raleway_extrabold"
                    />
 
-               <RelativeLayout
-                   android:id="@+id/category_viewall"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_alignParentRight="true"
-                   android:layout_centerVertical="true"
-                   android:layout_margin="10dp"
-                   android:paddingRight="10dp"
-                   android:paddingLeft="10dp"
-                   android:paddingTop="2dp"
-                   android:paddingBottom="2dp"
-                   android:background="@drawable/view_all_btn_shape"
-                   >
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/view_all"
-                       android:textColor="#FFF"
-                       android:layout_centerVertical="true"
 
-                       android:layout_margin="2dp"
-                       android:gravity="center"
-                       android:textSize="10sp"
 
-                       />
-               </RelativeLayout>
            </RelativeLayout>
+<RelativeLayout
+    android:layout_below="@+id/category_title_lay"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/category_viewall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_text"
+        android:text="All"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:fontFamily="@font/raleway_extrabold"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center_vertical"
+
+        />
+
 
                <android.support.v7.widget.RecyclerView
                    android:id="@+id/category_challengers_list"
-                   android:layout_below="@+id/category_title_lay"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
+                   android:layout_toLeftOf="@+id/category_viewall"
                    android:layout_marginTop="5dp"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/home_cat_item"
+                   android:orientation="horizontal"
+                   android:layout_marginBottom="10dp"
+                   android:layout_marginLeft="5dp"
                    >
 
 
                </android.support.v7.widget.RecyclerView>
+</RelativeLayout>
 
            </RelativeLayout>
          <RelativeLayout
@@ -239,6 +280,7 @@
              android:paddingRight="10dp"
              android:paddingLeft="10dp"
              android:paddingTop="2dp"
+             android:visibility="gone"
              android:paddingBottom="2dp"
              android:layout_margin="10dp"
              android:layout_gravity="center_horizontal"
@@ -254,12 +296,20 @@
                android:textColor="#FFF"
                />
          </RelativeLayout>
-
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/extra_list"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_marginTop="5dp"
+               android:nestedScrollingEnabled="false"
+               tools:listitem="@layout/list_of_list_item"
+               >
+           </android.support.v7.widget.RecyclerView>
 
 
 
 
        </LinearLayout>
-   </ScrollView>
+   </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

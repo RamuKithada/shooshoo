@@ -6,6 +6,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.LoginSuccess;
@@ -14,13 +15,30 @@ import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.views.LoginView;
 
 public class ForgetPasswordActivity extends BaseActivity implements LoginView {
-LoginPresenter loginPresenter;
-EditText email;
+
+    /**{@link ForgetPasswordActivity} is used to show forget password screen
+     * loginPresenter is the presenter of login , forget password ,change password and registration related services call handling class
+     * LoginPresenter uses LoginView to interact ForgetPasswordActivity class ui.
+     *
+     */
+    LoginPresenter loginPresenter;
+  EditText email;
+
+
+
 @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_password);
+        loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
+    ImageView imageView=findViewById(R.id.iv_back);
+    imageView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    });
         Button btn_forget_pws=findViewById(R.id.btn_forget_pws);
         email=findViewById(R.id.edt_user_email);
         btn_forget_pws.setOnClickListener(new View.OnClickListener() {

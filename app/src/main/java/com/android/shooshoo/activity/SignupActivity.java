@@ -3,6 +3,7 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Patterns;
@@ -22,6 +23,12 @@ import com.android.shooshoo.views.LoginView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * {@link SignupActivity} is used to sign up the user into app.
+ *  {@link LoginPresenter }
+ * edt_user_email  is the input field of user name
+ * edt_pws  is the input field of user password
+ */
 public class SignupActivity extends BaseActivity implements LoginView,View.OnClickListener{
     @BindView(R.id.edt_user_name)
     EditText edt_user_name;
@@ -33,33 +40,10 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
     EditText edt_pws;
 
     @BindView(R.id.btn_register)
-    Button btn_register;
+    AppCompatTextView btn_register;
 
     @BindView(R.id.sign_in_layout)
     LinearLayout sign_in_layout;
-
-    @BindView(R.id.tv_skip)
-    TextView tv_skip;
-    @BindView(R.id.iv_help)
-    ImageView iv_help;
-
-    @BindView(R.id.button1)
-    Button button1;
-
-    @BindView(R.id.button2)
-    Button button2;
-
-    @BindView(R.id.button3)
-    Button button3;
-
-    @BindView(R.id.button4)
-    Button button4;
-
-    @BindView(R.id.iv_back)
-    ImageView iv_back;
-
-    @BindView(R.id.iv_close)
-    ImageView iv_close;
 
     @BindView(R.id.iv_red_eye)
     ImageView iv_red_eye;
@@ -72,8 +56,6 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
     @BindView(R.id.iv_email_icon)
     ImageView iv_email_icon;
 
-    @BindView(R.id.tv_title)
-            TextView tv_title;
 
 
     LoginPresenter loginPresenter;
@@ -82,20 +64,13 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        tv_title.setText("Registration Details");
-        tv_skip.setVisibility(View.INVISIBLE);
-        iv_help.setVisibility(View.INVISIBLE);
-        setFoucusChange(edt_user_name,R.id.user_name_line,iv_user_name_icon,new int[]{R.drawable.username_active,R.drawable.username_normal});
-        setFoucusChange(edt_user_email,R.id.user_mail_line,iv_email_icon,new int[]{R.drawable.email_active,R.drawable.email_normal});
-        setFoucusChange(edt_pws,R.id.pws_line,iv_pws_icon,new int[]{R.drawable.password_active,R.drawable.password_normal});
+//        setFoucusChange(edt_user_name,R.id.user_name_line,iv_user_name_icon,new int[]{R.drawable.username_active,R.drawable.username_normal});
+//        setFoucusChange(edt_user_email,R.id.user_mail_line,iv_email_icon,new int[]{R.drawable.email_active,R.drawable.email_normal});
+//        setFoucusChange(edt_pws,R.id.pws_line,iv_pws_icon,new int[]{R.drawable.password_active,R.drawable.password_normal});
         btn_register.setOnClickListener(this);
         sign_in_layout.setOnClickListener(this);
         loginPresenter=new LoginPresenter();
         loginPresenter.attachView(this);
-           setState();
-
-        iv_back.setOnClickListener(this);
-        iv_close.setOnClickListener(this);
         iv_red_eye.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)  {
@@ -113,16 +88,6 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
         });
 
     }
-
-    private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
-        button2.setBackgroundResource(R.drawable.unselected);
-        button3.setBackgroundResource(R.drawable.unselected);
-        button4.setBackgroundResource(R.drawable.unselected);
-
-
-    }
-
     String active="#ffffff",inactive="#cccccc";
     public void setFoucusChange(EditText editText, int id, final ImageView imageView, final int[] res){
         final View view=findViewById(id);
@@ -156,11 +121,6 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
                 Intent loginIntent=new Intent(this,LoginActivity.class);
                 startActivity(loginIntent);
                 break;
-            case R.id.iv_back:
-            case R.id.iv_close:
-                finish();
-                break;
-
         }
     }
 
@@ -237,6 +197,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
 
     @Override
     public void loginDetails(LoginSuccess loginSuccess) {
+
         if(loginSuccess.getStatus()==1) {
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
@@ -249,6 +210,8 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
                 e.printStackTrace();
             }
 
+        }else if( loginSuccess.getMessage()!=null){
+            showMessage(loginSuccess.getMessage());
         }
     }
 }

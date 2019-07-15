@@ -20,20 +20,16 @@ import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
-import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
-import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
-import com.android.shooshoo.presenters.SponcerChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.JackpotChallengeView;
-import com.android.shooshoo.views.SponsorChallengeView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,7 +46,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+/***
+ *   {@link JackpotAudienceActivity} is used to address the participants who are participates in this jacpot challenge
+ *
+ * cat_subcat_list show to select category and it brand .
+ * categorySelectionAdapter is used to make this functionality.
+ * minAgePos,maxAgePos are the positions of the spinner_min_age adapter and spinner_max_age adapter to get limits of the audience age
+ *  spinner_miles is used to show surrounding area  in miles to participants can participate in this challenge.
+ */
 public class JackpotAudienceActivity extends BaseActivity implements DataLoadView, JackpotChallengeView,CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener{
+
     @BindView(R.id.btn_next)
     TextView btn_next;
     @BindView(R.id.iv_back)
@@ -244,8 +250,17 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
            StringBuilder cats=new StringBuilder();
                 StringBuilder brands=new StringBuilder();
                     for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
-                        if(categoryArrayList.size()>categoryModel.getCategory())
-                        if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
+                        if(categoryArrayList.size()>categoryModel.getCategory()){
+                            Category mCategory= categoryArrayList.get(categoryModel.getCategory());
+                            if (cats.length() > 0) {
+                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                    cats.append(',').append(mCategory.getCategoryId());
+                            } else {
+                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                                    cats.append(mCategory.getCategoryId());
+                            }
+                        }
+                       /* if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
                         if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
                             Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
 
@@ -259,7 +274,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                             }else
                                 brands.append(brand.getBrandId());
 
-                        }
+                        }*/
                     }
 
                     if(!connectionDetector.isConnectingToInternet())
@@ -334,13 +349,16 @@ jackpotChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
 
         return true;
     }
-
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
+                    buttons.get(index).setText(String.valueOf(step+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
@@ -408,7 +426,7 @@ jackpotChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
     }
 
 
-
+//used to get size of the audiences size belongs to this criteria on selection gender, age,locality,borders areas etc.
    public void getSizeofAudience(){
         if(!connectionDetector.isConnectingToInternet())
         {

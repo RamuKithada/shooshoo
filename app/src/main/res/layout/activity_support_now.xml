@@ -46,6 +46,14 @@
         android:layout_height="1dp"
         android:background="#FFF"
         />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,14 +71,19 @@
            android:layout_gravity="center"
            android:gravity="center"
            >
-           <de.hdodenhof.circleimageview.CircleImageView
-               android:layout_width="80dp"
-               android:layout_height="80dp"
-               android:layout_gravity="center"
-               android:layout_marginTop="10dp"
-               android:layout_marginBottom="10dp"
-               android:src="@drawable/rose"
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/circler_view_bg"
+               >
+           <ImageView
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:layout_margin="15dp"
+               android:layout_centerInParent="true"
+               android:src="@drawable/ic_wallet_notification_icon"
                />
+           </RelativeLayout>
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -153,7 +166,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/portrait"
+        android:src="@drawable/profile_1"
         android:layout_gravity="center"
         app:civ_border_color="@color/white_text"
         app:civ_border_width="1dp"
@@ -287,5 +300,6 @@
 
             />
     </RelativeLayout>
-
+   </LinearLayout>
+    </ScrollView>
 </LinearLayout>

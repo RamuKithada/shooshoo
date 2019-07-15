@@ -35,7 +35,7 @@ public class ChallengerViewPagerAdapter  extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(names==null)
-            return null;
+             return null;
 
         return names[position];
     }

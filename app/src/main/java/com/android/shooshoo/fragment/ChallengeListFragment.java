@@ -1,6 +1,7 @@
 package com.android.shooshoo.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.BaseView;
 
@@ -31,6 +38,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/***
+ * Challenges list to show Challenges in gridview in ViewPager of the {@link ChallengersFragment}
+ */
 
 public class ChallengeListFragment extends Fragment {
 
@@ -41,6 +51,7 @@ public class ChallengeListFragment extends Fragment {
 
     public SponsorChallengersAdapter adapter=null;
     List<Challenge> challenges=new ArrayList<Challenge>();
+    RecyclerView recyclerView;
 //    private OnListFragmentInteractionListener mListener;
 
     /**
@@ -48,6 +59,7 @@ public class ChallengeListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ChallengeListFragment() {
+
     }
 
     // TODO: Customize parameter initialization
@@ -81,7 +93,7 @@ public class ChallengeListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+         recyclerView = (RecyclerView) view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 2));
         recyclerView.setAdapter(adapter);
         String endpoint=null;
@@ -89,28 +101,52 @@ public class ChallengeListFragment extends Fragment {
        endpoint="latest";
    }else if(mColumnCount==1){
        endpoint="past";
+   }else if(mColumnCount==2){
+       endpoint="past";
    }
 
             Log.e("mColumnCount",""+mColumnCount);
    baseView.showProgressIndicator(true);
-        RetrofitApis.Factory.create(getContext()).getChallenges(endpoint).enqueue(new Callback<ChallengeResponse>() {
+        RetrofitApis.Factory.create(getContext()).getChallenges(endpoint).enqueue(new Callback<ChallengeListResponse>() {
             @Override
-            public void onResponse(Call<ChallengeResponse> call, Response<ChallengeResponse> response) {
+            public void onResponse(Call<ChallengeListResponse> call, Response<ChallengeListResponse> response) {
                 baseView.showProgressIndicator(false);
                 if(response.isSuccessful()){
-                   ChallengeResponse challengeResponse=response.body();
+                    ChallengeListResponse challengeResponse=response.body();
                    if(challengeResponse.getStatus()==1){
                        if(mColumnCount==0){
-                            adapter.setChallenges(challengeResponse.getLatest());
+                             adapter.setChallenges(challengeResponse.getLatest().getChallengeList());
                        }else if(mColumnCount==1){
-                           adapter.setChallenges(challengeResponse.getPast());
+                             adapter.setChallenges(challengeResponse.getPast().getChallengeList());
                        }
+                       recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
+                           @Override
+                           public void onClick(View view, int position) {
+//                               Toast.makeText(getContext(),""+position,Toast.LENGTH_SHORT).show();
+                               challenges=adapter.getChallenges();
+                               if(challenges!=null) {
+                                   Intent intent = new Intent(getActivity(), MyChallengesActivity.class);
+                                   intent.putExtra("challenge",challenges.get(position));
+                                   if(challenges.get(position).getSponsoredBy()==null)
+                                       intent.putExtra("type",2);
+                                   else
+                                       intent.putExtra("type",1);
+
+                                   startActivity(intent);
+                               }
+                           }
+
+                           @Override
+                           public void onLongClick(View view, int position) {
+
+                           }
+                       }));
                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ChallengeResponse> call, Throwable t) {
+            public void onFailure(Call<ChallengeListResponse> call, Throwable t) {
                 baseView.showProgressIndicator(false);
 
             }

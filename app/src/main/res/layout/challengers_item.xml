@@ -3,89 +3,113 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@color/bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-
+    <TextView
+        android:id="@+id/view_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_all"
+        android:textColor="#FFF"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_margin="20dp"
+        android:visibility="gone"
+        android:background="@drawable/view_all_btn_shape"
+        android:layout_centerInParent="true"
+        />
 <android.support.v7.widget.CardView
-    android:layout_width="wrap_content"
+    android:id="@+id/card"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#6F6F6F"
+    app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="2dp"
     app:cardCornerRadius="2dp"
     android:layout_centerInParent="true"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:visibility="visible"
     >
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="5dp"
         >
     <ImageView
         android:id="@+id/image"
-        android:layout_width="130dp"
-        android:layout_height="80dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/rose"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/drink_challange"
         />
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|left"
-        android:layout_gravity="center_vertical|left"
-        android:textColor="#FFF"
-        android:text="Title"
-        android:layout_marginTop="2dp"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|left"
+            android:gravity="center_vertical|left"
+            android:text="Title Title2 Title Title2 Title Title2"
+            android:maxLines="2"
+            android:minLines="2"
+            android:fontFamily="@font/raleway_extrabold"
+            android:layout_marginTop="1dp"
+            android:lineSpacingMultiplier="0.8"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:textColor="#FFF" />
     <TextView
         android:id="@+id/sub_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical|left"
         android:layout_gravity="center_vertical|left"
-        android:layout_marginTop="2dp"
-        android:textColor="@color/gray_text"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:lineSpacingMultiplier="1"
+        android:fontFamily="@font/raleway_medium"
+        android:textColor="@color/white_text"
+        android:maxLines="1"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:textSize="12sp"
         android:text="Subtitle"
         />
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         >
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|left"
-            android:layout_gravity="left|center_vertical"
-            android:layout_margin="5dp"
-            android:text="2h ago"
-            android:textSize="12sp"
-            android:textColor="@color/gray_text"
-            android:layout_weight="1"
-            />
         <TextView
             android:id="@+id/brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="5000 €"
+            android:padding="1dp"
+            android:background="@color/pink_drak"
+            android:fontFamily="@font/raleway_extrabold"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/white_text"
+            />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical|right"
-            android:layout_gravity="center_vertical|right"
-            android:layout_margin="5dp"
-            android:text="Sony"
+            android:text="2h ago"
             android:textSize="12sp"
-            android:textColor="@color/gray_text"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
             />
 
 
-    </LinearLayout>
+
+    </RelativeLayout>
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_cash"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Cash"
+        android:enabled="false"
+        android:fontFamily="@font/raleway_medium"
+        android:text=""
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_cash_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Amount"
+        android:fontFamily="@font/raleway_medium"
+        android:enabled="false"
+        android:text=""
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_cash_currency"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:enabled="false"
+        android:inputType="textPersonName"
+        android:hint="Currency"
+        android:fontFamily="@font/raleway_medium"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+        />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:inputType="textPersonName"
+        android:text="Name" />
+</LinearLayout>

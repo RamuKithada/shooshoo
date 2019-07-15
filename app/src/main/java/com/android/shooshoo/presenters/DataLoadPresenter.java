@@ -12,8 +12,14 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
+/**
+ * {@link DataLoadPresenter} is used to load the common data like countries
+ * ,cites from selected country and all categories and their available brands
+ */
 public class DataLoadPresenter implements BasePresenter<DataLoadView> {
+
+
+
     DataLoadView view;
     RetrofitApis retrofitApis;
 
@@ -25,16 +31,21 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
     @Override
     public void detachView() {
+         if(view!=null)
+          view.showProgressIndicator(false);
         this.retrofitApis=null;
         this.view=null;
 
     }
 
+    /**this is used to load countries data*/
     public void loadCountryData(){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getCountries().enqueue(new Callback<CountryResult>() {
             @Override
             public void onResponse(Call<CountryResult> call, Response<CountryResult> response) {
+               if(view!=null){
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
 
@@ -45,39 +56,43 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
                         view.onCountryData(countries);
                     }else
                     view.showMessage(countryResult.getMessage());
-                }
+                }}
             }
 
             @Override
             public void onFailure(Call<CountryResult> call, Throwable t) {
-                view.showProgressIndicator(false);
-                view.showMessage(t.getMessage());
+               if(view!=null) {
+                   view.showProgressIndicator(false);
+                   view.showMessage(t.getMessage());
+               }
 
             }
         });
 
     }
-
+   /**This is used to load cites data*/
     public void loadCites(String countryCode){
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getCities(countryCode).enqueue(new Callback<CityResult>() {
 
             @Override
             public void onResponse(Call<CityResult> call, Response<CityResult> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
-
                     CityResult cityResult=response.body();
 
                     if(cityResult.getStatus()==1){
+                        if(view!=null)
                         view.onCitiesData(cityResult.getCities());
                         //                    displayListCity(cityResult.getCities(),spinner_city);
 
                     }else if(cityResult.getStatus()==2)
-                    {
+                    { if(view!=null)
                         view.onCitiesData(null);
                     }
-
+                    if(view!=null)
                         view.showMessage(cityResult.getMessage());
 
 
@@ -86,25 +101,35 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
             @Override
             public void onFailure(Call<CityResult> call, Throwable t) {
-                view.showProgressIndicator(false);
-                view.showMessage(t.getMessage());
+                if(view!=null) {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
 
             }
         });
     }
+    /**This is used to load all categories and the brands*/
     public void loadAllcategoriesList(){
+
+        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.getAllCategories().enqueue(new Callback<CategoryList>() {
             @Override
             public void onResponse(Call<CategoryList> call, Response<CategoryList> response) {
+                if(view!=null)
                 view.showProgressIndicator(false);
                 if(response.isSuccessful()){
                     CategoryList categoryList=response.body();
                     if(categoryList.getStatus()==1){
+                        if(view!=null)
                         view.onAllCategories(categoryList.getCategories());
                         //                    displayListCity(cityResult.getCities(),spinner_city);
 
-                    }else   view.showMessage(categoryList.getMessage());
+                    }else {
+                        if(view!=null)
+                        view.showMessage(categoryList.getMessage());
+                    }
 
 
                 }
@@ -112,8 +137,9 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
 
             @Override
             public void onFailure(Call<CategoryList> call, Throwable t) {
-                view.showProgressIndicator(false);
+                if(view!=null){ view.showProgressIndicator(false);
                 view.showMessage(t.getMessage());
+            }
             }
         });
 

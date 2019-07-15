@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradiant_home"
+    android:orientation="vertical"
+    android:background="@color/bg_color"
     tools:showIn="@layout/activity_edit_profile"
     tools:context=".activity.EditProfileActivity">
-    <LinearLayout
+
+    <RelativeLayout
         android:id="@+id/tool_bar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginRight="2dp"
@@ -21,66 +24,73 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
-            android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            app:srcCompat="@drawable/back_arrow"
             />
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:text="@string/edit_profile"
-            android:layout_gravity="center_vertical"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:textSize="18sp"
-            android:fontFamily="@font/futura_medium_bt"
+            app:textAllCaps="true"
+            android:fontFamily="@font/raleway_extrabold"
             android:textColor="#ffffff"
             />
-        <View
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            android:layout_height="1dp"
 
-            />
         <ImageView
             android:id="@+id/iv_chat"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
             android:padding="5dp"
-            android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_chat_notification_icon"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/menu_icon"
             />
-    </LinearLayout>
+    </RelativeLayout>
     <View
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#FFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         />
+<!--
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_bar"
         android:layout_width="match_parent"
-        android:layout_marginTop="1dp"
-        android:layout_height="wrap_content">
-
-    </android.support.design.widget.TabLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/view_pager"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         >
-    </android.support.v4.view.ViewPager>
-</android.support.constraint.ConstraintLayout>
+
+    </android.support.design.widget.TabLayout>-->
+
+  <!--  <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        >
+    </android.support.v4.view.ViewPager>-->
+    <FrameLayout
+        android:id="@+id/profile_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        ></FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradiant_home_bottom_navi"
+        >
+        <include layout="@layout/bottom_navi"/>
+    </RelativeLayout>
+</LinearLayout>

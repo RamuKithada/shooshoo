@@ -18,6 +18,11 @@ import butterknife.ButterKnife;
 
 public class CreateSponsorChallengeActivity extends BaseActivity implements View.OnClickListener {
 
+    /**
+     * {@link CreateSponsorChallengeActivity} is use to show the create challenge  screen in process
+      * sponsor or jackpot challenge registration .This is the first step.
+     */
+
     @BindView(R.id.btn_next)
     TextView btn_next;
 
@@ -40,14 +45,14 @@ public class CreateSponsorChallengeActivity extends BaseActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_challenge);
+         setContentView(R.layout.activity_create_challenge);
         ButterKnife.bind(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
 
 
         setStage(0);
-        title.setText("Create a challenge");
+        title.setText("Create a Challenge");
       challengeType=getIntent().getIntExtra("challenge_type",0);
       if(challengeType==1){
             sponsor_challenge_guide.setVisibility(View.VISIBLE);
@@ -59,10 +64,13 @@ public class CreateSponsorChallengeActivity extends BaseActivity implements View
 
 
     }
-
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 

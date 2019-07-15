@@ -36,6 +36,10 @@ import butterknife.ButterKnife;
 import static android.Manifest.permission.READ_CONTACTS;
 
 public class InviteFriendActivity extends BaseActivity {
+
+    /** this is used to invite your friends to participate in the challenge i.e., created by u
+     *   Here we fetch contacts data from  phone and show the list to invite
+     */
     @BindView(R.id.btn_next)
     TextView btn_next;
     @BindView(R.id.iv_back)
@@ -60,7 +64,7 @@ public class InviteFriendActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_invite_friend);
         ButterKnife.bind(this);
-        title.setText("The Challenge");
+        title.setText("Invite Friends");
         setStage(3);
         friends_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         findContactsAdapter=new FindContactsAdapter(this,contactsModelArrayList);
@@ -95,12 +99,16 @@ public class InviteFriendActivity extends BaseActivity {
         });
 
     }
-    private void setStage(int i) {
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
+    private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index==step){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
+                    buttons.get(index).setText(String.valueOf(step+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
