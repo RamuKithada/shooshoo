@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/gradiant_home"
+    android:background="@color/bg_color"
     tools:context=".activity.CampaignActivity"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
@@ -24,42 +24,344 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="5dp"
-        app:cardBackgroundColor="#393738"
-        app:cardElevation="5dp"
+        app:cardBackgroundColor="#55707070"
+        app:cardElevation="0dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="20dp"
+            android:layout_margin="2dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             >
-            <TextView
-
+            <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/audience_size_lable"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="18sp"
+                android:text="@string/audandout"
+                android:textColor="@color/white_text"
+                android:fontFamily="@font/raleway_extrabold"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_margin="5dp"
                 />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
 
-            <TextView
-                android:id="@+id/audience_size"
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+            </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_weight="3"
+    >
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ca 1.121.132"
-                android:textColor="#FFFFFF"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-                />
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Country"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="#939393"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/country_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Country"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="City"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="#939393"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/city_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="City"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Zip"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="#939393"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/zip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="25648"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/category_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="#939393"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_below="@+id/category_title"
+            android:id="@+id/categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sports"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Age"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="#939393"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/age_range"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="13-18"
+                    android:layout_margin="5dp"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/genger"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Male , Female"
+                    android:layout_margin="5dp"
+
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                >
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="2dp"
+                    android:layout_margin="2dp"
+                    android:background="#F31F68"
+
+                    />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/audience_size_lable2"
+                    android:layout_margin="10dp"
+                    android:textColor="#939393"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:fontFamily="@font/raleway_medium"
+
+                    />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/audience_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ca 1.121.132"
+                    android:textColor="#FFFFFF"
+                    android:fontFamily="@font/futura_medium_bt"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    />
+            </LinearLayout>
+
 
 
         </LinearLayout>
@@ -67,142 +369,249 @@
 
     </android.support.v7.widget.CardView>
 
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/define_your_budget"
-        android:padding="5dp"
-        android:textColor="#FFF"
+        android:textAllCaps="true"
+        android:textColor="#85868A"
+        android:fontFamily="@font/raleway_extrabold"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_margin="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        ><ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:visibility="gone"
-        android:src="@drawable/streetno_normal"
-        />
+        >
     <TextView
         android:id="@+id/budget_per_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="€ 135,27 Average/Day"
+        android:text="Per day"
         android:fontFamily="@font/futura_medium_bt"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="#FFF"
-        android:layout_margin="5dp"
         />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_budget_per_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/enter_amount"
+            android:fontFamily="@font/raleway_medium"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/white_text"
+            android:textColor="@color/white_text"
+            android:theme="@style/MyEditTextTheme"
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="@color/white_text"
+            android:layout_margin="2dp"
+            android:gravity="center_vertical"
+            android:text="€"/>
 
     </LinearLayout>
-    <android.support.v7.widget.AppCompatSeekBar
-        android:id="@+id/seekbar"
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:fontFamily="@font/raleway_medium"
+        android:text="For the time of your Challenge 01.01. - 01.20."
+
+        />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Max."
+                    android:fontFamily="@font/futura_medium_bt"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textColor="#FFF"
+                    />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/max_budget_per_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="135"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:fontFamily="@font/raleway_medium"
+                    android:textColor="@color/white_text"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="25dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:textColor="@color/white_text"
+                    android:layout_margin="2dp"
+                    android:gravity="center_vertical"
+                    android:text="€"/>
+
+            </LinearLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardBackgroundColor="#55707070"
+                app:cardElevation="0dp"
+                android:layout_marginTop="15dp"
+                >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    >
+    <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:progress="50"
-        android:layout_margin="10dp"
+        android:text="@string/outreach_on_baget"
+        android:textColor="@color/white_text"
+        android:fontFamily="@font/raleway_extrabold"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:padding="5dp"
-        android:layout_marginLeft="10dp"
-        android:text="For the time of your challenge 01.01-0.1020.2.700E( Maximum )"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:fontFamily="@font/raleway_medium"
+        android:text="Between 01.01.-01.20."
 
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/estimate_outreach"
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/futura_medium_bt"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ca.247.000 impressions"
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:fontFamily="@font/futura_medium_bt"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_margin="10dp"
-        />
-    <View
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_gray"
-        />
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Between 01.01-01.20."
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_margin="10dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ca.25.000 Entries"
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:fontFamily="@font/futura_medium_bt"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_margin="10dp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_gray"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Between 01.01-01.20."
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_margin="10dp"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ca.64.000 Profile Views"
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:fontFamily="@font/futura_medium_bt"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_margin="10dp"
-        />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_gray"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Between 01.01-01.20."
-        android:padding="5dp"
-        android:textColor="#FFF"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:layout_margin="10dp"
-        />
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Challenge posts"
+            android:layout_weight="3"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/no_of_posts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="53.542"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
 
 
-            <TextView
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Challenge views"
+            android:layout_weight="3"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/no_of_views"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="120.543"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Profile views"
+            android:layout_weight="3"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/no_of_profile_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="13.543"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:fontFamily="@font/raleway_medium"
+            android:textColor="@color/white_text"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -211,13 +620,14 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/next"
+                android:fontFamily="@font/raleway_black"
                 android:textSize="18sp"
                 android:textColor="#FFF"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:layout_marginTop="25dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/submit_btn_shape"
+                android:background="@drawable/submit_button"
                 />
         </LinearLayout>
     </ScrollView>

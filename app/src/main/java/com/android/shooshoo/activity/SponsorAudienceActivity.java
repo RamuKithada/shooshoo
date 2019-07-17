@@ -7,10 +7,11 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +56,7 @@ import retrofit2.Response;
  * This {@link SponsorAudienceActivity} is used to show the sponsor challenge target Audience selection functionality
  * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
  */
-public class SponsorAudienceActivity extends BaseActivity implements DataLoadView,SponsorChallengeView, CompoundButton.OnCheckedChangeListener,View.OnClickListener,AdapterView.OnItemSelectedListener,FragmentListDialogListener {
+public class SponsorAudienceActivity extends BaseActivity implements DataLoadView, CompoundButton.OnCheckedChangeListener,SponsorChallengeView,View.OnClickListener,FragmentListDialogListener {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -66,7 +67,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     @BindView(R.id.iv_help)
     ImageView iv_help;
 
-    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
+    @BindViews({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
@@ -92,7 +93,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
 
     @BindView(R.id.rv_price_list)
-            RecyclerView rv_price_list;
+    RecyclerView rv_price_list;
 
     @BindView(R.id.btn_more_prizes)
     ImageView btn_more_prizes;
@@ -112,6 +113,8 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     AppCompatEditText et_cash_amount;
     @BindView(R.id.et_cash_currency)
     AppCompatEditText et_cash_currency;
+    @BindView(R.id.et_cash_number)
+    AppCompatEditText et_cash_number;
     @BindView(R.id.et_prize_name)
     AppCompatEditText et_prize_name;
     @BindView(R.id.et_prize_worth)
@@ -121,6 +124,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
     @BindView(R.id.no_of_winners)
     AppCompatEditText no_of_winners;
+
     @BindView(R.id.edt_country)
     AppCompatEditText edt_country;
 
@@ -135,8 +139,11 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     @BindView(R.id.edt_miles)
     AppCompatEditText edt_miles;
 
-    @BindView(R.id.edt_gender)
-    AppCompatEditText edt_gender;
+    @BindView(R.id.checkbox_male)
+    CheckBox checkbox_male;
+
+    @BindView(R.id.checkbox_female)
+    CheckBox checkbox_female;
 
     @BindView(R.id.edt_min_age)
     AppCompatEditText edt_min_age;
@@ -146,18 +153,13 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     AppCompatEditText edt_max_age;
 
 
-
-
     @BindView(R.id.tv_price_total)
     AppCompatTextView tv_price_total;
 
 
-
-
-    /** winners,miles,age are lists set them to FragmentDialog to show to choose one of the them.
+    /**
+     * winners,miles,age are lists set them to FragmentDialog to show to choose one of the them.
      */
-
-
 
 
     DataLoadPresenter dataLoadPresenter;
@@ -165,25 +167,33 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     CategorySelectionAdapter categorySelectionAdapter;
 
     SponsorChallengePresenter sponsorChallengePresenter;
-    List<Category> categoryArrayList=new ArrayList<Category>();
+    List<Category> categoryArrayList = new ArrayList<Category>();
+    List<Country> countries=new ArrayList<Country>();
+    List<City> cities=new ArrayList<City>();
+    Country country;
+    City city;
+    int city_pos=-1,country_pos=-1;
 
 
-    ArrayList<PrizeBaseModel> prices=new ArrayList<PrizeBaseModel>();
-    PrizeListAdapter priceWorthAdapter=null;
-    int total=0;
-    RecyclerView.AdapterDataObserver  adapterDataObserver=new RecyclerView.AdapterDataObserver() {
+
+    ArrayList<PrizeBaseModel> prices = new ArrayList<PrizeBaseModel>();
+    PrizeListAdapter priceWorthAdapter = null;
+    double total = 0;
+    RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
-         /*   total=0;
-            for (EditModel model:prices){
+            total=0;
+            for (PrizeBaseModel model:prices){
                 try {
-                    int price=Integer.valueOf(model.getEditTextValue());
+
+
+                     double price=model.getPrizeAmount();
                      total=total+price;
                 }catch (Exception e){
                     e.printStackTrace();
                 }
           }
-          edt_price_total.setText(String.valueOf(total));*/
+          tv_price_total.setText(String.valueOf(total));
         }
     };
 
@@ -198,36 +208,81 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         btn_more_categories.setOnClickListener(this);
         title.setText("PRIZE & Outreach");
         iv_help.setVisibility(View.VISIBLE);
-        tv_national.setBackgroundResource(R.drawable.cat_selected);
-        tv_international.setBackgroundResource(R.drawable.cat_unselected);
         setStage(2);
         spinnersInti();
-        categorySelectionAdapter=new CategorySelectionAdapter(this,categoryArrayList);
-        priceWorthAdapter=new PrizeListAdapter(this,prices);
+        categorySelectionAdapter = new CategorySelectionAdapter(this, categoryArrayList);
+        priceWorthAdapter = new PrizeListAdapter(this, prices);
         priceWorthAdapter.registerAdapterDataObserver(adapterDataObserver);
         btn_more_prizes.setOnClickListener(this);
         rv_price_list.setAdapter(priceWorthAdapter);
         rv_price_list.setLayoutManager(new LinearLayoutManager(this));
         rv_price_list.setNestedScrollingEnabled(false);
-                dataLoadPresenter=new DataLoadPresenter();
+        dataLoadPresenter = new DataLoadPresenter();
         dataLoadPresenter.attachView(this);
-        sponsorChallengePresenter =new SponsorChallengePresenter();
+        sponsorChallengePresenter = new SponsorChallengePresenter();
         sponsorChallengePresenter.attachView(this);
-        connectionDetector=new ConnectionDetector(this);
+        connectionDetector = new ConnectionDetector(this);
 
         et_prize_type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                CustomListFragmentDialog showFragment = new CustomListFragmentDialog();
                 Bundle args = new Bundle();
-                args.putStringArray("list",new String[]{"Cash","Product"});
-                args.putInt("view",et_prize_type.getId());
+                args.putStringArray("list", new String[]{"Cash", "Product"});
+                args.putInt("view", et_prize_type.getId());
                 showFragment.setArguments(args);
-                showFragment.show(getSupportFragmentManager(),"Prize Type");
+                showFragment.show(getSupportFragmentManager(), "Prize Type");
 
             }
         });
-/*        edt_price_worth.addTextChangedListener(new TextWatcher() {
+        edt_country.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(countries==null)
+                    return;
+
+                final String[] lables=new String[countries.size()];
+                for(int index=0;index<countries.size();index++)
+                {
+                    lables[index]=countries.get(index).getCountryName();
+                }
+
+                        CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                        Bundle args = new Bundle();
+                        args.putStringArray("list",lables);
+                        args.putInt("view",edt_country.getId());
+                        showFragment.setArguments(args);
+                        showFragment.show(getSupportFragmentManager(),"country");
+
+
+            }
+        });
+        edt_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(cities==null)
+                {
+                    city_pos=-1;
+                    showMessage("No Cites");
+                    return;
+                }
+
+                final String[] lables=new String[cities.size()];
+                for(int index=0;index<cities.size();index++)
+                {
+                    lables[index]=cities.get(index).getCityName();
+                }
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_city.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"city");
+            }
+        });
+
+
+        et_cash_number.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -236,9 +291,15 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    int value=Integer.valueOf(s.toString());
-                    int mTotal=total+value;
-                    edt_price_total.setText(String.valueOf(mTotal));
+                    int number=1;
+                    if(ApiUrls.validateString(s.toString())&&s.length()>0)
+                       number= Integer.valueOf(s.toString());
+                    int value=0;
+                    if(ApiUrls.validateString(et_cash_amount.getText().toString())&&et_cash_amount.getText().length()>0)
+                        value =Integer.valueOf(et_cash_amount.getText().toString());
+                    double mTotal=total+value*number;
+                    tv_price_total.setText(String.valueOf(mTotal));
+                    tv_price_total.setText(String.valueOf(mTotal));
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -249,38 +310,121 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
             public void afterTextChanged(Editable s) {
 
             }
-        });*/
-        if(connectionDetector.isConnectingToInternet()){
-            dataLoadPresenter.loadAllcategoriesList();
-        }
+        });
+        et_prize_number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int number=1;
+                    if(ApiUrls.validateString(s.toString())&&s.length()>0)
+                        number=Integer.valueOf(s.toString());
+                    int value=0;
+                    if(ApiUrls.validateString(et_prize_worth.getText().toString())&&et_prize_worth.getText().length()>0)
+                        value =Integer.valueOf(et_prize_worth.getText().toString());
+                    double mTotal=total+value*number;
+                    tv_price_total.setText(String.valueOf(mTotal));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_prize_worth.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int value=0;
+                    if(ApiUrls.validateString(s.toString())&&s.length()>0)
+                        value=Integer.valueOf(s.toString());
+                    int number=1;
+                    if(ApiUrls.validateString(et_prize_number.getText().toString())&&et_prize_number.getText().length()>0)
+                        number =Integer.valueOf(et_prize_number.getText().toString());
+                    double mTotal=total+value*number;
+                    tv_price_total.setText(String.valueOf(mTotal));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        et_cash_amount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    int value=0;
+                    if(ApiUrls.validateString(s.toString())&&s.length()>0)
+                       value=Integer.valueOf(s.toString());
+                    int number=1;
+                    if(ApiUrls.validateString(et_cash_number.getText().toString())&&et_cash_number.getText().length()>0)
+                        number =Integer.valueOf(et_cash_number.getText().toString());
+                    double mTotal=total+value*number;
+                    tv_price_total.setText(String.valueOf(mTotal));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        if (connectionDetector.isConnectingToInternet()) {
+            dataLoadPresenter.loadAllcategoriesList();
+            dataLoadPresenter.loadCountryData();
+        }
 
 
     }
 
     private void spinnersInti() {
-
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
     }
 
-    int nationalization=0;
-    View.OnClickListener radioClickListener=new View.OnClickListener() {
+    int nationalization = 0;
+    View.OnClickListener radioClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.national_lay:
-          tv_national.setTextColor(Color.parseColor("#FFFFFF"));
-          tv_international.setTextColor(Color.parseColor("#85868A"));
-          nationalization=0;
-            break;
-                case R.id.tv_international:
+                    tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+                    tv_international.setTextColor(Color.parseColor("#85868A"));
+                    nationalization = 0;
+                    break;
+                case R.id.international_lay:
                     tv_international.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_national.setTextColor(Color.parseColor("#85868A"));
-          nationalization=1;
-            break;
-        }
+                    nationalization = 1;
+                    break;
+            }
 
             getSizeofAudience();
         }
@@ -289,28 +433,14 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.btn_next:
-                if(validate())
-                {
-                    String radar="national";
-                    if(nationalization==1){
-                        radar="international";
+                if (validate()) {
+                    String radar = "national";
+                    if (nationalization == 1) {
+                        radar = "international";
                     }
-                    StringBuilder  gender=new StringBuilder();
-                    if(checkbox_male.isChecked()){
-                        gender.append("male");
-
-                }
-                if(checkbox_female.isChecked()){
-                    if(gender.length()>0){
-                        gender.append(',').append("female");
-                    }else {
-                        gender.append("female");
-                    }
-
-                }
+                    StringBuilder gender = new StringBuilder();
 /*                StringBuilder stringBuilder=new StringBuilder();
 //                    JSONArray jsonArray=new JSONArray();
                 for (int index=0;index<prices.size();index++){
@@ -322,11 +452,11 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                 }
                     stringBuilder.append(',').append(edt_price_worth.getText().toString());*/
 
-           StringBuilder cats=new StringBuilder();
-                StringBuilder brands=new StringBuilder();
-                    for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
-                        if(categoryArrayList.size()>categoryModel.getCategory()){
-                            Category mCategory= categoryArrayList.get(categoryModel.getCategory());
+                    StringBuilder cats = new StringBuilder();
+                    StringBuilder brands = new StringBuilder();
+                    for (CategoryModel categoryModel : categorySelectionAdapter.getCategoryModels()) {
+                        if (categoryArrayList.size() > categoryModel.getCategory()) {
+                            Category mCategory = categoryArrayList.get(categoryModel.getCategory());
                             if (cats.length() > 0) {
                                 if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
                                     cats.append(',').append(mCategory.getCategoryId());
@@ -335,43 +465,26 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                                     cats.append(mCategory.getCategoryId());
                             }
                         }
-                   /*     if(categoryArrayList.get(categoryModel.getCategory()).getBrands()!=null)
-                        if(categoryArrayList.get(categoryModel.getCategory()).getBrands().size()>categoryModel.getSubcategory()){
-                            Brand brand=categoryArrayList.get(categoryModel.getCategory()).getBrands().get(categoryModel.getSubcategory());
 
-                            if(cats.length()>0){
-                                if(!cats.toString().contains(brand.getCategoryId()))
-                                cats.append(',').append(brand.getCategoryId());
-                            }else
-                                cats.append(brand.getCategoryId());
-
-                            if(brands.length()>0){
-                                if(!brands.toString().contains(brand.getCategoryId()))
-                                    brands.append(',').append(brand.getBrandId());
-                            }else
-                                brands.append(brand.getBrandId());
-
-                        }*/
                     }
 
-                    if(prices!=null){
-                        if(prices.size()<0){
-                            showMessage("");
+                    if (prices != null) {
+                        if (prices.size() < 0) {
+                            showMessage("Please Announce prizes");
                         }
                     }
 
 
-
-                    if(!connectionDetector.isConnectingToInternet())
-                    {
+                    if (!connectionDetector.isConnectingToInternet()) {
                         showMessage("Please check internet connection !");
                         return;
-                    }/*
+                    }
+                    /*
 sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
         stringBuilder.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
         edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
         ,age.get(minAgePos),age.get(maxAgePos),gender.toString());*/
-        }
+                }
 
 //
                 break;
@@ -379,33 +492,70 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                 finish();
                 break;
             case R.id.btn_more_categories:
+                List<CategoryModel> models=categorySelectionAdapter.getCategoryModels();
+                for (int index=0;index<models.size();index++){
+                    CategoryModel model=models.get(index);
+                    if(model.getCategory()<=0){
+                        showMessage("please select category at "+(index+1));
+                        return;
+                    }
+
+                }
+
                 categorySelectionAdapter.add();
                 break;
             case R.id.btn_more_prizes:
-                if(priceWorthAdapter.getItemCount()<4) {
+                if (priceWorthAdapter.getItemCount() < 4) {
+                    PrizeBaseModel prizeBaseModel = null;
+                    if (prizetype == 0) {
 
-                    PrizeBaseModel prizeBaseModel=null;
-                    if(prizetype==0)
-                        {
-                        CashModel cashModel=new CashModel();
+
+
+                        CashModel cashModel = new CashModel();
+                        if(!ApiUrls.validateString(et_cash_amount.getText().toString())){
+                            showMessage("Please enter amount");
+                            return;
+                        }
+
                         cashModel.setAmount(et_cash_amount.getText().toString());
+                        if(!ApiUrls.validateString(et_cash_currency.getText().toString())){
+                            showMessage("Please enter Currency");
+                            return;
+                           }
                         cashModel.setCurrency(et_cash_currency.getText().toString());
-                        prizeBaseModel=cashModel;
+                        if(!ApiUrls.validateString(et_cash_number.getText().toString())){
+                            showMessage("Please enter number");
+                            return;
+                           }
+                        cashModel.setNumber(et_cash_number.getText().toString());
+                        prizeBaseModel = cashModel;
+                    } else {
+                        PrizeModel prizeModel = new PrizeModel();
+                        if(!ApiUrls.validateString(et_prize_name.getText().toString())){
+                            showMessage("Please enter Product Name");
+                            return;
                         }
-                    else
-                        {
-                        PrizeModel  prizeModel=new PrizeModel();
                         prizeModel.setName(et_prize_name.getText().toString());
-                        prizeModel.setWorth(et_prize_worth.getText().toString());
-                        prizeModel.setNumber(et_prize_number.getText().toString());
-                        prizeBaseModel=prizeModel;
+                        if(!ApiUrls.validateString(et_prize_worth.getText().toString())){
+                            showMessage("Please enter Product worth");
+                            return;
                         }
-                    if(prizeBaseModel!=null)
-                    priceWorthAdapter.addItem(prizeBaseModel);
+                        prizeModel.setWorth(et_prize_worth.getText().toString());
+                        if(!ApiUrls.validateString(et_prize_number.getText().toString())){
+                            showMessage("Please enter number");
+                            return;
+                        }
+                        prizeModel.setNumber(et_prize_number.getText().toString());
+                        prizeBaseModel = prizeModel;
+                    }
+                    if (prizeBaseModel != null)
+                        priceWorthAdapter.addItem(prizeBaseModel);
                     et_prize_type.setText("Cash");
                     cash_lay.setVisibility(View.VISIBLE);
+                    product_lay.setVisibility(View.GONE);
                     et_cash_amount.setText(null);
                     et_cash_currency.setText(null);
+                    et_cash_number.setText(null);
                     et_prize_name.setText(null);
                     et_prize_number.setText(null);
                     et_prize_worth.setText(null);
@@ -417,79 +567,124 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
     }
 
     private boolean validate() {
-        if(!ApiUrls.validateString(edt_amount.getText().toString())){
-            edt_amount.setError("Enter amount");
-            edt_amount.requestFocus();
-            return false;
-        }
-        if(!ApiUrls.validateString(edt_key_des.getText().toString())){
-            edt_key_des.setError("Enter Key Description");
-            edt_key_des.requestFocus();
-            return false;
-        }
-     /*   if(!ApiUrls.validateString(edt_price_worth.getText().toString())) {
-            edt_price_worth.setError("Enter price");
-            edt_price_worth.requestFocus();
-            return false;
-        }*/
+            if(priceWorthAdapter.getItemCount()<=0){
+              showMessage("Please Prizes Description to winners");
+              return false;
+                }
 
-        if(!ApiUrls.validateString(edt_price_total.getText().toString())) {
-            edt_price_total.setError("Enter Total price");
-            edt_price_total.requestFocus();
+          if(!ApiUrls.validateString(no_of_winners.getText().toString())){
+              showMessage("Enter number of winners");
+              no_of_winners.requestFocus();
             return false;
         }
-        if(!ApiUrls.validateString(edt_zipcode.getText().toString())) {
+    if(country_pos<0){
+        showMessage("Please select Country");
+        edt_country.requestFocus();
+        return false;
+    }
+         if(!ApiUrls.validateString(edt_zipcode.getText().toString())) {
+             edt_zipcode.setError("Enter Zip Code ");
+             edt_zipcode.requestFocus();
+            return false;
+        }
+
+    if(city_pos<0){
+        showMessage("Please select City");
+        edt_city.requestFocus();
+        return false;
+    }
+
+    if(!ApiUrls.validateString(edt_miles.getText().toString())) {
+        edt_miles.setError("Enter miles for challenge range");
+        edt_miles.requestFocus();
+            return false;
+        }
+
+   if(categorySelectionAdapter.getItemCount()<3){
+       showMessage("Please select at least 3 categories");
+       return false;
+   }
+   List<CategoryModel> models=categorySelectionAdapter.getCategoryModels();
+     for (int index=0;index<models.size();index++){
+         CategoryModel model=models.get(index);
+         if(model.getCategory()<=0){
+             showMessage("please select category at "+index+1);
+             return false;
+         }
+
+     }
+
+        if (!ApiUrls.validateString(edt_zipcode.getText().toString())) {
             edt_zipcode.setError("Enter ZipCode");
             edt_zipcode.requestFocus();
             return false;
         }
 
-        if(!ApiUrls.validateString(edt_address.getText().toString())) {
-            edt_address.setError("Enter Personal Address");
-            edt_address.requestFocus();
+        if (!ApiUrls.validateString(edt_min_age.getText().toString())) {
+            showMessage("Please enter starting age");
+            edt_min_age.requestFocus();
             return false;
         }
+        if (!ApiUrls.validateString(edt_max_age.getText().toString())) {
+            edt_max_age.requestFocus();
+            showMessage("Please enter ending age");
+            return false;
+        }
+        int minAgePos=0;
+        int maxAgePos=0;
+       try {
+           minAgePos=Integer.valueOf(edt_min_age.getText().toString());
+           maxAgePos=Integer.valueOf(edt_max_age.getText().toString());
+           if (minAgePos >= maxAgePos) {
+               showMessage("Minimum age must be less the Maximum age");
+               return false;
+           }
+       }catch (Exception e){
 
-        if(minAgePos>=maxAgePos){
-            showMessage("Minimum age must be less the Maximum age");
-            return false;
-        }
+       }
+
+
 
         if(!checkbox_female.isChecked()&&!checkbox_male.isChecked()){
            showMessage("Select atleast one gender ");
            return false;
         }
 
-
-
-
         return true;
     }
+
     /**
      * setStage is for selection one of registration step
+     *
      * @param step is step of registration process of a challenge
      */
     private void setStage(int step) {
-        for(int index=0;index<buttons.size();index++){
-            if(index==step){
+        for (int index = 0; index < buttons.size(); index++) {
+            if (index <= step) {
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
                 }
-            }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
+            } else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
         }
     }
 
     @Override
     public void onCitiesData(List<City> cities) {
+        this.cities=cities;
+        edt_city.setText(null);
+        city=null;
+
+
 
     }
 
     @Override
     public void onCountryData(List<Country> countries) {
+        if(countries!=null)
+            this.countries=countries;
 
     }
-
 
 
     @Override
@@ -507,115 +702,112 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
         this.cat_subcat_list.setAdapter(this.categorySelectionAdapter);
     }
 
-    int winnerPos=0,maxAgePos=0,minAgePos=0,milesPos=0;
-    @Override
+//    int winnerPos = 0, maxAgePos = 0, minAgePos = 0, milesPos = 0;
+
+   /* @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (parent.getId()){
+        switch (parent.getId()) {
             case R.id.spinner_max_age:
-                maxAgePos=position;
+                maxAgePos = position;
                 getSizeofAudience();
                 break;
 
             case R.id.spinner_min_age:
-                minAgePos=position;
+                minAgePos = position;
                 getSizeofAudience();
                 break;
 
             case R.id.spinner_miles:
-                milesPos=position;
+                milesPos = position;
                 break;
 
             case R.id.spinner_winner:
-                winnerPos=position;
+                winnerPos = position;
                 break;
 
 
         }
 
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
+    } */
     @Override
     public void onCompanyRegister(Company company) {
 
     }
 
+
+
+
     @Override
     public void onChallengeResponse(Challenge company) {
         this.userSession.setSponsorChallenge(company.getChallengeId());
         this.userSession.savaChallenge(company);
-        startActivity(new Intent(this,CampaignActivity.class));
+        startActivity(new Intent(this, CampaignActivity.class));
     }
 
-   public void getSizeofAudience(){
-        if(!connectionDetector.isConnectingToInternet())
-        {
+    public void getSizeofAudience() {
+        if (!connectionDetector.isConnectingToInternet()) {
             showMessage("Please check internet connection");
             return;
         }
 
 
-        String ageStart=null,ageEnd=null;
+        String ageStart = null, ageEnd = null;
 
-       String radar="national";
-       if(nationalization==1){
-           radar="international";
-       }
-       StringBuilder  gender=new StringBuilder();
-       if(checkbox_male.isChecked()){
-           gender.append("male");
+        String radar = "national";
+        if (nationalization == 1) {
+            radar = "international";
+        }
+        StringBuilder  gender=new StringBuilder();
+        if(checkbox_male.isChecked()){
+            gender.append("male");
 
-       }
-       if(checkbox_female.isChecked()){
-           if(gender.length()>0){
-               gender.append(',').append("female");
-           }else {
-               gender.append("female");
-           }
+        }
+        if(checkbox_female.isChecked()){
+            if(gender.length()>0){
+                gender.append(',').append("female");
+            }else {
+                gender.append("female");
+            }
 
-       }
-       ageStart=age.get(minAgePos).toLowerCase().replace("years"," ");
-       ageEnd=age.get(maxAgePos).toLowerCase().replace("years"," ");
+        }
+        ageStart = edt_min_age.getText().toString();
+        ageEnd = edt_max_age.getText().toString();
 
-       RetrofitApis retrofitApis=RetrofitApis.Factory.create(this);
-       Call<ResponseBody>  call=retrofitApis.calculateAudience(radar,gender.toString(),ageStart,ageEnd);
+        RetrofitApis retrofitApis = RetrofitApis.Factory.create(this);
+        Call<ResponseBody> call = retrofitApis.calculateAudience(radar, gender.toString(), ageStart, ageEnd);
 
-       showProgressIndicator(true);
-       call.enqueue(new Callback<ResponseBody>() {
-           @Override
-           public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-               showProgressIndicator(false);
-               if(response.isSuccessful()){
-                   try {
-                       JSONObject object=new JSONObject(response.body().string());
-                       if(object.optInt("status")==1){
-                           JSONObject size=object.getJSONObject("size");
-                          String audienceSize=size.optString("size");
-                          userSession.setAudSize(audienceSize);
-                          audience_size.setText(audienceSize);
-                          showMessage(object.optString("message"));
-                       }
+        showProgressIndicator(true);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                showProgressIndicator(false);
+                if (response.isSuccessful()) {
+                    try {
+                        JSONObject object = new JSONObject(response.body().string());
+                        if (object.optInt("status") == 1) {
+                            JSONObject size = object.getJSONObject("size");
+                            String audienceSize = size.optString("size");
+                            userSession.setAudSize(audienceSize);
+                            audience_size.setText(audienceSize);
+                            showMessage(object.optString("message"));
+                        }
 
-                   } catch (JSONException e) {
-                       e.printStackTrace();
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-               }
-           }
+                }
+            }
 
-           @Override
-           public void onFailure(Call<ResponseBody> call, Throwable t) {
-               showProgressIndicator(false);
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showProgressIndicator(false);
 
-           }
-       });
+            }
+        });
 
     }
 
@@ -624,27 +816,45 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
         getSizeofAudience();
     }
 
-    int prizetype=0;
+    int prizetype = 0;
     @Override
     public void onEditView(int view, int position) {
-        if(view==R.id.et_prize_type){
-            if(position==0)
-            {
-                prizetype=0;
-                et_prize_type.setText("Cash");
-                cash_lay.setVisibility(View.VISIBLE);
-                product_lay.setVisibility(View.GONE);
+        switch (view) {
+            case R.id.et_prize_type:
+                if (position == 0) {
+                    prizetype = 0;
+                    et_prize_type.setText("Cash");
+                    cash_lay.setVisibility(View.VISIBLE);
+                    product_lay.setVisibility(View.GONE);
+                } else {
+                    prizetype = 1;
+                    et_prize_type.setText("Product");
+                    cash_lay.setVisibility(View.GONE);
+                    product_lay.setVisibility(View.VISIBLE);
+                }
 
+                break;
+            case R.id.edt_city:
+                if(cities!=null)
+                {
+                    edt_city.setText(cities.get(position).getCityName());
+                    edt_city.setError(null);
+                    city=cities.get(position);
+                    city_pos=position;
+                }
+                break;
+            case R.id.edt_country:
+                if(countries!=null)
+                {
+                    dataLoadPresenter.loadCites(countries.get(position).getCountryId());
+                    edt_country.setText(countries.get(position).getCountryName());
+                    edt_city.setError(null);
+                    country_pos=position;
+                    country=countries.get(position);
+                }
 
-            }
-            else
-            {
-                prizetype=1;
-                et_prize_type.setText("Product");
-                cash_lay.setVisibility(View.GONE);
-                product_lay.setVisibility(View.VISIBLE);
-            }
+                break;
+
         }
-
     }
 }

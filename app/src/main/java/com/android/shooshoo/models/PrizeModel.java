@@ -7,8 +7,18 @@ public class PrizeModel implements PrizeBaseModel {
     String name;
 
     @Override
-    public String getPrizeAmount() {
-        return getWorth();
+    public double getPrizeAmount() {
+        int value=0,number=1;
+        try {
+             value=Integer.valueOf(getWorth());
+             number=Integer.valueOf(getNumber());
+        }catch (Exception e){
+
+        }
+
+
+        double total=value*number;
+        return total;
     }
 
     @Override

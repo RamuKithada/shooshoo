@@ -155,4 +155,7 @@
     <string name="language">Language</string>
     <string name="interaction">Interaction</string>
     <string name="outreach">Outreach</string>
+    <string name="audandout"><![CDATA[Audience & Outreach]]></string>
+    <string name="outreach_on_baget">Outreach based on budget</string>
+    <string name="checkout">CHECKOUT</string>
 </resources>

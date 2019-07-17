@@ -183,7 +183,7 @@ public interface RetrofitApis {
 
     @Multipart
     @POST("sponsor")
-    Call<ChallengeResponse> saveChallenge(@Part("createdBy") RequestBody  createdBy, @Part("sponsoredBy") RequestBody  sponsoredBy,
+    Call<ChallengeResponse> saveChallenge(@Part("createdBy") RequestBody  createdBy, @Part("sponsoredBy") RequestBody  sponsoredBy, @Part("privateSponsor") RequestBody  privateSponsor,
                                           @Part("challengeName") RequestBody  challName, @Part("startDate") RequestBody  startDate,
                                           @Part("startTime") RequestBody  startTime,@Part("endDate") RequestBody  endDate, @Part("endTime") RequestBody  endTime,
                                           @Part("description") RequestBody  description, @Part("photoEntries") RequestBody  photoEntries,

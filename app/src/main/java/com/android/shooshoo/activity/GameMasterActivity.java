@@ -599,7 +599,7 @@ public class GameMasterActivity   extends BaseActivity implements View.OnClickLi
     public void onGameMasterCreate(GameMaster master) {
              userSession.saveGameMaster(master);
              userSession.setSponsorChallenge(master.getChallengeId());
-        Intent intent=new Intent(this,TheChallengeActivity.class);
+        Intent intent=new Intent(this,JackpotChallengeFormActivity.class);
         intent.putExtra("challenge_type",2);
         startActivity(intent);
 

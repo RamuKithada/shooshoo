@@ -21,7 +21,7 @@
             >
             <Spinner
                 android:id="@+id/spinner_category"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -33,15 +33,15 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:padding="10dp"
-                android:src="@drawable/down_angel"
+                android:visibility="gone"
+                android:src="@drawable/add_plus_icon"
                 android:layout_gravity="center_vertical"
                 />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/color_gray"
+            android:background="@color/white_text"
             />
     </LinearLayout>
     <LinearLayout
@@ -89,6 +89,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="5dp"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_close_black_24dp"
         android:layout_gravity="center"
 

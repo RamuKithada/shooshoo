@@ -111,6 +111,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     String challengeVideoUri=null;
     private int sizePos=-1;
     final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
+    private int privateSponsor=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,6 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         iv_back.setOnClickListener(this);
         bannerCard.setOnClickListener(this);
         videoCard.setOnClickListener(this);
-
         edt_start_time.setOnClickListener(this);
         edt_startdate.setOnClickListener(this);
         edt_enddate.setOnClickListener(this);
@@ -133,6 +133,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         title.setText("The Challenge");
         setStage(1);
         viewInitilization();
+        if(getIntent().hasExtra("privateSponsor")){
+            privateSponsor=getIntent().getIntExtra("privateSponsor",0);
+        }
+
+
 
     }
 
@@ -178,8 +183,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             showMessage("Please save a company");
                             return;
                         }
-
-                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,edt_challenge_name.getText().toString(),
+                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,privateSponsor,edt_challenge_name.getText().toString(),
                                 edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
                                 videos, lables[sizePos], challengeImageUri, challengeVideoUri);
@@ -439,7 +443,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
     private void setStage(int i) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index<=i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
                 }

@@ -174,7 +174,16 @@ FullVideoAdapter.FeedClickListener clickListener=new FullVideoAdapter.FeedClickL
         else
             showMessage("Check Internet connection");
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if(container!=null)
+            if (isVisibleToUser) {
+                container.setAdapter(adapter);
+            }else {
+                container.setAdapter(null);
+            }
+        super.setUserVisibleHint(isVisibleToUser);
+    }
     @Override
     public void onFeedsLoaded(ChallengeFeeds feeds) {
 

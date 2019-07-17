@@ -59,8 +59,10 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
     @BindView(R.id.btn_next)
     TextView btn_next;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
+
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 

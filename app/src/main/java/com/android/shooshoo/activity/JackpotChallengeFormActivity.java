@@ -505,7 +505,7 @@ int startDate=0,startYear=0,startMonth=0;
     @Override
     public void onGameMasterCreate(GameMaster result) {
         userSession.saveGameMaster(result);
-        Intent intent=new Intent(this, AudienceInstructionActivity.class);
+        Intent intent=new Intent(this, JackpotAudienceActivity.class);
         intent.putExtra("challenge_type",2);
         startActivity(intent);
     }

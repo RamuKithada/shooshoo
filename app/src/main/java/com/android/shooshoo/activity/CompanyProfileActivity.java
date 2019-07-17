@@ -121,6 +121,11 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.edt_city)
     AppCompatEditText edt_city;
 
+    @BindView(R.id.edt_company_business_email)
+    AppCompatEditText edt_company_business_email;
+
+
+
 
 
     DataLoadPresenter dataLoadPresenter;
@@ -165,16 +170,16 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         {
             case R.id.btn_next:
                 if(validate()){
-                int sponsorType=0;
-                if(private_sponsor.isChecked())
-                    sponsorType=1;
+//                int sponsorType=0;
+//                if(private_sponsor.isChecked())
+//                    sponsorType=1;
             if(connectionDetector.isConnectingToInternet()) {
                 this.view=view;
                 sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
                         edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
-                            String.valueOf(sponsorType));
+                            edt_company_business_email.getText().toString());
                             }
                             else
                                 showMessage("Please Check Internet connection");
@@ -191,16 +196,16 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.btn_more_companies:
                 if(validate()){
-                    int sponsorType=0;
-                    if(private_sponsor.isChecked())
-                        sponsorType=1;
+//                    int sponsorType=0;
+//                    if(private_sponsor.isChecked())
+//                        sponsorType=1;
                     if(connectionDetector.isConnectingToInternet()) {
                         this.view=view;
                         sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                                 city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
                                 edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
-                                String.valueOf(sponsorType));
+                                 edt_company_business_email.getText().toString());
 
                     }
                     else
@@ -408,6 +413,31 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         {
             edt_user_email.requestFocus();
             edt_user_email.setError("Email is too Long");
+            return false;
+        }
+
+        if(!ApiUrls.validateString(edt_company_business_email.getText().toString()))
+        {
+            edt_company_business_email.requestFocus();
+            edt_company_business_email.setError("Please enter email");
+            return false;
+        }
+        if(!Patterns.EMAIL_ADDRESS.matcher(edt_company_business_email.getText().toString()).matches()){
+            edt_company_business_email.requestFocus();
+            edt_company_business_email.setError("Please enter valid email");
+            return false;
+        }
+
+        if(edt_company_business_email.getText().toString().length()<6)
+        {
+            edt_company_business_email.requestFocus();
+            edt_company_business_email.setError("Email is Too Short");
+            return false;
+        }
+        if(edt_company_business_email.getText().toString().length()>70)
+        {
+            edt_company_business_email.requestFocus();
+            edt_company_business_email.setError("Email is too Long");
             return false;
         }
 
@@ -663,8 +693,9 @@ View view=null;
 
                 }
                 userSession.setSponsorIds(ids.toString());
-                Intent intent=new Intent(this,TheChallengeActivity.class);
-                startActivity(intent);
+                Intent privateSponsor=new Intent(this,SponsorChallengeFormActivity.class);
+                privateSponsor.putExtra("privateSponsor",0);
+                startActivity(privateSponsor);
             }
             }
 
@@ -695,7 +726,8 @@ View view=null;
                     edt_city.setText(cities.get(position).getCityName());
                     edt_city.setError(null);
                     city=cities.get(position);
-                    city_pos=position;}
+                    city_pos=position;
+                }
                 break;
         }
 
