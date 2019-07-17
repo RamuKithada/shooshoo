@@ -158,4 +158,9 @@
     <string name="audandout"><![CDATA[Audience & Outreach]]></string>
     <string name="outreach_on_baget">Outreach based on budget</string>
     <string name="checkout">CHECKOUT</string>
+    <string name="entry_fees">Entry Fees</string>
+    <string name="access_limit">Limited access max</string>
+    <string name="rewards_selection">Reward selection</string>
+    <string name="invite_fnds">Invite others</string>
+    <string name="per_user">Per User</string>
 </resources>

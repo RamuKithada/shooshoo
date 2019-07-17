@@ -94,16 +94,15 @@
         <activity
             android:name=".activity.InviteFriendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" >
+
+
+        </activity>
         <activity
             android:name=".activity.GameMasterActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -168,7 +167,14 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".activity.CreateSponsorChallengeActivity"
             android:screenOrientation="portrait"
@@ -180,7 +186,10 @@
         <activity
             android:name=".activity.JackpotAudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" >
+
+
+        </activity>
         <activity
             android:name=".activity.SponsorAudienceActivity"
             android:screenOrientation="portrait"

@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CreateSponsorChallengeActivity;
+import com.android.shooshoo.activity.JackpotChallengeFormActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.activity.SponsorChallenge;
 import com.android.shooshoo.activity.ViewAllChallengesActivity;
@@ -192,7 +193,7 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
                 startActivity(intentSponsor);
                 break;
             case R.id.tv_jackpot_challenge:
-                Intent intentJackpot=new Intent(getActivity(), CreateSponsorChallengeActivity.class);
+                Intent intentJackpot=new Intent(getActivity(), JackpotChallengeFormActivity.class);
                 intentJackpot.putExtra("challenge_type",2);
                 startActivity(intentJackpot);
                 break;

@@ -3,6 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
@@ -35,7 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Harikrishna"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:fontFamily="@font/raleway_semibold"
+                android:textAppearance="?android:attr/textAppearanceSmallInverse"
                 android:textColor="#FFF"
                 />
             <TextView
@@ -54,23 +57,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_centerVertical="true">
 
             <RelativeLayout
                 android:id="@+id/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/addfriend_unselect"
                 android:layout_gravity="center"
-                android:visibility="visible">
-                <TextView
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                    android:text=" Add "
+                android:visibility="visible"
+                android:background="@drawable/addfriend"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="50dp"
+                    android:layout_height="24dp"
+                    android:text="Invite"
+                    android:fontFamily="@font/raleway_medium"
                     android:gravity="center"
                     android:textColor="@android:color/white"
+
 
                     />
             </RelativeLayout>
@@ -83,8 +87,8 @@
                 android:background="@drawable/addfriend"
                 >
                 <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="24dp"
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     app:srcCompat="@drawable/ic_add_white_24dp"
@@ -101,6 +105,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:visibility="invisible"
         android:layout_below="@+id/layout_container"
         android:background="@color/gray_text"></View>
 </RelativeLayout>

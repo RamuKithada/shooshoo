@@ -28,26 +28,13 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
-    @BindViews({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5})
+    @BindViews({R.id.button1, R.id.button2, R.id.button3, R.id.button4})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
     TextView title;
-
-    @BindView(R.id.tv_prize_money)
-    TextView tv_prize_money;
-
-    @BindView(R.id.edt_summary)
-    EditText edt_summary;
-
     @BindView(R.id.tv_challenge_name)
     TextView tv_challenge_name;
-
-    @BindView(R.id.tv_end_time)
-    TextView tv_end_time;
-
-    @BindView(R.id.tv_start_time)
-    TextView tv_start_time;
     ConnectionDetector connectionDetector;
 
     @Override
@@ -64,8 +51,8 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
         GameMaster gameMaster = this.userSession.getGameMaster();
         if (gameMaster != null) {
             this.tv_challenge_name.setText(gameMaster.getChallengeName());
-            this.tv_start_time.setText(gameMaster.getStartDate());
-            this.tv_end_time.setText(gameMaster.getEndDate());
+//            this.tv_start_time.setText(gameMaster.getStartDate());
+//            this.tv_end_time.setText(gameMaster.getEndDate());
         }
     }
 

@@ -27,6 +27,12 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
+
+
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+
+
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 
@@ -60,6 +66,7 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             ButterKnife.bind(this);
             btn_next.setOnClickListener(this);
             iv_back.setOnClickListener(this);
+        iv_help.setOnClickListener(this);
             setStage(4);
             title.setText("Summary");
             this.connectionDetector = new ConnectionDetector(this);
@@ -117,6 +124,9 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_help:
+                showMessage("Help");
                 break;
         }
 

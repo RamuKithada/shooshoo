@@ -7,69 +7,90 @@
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
     tools:context=".activity.InviteFriendActivity">
-    <include layout="@layout/stagebar_layout"/>
+    <include layout="@layout/jackpot_stagebar_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@drawable/search_btn_shape"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="8dp"
         >
-        <EditText
-            android:id="@+id/edt_search"
+        <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00FFFFFF"
+            android:inputType="textPersonName"
+            android:focusable="false"
+            android:clickable="true"
+            android:fontFamily="@font/raleway_medium"
+            android:text="@string/invite_fnds"
+            android:textColorHint="@color/white_text"
+            android:textColor="@color/white_text"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|left"
-            android:textColor="#FFFFFf"
-            android:textColorHint="#dfdfdf"
+            />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/edt_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPhonetic"
+            android:fontFamily="@font/raleway_medium"
+            android:minWidth="100dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            android:drawableLeft="@drawable/ic_search_notification_icon"
             android:hint="@string/search"
-            android:padding="10dp"
-            />
-        <ImageView
-            android:id="@+id/iv_search"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="5dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_search_notification_icon"
-            />
+            android:layout_marginLeft="10dp"
+            android:textColorHint="@color/white_text"
+            android:textColor="@color/white_text"
+            android:theme="@style/MyEditTextTheme" />
 
         </LinearLayout>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/select_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_text"
+        android:text="All"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:fontFamily="@font/raleway_extrabold"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:gravity="center_vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginBottom="5dp"
 
+
+
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_weight="1"
+        android:layout_gravity="center_horizontal"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         >
 
 
     </android.support.v7.widget.RecyclerView>
-    <TextView
+    <android.support.v7.widget.AppCompatTextView
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:text="@string/publish"
-        android:textSize="18sp"
-        android:textColor="#FFF"
-        android:layout_gravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/submit_button"
+        android:fontFamily="@font/raleway_black"
         android:gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/submit_btn_shape"
+        android:text="@string/next"
+        android:layout_gravity="center"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="@color/white_text"
+
         />
 </LinearLayout>

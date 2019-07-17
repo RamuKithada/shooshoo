@@ -35,6 +35,9 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+
     @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 
@@ -64,6 +67,7 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         ButterKnife.bind(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+        iv_help.setOnClickListener(this);
         title.setText("Campaign");
         setStage(3);
         String audienceSize= userSession.getAudSize();
@@ -86,6 +90,9 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_help:
+               showMessage("Help");
                 break;
         }
     }

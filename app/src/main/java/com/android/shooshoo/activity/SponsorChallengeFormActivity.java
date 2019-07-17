@@ -60,7 +60,10 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
     @BindView(R.id.iv_back)
     ImageView iv_back;
-    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+
+    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
@@ -126,6 +129,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         edt_startdate.setOnClickListener(this);
         edt_enddate.setOnClickListener(this);
         edt_end_time.setOnClickListener(this);
+        iv_help.setOnClickListener(this);
 
         connectionDetector=new ConnectionDetector(this);
         sponsorChallengePresenter =new SponsorChallengePresenter();
@@ -193,6 +197,9 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_help:
+            showMessage("Help");
                 break;
             case R.id.edt_start_time:
             case R.id.edt_end_time:

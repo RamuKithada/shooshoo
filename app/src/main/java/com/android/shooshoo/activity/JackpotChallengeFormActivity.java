@@ -66,7 +66,10 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     TextView btn_next;
     @BindView(R.id.iv_back)
     ImageView iv_back;
-    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
+
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
+    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
@@ -90,7 +93,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     @BindView(R.id.edt_challenge_des)
     EditText edt_challenge_des;
 
-    @BindView(R.id.edt_video_sizes)
+    @BindView(R.id.edit_video_sizes)
     EditText edt_video_sizes;
 
 
@@ -109,8 +112,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     @BindView(R.id.ch_video_entites)
     CheckBox ch_video_entites;
 
-    @BindView(R.id.ch_mini_game)
-    CheckBox ch_mini_game;
+   /* @BindView(R.id.ch_mini_game)
+    CheckBox ch_mini_game;*/
 
     ConnectionDetector connectionDetector;
     JackpotChallengePresenter sponcerChallengePresenter;
@@ -154,12 +157,12 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     }
 
     private void viewInitilization() {
-        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
-        setFocusChange(edt_startdate,R.id.startdate_line);
-        setFocusChange(edt_start_time,R.id.starttime_line);
-        setFocusChange(edt_enddate,R.id.enddate_line);
-        setFocusChange(edt_end_time,R.id.endtime_line);
-        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
+//        setFocusChange(edt_challenge_name,R.id.edt_challenge_line);
+//        setFocusChange(edt_startdate,R.id.startdate_line);
+//        setFocusChange(edt_start_time,R.id.starttime_line);
+//        setFocusChange(edt_enddate,R.id.enddate_line);
+//        setFocusChange(edt_end_time,R.id.endtime_line);
+//        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
 //        setFocusChange(edt_photo_entries,R.id.edt_photo_entries_line);
 //        setFocusChange(edt_video_entries,R.id.edt_video_entries_line);
     }
@@ -180,8 +183,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                         if(ch_video_entites.isChecked())
                             videos="yes";
 
-                        if(ch_mini_game.isChecked())
-                            minigame="yes";
+//                        if(ch_mini_game.isChecked())
+//                            minigame="no";
                         sponcerChallengePresenter.createChallenge(userSession.getUserId(),userSession.getSponsorChallenge(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
@@ -304,7 +307,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         return true;
     }
 
-    String active="#FFFFFF",inactive="#CCCCCC";
+ /*   String active="#FFFFFF",inactive="#CCCCCC";
     void setFocusChange(EditText editText, int id){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -318,7 +321,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             }
         });
 
-    }
+    }*/
     ///////////image Picker tool//////////
     private boolean checkPermission(String permission) {
         if (Build.VERSION.SDK_INT >= 23) {
@@ -429,7 +432,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
     private void setStage(int i) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index<=i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
                     buttons.get(index).setText(String.valueOf(i+1));

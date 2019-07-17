@@ -54,13 +54,17 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
         final ContactsModel model=filterArrayList.get(position);
         holder.tv_personname.setText(model.getName());
         holder.tv_personnumber.setText(model.getNumber());
-        if(model.isSelected()){
-            holder.added.setVisibility(View.VISIBLE);
-            holder.add.setVisibility(View.INVISIBLE);
-        }else {
-            holder.added.setVisibility(View.INVISIBLE);
-            holder.add.setVisibility(View.VISIBLE);
-        }
+
+            if(model.isSelected()){
+                holder.added.setVisibility(View.VISIBLE);
+                holder.add.setVisibility(View.INVISIBLE);
+            }else {
+                holder.added.setVisibility(View.INVISIBLE);
+                holder.add.setVisibility(View.VISIBLE);
+            }
+
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,6 +94,12 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
             myFillter=new MyFillter();
 
         return myFillter;
+    }
+    public void setSelectAll() {
+        for (ContactsModel model:filterArrayList) {
+            model.setSelected(true);
+        }
+        notifyDataSetChanged();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder

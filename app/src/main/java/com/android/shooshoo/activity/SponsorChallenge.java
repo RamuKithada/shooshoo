@@ -32,14 +32,10 @@ LinearLayout privateChallenge,comapanyRegiser;
             case R.id.private_sponsor:
                 Intent privateSponsor=new Intent(this,SponsorChallengeFormActivity.class);
                 privateSponsor.putExtra("privateSponsor",1);
-
                 startActivity(privateSponsor);
-
                 break;
             case R.id.company_register:
                 startActivity(new Intent(this, CompanyProfileActivity.class));
-
-
                 break;
             case R.id.iv_back:
                  finish();

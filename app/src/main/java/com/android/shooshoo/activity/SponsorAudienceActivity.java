@@ -205,9 +205,9 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         ButterKnife.bind(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
+        iv_help.setOnClickListener(this);
         btn_more_categories.setOnClickListener(this);
         title.setText("PRIZE & Outreach");
-        iv_help.setVisibility(View.VISIBLE);
         setStage(2);
         spinnersInti();
         categorySelectionAdapter = new CategorySelectionAdapter(this, categoryArrayList);
@@ -434,6 +434,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
             case R.id.btn_next:
                 if (validate()) {
                     String radar = "national";
@@ -490,6 +491,9 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                 break;
             case R.id.iv_back:
                 finish();
+                break;
+            case R.id.iv_help:
+                showMessage("Help");
                 break;
             case R.id.btn_more_categories:
                 List<CategoryModel> models=categorySelectionAdapter.getCategoryModels();

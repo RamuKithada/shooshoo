@@ -150,32 +150,14 @@
                     android:layout_centerVertical="true"
                     />
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
-                    android:background="@drawable/selected"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/color_gray"
-                    />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#cccccc"
-                    android:layout_centerVertical="true"
-                    />
-            </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/button4"
                     android:layout_width="@dimen/stage_button"
                     android:layout_height="@dimen/stage_button"
                     android:layout_centerInParent="true"
@@ -187,7 +169,7 @@
                     android:layout_height="1dp"
                     android:background="#cccccc"
                     android:layout_marginRight="-5dp"
-                    android:layout_toLeftOf="@id/button5"
+                    android:layout_toLeftOf="@id/button4"
                     android:layout_centerVertical="true"
                     />
             </RelativeLayout>

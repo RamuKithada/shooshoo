@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -35,7 +37,7 @@ import butterknife.ButterKnife;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
-public class InviteFriendActivity extends BaseActivity {
+public class InviteFriendActivity extends BaseActivity implements View.OnClickListener{
 
     /** this is used to invite your friends to participate in the challenge i.e., created by u
      *   Here we fetch contacts data from  phone and show the list to invite
@@ -44,7 +46,7 @@ public class InviteFriendActivity extends BaseActivity {
     TextView btn_next;
     @BindView(R.id.iv_back)
     ImageView iv_back;
-    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
+    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
@@ -53,7 +55,10 @@ public class InviteFriendActivity extends BaseActivity {
     RecyclerView friends_list;
 
     @BindView(R.id.edt_search)
-    EditText edt_search;
+    AppCompatEditText edt_search;
+    @BindView(R.id.select_all)
+    AppCompatTextView select_all;
+
 
     private FindContactsAdapter findContactsAdapter;
     private ArrayList<ContactsModel> contactsModelArrayList=new ArrayList<>();
@@ -66,6 +71,7 @@ public class InviteFriendActivity extends BaseActivity {
         ButterKnife.bind(this);
         title.setText("Invite Friends");
         setStage(3);
+        select_all.setOnClickListener( this);
         friends_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         findContactsAdapter=new FindContactsAdapter(this,contactsModelArrayList);
         friends_list.setAdapter(findContactsAdapter);
@@ -105,7 +111,7 @@ public class InviteFriendActivity extends BaseActivity {
      */
     private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==step){
+            if(index<=step){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
                     buttons.get(index).setText(String.valueOf(step+1));
@@ -208,4 +214,8 @@ public class InviteFriendActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onClick(View v) {
+        findContactsAdapter.setSelectAll();
+    }
 }
