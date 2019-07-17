@@ -48,7 +48,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
             if(response.isSuccessful()){
                 CompanyResponse companyResponse=response.body();
                 if(view!=null)
-                view.showMessage(companyResponse.getMessage());
+                   view.showMessage(companyResponse.getMessage());
                 if(companyResponse.getStatus()==1)
                     if(view!=null)
                     view.onCompanyRegister(companyResponse.getData());
@@ -112,7 +112,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
     }
 
-   public void createChallenge(String  userId,String  sponsoredBy,String challName,String  startDate,String  startTime,
+   public void createChallenge(String  userId,String  sponsoredBy,int privateSponsor,String challName,String  startDate,String  startTime,
                                String  endDate,String  endtime,String  description,String  photoEntries,
                                String  videoEntries,String  videoLength,String  bannerImage,String challVideo){
 
@@ -120,10 +120,8 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
        String  maxLength=videoLength;
        if(videoLength.toLowerCase().contains("sec"))
            maxLength=videoLength.toLowerCase().replace("sec"," ").trim();
-       else if(videoLength.toLowerCase().contains("sec"))
+       else if(videoLength.toLowerCase().contains("min"))
            maxLength=videoLength.toLowerCase().replace("min"," ").trim();
-
-
        File bannerImagefile=null;
        MultipartBody.Part bannerImageBody=null;
        if(bannerImage!=null)
@@ -143,7 +141,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
        }
        if(view!=null)
        view.showProgressIndicator(true);
-       retrofitApis.saveChallenge(getTextPart(userId),getTextPart(sponsoredBy),getTextPart(challName),getTextPart(startDate),
+       retrofitApis.saveChallenge(getTextPart(userId),getTextPart(sponsoredBy),getTextPart(""+privateSponsor),getTextPart(challName),getTextPart(startDate),
                getTextPart(startTime),getTextPart(endDate),getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),
                getTextPart(videoEntries),getTextPart(maxLength),bannerImageBody,challengeVideoBody).enqueue(challengeResponseCallback);
 

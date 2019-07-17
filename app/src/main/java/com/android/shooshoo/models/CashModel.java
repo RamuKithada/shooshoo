@@ -4,10 +4,19 @@ public class CashModel implements PrizeBaseModel{
 
     String amount="";
     String currency="";
+    String number;
 
     @Override
-    public String getPrizeAmount() {
-        return getAmount();
+    public double getPrizeAmount() {
+        int value=0,number=1;
+        try {
+            value=Integer.valueOf(getAmount());
+            number=Integer.valueOf(getNumber());
+        }catch (Exception e){
+
+        }
+        double total=value*number;
+        return total;
     }
 
     @Override
@@ -29,5 +38,13 @@ public class CashModel implements PrizeBaseModel{
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

@@ -9,7 +9,7 @@
     tools:context=".activity.SponsorAudienceActivity">
 <include layout="@layout/stagebar_layout"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -30,6 +30,7 @@
                     android:gravity="center"
                     android:textAllCaps="true"
                     android:text="@string/prize"
+                    android:fontFamily="@font/raleway_extrabold"
                     android:textColor="#85868A"
                     />
                 <LinearLayout
@@ -51,7 +52,7 @@
                     android:id="@+id/tv_price_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="10,000 $"
+                    android:text="00"
                     android:fontFamily="@font/raleway_extrabold"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:padding="2dp"
@@ -70,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                tools:itemCount="3"
+                tools:itemCount="1"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 tools:listitem="@layout/cash_item"
                 android:orientation="vertical"
@@ -204,10 +205,20 @@
                                     android:textColor="@color/white_text"
                                     android:theme="@style/MyEditTextTheme"
                                     />
-                                <View
+                                <android.support.v7.widget.AppCompatEditText
+                                    android:id="@+id/et_cash_number"
                                     android:layout_width="0dp"
-                                    android:layout_height="1dp"
-                                    android:layout_weight="1"/>
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:inputType="number"
+                                    android:hint="Number"
+                                    android:fontFamily="@font/raleway_medium"
+                                    android:text=""
+                                    android:textColorHint="@color/white_text"
+                                    android:textColor="@color/white_text"
+                                    android:theme="@style/MyEditTextTheme"
+
+                                    />
 
 
                             </LinearLayout>
@@ -235,13 +246,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="5dp"
                 >
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_text"
+                    android:textColor="#85868A"
                     android:text="Rewards selection"
+                    android:fontFamily="@font/raleway_extrabold"
                     app:textAllCaps="true"
                     android:textSize="14sp"
                     />
@@ -251,8 +264,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
                     >
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -269,11 +281,11 @@
                         android:id="@+id/no_of_winners"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:fontFamily="@font/raleway_medium"
-                        android:text="100"
                         android:minWidth="100dp"
                         android:gravity="center"
+                        android:hint="winners"
                         android:layout_marginLeft="10dp"
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
@@ -291,6 +303,7 @@
                 android:textSize="18sp"
                 android:padding="5dp"
                 android:textColor="#FFF"
+                android:visibility="gone"
                 android:layout_margin="10dp"
                 />
             <LinearLayout
@@ -299,13 +312,20 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 >
                 <RelativeLayout
                   android:id="@+id/national_lay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_margin="5dp"
+                    android:background="#00FFFFFF"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+
+
                     >
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_national"
@@ -314,21 +334,25 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:text="National"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#00FFFFFF"
                     android:fontFamily="@font/raleway_extrabold"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+
                     />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/international_lay"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_margin="5dp"
+                    android:background="#00FFFFFF"
+                    android:paddingLeft="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
                     >
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_international"
@@ -338,8 +362,9 @@
                     android:fontFamily="@font/raleway_extrabold"
                     android:textAllCaps="true"
                     android:textColor="#85868A"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
+                    android:background="#00FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     />
                 </RelativeLayout>
 
@@ -349,7 +374,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="10dp"
                 >
 
                 <LinearLayout
@@ -373,21 +397,22 @@
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
                         android:theme="@style/MyEditTextTheme"
-                        android:paddingRight="15dp"
+                        android:minWidth="150dp"
                         />
                         <android.support.v7.widget.AppCompatEditText
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
                             android:fontFamily="@font/raleway_medium"
-                            android:gravity="center"
+                            android:gravity="center_vertical"
+                            android:minWidth="150dp"
                             android:layout_marginLeft="10dp"
                             android:textColorHint="@color/white_text"
                             android:textColor="@color/white_text"
                             android:theme="@style/MyEditTextTheme"
                             android:id="@+id/edt_zipcode"
                             android:layout_gravity="center_vertical"
-                            android:paddingRight="20dp"
                             android:hint="Zip Code"
                         />
 
@@ -415,15 +440,17 @@
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
                         android:theme="@style/MyEditTextTheme"
+                        android:minWidth="150dp"
                         />
                     <android.support.v7.widget.AppCompatEditText
 
 
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
+                        android:layout_weight="1"
                         android:fontFamily="@font/raleway_medium"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:layout_marginLeft="10dp"
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
@@ -481,8 +508,8 @@
                 android:fontFamily="@font/raleway_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#85868A"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingLeft="5dp"
                 />
             <FrameLayout
                 android:layout_width="match_parent"
@@ -495,8 +522,8 @@
                 android:layout_marginRight="45dp"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                 android:orientation="vertical"
+                tools:itemCount="2"
                 android:nestedScrollingEnabled="false"
-                tools:itemCount="3"
                 tools:listitem="@layout/add_category_item"
                 >
 
@@ -508,6 +535,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:padding="5dp"
+                    android:layout_margin="5dp"
                     android:layout_gravity="right|bottom"
                     android:src="@drawable/add_plus_icon"
                     />
@@ -520,7 +548,6 @@
                 android:fontFamily="@font/raleway_extrabold"
                 android:textAllCaps="true"
                 android:textColor="#85868A"
-                android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:layout_marginTop="10dp"
                 />
@@ -542,7 +569,9 @@
                     android:fontFamily="@font/raleway_medium"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:textColor="@color/white_text"
-                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginRight="10dp"
                     />
 
 
@@ -552,9 +581,10 @@
                             android:layout_height="wrap_content"
                             android:minWidth="40dp"
                             android:layout_gravity="center_vertical"
-                            android:background="#00FFFFFF"
                             android:layout_margin="5dp"
-                            android:text="13"
+                            android:text=""
+                            android:hint="Start"
+                            android:paddingRight="15dp"
                             android:inputType="number"
                             android:gravity="center"
                             android:layout_marginLeft="10dp"
@@ -574,9 +604,10 @@
                     android:layout_height="wrap_content"
                     android:minWidth="40dp"
                     android:layout_gravity="center_vertical"
-                    android:background="#00FFFFFF"
                     android:layout_margin="5dp"
-                    android:text="13"
+                    android:text=""
+                    android:hint="End"
+                    android:paddingRight="15dp"
                     android:inputType="number"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
@@ -587,23 +618,62 @@
 
 
             </LinearLayout>
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/edt_gender"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:text="Male"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:inputType="text"
-                android:gravity="center"
-                android:layout_marginLeft="10dp"
-                android:textColorHint="@color/white_text"
-                android:textColor="@color/white_text"
-                android:theme="@style/MyEditTextTheme"
-                />
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                >
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+                    <CheckBox
+
+                        android:id="@+id/checkbox_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/male"
+                        android:textColor="#FFFFFF"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:fontFamily="@font/raleway_medium"
+                        android:drawableRight="@drawable/selector_check"
+                        android:textSize="20sp"
+                        android:buttonTint="@color/colorAccent"
+                        android:button="@null"
+                        android:checked="true"
+
+                        android:drawablePadding="5dp"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    >
+
+
+                    <CheckBox
+                        android:id="@+id/checkbox_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/female"
+                        android:textColor="#FFFFFF"
+                        android:gravity="center"
+                        android:fontFamily="@font/raleway_medium"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@drawable/selector_check"
+                        android:buttonTint="@color/colorAccent"
+                        android:textSize="20sp"
+                        android:button="@null"
+                        android:checked="true"
+                        android:drawablePadding="5dp"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -678,6 +748,7 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="@string/next"
+                android:fontFamily="@font/raleway_black"
                 android:textSize="18sp"
                 android:textColor="#FFF"
                 android:layout_gravity="center"
@@ -692,5 +763,5 @@
 
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

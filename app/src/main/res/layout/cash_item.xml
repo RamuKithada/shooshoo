@@ -52,10 +52,19 @@
         android:theme="@style/MyEditTextTheme"
         />
 
-    <View
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_cash_number"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:inputType="textPersonName"
-        android:text="Name" />
+        android:inputType="number"
+        android:hint="Number"
+        android:enabled="false"
+        android:fontFamily="@font/raleway_medium"
+        android:text=""
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+
+        />
 </LinearLayout>

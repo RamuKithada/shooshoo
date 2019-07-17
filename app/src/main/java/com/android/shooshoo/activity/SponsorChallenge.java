@@ -9,8 +9,12 @@ import android.widget.LinearLayout;
 
 import com.android.shooshoo.R;
 
+import butterknife.BindView;
+
 public class SponsorChallenge extends AppCompatActivity implements View.OnClickListener{
 LinearLayout privateChallenge,comapanyRegiser;
+    @BindView(R.id.iv_back)
+    ImageView iv_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,16 +23,26 @@ LinearLayout privateChallenge,comapanyRegiser;
         comapanyRegiser=findViewById(R.id.company_register);
         privateChallenge.setOnClickListener(this);
         comapanyRegiser.setOnClickListener(this);
+        iv_back.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.private_sponsor:
-                startActivity(new Intent(this,SponsorChallengeFormActivity.class));
+                Intent privateSponsor=new Intent(this,SponsorChallengeFormActivity.class);
+                privateSponsor.putExtra("privateSponsor",1);
+
+                startActivity(privateSponsor);
+
                 break;
             case R.id.company_register:
                 startActivity(new Intent(this, CompanyProfileActivity.class));
+
+
+                break;
+            case R.id.iv_back:
+                 finish();
                 break;
 
 

@@ -159,6 +159,7 @@ Challenge mChallenge;
                           startTimer(30000);
                       else if(length.equalsIgnoreCase("20"))
                           startTimer(20000);
+                      else startTimer(10000);
 
                     }
                 } else {
@@ -196,8 +197,9 @@ Challenge mChallenge;
                 else
                 intent.putExtra("mpost", videoFileUri);
                 intent.putExtra("challenge",getIntent().getParcelableExtra("challenge"));
+                intent.putExtra("type",isImageChallenge);
                 startActivity(intent);
-                finish();
+//                finish();
 
                 break;
             case R.id.cancel_btn:
@@ -427,10 +429,16 @@ Challenge mChallenge;
     private  void exportPngToGallery(Context context, String filePath) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(filePath);
-        Uri contentUri = Uri.fromFile(f);
+        final Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         context.sendBroadcast(mediaScanIntent);
-        setImage(contentUri);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setImage(contentUri);
+                showProgressIndicator(false);
+            }
+        },2000);
     }
 
     public static String getImageFilePath() {

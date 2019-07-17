@@ -41,7 +41,7 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textColor="@color/white_text"
-                    android:fontFamily="@font/raleway_black"
+                    android:fontFamily="@font/raleway_extrabold"
                     android:text="Upload Company Logo"
                     />
 
@@ -229,7 +229,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_margin="5dp"
                     android:background="@drawable/submit_button"
-                    android:fontFamily="@font/raleway_bold"
+                    android:fontFamily="@font/raleway_black"
                     android:gravity="center"
                     android:text="MORE"
                     android:paddingLeft="8dp"
@@ -241,23 +241,25 @@
                     android:textColor="@color/white_text"
 
                     />
+
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/btn_preview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
                     android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="12dp"
                     android:background="@drawable/submit_button"
-                    android:fontFamily="@font/raleway_bold"
+                    android:fontFamily="@font/raleway_black"
                     android:gravity="center"
-                    android:text="Profile Preview"
-                    app:textAllCaps="true"
-                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:padding="5dp"
-                    android:textColor="@color/white_text"
+                    android:text="Profile Preview"
 
-                    />
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                    android:textColor="@color/white_text"
+                    app:textAllCaps="true" />
 
 
             </RelativeLayout>
@@ -374,7 +376,22 @@
                     />
             </LinearLayout>
 
-
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edt_company_business_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:hint="Company E-mail "
+                android:fontFamily="@font/raleway_medium"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/white_text"
+                android:textColor="@color/white_text"
+                android:theme="@style/MyEditTextTheme"
+                android:layout_marginLeft="@dimen/edit_icon"
+                />
 
 
 
@@ -406,7 +423,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_margin="5dp"
                 android:background="@drawable/submit_button"
-                android:fontFamily="@font/raleway_bold"
+                android:fontFamily="@font/raleway_black"
                 android:gravity="center"
                 android:text="@string/next"
                 android:layout_gravity="center"

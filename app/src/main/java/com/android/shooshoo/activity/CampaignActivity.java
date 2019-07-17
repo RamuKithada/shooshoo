@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSeekBar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.utils.ApiUrls;
 
 import org.json.JSONObject;
 
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
  * This is used to show Campaign screen of the sponsor challenge registration process
  *
  */
-public class CampaignActivity extends BaseActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
+public class CampaignActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -37,32 +41,21 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.tv_title)
     TextView title;
 
-    @BindView(R.id.seekbar)
-    AppCompatSeekBar appCompatSeekBar;
 
-    @BindView(R.id.budget_per_day)
-    TextView budget_per_day;
+
+    @BindView(R.id.max_budget_per_day)
+    TextView max_budget_per_day;
 
     @BindView(R.id.audience_size)
     TextView audience_size;
 
+    @BindView(R.id.edt_budget_per_day)
+    EditText edt_budget_per_day;
 
 
 
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            TextView textView = CampaignActivity.this.budget_per_day;
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("€ ");
-            stringBuilder.append(progress);
-            stringBuilder.append(" Average/Day");
-            textView.setText(stringBuilder.toString());
-        }
 
-        public void onStartTrackingTouch(SeekBar seekBar) {
-        }
 
-        public void onStopTrackingTouch(SeekBar seekBar) {
-        }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +66,6 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         iv_back.setOnClickListener(this);
         title.setText("Campaign");
         setStage(3);
-        this.appCompatSeekBar.setOnSeekBarChangeListener(this   );
-        appCompatSeekBar.setProgress(5);
         String audienceSize= userSession.getAudSize();
         audience_size.setText(audienceSize);
 
@@ -85,9 +76,9 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         switch (view.getId())
         {
             case R.id.btn_next:
-                if (this.appCompatSeekBar.getProgress() > 0) {
+                if (ApiUrls.validateString(edt_budget_per_day.getText().toString())) {
                     Intent intent = new Intent(this, ChallengePaymentActivity.class);
-                    intent.putExtra("budget", this.appCompatSeekBar.getProgress());
+                    intent.putExtra("budget", edt_budget_per_day.getText().toString());
                     startActivity(intent);
                 } else {
                     showMessage("Please select Average budget per day");
@@ -104,12 +95,27 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
      */
     private void setStage(int step) {
         for(int index=0;index<buttons.size();index++){
-            if(index==step){
+            if(index<=step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
                 buttons.get(index).setText(String.valueOf(step+1));
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }
 

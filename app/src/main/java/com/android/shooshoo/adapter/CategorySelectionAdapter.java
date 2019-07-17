@@ -127,7 +127,8 @@ public class CategorySelectionAdapter extends RecyclerView.Adapter<CategorySelec
     public void add(){
         int pos=categoryModels.size();
         categoryModels.add(new CategoryModel(0,0));
-        notifyItemInserted(pos);
+        notifyDataSetChanged();
+//        notifyItemInserted(pos);
     }
 
     public List<CategoryModel> getCategoryModels() {

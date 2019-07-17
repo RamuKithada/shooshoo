@@ -1,6 +1,6 @@
 package com.android.shooshoo.models;
 
 public interface PrizeBaseModel {
-    String getPrizeAmount();
+    double getPrizeAmount();
     String getType();
 }
