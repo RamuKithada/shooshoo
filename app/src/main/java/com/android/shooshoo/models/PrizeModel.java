@@ -26,7 +26,7 @@ public class PrizeModel implements PrizeBaseModel {
         return "Product";
     }
 
-    private String getWorth() {
+    public String getWorth() {
         return worth;
     }
 

@@ -1,6 +1,7 @@
 package com.android.shooshoo.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -48,6 +49,8 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
                     .placeholder(R.drawable.rose)
                     .into(catViewHolder.imageView);
             catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+            catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
+            catViewHolder.brand.setText(challenge.getAmount());
             StringBuilder builder=new StringBuilder();
             if(challenge.getFirstName()!=null)
                 builder.append(challenge.getFirstName());

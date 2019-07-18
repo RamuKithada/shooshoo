@@ -47,6 +47,10 @@ public class Company {
         @SerializedName("emailId")
         @Expose
         private String emailId;
+        @SerializedName("companyEmail")
+        @Expose
+        private String companyEmail;
+
         @SerializedName("createdBy")
         @Expose
         private String createdBy;
@@ -164,7 +168,15 @@ public class Company {
         this.emailId = emailId;
     }
 
-        public String getCreatedBy() {
+    public String getCompanyEmail() {
+        return companyEmail;
+    }
+
+    public void setCompanyEmail(String companyEmail) {
+        this.companyEmail = companyEmail;
+    }
+
+    public String getCreatedBy() {
         return createdBy;
     }
 

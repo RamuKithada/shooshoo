@@ -40,6 +40,7 @@ import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.SponsorChallengeView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -56,7 +57,7 @@ import retrofit2.Response;
  * This {@link SponsorAudienceActivity} is used to show the sponsor challenge target Audience selection functionality
  * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
  */
-public class SponsorAudienceActivity extends BaseActivity implements DataLoadView, CompoundButton.OnCheckedChangeListener,SponsorChallengeView,View.OnClickListener,FragmentListDialogListener {
+public class SponsorAudienceActivity extends BaseActivity implements DataLoadView,TextWatcher,CompoundButton.OnCheckedChangeListener,SponsorChallengeView,View.OnClickListener,FragmentListDialogListener {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -206,6 +207,11 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         iv_help.setOnClickListener(this);
+        checkbox_male.setOnCheckedChangeListener(this);
+        checkbox_female.setOnCheckedChangeListener(this);
+        edt_min_age.addTextChangedListener(this);
+        edt_max_age.addTextChangedListener(this);
+        edt_miles.addTextChangedListener(this);
         btn_more_categories.setOnClickListener(this);
         title.setText("PRIZE & Outreach");
         setStage(2);
@@ -442,19 +448,17 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                         radar = "international";
                     }
                     StringBuilder gender = new StringBuilder();
-/*                StringBuilder stringBuilder=new StringBuilder();
-//                    JSONArray jsonArray=new JSONArray();
+                    JSONArray jsonArray=new JSONArray();
                 for (int index=0;index<prices.size();index++){
-                    EditModel model=prices.get(index);
-                    if(index!=0){
-                        stringBuilder.append(',').append(model.getEditTextValue());
-                    }else stringBuilder.append(model.getEditTextValue());
+                    jsonArray.put(putPrize(prices.get(index)));
+                         }
+                PrizeBaseModel prizeBaseModel=addPrize();
+                  if(prizeBaseModel!=null){
+                      jsonArray.put(putPrize(prizeBaseModel));
+                  }
 
-                }
-                    stringBuilder.append(',').append(edt_price_worth.getText().toString());*/
 
                     StringBuilder cats = new StringBuilder();
-                    StringBuilder brands = new StringBuilder();
                     for (CategoryModel categoryModel : categorySelectionAdapter.getCategoryModels()) {
                         if (categoryArrayList.size() > categoryModel.getCategory()) {
                             Category mCategory = categoryArrayList.get(categoryModel.getCategory());
@@ -480,14 +484,11 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                         showMessage("Please check internet connection !");
                         return;
                     }
-                    /*
-sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),edt_key_des.getText().toString(),
-        stringBuilder.toString(),edt_price_total.getText().toString(),winners.get(winnerPos),radar,
-        edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
-        ,age.get(minAgePos),age.get(maxAgePos),gender.toString());*/
+                sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),
+                    jsonArray.toString(),tv_price_total.getText().toString(),no_of_winners.getText().toString(),radar,
+                    edt_zipcode.getText().toString(),edt_miles.getText().toString(),countries.get(country_pos).getCountryId(),cities.get(city_pos).getCityId(),cats.toString(),
+                    edt_min_age.getText().toString(),edt_max_age.getText().toString(),gender.toString());
                 }
-
-//
                 break;
             case R.id.iv_back:
                 finish();
@@ -510,64 +511,95 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                 break;
             case R.id.btn_more_prizes:
                 if (priceWorthAdapter.getItemCount() < 4) {
-                    PrizeBaseModel prizeBaseModel = null;
-                    if (prizetype == 0) {
-
-
-
-                        CashModel cashModel = new CashModel();
-                        if(!ApiUrls.validateString(et_cash_amount.getText().toString())){
-                            showMessage("Please enter amount");
-                            return;
-                        }
-
-                        cashModel.setAmount(et_cash_amount.getText().toString());
-                        if(!ApiUrls.validateString(et_cash_currency.getText().toString())){
-                            showMessage("Please enter Currency");
-                            return;
-                           }
-                        cashModel.setCurrency(et_cash_currency.getText().toString());
-                        if(!ApiUrls.validateString(et_cash_number.getText().toString())){
-                            showMessage("Please enter number");
-                            return;
-                           }
-                        cashModel.setNumber(et_cash_number.getText().toString());
-                        prizeBaseModel = cashModel;
-                    } else {
-                        PrizeModel prizeModel = new PrizeModel();
-                        if(!ApiUrls.validateString(et_prize_name.getText().toString())){
-                            showMessage("Please enter Product Name");
-                            return;
-                        }
-                        prizeModel.setName(et_prize_name.getText().toString());
-                        if(!ApiUrls.validateString(et_prize_worth.getText().toString())){
-                            showMessage("Please enter Product worth");
-                            return;
-                        }
-                        prizeModel.setWorth(et_prize_worth.getText().toString());
-                        if(!ApiUrls.validateString(et_prize_number.getText().toString())){
-                            showMessage("Please enter number");
-                            return;
-                        }
-                        prizeModel.setNumber(et_prize_number.getText().toString());
-                        prizeBaseModel = prizeModel;
-                    }
-                    if (prizeBaseModel != null)
+                    PrizeBaseModel prizeBaseModel = addPrize();
+                    if (prizeBaseModel != null) {
                         priceWorthAdapter.addItem(prizeBaseModel);
-                    et_prize_type.setText("Cash");
-                    cash_lay.setVisibility(View.VISIBLE);
-                    product_lay.setVisibility(View.GONE);
-                    et_cash_amount.setText(null);
-                    et_cash_currency.setText(null);
-                    et_cash_number.setText(null);
-                    et_prize_name.setText(null);
-                    et_prize_number.setText(null);
-                    et_prize_worth.setText(null);
+                        et_prize_type.setText("Cash");
+                        prizetype=0;
+                        cash_lay.setVisibility(View.VISIBLE);
+                        product_lay.setVisibility(View.GONE);
+                        et_cash_amount.setText(null);
+                        et_cash_currency.setText(null);
+                        et_cash_number.setText(null);
+                        et_prize_name.setText(null);
+                        et_prize_number.setText(null);
+                        et_prize_worth.setText(null);
+                    }
 
                 }
                 break;
 
         }
+    }
+
+    private PrizeBaseModel addPrize() {
+        PrizeBaseModel prizeBaseModel=null;
+        if (prizetype == 0) {
+            CashModel cashModel = new CashModel();
+            if(!ApiUrls.validateString(et_cash_amount.getText().toString())){
+                showMessage("Please enter amount");
+                return prizeBaseModel;
+            }
+
+            cashModel.setAmount(et_cash_amount.getText().toString());
+            if(!ApiUrls.validateString(et_cash_currency.getText().toString())){
+                showMessage("Please enter Currency");
+                return prizeBaseModel;
+            }
+            cashModel.setCurrency(et_cash_currency.getText().toString());
+            if(!ApiUrls.validateString(et_cash_number.getText().toString())){
+                showMessage("Please enter number");
+                return prizeBaseModel;
+            }
+            cashModel.setNumber(et_cash_number.getText().toString());
+            prizeBaseModel = cashModel;
+        } else {
+            PrizeModel prizeModel = new PrizeModel();
+            if(!ApiUrls.validateString(et_prize_name.getText().toString())){
+                showMessage("Please enter Product Name");
+                return prizeBaseModel;
+            }
+            prizeModel.setName(et_prize_name.getText().toString());
+            if(!ApiUrls.validateString(et_prize_worth.getText().toString())){
+                showMessage("Please enter Product worth");
+                return prizeBaseModel;
+            }
+            prizeModel.setWorth(et_prize_worth.getText().toString());
+            if(!ApiUrls.validateString(et_prize_number.getText().toString())){
+                showMessage("Please enter number");
+                return prizeBaseModel;
+            }
+            prizeModel.setNumber(et_prize_number.getText().toString());
+            prizeBaseModel = prizeModel;
+        }
+      return prizeBaseModel;
+    }
+
+    private JSONObject putPrize(PrizeBaseModel model) {
+        JSONObject object=new JSONObject();
+        try {
+            if(model instanceof CashModel){
+                CashModel cashModel= (CashModel) model;
+                object.accumulate("type",cashModel.getType());
+                object.accumulate("total",""+cashModel.getPrizeAmount());
+                object.accumulate("amount",""+cashModel.getAmount());
+                object.accumulate("number",""+cashModel.getNumber());
+                object.accumulate("description","");
+            }else if(model instanceof PrizeModel){
+                PrizeModel prizeModel= (PrizeModel) model;
+                object.accumulate("type",prizeModel.getType());
+                object.accumulate("total",""+prizeModel.getPrizeAmount());
+                object.accumulate("amount",""+prizeModel.getWorth());
+                object.accumulate("number",""+prizeModel.getNumber());
+                object.accumulate("description",""+prizeModel.getName());
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+     return object;
     }
 
     private boolean validate() {
@@ -743,10 +775,12 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
 
 
     @Override
-    public void onChallengeResponse(Challenge company) {
-        this.userSession.setSponsorChallenge(company.getChallengeId());
-        this.userSession.savaChallenge(company);
-        startActivity(new Intent(this, CampaignActivity.class));
+    public void onChallengeResponse(Challenge challenge) {
+        this.userSession.setSponsorChallenge(challenge.getChallengeId());
+        this.userSession.savaChallenge(challenge);
+        Intent intent=new Intent(this, CampaignActivity.class);
+        intent.putExtra("challenge",challenge);
+        startActivity(intent);
     }
 
     public void getSizeofAudience() {
@@ -860,5 +894,21 @@ sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userS
                 break;
 
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        getSizeofAudience();
+
     }
 }

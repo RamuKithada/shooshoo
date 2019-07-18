@@ -277,7 +277,7 @@
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
                         />
-                    <android.support.v7.widget.AppCompatEditText
+                        <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/no_of_winners"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

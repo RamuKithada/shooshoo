@@ -92,12 +92,12 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 mTextMessage.setText(R.string.title_home);
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.VISIBLE);
-                iv_search.setVisibility(View.GONE);
+                iv_search.setVisibility(View.VISIBLE);
 //                iv_wallet.setVisibility(View.VISIBLE);
-                iv_filters.setVisibility(View.VISIBLE);
+                iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram"),"home").commit();
                 break;
             case R.id.navigation_challengers:
                 mTextMessage.setText(R.string.title_challengers);
@@ -108,7 +108,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ChallengersFragment.newInstance("Hi","Ram")).commit();
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ChallengersFragment.newInstance("Hi","Ram"),"challenges").commit();
                     break;
             case R.id.navigation_feed:
                 mTextMessage.setText(R.string.title_feed);
@@ -131,7 +131,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, WinnersFragment.newInstance("Hi","Ram")).commit();
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, WinnersFragment.newInstance("Hi","Ram"),"winners").commit();
                 break;
             case R.id.navigation_radar:
                 mTextMessage.setText(R.string.title_radar);
@@ -142,7 +142,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.GONE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, RadarFragment.newInstance("Hi","Ram")).commit();
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, RadarFragment.newInstance("Hi","Ram"),"radar").commit();
                 break;
         }
         selectNavi(v);
@@ -212,7 +212,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         bottom_navi_view.setOnClickListener(bottomNavigationOnClickListener);
 
         FragmentManager fragmentManager=getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram")).commit();
+        fragmentManager.beginTransaction().add(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram"),"home").commit();
         iv_profile.setOnClickListener(this);
         iv_edit_profile.setOnClickListener(this);
         iv_chat.setOnClickListener(this);
@@ -262,7 +262,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         {
             case R.id.iv_profile:
                 FragmentManager fragmentManager=getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ProfileFragment.newInstance(userSession.getUserId(),"Ram")).commit();
+                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, ProfileFragment.newInstance(userSession.getUserId(),"Ram"),"profile").commit();
                 mTextMessage.setText(R.string.profile);
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);
@@ -284,14 +284,26 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_search.setVisibility(View.VISIBLE);
 //                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram")).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram"),"chat").commit();
                 break;
             case R.id.iv_search:
                 /**
                  * calling Chatting search friends activity
                  */
-                Intent intentsearch=new Intent(this,ChatSearchActivity.class);
-                startActivity(intentsearch);
+                HomeFragment homeFragment = (HomeFragment)getSupportFragmentManager().findFragmentByTag("home");
+                if (homeFragment != null && homeFragment.isVisible()) {
+                    Intent intentsearch=new Intent(this,HomeSearchActivity.class);
+                    startActivity(intentsearch);
+                    return;
+                }
+                ChatsFragment chatsFragment = (ChatsFragment) getSupportFragmentManager().findFragmentByTag("chat");
+                if (chatsFragment != null && chatsFragment.isVisible()) {
+                    Intent intentsearch=new Intent(this,ChatSearchActivity.class);
+                    startActivity(intentsearch);
+                    return;
+                }
+
+
                 break;
         }
 

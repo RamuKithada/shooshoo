@@ -27,26 +27,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.CompanyDetailsActivity"
-            android:screenOrientation="portrait"
-            ></activity>
-        <activity android:name=".activity.EnteredChallengeViewActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.CreatedChallengeViewActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.SponsorChallenge"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.UserProfileActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.SingleVideoViewActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".activity.ViewAllChallengesActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.HomeSearchActivity">
+     <!--       <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+        <activity
+            android:name=".activity.CompanyDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.EnteredChallengeViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.CreatedChallengeViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SponsorChallenge"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.UserProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SingleVideoViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ViewAllChallengesActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.CategoryWiseChallengerActivity"
             android:screenOrientation="portrait" />
@@ -76,9 +84,7 @@
         <activity
             android:name=".activity.FeedsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.EditProfileActivity"
             android:screenOrientation="portrait"
@@ -94,22 +100,20 @@
         <activity
             android:name=".activity.InviteFriendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.GameMasterActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.ChallengePaymentActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -119,10 +123,7 @@
         <activity
             android:name=".activity.CampaignActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.SponsorChallengeFormActivity"
             android:screenOrientation="portrait"
@@ -167,12 +168,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait">
 
         </activity>
         <activity
@@ -186,14 +182,13 @@
         <activity
             android:name=".activity.JackpotAudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
-
-
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".activity.SponsorAudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden">
+
+
 
 
         </activity>

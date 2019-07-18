@@ -61,7 +61,8 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                            }
 
                        }
-
+                   catViewHolder.brand.setBackgroundColor(Color.parseColor("#F31F68"));
+                   catViewHolder.brand.setText(challenge.getTotalPrize());
                }
                  else if(challenge.getType().equalsIgnoreCase("jackpot"))
                {
@@ -71,6 +72,9 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                        builder.append(challenge.getFirstName());
                    if(challenge.getLastName()!=null)
                        builder.append(' ').append(challenge.getLastName());
+
+                   catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
+                   catViewHolder.brand.setText(challenge.getAmount());
 
 
 

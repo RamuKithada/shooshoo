@@ -34,14 +34,28 @@
                 app:surface_type="texture_view"
                 app:use_controller="false"
                 />
+                <ImageView
+                    android:id="@+id/iv_playpause"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_play_circle_outline_black_24dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/circler_view_bg"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/video_thumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/hotel_challange"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    />
 
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginRight="20dp"
-                android:layout_marginLeft="20dp"
                 >
 
                 <TextView
@@ -54,16 +68,47 @@
                     android:fontFamily="@font/raleway_extrabold"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     />
-                <TextView
-                    android:id="@+id/brand_name"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:text="H M"
-                    android:textColor="@color/white_text"
-                    android:fontFamily="@font/raleway_extrabold"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    />
+                    >
+                    <TextView
+                        android:id="@+id/sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alles was du brauchst"
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentLeft="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:layout_toLeftOf="@+id/participants"
+                        android:padding="2dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        />
+                    <TextView
+                        android:id="@+id/tv_key_des"
+                        android:layout_below="@+id/sub_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="win da 500 $ coupon "
+                        android:padding="2dp"
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentLeft="true"
+
+
+                        />
+                    <TextView
+                        android:id="@+id/participants"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4373 participants "
+                        android:textColor="@color/white_text"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/ic_participants"
+                        />
+
+                </RelativeLayout>
 
 
 
@@ -253,7 +298,7 @@
                                         android:textColor="#939393"
                                         />
                                     <android.support.v7.widget.AppCompatTextView
-                                        android:id="@+id/zip"
+                                        android:id="@+id/zip_code"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:text="25648"
@@ -367,7 +412,7 @@
                             android:textColor="@color/white_text"
                             />
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/genger"
+                            android:id="@+id/gender"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"

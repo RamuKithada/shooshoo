@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatSeekBar;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,7 +15,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Company;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.SponsorChallengeView;
 
 import org.json.JSONObject;
 
@@ -25,9 +31,11 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 /**
  * This is used to show Campaign screen of the sponsor challenge registration process
+ *   {@link SponsorChallengePresenter} is used to call related services for this screen
+ *   {@link SponsorChallengeView} is used by sponsorChallengePresenter to interact with this screen.
  *
  */
-public class CampaignActivity extends BaseActivity implements View.OnClickListener, TextWatcher {
+public class CampaignActivity extends BaseActivity implements SponsorChallengeView,View.OnClickListener, TextWatcher {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -55,9 +63,25 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     @BindView(R.id.edt_budget_per_day)
     EditText edt_budget_per_day;
 
+    @BindView(R.id.country_name)
+    AppCompatTextView country_name;
+    @BindView(R.id.city_name)
+    AppCompatTextView city_name;
+    @BindView(R.id.zip_code)
+    AppCompatTextView zip_code;
+    @BindView(R.id.category_title)
+    AppCompatTextView category_title;
+
+    @BindView(R.id.age_range)
+    AppCompatTextView age_range;
+    @BindView(R.id.gender)
+    AppCompatTextView gender;
 
 
 
+    ConnectionDetector connectionDetector;
+    SponsorChallengePresenter sponsorChallengePresenter;
+    Challenge challenge;
 
 
     @Override
@@ -69,9 +93,23 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         iv_back.setOnClickListener(this);
         iv_help.setOnClickListener(this);
         title.setText("Campaign");
+        challenge=getIntent().getParcelableExtra("challenge");
         setStage(3);
         String audienceSize= userSession.getAudSize();
         audience_size.setText(audienceSize);
+        this.connectionDetector = new ConnectionDetector(this);
+        this.sponsorChallengePresenter = new SponsorChallengePresenter();
+        this.sponsorChallengePresenter.attachView(this);
+
+        if(challenge!=null) {
+            country_name.setText(challenge.getCountry());
+            city_name.setText(challenge.getCity());
+            age_range.setText(challenge.getAgeStart() + " - " + challenge.getAgeEnd());
+            category_title.setText(challenge.getCategories());
+            zip_code.setText(challenge.getAudZipcode());
+            gender.setText(challenge.getAudGender());
+        }
+
 
     }
 
@@ -81,9 +119,14 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
         {
             case R.id.btn_next:
                 if (ApiUrls.validateString(edt_budget_per_day.getText().toString())) {
-                    Intent intent = new Intent(this, ChallengePaymentActivity.class);
-                    intent.putExtra("budget", edt_budget_per_day.getText().toString());
-                    startActivity(intent);
+                    if (this.connectionDetector.isConnectingToInternet()) {
+                        SponsorChallengePresenter sponsorChallengePresenter = this.sponsorChallengePresenter;
+                        String sponsorChallenge = this.userSession.getSponsorChallenge();
+                        sponsorChallengePresenter.saveCampaign(sponsorChallenge,userSession.getUserId(), edt_budget_per_day.getText().toString(), "");
+                        return;
+                    }
+                    else
+                    showMessage("Please check your Internet Connection");
                 } else {
                     showMessage("Please select Average budget per day");
                 }
@@ -123,6 +166,18 @@ public class CampaignActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void afterTextChanged(Editable s) {
 
+    }
+
+    @Override
+    public void onCompanyRegister(Company company) {
+
+    }
+
+    @Override
+    public void onChallengeResponse(Challenge challenge) {
+        Intent intent = new Intent(this, ChallengePaymentActivity.class);
+        intent.putExtra("challenge",challenge);
+        startActivity(intent);
     }
 }
 

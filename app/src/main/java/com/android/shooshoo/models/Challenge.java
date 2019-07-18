@@ -54,9 +54,9 @@ public class Challenge implements Parcelable {
     @SerializedName("keyDescription")
     @Expose
     private String keyDescription;
-    @SerializedName("priceWorth")
+    @SerializedName("prizesInfo")
     @Expose
-    private String priceWorth;
+    private String prizesInfo;
     @SerializedName("totalPrize")
     @Expose
     private String totalPrize;
@@ -69,6 +69,12 @@ public class Challenge implements Parcelable {
     @SerializedName("audZipcode")
     @Expose
     private String audZipcode;
+    @SerializedName("audCountry")
+    @Expose
+    private String audCountry;
+    @SerializedName("audCity")
+    @Expose
+    private String audCity;
     @SerializedName("audMiles")
     @Expose
     private String audMiles;
@@ -157,9 +163,7 @@ public class Challenge implements Parcelable {
     @SerializedName("mobileNumber")
     @Expose
     private String mobileNumber;
-    @SerializedName("miniGame")
-    @Expose
-    private String miniGame;
+
     @SerializedName("limited")
     @Expose
     private String limited;
@@ -197,7 +201,7 @@ public class Challenge implements Parcelable {
         maxLength = in.readString();
         amount = in.readString();
         keyDescription = in.readString();
-        priceWorth = in.readString();
+        prizesInfo = in.readString();
         totalPrize = in.readString();
         winners = in.readString();
         radar = in.readString();
@@ -229,7 +233,6 @@ public class Challenge implements Parcelable {
         street = in.readString();
         streetNumber = in.readString();
         mobileNumber = in.readString();
-        miniGame = in.readString();
         limited = in.readString();
         address = in.readString();
         audGender = in.readString();
@@ -369,12 +372,12 @@ public class Challenge implements Parcelable {
         this.keyDescription = keyDescription;
     }
 
-    public String getPriceWorth() {
-        return priceWorth;
+    public String getPrizesInfo() {
+        return prizesInfo;
     }
 
-    public void setPriceWorth(String priceWorth) {
-        this.priceWorth = priceWorth;
+    public void setPrizesInfo(String prizesInfo) {
+        this.prizesInfo = prizesInfo;
     }
 
     public String getTotalPrize() {
@@ -625,13 +628,7 @@ public class Challenge implements Parcelable {
         this.mobileNumber = mobileNumber;
     }
 
-    public String getMiniGame() {
-        return miniGame;
-    }
 
-    public void setMiniGame(String miniGame) {
-        this.miniGame = miniGame;
-    }
 
     public String getLimited() {
         return limited;
@@ -703,7 +700,7 @@ public class Challenge implements Parcelable {
         dest.writeString(maxLength);
         dest.writeString(amount);
         dest.writeString(keyDescription);
-        dest.writeString(priceWorth);
+        dest.writeString(prizesInfo);
         dest.writeString(totalPrize);
         dest.writeString(winners);
         dest.writeString(radar);
@@ -735,7 +732,6 @@ public class Challenge implements Parcelable {
         dest.writeString(street);
         dest.writeString(streetNumber);
         dest.writeString(mobileNumber);
-        dest.writeString(miniGame);
         dest.writeString(limited);
         dest.writeString(address);
         dest.writeString(audGender);

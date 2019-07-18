@@ -1,26 +1,48 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.Company;
-import com.android.shooshoo.presenters.SponsorChallengePresenter;
-import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.views.SponsorChallengeView;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.PlaybackParameters;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.util.Util;
+
 import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
+import static com.android.shooshoo.utils.ApiUrls.VIDEO_URL;
 /**{@link ChallengePaymentActivity} is used to show payment screen of the Jockpot challenge registration screen
- *  {@link SponsorChallengePresenter} is used to call related services for this screen
- *  {@link SponsorChallengeView} is used by sponsorChallengePresenter to interact with this screen.
+
  */
-public class ChallengePaymentActivity extends BaseActivity implements SponsorChallengeView, View.OnClickListener {
+public class ChallengePaymentActivity extends BaseActivity implements View.OnClickListener ,SimpleExoPlayer.EventListener{
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -37,7 +59,46 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
+    TextView tv_title;
+
+    @BindView(R.id.sub_title)
+    TextView sub_title;
+
+    @BindView(R.id.tv_key_des)
+    TextView tv_key_des;
+    @BindView(R.id.participants)
+    TextView participants;
+
+    @BindView(R.id.title)
     TextView title;
+
+    @BindView(R.id.country_name)
+    AppCompatTextView country_name;
+    @BindView(R.id.city_name)
+    AppCompatTextView city_name;
+    @BindView(R.id.zip_code)
+    AppCompatTextView zip_code;
+
+    @BindView(R.id.categories)
+    AppCompatTextView categories;
+
+    @BindView(R.id.age_range)
+    AppCompatTextView age_range;
+    @BindView(R.id.gender)
+    AppCompatTextView gender;
+    @BindView(R.id.audience_size)
+    AppCompatTextView audience_size;
+
+
+    String videoUri="";
+    @BindView(R.id.player)
+    SimpleExoPlayerView playerView;
+    @BindView(R.id.iv_playpause)
+    ImageView iv_playpause;
+    @BindView(R.id.video_layout)
+    RelativeLayout video_layout;
+    SimpleExoPlayer player;
+    private boolean isPlaying=true;
 
    /* @BindView(R.id.budget_per_day)
     TextView budget_per_day;*/
@@ -55,8 +116,7 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
     CheckBox tc_checkbox;*/
 
 
-    ConnectionDetector connectionDetector;
-    SponsorChallengePresenter sponsorChallengePresenter;
+
 
 
     @Override
@@ -68,25 +128,23 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
             iv_back.setOnClickListener(this);
         iv_help.setOnClickListener(this);
             setStage(4);
-            title.setText("Summary");
-            this.connectionDetector = new ConnectionDetector(this);
-        this.sponsorChallengePresenter = new SponsorChallengePresenter();
-        this.sponsorChallengePresenter.attachView((SponsorChallengeView) this);
+            tv_title.setText("Summary");
+/*
         if (getIntent().hasExtra("budget")) {
-/*            int progress = getIntent().getIntExtra("budget", 0);
+*//*            int progress = getIntent().getIntExtra("budget", 0);
             TextView textView = this.budget_per_day;
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("€ ");
             stringBuilder.append(progress);
             stringBuilder.append(" Average/Day");
-            textView.setText(stringBuilder.toString());*/
+            textView.setText(stringBuilder.toString());*//*
+        }*/
+        Challenge challenge = this.userSession.getChallnge();
+        if (challenge != null) {
+            setChallenge(challenge);
+
         }
-        Challenge company = this.userSession.getChallnge();
-        if (company != null) {
-//            this.tv_challenge_name.setText(company.getChallengeName());
-//            this.tv_start_time.setText(company.getStartDate());
-//            this.tv_end_time.setText(company.getEndDate());
-        }
+
     }
     /**
      * setStage is for selection one of registration step
@@ -109,18 +167,13 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
         switch (view.getId())
         {
             case R.id.btn_next:
-                if(validate()){
-             /*       if (this.connectionDetector.isConnectingToInternet()) {
-                        SponsorChallengePresenter sponsorChallengePresenter = this.sponsorChallengePresenter;
-                        String sponsorChallenge = this.userSession.getSponsorChallenge();
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("");
-                        stringBuilder.append(getIntent().getIntExtra("budget", 0));
-                        sponsorChallengePresenter.saveCampaign(sponsorChallenge,userSession.getUserId(), stringBuilder.toString(), this.edt_summary.getText().toString());
-                        return;
-                            }
-                    showMessage("Please check your Internet Connection");*/
-                }
+                userSession.setSponsorChallenge(null);
+                userSession.savaChallenge(null);
+                Intent homeIntent=new Intent(this,HomeActivity.class);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+
+
                 break;
             case R.id.iv_back:
                 finish();
@@ -131,44 +184,173 @@ public class ChallengePaymentActivity extends BaseActivity implements SponsorCha
         }
 
     }
+    Challenge challenge;
+    private void setChallenge(Challenge challenge){
+        this.challenge=challenge;
+        title.setText(challenge.getChallengeName());
+        sub_title.setText(challenge.getDescription());
+        tv_key_des.setText(challenge.getKeyDescription());
+        participants.setText(challenge.getParticipants());
+        videoUri =VIDEO_URL+challenge.getType()+"s/videos/"+challenge.getChallengeVideo();
+        setUpVideo();
+        country_name.setText(challenge.getCountry());
+        city_name.setText(challenge.getCity());
+        age_range.setText(challenge.getAgeStart()+" - "+challenge.getAgeEnd());
+        categories.setText(challenge.getCategories());
+        zip_code.setText(challenge.getAudZipcode());
+        gender.setText(challenge.getAudGender());
+        audience_size.setText(userSession.getAudSize());
+   }
 
     /**
-     * vlidations of the input fields of this screen
-     *
-     * @return
+     * setUpVideo is to setup the video player to play the video
      */
-    private boolean validate() {
-//        if(!tc_checkbox.isChecked()){
-//         showMessage("Please accept Terms and Conditions");
-//         return false;
-//        }
-//
-//        if (!ApiUrls.validateString(this.edt_summary.getText().toString())) {
-//            this.edt_summary.requestFocus();
-//            this.edt_summary.setError("enter summary for your challenge");
-//            return false;
-//        } else if (getIntent().getIntExtra("budget", 0) > 0) {
-//            return true;
-//        } else {
-//            showMessage("Please set your budget per day");
-//            return false;
-//        }
-//
-return true;
+    private void setUpVideo() {
+        initializePlayer();
+        if (videoUri == null) {
+            return;
+        }
+        buildMediaSource(Uri.parse(videoUri));
+    }
+
+    private void initializePlayer() {
+        if (player == null) {
+            // 1. Create a default TrackSelector
+            BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+            TrackSelection.Factory videoTrackSelectionFactory =
+                    new AdaptiveTrackSelection.Factory(bandwidthMeter);
+            TrackSelector trackSelector =
+                    new DefaultTrackSelector(videoTrackSelectionFactory);
+            // 2. Create the player
+            player = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(this), trackSelector);
+            player.setRepeatMode(Player.REPEAT_MODE_ALL);//
+            playerView.setPlayer(player);
+            playerView.setRepeatToggleModes(Player.REPEAT_MODE_ALL);// play repeat video
+        }
+    }
+
+    /**
+     *  binding the uri of the video to the media player
+     */
+
+    private void buildMediaSource(Uri mUri) {
+        // Measures bandwidth during playback. Can be null if not required.
+        DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        // Produces DataSource instances through which media data is loaded.
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this,
+                Util.getUserAgent(this, getString(R.string.app_name)), bandwidthMeter);
+        DefaultExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+        MediaSource mediaSource = new ExtractorMediaSource(mUri,
+                dataSourceFactory, extractorsFactory, null, null);
+        player.prepare(mediaSource);
+        player.setPlayWhenReady(true);
+        player.addListener(this);
+    }
+    /**
+     release the media Player
+     */
+    private void releasePlayer() {
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
+    /**pause the media player*/
+    private void pausePlayer() {
+        if (player != null) {
+            player.setPlayWhenReady(false);
+            player.getPlaybackState();
+            isPlaying=false;
+            activityPaused=false;
+        }
+    }
+    /** resume the media player*/
+    private void resumePlayer() {
+
+        if (player != null) {
+            player.setPlayWhenReady(true);
+            player.getPlaybackState();
+            isPlaying=true;
+            activityPaused=true;
+        }
+    }
+
+
+
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest, int reason) {
+
     }
 
     @Override
-    public void onCompanyRegister(Company company) {
+    public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
 
     }
 
     @Override
-    public void onChallengeResponse(Challenge company) {
-        userSession.setSponsorChallenge(null);
-        userSession.savaChallenge(null);
-        Intent homeIntent=new Intent(this,HomeActivity.class);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(homeIntent);
+    public void onLoadingChanged(boolean isLoading) {
 
+    }
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+    }
+
+    @Override
+    public void onRepeatModeChanged(int repeatMode) {
+
+    }
+
+    @Override
+    public void onShuffleModeEnabledChanged(boolean shuffleModeEnabled) {
+
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
+
+    }
+
+    @Override
+    public void onPositionDiscontinuity(int reason) {
+
+    }
+
+
+
+    @Override
+    public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+    }
+
+    @Override
+    public void onSeekProcessed() {
+
+    }
+    /**conform that the video is playing the video or not  when activity is paused*/
+    boolean activityPaused=true;
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(activityPaused)
+        {
+            resumePlayer();
+        }else
+            iv_playpause.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        pausePlayer();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        releasePlayer();
     }
 }

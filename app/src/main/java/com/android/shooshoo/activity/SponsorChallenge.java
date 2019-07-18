@@ -23,6 +23,7 @@ LinearLayout privateChallenge,comapanyRegiser;
         comapanyRegiser=findViewById(R.id.company_register);
         privateChallenge.setOnClickListener(this);
         comapanyRegiser.setOnClickListener(this);
+        iv_back=findViewById(R.id.iv_back);
         iv_back.setOnClickListener(this);
     }
 
@@ -40,8 +41,6 @@ LinearLayout privateChallenge,comapanyRegiser;
             case R.id.iv_back:
                  finish();
                 break;
-
-
         }
 
     }

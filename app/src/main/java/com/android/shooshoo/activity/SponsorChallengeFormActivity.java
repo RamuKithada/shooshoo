@@ -281,17 +281,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             return false;
         }
 
-        /*if(!ApiUrls.validateString(edt_photo_entries.getText().toString())){
-            edt_photo_entries.setError("Enter a number");
-            edt_photo_entries.requestFocus();
-            return false;
-        }
 
-        if(!ApiUrls.validateString(edt_video_entries.getText().toString())){
-            edt_video_entries.setError("Enter a number");
-            edt_video_entries.requestFocus();
-            return false;
-        }*/
         if(sizePos<0){
             edt_video_sizes.requestFocus();
             edt_video_sizes.setError("Please set Limit?");
@@ -409,8 +399,6 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         if (requestCode == RESULT_LOAD_VIDEO && resultCode == RESULT_OK && null != data) {
             Uri videoUri = data.getData();
             setVideo(videoUri);
-
-
             /*CropImage.activity(imageUri).setAspectRatio(4,3)
                     .start(this);*/
         }

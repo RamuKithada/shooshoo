@@ -94,7 +94,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
     public void createCompany(Uri companyLogo, String userId,String compName, String email, String firstName, String  lastName,
                               String  country, String  city, String  zipcode, String  street, String  streetNumber,
-                              String mobile, String taxNum, String  privateSponsor){
+                              String mobile, String taxNum, String  companyEmail){
 
         File file=null;
         MultipartBody.Part body=null;
@@ -108,7 +108,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
         view.showProgressIndicator(true);
         retrofitApis.saveComapany(body,getTextPart(userId),getTextPart(compName),getTextPart(email),getTextPart(firstName),getTextPart(lastName)
           ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(mobile)
-        ,getTextPart(taxNum),getTextPart(privateSponsor)).enqueue(companyResponseCallback);
+        ,getTextPart(taxNum),getTextPart(companyEmail)).enqueue(companyResponseCallback);
 
     }
 
@@ -149,29 +149,21 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
    }
 
-   public  void createAudience( String companyId, String userId,String amount, String keyDescription,String priceWorth, String totalPrize,
-                               String winners,String radar,String audZipcode,String audMiles, String personalAddress,
-                                String categories,String brands,String ageStart, String ageEnd,String gender){
-
-
-String mWinners=winners.toLowerCase().replace("top"," ").trim();
-String mAudMiles=audMiles.toLowerCase().replace("miles"," ").trim();
-String mAgeStart=ageStart.toLowerCase().replace("years"," ").trim();
-String mAgeEnd=ageEnd.toLowerCase().replace("years"," ").trim();
-//       Log.e(mWinners+" "+mAudMiles,""+mAgeStart+" "+mAgeEnd+" ");
-
+   public  void createAudience( String companyId, String userId, String prizesInfo, String totalPrize,
+                               String winners,String radar,String audZipcode,String audMiles, String countryId,String cityId,
+                                String categories,String ageStart, String ageEnd,String gender){
        if(view!=null)
        view.showProgressIndicator(true);
-        retrofitApis.saveAudience(companyId, userId,amount, keyDescription, priceWorth, totalPrize, mWinners, radar, audZipcode, mAudMiles, personalAddress,
-                          categories,brands,mAgeStart,mAgeEnd, gender).enqueue(challengeResponseCallback);
+        retrofitApis.saveAudience(companyId, userId, prizesInfo, totalPrize, winners, radar, audZipcode, audMiles, countryId,cityId,
+                          categories,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
 
 
    }
 
-   public void saveCampaign(String companyId, String userId, String budget, String summery){
+   public void saveCampaign(String challengeId, String userId, String budget, String summery){
        if(view!=null)
         view.showProgressIndicator(true);
-        retrofitApis.saveCampaign(companyId,userId,budget,summery).enqueue(challengeResponseCallback);
+        retrofitApis.saveCampaign(challengeId,userId,budget,summery).enqueue(challengeResponseCallback);
 
 
    }

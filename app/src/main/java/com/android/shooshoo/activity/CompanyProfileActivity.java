@@ -228,6 +228,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         edt_zipcode.setText(null);
         edt_number.setText(null);
         edt_user_email.setText(null);
+        edt_company_business_email.setText(null);
         iv_profile_pic.setImageResource(R.drawable.photo_upload);
         newsImage=null;
         edt_country.setText(null);
@@ -419,7 +420,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         if(!ApiUrls.validateString(edt_company_business_email.getText().toString()))
         {
             edt_company_business_email.requestFocus();
-            edt_company_business_email.setError("Please enter email");
+            edt_company_business_email.setError("Please enter company  email");
             return false;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(edt_company_business_email.getText().toString()).matches()){

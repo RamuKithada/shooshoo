@@ -171,7 +171,7 @@
                     android:textColor="#939393"
                     />
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/zip"
+                    android:id="@+id/zip_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="25648"
@@ -195,7 +195,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/category_title"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
@@ -285,7 +285,7 @@
                     android:textColor="@color/white_text"
                     />
                 <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/genger"
+                    android:id="@+id/gender"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"

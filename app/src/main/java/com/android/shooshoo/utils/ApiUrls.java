@@ -29,13 +29,11 @@ import static android.text.format.DateUtils.YEAR_IN_MILLIS;
  *
  */
 public class ApiUrls {
-
     public static final String SPONSERS="sponsors";
     public static final String JACKPOTS="jackpots";
     public static final String ENTERED="entered";
     public static final String SAVED="saved";
     public static final String CREATED="created";
-
     public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
     public static  final String DEVICE_TOKEN="abcdefghijklmn";
@@ -142,7 +140,7 @@ public class ApiUrls {
             Date date=simpleDateFormat.parse(newsdatetime);
             CharSequence relativeDate =
                     DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
-                            0L,DateUtils.FORMAT_ABBREV_ALL);
+                            0L,DateUtils.FORMAT_NO_YEAR);
             return relativeDate.toString();
         }catch (ParseException e){
             e.printStackTrace();
@@ -169,7 +167,6 @@ public class ApiUrls {
         }
 
     }
-/*
     public synchronized static String getRemaingTime(){
         String dateStart = "01/14/2012 09:29:58";
         String dateStop = "01/15/2012 10:31:48";
@@ -185,12 +182,12 @@ public class ApiUrls {
 
 
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+           return null;
     }
-*/
 
 
 }

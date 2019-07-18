@@ -178,7 +178,7 @@ public interface RetrofitApis {
                                        @Part("firstName") RequestBody firstName,@Part("lastName") RequestBody  lastName,
                                        @Part("country") RequestBody  country,@Part("city") RequestBody  city,@Part("zipcode") RequestBody  zipcode,
                                        @Part("street") RequestBody  street,@Part("streetNumber") RequestBody  streetNum,@Part("mobileNumber") RequestBody  mobile,@Part("taxNumber") RequestBody  taxNum,
-                                       @Part("privateSponsor") RequestBody  privateSponsor);
+                                       @Part("companyEmail") RequestBody  companyEmail);
 
 
     @Multipart
@@ -191,11 +191,11 @@ public interface RetrofitApis {
                                           @Part MultipartBody.Part  bannerImage, @Part MultipartBody.Part  challVideo);
     @FormUrlEncoded
     @POST("audience")
-    Call<ChallengeResponse> saveAudience(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,@Field("amount") String amount,@Field("keyDescription") String keyDescription,
-                                        @Field("priceWorth") String priceWorth,@Field("totalPrize") String totalPrize,
+    Call<ChallengeResponse> saveAudience(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,
+                                        @Field("prizesInfo") String prizesInfo,@Field("totalPrize") String totalPrize,
                                         @Field("winners") String winners,@Field("radar") String radar,@Field("audZipcode") String audZipcode,
-                                        @Field("audMiles") String audMiles,@Field("personalAddress") String personalAddress,@Field("categories") String categories,
-                                        @Field("brands") String brands,
+                                        @Field("audMiles") String audMiles,@Field("audCountry") String audCountry,@Field("audCity") String audCity,
+                                         @Field("categories") String categories,
                                         @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("gender") String gender);
 
     @FormUrlEncoded
