@@ -1,13 +1,10 @@
 package com.android.shooshoo.models;
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
-public class Challenge implements Parcelable {
+public class Challenge implements Parcelable{
 
     @SerializedName("challengeId")
     @Expose
@@ -84,6 +81,9 @@ public class Challenge implements Parcelable {
     @SerializedName("categories")
     @Expose
     private String categories;
+    @SerializedName("categoryNames")
+    @Expose
+    private String[] categoryNames;
     @SerializedName("brands")
     @Expose
     private String brands;
@@ -185,6 +185,16 @@ public class Challenge implements Parcelable {
     @Expose
     private String fullName;
 
+
+    @SerializedName("countryName")
+    @Expose
+    private String countryName;
+
+    @SerializedName("cityName")
+    @Expose
+    private String cityName;
+
+
     protected Challenge(Parcel in) {
         challengeId = in.readString();
         challengeName = in.readString();
@@ -206,9 +216,12 @@ public class Challenge implements Parcelable {
         winners = in.readString();
         radar = in.readString();
         audZipcode = in.readString();
+        audCountry = in.readString();
+        audCity = in.readString();
         audMiles = in.readString();
         personalAddress = in.readString();
         categories = in.readString();
+        categoryNames = in.createStringArray();
         brands = in.readString();
         ageStart = in.readString();
         ageEnd = in.readString();
@@ -238,6 +251,8 @@ public class Challenge implements Parcelable {
         audGender = in.readString();
         userName = in.readString();
         fullName = in.readString();
+        countryName = in.readString();
+        cityName = in.readString();
     }
 
     public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
@@ -412,6 +427,22 @@ public class Challenge implements Parcelable {
         this.audZipcode = audZipcode;
     }
 
+    public String getAudCountry() {
+        return audCountry;
+    }
+
+    public void setAudCountry(String audCountry) {
+        this.audCountry = audCountry;
+    }
+
+    public String getAudCity() {
+        return audCity;
+    }
+
+    public void setAudCity(String audCity) {
+        this.audCity = audCity;
+    }
+
     public String getAudMiles() {
         return audMiles;
     }
@@ -434,6 +465,14 @@ public class Challenge implements Parcelable {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public String[] getCategoryNames() {
+        return categoryNames;
+    }
+
+    public void setCategoryNames(String[] categoryNames) {
+        this.categoryNames = categoryNames;
     }
 
     public String getBrands() {
@@ -678,6 +717,23 @@ public class Challenge implements Parcelable {
         this.fullName = fullName;
     }
 
+    public String getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String countryName) {
+        this.countryName = countryName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -705,9 +761,12 @@ public class Challenge implements Parcelable {
         dest.writeString(winners);
         dest.writeString(radar);
         dest.writeString(audZipcode);
+        dest.writeString(audCountry);
+        dest.writeString(audCity);
         dest.writeString(audMiles);
         dest.writeString(personalAddress);
         dest.writeString(categories);
+        dest.writeStringArray(categoryNames);
         dest.writeString(brands);
         dest.writeString(ageStart);
         dest.writeString(ageEnd);
@@ -737,5 +796,7 @@ public class Challenge implements Parcelable {
         dest.writeString(audGender);
         dest.writeString(userName);
         dest.writeString(fullName);
+        dest.writeString(countryName);
+        dest.writeString(cityName);
     }
 }

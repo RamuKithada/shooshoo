@@ -16,7 +16,8 @@ import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.models.CompanyResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.FeedsResponse;
-import com.android.shooshoo.models.GameMasterResult;
+import com.android.shooshoo.models.FollowerResult;
+import com.android.shooshoo.models.JackpotResult;
 import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.NewPostsResponse;
@@ -174,11 +175,11 @@ public interface RetrofitApis {
     Call<LoginSuccess> forgetPassword(@Field("email") String email);
     @Multipart
     @POST("company")
-    Call<CompanyResponse> saveComapany(@Part MultipartBody.Part  logoImage,@Part("createdBy") RequestBody userId,@Part("companyName") RequestBody compName,@Part("emailId") RequestBody email,
-                                       @Part("firstName") RequestBody firstName,@Part("lastName") RequestBody  lastName,
-                                       @Part("country") RequestBody  country,@Part("city") RequestBody  city,@Part("zipcode") RequestBody  zipcode,
-                                       @Part("street") RequestBody  street,@Part("streetNumber") RequestBody  streetNum,@Part("mobileNumber") RequestBody  mobile,@Part("taxNumber") RequestBody  taxNum,
-                                       @Part("companyEmail") RequestBody  companyEmail);
+    Call<CompanyResponse> saveCompany(@Part MultipartBody.Part  logoImage, @Part("createdBy") RequestBody userId, @Part("companyName") RequestBody compName, @Part("emailId") RequestBody email,
+                                      @Part("firstName") RequestBody firstName, @Part("lastName") RequestBody  lastName,
+                                      @Part("country") RequestBody  country, @Part("city") RequestBody  city, @Part("zipcode") RequestBody  zipcode,
+                                      @Part("street") RequestBody  street, @Part("streetNumber") RequestBody  streetNum, @Part("mobileNumber") RequestBody  mobile, @Part("taxNumber") RequestBody  taxNum,
+                                      @Part("companyEmail") RequestBody  companyEmail);
 
 
     @Multipart
@@ -211,32 +212,35 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("sizeofaudience")
     Call<ResponseBody> calculateAudience(@Field("radar") String radar,@Field("gender") String gender,@Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd);
+/*
 
     @Multipart
     @POST("gamemaster")
-    Call<GameMasterResult> saveGameMaster(@Part MultipartBody.Part  logoImage, @Part("createdBy") RequestBody userId, @Part("firstName") RequestBody firstName, @Part("lastName") RequestBody lastName,
-                                          @Part("dob") RequestBody dob, @Part("country") RequestBody  country, @Part("city") RequestBody  city, @Part("zipcode") RequestBody  zipcode,
-                                          @Part("street") RequestBody  street, @Part("streetNumber") RequestBody  streetNumber, @Part("mobileNumber") RequestBody  mobile, @Part("gender") RequestBody  gender);
+    Call<JackpotResult> saveGameMaster(@Part MultipartBody.Part  logoImage, @Part("createdBy") RequestBody userId, @Part("firstName") RequestBody firstName, @Part("lastName") RequestBody lastName,
+                                       @Part("dob") RequestBody dob, @Part("country") RequestBody  country, @Part("city") RequestBody  city, @Part("zipcode") RequestBody  zipcode,
+                                       @Part("street") RequestBody  street, @Part("streetNumber") RequestBody  streetNumber, @Part("mobileNumber") RequestBody  mobile, @Part("gender") RequestBody  gender);
 
+*/
 
     @Multipart
     @POST("jackpot")
-    Call<GameMasterResult> saveJackpotChallenge(@Part("createdBy") RequestBody  createdBy, @Part("challengeId") RequestBody  challengeId, @Part MultipartBody.Part  bannerImage, @Part MultipartBody.Part  challVideo,
-                                          @Part("challengeName") RequestBody  challName, @Part("startDate") RequestBody  startDate, @Part("startTime") RequestBody  startTime,
-                                          @Part("endDate") RequestBody  endDate, @Part("endTime") RequestBody  endTime, @Part("description") RequestBody  description, @Part("photoEntries") RequestBody  photoEntries,
-                                          @Part("videoEntries") RequestBody  videoEntries,  @Part("miniGame") RequestBody  miniGame,@Part("maxLength") RequestBody  maxLength );
+    Call<JackpotResult> saveJackpotChallenge(@Part("createdBy") RequestBody  createdBy,@Part MultipartBody.Part  bannerImage, @Part MultipartBody.Part  challVideo,
+                                             @Part("challengeName") RequestBody  challName, @Part("startDate") RequestBody  startDate, @Part("startTime") RequestBody  startTime,
+                                             @Part("endDate") RequestBody  endDate, @Part("endTime") RequestBody  endTime, @Part("description") RequestBody  description, @Part("photoEntries") RequestBody  photoEntries,
+                                             @Part("videoEntries") RequestBody  videoEntries,  @Part("maxLength") RequestBody  maxLength );
 
     @FormUrlEncoded
     @POST("jackpotaudience")
-    Call<GameMasterResult> saveJackpotAudience(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,@Field("amount") String amount,
-                                                @Field("keyDescription") String keyDescription,@Field("priceWorth") String priceWorth,@Field("limited") String limited,
-                                               @Field("winners") String winners,@Field("radar") String radar,@Field("audZipcode") String audZipcode,
-                                              @Field("audMiles") String audMiles,@Field("address") String personalAddress,@Field("categories") String categories,
-                                             @Field("brands") String brands,
-                                             @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
+    Call<JackpotResult> saveJackpotAudience(@Field("challengeId") String challengeId, @Field("createdBy") String createdBy, @Field("amount") String amount,
+                                            @Field("limited") String limited,
+                                            @Field("winners") String winners, @Field("radar") String radar, @Field("audCountry") String country,
+                                            @Field("audZipcode") String audZipcode,@Field("audMiles") String audMiles,
+                                            @Field("audCity") String city, @Field("categories") String categories,
+                                            @Field("ageStart") String ageStart, @Field("ageEnd") String ageEnd, @Field("audGender") String gender);
+
+
      @GET("home")
      Call<HomeResponse> getHomeData();
-
 
     @Multipart
     @POST("addFeed")
@@ -348,5 +352,14 @@ public interface RetrofitApis {
                                                       @Field("userId") String userId,
                                                       @Field("limit") String limit,
                                                       @Field("offset") String offset);
+    @FormUrlEncoded
+    @POST("userFollowers")
+    Call<FollowerResult> getFollowers(@Field("userId") String userId);
+
+    @FormUrlEncoded
+    @POST("invitations")
+    Call<FollowerResult> inviteMyFollowers(@Field("challengeId") String challengeId,@Field("invitations") String invitations);
+
+
 }
 

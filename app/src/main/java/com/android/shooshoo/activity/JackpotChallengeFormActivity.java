@@ -5,7 +5,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
@@ -14,23 +13,18 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
-import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.models.GameMaster;
+import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
@@ -151,7 +145,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         sponcerChallengePresenter=new JackpotChallengePresenter();
         sponcerChallengePresenter.attachView(this);
         title.setText("The Challenge");
-        setStage(1);
+        setStage(0);
         viewInitilization();
 
     }
@@ -176,19 +170,15 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                     if (connectionDetector.isConnectingToInternet()) {
                         String videos ="no";
                         String photos = "no";
-                        String minigame="no";
                         if(ch_photo_entites.isChecked())
                             photos="yes";
 
                         if(ch_video_entites.isChecked())
                             videos="yes";
-
-//                        if(ch_mini_game.isChecked())
-//                            minigame="no";
-                        sponcerChallengePresenter.createChallenge(userSession.getUserId(),userSession.getSponsorChallenge(), challengeImageUri, challengeVideoUri,
+                        sponcerChallengePresenter.createChallenge(userSession.getUserId(), challengeImageUri, challengeVideoUri,
                                 edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
-                                videos,minigame, lables[sizePos]);
+                                videos,lables[sizePos]);
 
                     } else showMessage("Please Check Internet connection");
                 }
@@ -435,7 +425,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             if(index<=i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
+//                    buttons.get(index).setText(String.valueOf(i+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
@@ -449,9 +439,12 @@ int startDate=0,startYear=0,startMonth=0;
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                startYear=year;
-                startDate=dayOfMonth;
-                startMonth=month;
+
+                if(edt_dob.getId()==R.id.edt_startdate) {
+                    startYear = year;
+                    startDate = dayOfMonth;
+                    startMonth = month;
+                }
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);
@@ -506,10 +499,10 @@ int startDate=0,startYear=0,startMonth=0;
     }
 
     @Override
-    public void onGameMasterCreate(GameMaster result) {
-        userSession.saveGameMaster(result);
+    public void onChallengeUpdated(Challenge result) {
+        userSession.saveJackpot(result);
         Intent intent=new Intent(this, JackpotAudienceActivity.class);
-        intent.putExtra("challenge_type",2);
+        intent.putExtra("challengeId",result.getChallengeId());
         startActivity(intent);
     }
 

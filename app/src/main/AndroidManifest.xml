@@ -27,13 +27,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.HomeSearchActivity">
-     <!--       <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.HomeSearchActivity"
+            android:screenOrientation="portrait"
+            />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
         <activity
             android:name=".activity.CompanyDetailsActivity"
             android:screenOrientation="portrait" />
@@ -96,24 +93,28 @@
         <activity
             android:name=".activity.JackpotOverviewActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" >
+
+
+
+        </activity>
         <activity
             android:name=".activity.InviteFriendActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".activity.GameMasterActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".activity.ChallengePaymentActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
+
+        </activity>
+        <activity
+            android:name=".activity.ChallengePaymentActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
+
 
         </activity>
         <activity
@@ -169,7 +170,10 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.CreateSponsorChallengeActivity"
@@ -178,11 +182,16 @@
         <activity
             android:name=".activity.JackpotChallengeFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" >
+
+
+        </activity>
         <activity
             android:name=".activity.JackpotAudienceActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden">
+
+        </activity>
         <activity
             android:name=".activity.SponsorAudienceActivity"
             android:screenOrientation="portrait"

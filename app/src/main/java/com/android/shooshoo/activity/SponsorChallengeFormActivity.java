@@ -455,9 +455,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                startYear=year;
-                startDate=dayOfMonth;
-                startMonth=month;
+                if(edt_dob.getId()==R.id.edt_startdate) {
+                    startYear = year;
+                    startDate = dayOfMonth;
+                    startMonth = month;
+                }
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
                 edt_dob.setError(null);

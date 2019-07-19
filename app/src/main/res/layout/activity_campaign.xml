@@ -195,7 +195,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.AppCompatTextView
-
+            android:id="@+id/category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Category"
@@ -206,8 +206,9 @@
             android:textColor="#939393"
             />
         <android.support.v7.widget.AppCompatTextView
-            android:layout_below="@+id/category_title"
+
             android:id="@+id/categories"
+            android:layout_below="@+id/category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sports"

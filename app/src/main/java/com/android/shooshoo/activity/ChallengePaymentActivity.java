@@ -172,8 +172,6 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
                 Intent homeIntent=new Intent(this,HomeActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
-
-
                 break;
             case R.id.iv_back:
                 finish();
@@ -193,13 +191,37 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
         participants.setText(challenge.getParticipants());
         videoUri =VIDEO_URL+challenge.getType()+"s/videos/"+challenge.getChallengeVideo();
         setUpVideo();
-        country_name.setText(challenge.getCountry());
-        city_name.setText(challenge.getCity());
+        country_name.setText(challenge.getAudCountry());
+        city_name.setText(challenge.getAudCity());
         age_range.setText(challenge.getAgeStart()+" - "+challenge.getAgeEnd());
-        categories.setText(challenge.getCategories());
+        StringBuilder builderCat=new StringBuilder();
+        for (String name:challenge.getCategoryNames()) {
+            if(builderCat.length()==0)
+                builderCat.append(name);
+            else{
+                builderCat.append(',').append(name);
+            }
+        }
+        categories.setText(builderCat.toString());
         zip_code.setText(challenge.getAudZipcode());
-        gender.setText(challenge.getAudGender());
+        gender.setText(challenge.getGender());
         audience_size.setText(userSession.getAudSize());
+        video_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(player!=null)
+                {
+                    if(isPlaying) {
+                        pausePlayer();
+                        iv_playpause.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        resumePlayer();
+                        iv_playpause.setVisibility(View.GONE);
+                    }
+                }
+            }
+        });
    }
 
     /**

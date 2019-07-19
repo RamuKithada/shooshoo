@@ -4,14 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.Company;
-import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.models.NotificationSettings;
 import com.android.shooshoo.models.Visibility;
 import com.google.gson.Gson;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /****
  * Preference to store User data
@@ -188,7 +183,7 @@ public  void logout(){
      *  save Jackpot challenge in preference
      * @param master
      */
-    public void saveGameMaster(GameMaster master) {
+    public void saveJackpot(Challenge master) {
 
         if(master==null)
             pref.edit().remove("jackpot_challenge").commit();
@@ -201,8 +196,8 @@ public  void logout(){
      * this is used to get the Jackpot challenge reference to use all over step of the Challenge registration
      * @return Jackpot challenge
      */
-    public GameMaster getGameMaster() {
-        return (GameMaster) new Gson().fromJson(getString("jackpot_challenge"), GameMaster.class);
+    public Challenge getJackpot() {
+        return (Challenge) new Gson().fromJson(getString("jackpot_challenge"), Challenge.class);
     }
 
     public void setAudSize(String audienceSize) {

@@ -63,7 +63,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/title"
+                            android:id="@+id/challenge_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical|left"
@@ -284,7 +284,7 @@
                                         android:textColor="#939393"
                                         />
                                     <android.support.v7.widget.AppCompatTextView
-                                        android:id="@+id/zip"
+                                        android:id="@+id/zip_code"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:text="25648"
@@ -386,19 +386,19 @@
                             android:fontFamily="@font/raleway_medium"
                             android:textColor="#939393"
                             />
+
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/age_range"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="13-18"
                             android:layout_margin="5dp"
-                            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                            android:layout_weight="1"
                             android:fontFamily="@font/raleway_medium"
-                            android:textColor="@color/white_text"
-                            />
+                            android:text="13-18"
+                            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                            android:textColor="@color/white_text" />
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/genger"
+                            android:id="@+id/gender"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"

@@ -83,8 +83,8 @@ public class CreateSponsorChallengeActivity extends BaseActivity implements View
             case R.id.btn_next:
                 if(challengeType==1)
                     startActivity(new Intent(this, CompanyProfileActivity.class));
-                else if(challengeType==2)
-                    startActivity(new Intent(this, GameMasterActivity.class));
+//                else if(challengeType==2)
+//                    startActivity(new Intent(this, GameMasterActivity.class));
             break;
             case R.id.iv_back:
                 finish();

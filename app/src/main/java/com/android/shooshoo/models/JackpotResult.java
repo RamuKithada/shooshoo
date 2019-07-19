@@ -2,7 +2,7 @@ package com.android.shooshoo.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class GameMasterResult {
+public class JackpotResult {
 
     @SerializedName("status")
     @Expose
@@ -12,7 +12,7 @@ public class GameMasterResult {
     private String message;
     @SerializedName("data")
     @Expose
-    private GameMaster gameMaster;
+    private Challenge challenge;
 
     public Integer getStatus() {
         return status;
@@ -30,12 +30,11 @@ public class GameMasterResult {
         this.message = message;
     }
 
-    public GameMaster getGameMaster() {
-        return gameMaster;
+    public Challenge getChallenge() {
+        return challenge;
     }
 
-    public void setGameMaster(GameMaster data) {
-        this.gameMaster = data;
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
     }
-
 }

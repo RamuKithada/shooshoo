@@ -71,11 +71,12 @@ public class CampaignActivity extends BaseActivity implements SponsorChallengeVi
     AppCompatTextView zip_code;
     @BindView(R.id.category_title)
     AppCompatTextView category_title;
-
     @BindView(R.id.age_range)
     AppCompatTextView age_range;
     @BindView(R.id.gender)
     AppCompatTextView gender;
+    @BindView(R.id.categories)
+    AppCompatTextView categories;
 
 
 
@@ -102,10 +103,18 @@ public class CampaignActivity extends BaseActivity implements SponsorChallengeVi
         this.sponsorChallengePresenter.attachView(this);
 
         if(challenge!=null) {
-            country_name.setText(challenge.getCountry());
-            city_name.setText(challenge.getCity());
+            country_name.setText(challenge.getCountryName());
+            city_name.setText(challenge.getCityName());
             age_range.setText(challenge.getAgeStart() + " - " + challenge.getAgeEnd());
-            category_title.setText(challenge.getCategories());
+            StringBuilder builderCat=new StringBuilder();
+            for (String name:challenge.getCategoryNames()) {
+                if(builderCat.length()==0)
+                    builderCat.append(name);
+                else{
+                    builderCat.append(',').append(name);
+                }
+            }
+            categories.setText(builderCat.toString());
             zip_code.setText(challenge.getAudZipcode());
             gender.setText(challenge.getAudGender());
         }

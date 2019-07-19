@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".activity.SponsorAudienceActivity">
+    tools:context=".activity.JackpotAudienceActivity">
    <include layout="@layout/jackpot_stagebar_layout"/>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -55,7 +55,7 @@
                     android:id="@+id/edt_currency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="textAutoCorrect"
                     android:fontFamily="@font/raleway_medium"
                     android:minWidth="100dp"
                     android:gravity="center_vertical"
@@ -600,5 +600,5 @@
 
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

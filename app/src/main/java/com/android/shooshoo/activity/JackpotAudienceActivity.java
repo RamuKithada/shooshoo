@@ -7,15 +7,11 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
@@ -23,9 +19,9 @@ import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
+import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
-import com.android.shooshoo.models.GameMaster;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -161,7 +157,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         iv_back.setOnClickListener(this);
         btn_more_categories.setOnClickListener(this);
         title.setText("OUTREACH");
-        setStage(2);
+        setStage(1);
         spinnersInti();
         categorySelectionAdapter=new CategorySelectionAdapter(this,categoryArrayList);
         dataLoadPresenter=new DataLoadPresenter();
@@ -289,7 +285,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 }
 
            StringBuilder cats=new StringBuilder();
-                StringBuilder brands=new StringBuilder();
                     for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
                         if(categoryArrayList.size()>categoryModel.getCategory()){
                             Category mCategory= categoryArrayList.get(categoryModel.getCategory());
@@ -309,11 +304,13 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                         showMessage("Please check internet connection !");
                         break;
                     }
-/*jackpotChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),edt_amount.getText().toString(),
-        edt_key_des.getText().toString(),edt_price_worth.getText().toString(), edt_limited_access.getText().toString(),winners.get(winnerPos),radar,
-        edt_zipcode.getText().toString(),miles.get(milesPos),edt_address.getText().toString(),cats.toString(),brands.toString()
-        ,age.get(minAgePos),age.get(maxAgePos),gender.toString());
-       */ }
+jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId(),
+        userSession.getUserId(),edt_amount.getText().toString(),
+        edt_limited_access.getText().toString(),no_of_winners.getText().toString(), radar,
+        edt_zipcode.getText().toString(),edt_miles.getText().toString(),
+        countries.get(country_pos).getCountryId(),cities.get(city_pos).getCityId(),
+        cats.toString(),edt_min_age.getText().toString(),edt_max_age.getText().toString(),gender.toString());
+        }
 
 //
                 break;
@@ -359,7 +356,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             return false;
         }
         if(!ApiUrls.validateString(edt_zipcode.getText().toString())) {
-            edt_zipcode.setError("Enter Zip Code ");
+            edt_zipcode.setError("Enter ZipCode ");
             edt_zipcode.requestFocus();
             return false;
         }
@@ -390,11 +387,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
         }
 
-        if (!ApiUrls.validateString(edt_zipcode.getText().toString())) {
-            edt_zipcode.setError("Enter ZipCode");
-            edt_zipcode.requestFocus();
-            return false;
-        }
+
 
         if (!ApiUrls.validateString(edt_min_age.getText().toString())) {
             showMessage("Please enter starting age");
@@ -585,9 +578,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     }
 
     @Override
-    public void onGameMasterCreate(GameMaster result) {
-        this.userSession.setSponsorChallenge(result.getChallengeId());
-        this.userSession.saveGameMaster(result);
+    public void onChallengeUpdated(Challenge result) {
+        this.userSession.saveJackpot(result);
         startActivity(new Intent(this,InviteFriendActivity.class));
     }
     @Override

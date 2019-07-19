@@ -13,12 +13,17 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.ContactsModel;
+import com.android.shooshoo.models.Follower;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
 /**
  * Created by admin on 4/20/2017.
@@ -27,15 +32,14 @@ import butterknife.ButterKnife;
 public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapter.MyViewHolder> implements Filterable
 {
     private Context context;
-    private ArrayList<ContactsModel> contactsModelArrayList;
-    private ArrayList<ContactsModel> filterArrayList=new ArrayList<ContactsModel>();
-    public FindContactsAdapter(Context context, ArrayList<ContactsModel> contactsModelArrayList)
+    private ArrayList<Follower> contactsModelArrayList;
+    private ArrayList<Follower> filterArrayList=new ArrayList<Follower>();
+    public FindContactsAdapter(Context context, ArrayList<Follower> contactsModelArrayList)
     {
         this.context=context;
         this.contactsModelArrayList=contactsModelArrayList;
         if(contactsModelArrayList!=null)
           this.filterArrayList=contactsModelArrayList;
-
         Log.e("size",""+filterArrayList.size());
     }
 
@@ -51,10 +55,9 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
     public void onBindViewHolder(final FindContactsAdapter.MyViewHolder holder, final int position)
     {
         final FindContactsAdapter.MyViewHolder myViewHolder=holder;
-        final ContactsModel model=filterArrayList.get(position);
-        holder.tv_personname.setText(model.getName());
-        holder.tv_personnumber.setText(model.getNumber());
-
+        final Follower model=filterArrayList.get(position);
+        holder.tv_personname.setText(model.getUserName());
+        Picasso.with(context).load(PROFILE_IMAGE_URL+model.getImage()).error(R.drawable.profile_1).into(holder.iv_profileimage);
             if(model.isSelected()){
                 holder.added.setVisibility(View.VISIBLE);
                 holder.add.setVisibility(View.INVISIBLE);
@@ -96,7 +99,7 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
         return myFillter;
     }
     public void setSelectAll() {
-        for (ContactsModel model:filterArrayList) {
+        for (Follower model:filterArrayList) {
             model.setSelected(true);
         }
         notifyDataSetChanged();
@@ -106,6 +109,9 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
     {
         @BindView(R.id.tv_personname)
         TextView tv_personname;
+
+        @BindView(R.id.iv_profileimage)
+        CircleImageView iv_profileimage;
         @BindView(R.id.tv_personnumber)
         TextView tv_personnumber;
         @BindView(R.id.add)
@@ -130,9 +136,9 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
                 filterResults.count=contactsModelArrayList.size();
                 return filterResults;
             }
-            List<ContactsModel> models=new ArrayList<ContactsModel>();
-            for (ContactsModel contactsModel:contactsModelArrayList){
-                if(contactsModel.getName().toLowerCase().contains(constraint.toString().toLowerCase())){
+            List<Follower> models=new ArrayList<Follower>();
+            for (Follower contactsModel:contactsModelArrayList){
+                if(contactsModel.getUserName().toLowerCase().contains(constraint.toString().toLowerCase())){
                     models.add(contactsModel);
                 }
 
@@ -146,7 +152,7 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             if(results.count>0){
-                filterArrayList= (ArrayList<ContactsModel>) results.values;
+                filterArrayList= (ArrayList<Follower>) results.values;
                 notifyDataSetChanged();
             }
 

@@ -1,8 +1,5 @@
 package com.android.shooshoo.presenters;
-
-import android.net.Uri;
-
-import com.android.shooshoo.models.GameMasterResult;
+import com.android.shooshoo.models.JackpotResult;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.JackpotChallengeView;
 
@@ -34,22 +31,22 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
         view =null;
 
     }
-  Callback<GameMasterResult> callback=new Callback<GameMasterResult>() {
+  Callback<JackpotResult> callback=new Callback<JackpotResult>() {
       @Override
-      public void onResponse(Call<GameMasterResult> call, Response<GameMasterResult> response) {
+      public void onResponse(Call<JackpotResult> call, Response<JackpotResult> response) {
           if (view != null) {
               view.showProgressIndicator(false);
               if (response.isSuccessful()) {
-                  GameMasterResult companyResponse = response.body();
+                  JackpotResult companyResponse = response.body();
                   view.showMessage(companyResponse.getMessage());
                   if (companyResponse.getStatus() == 1)
-                      view.onGameMasterCreate(companyResponse.getGameMaster());
+                      view.onChallengeUpdated(companyResponse.getChallenge());
               }
           }
       }
 
       @Override
-      public void onFailure(Call<GameMasterResult> call, Throwable t) {
+      public void onFailure(Call<JackpotResult> call, Throwable t) {
 
           if (view != null) {
               view.showProgressIndicator(false);
@@ -61,7 +58,7 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
 
 
-
+/*
     public void createGameMaster(Uri masterLogo,String userid, String firstName, String lastName, String dob, String country, String city, String zipcode,
                                   String streetName, String streetNumber, String mobileNumber, String gender){
         File file=null;
@@ -78,13 +75,13 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
                 getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(streetName),getTextPart(streetNumber),
                 getTextPart(mobileNumber),getTextPart(gender))
                 .enqueue(callback);}
-    }
+    }*/
 
 
 
-    public void createChallenge(String  userId,String  challengeId,String  bannerImage,String challVideo,String challName,
+    public void createChallenge(String  userId,String  bannerImage,String challVideo,String challName,
                                 String  startDate,String  startTime,String  endDate,String  endtime,String  description,
-                                String  photoEntries, String  videoEntries,String miniGame,String  videoLength){
+                                String  photoEntries, String  videoEntries,String  videoLength){
 
 
         String  maxLength=videoLength;
@@ -112,10 +109,10 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
         }
         if(view!=null){
         view.showProgressIndicator(true);
-        retrofitApis.saveJackpotChallenge(getTextPart(userId),getTextPart(challengeId),bannerImageBody,challengeVideoBody,
+        retrofitApis.saveJackpotChallenge(getTextPart(userId),bannerImageBody,challengeVideoBody,
                 getTextPart(challName),getTextPart(startDate),getTextPart(startTime),getTextPart(endDate),
                 getTextPart(endtime),getTextPart(description),getTextPart(photoEntries),getTextPart(videoEntries),
-                getTextPart(miniGame),getTextPart(maxLength))
+               getTextPart(maxLength))
                 .enqueue(callback);
         }
 
@@ -132,20 +129,17 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
         return RequestBody.create(MediaType.parse("text/plain"),s);
     }
 
-    public void createAudience(String challenegId, String userId,String amount, String keyDescription,String priceWorth, String limitedAccess,
-                               String winners,String radar,String audZipcode,String audMiles, String personalAddress,
-                               String categories,String brands,String ageStart, String ageEnd,String gender) {
+    public void createAudience(String challenegId, String userId,String amount, String limitedAccess,
+                               String winners,String radar,String audZipcode,String audMiles,String country, String city,
+                               String categories,String ageStart, String ageEnd,String gender) {
 
-        String mWinners=winners.toLowerCase().replace("top"," ").trim();
-        String mAudMiles=audMiles.toLowerCase().replace("miles"," ").trim();
-        String mAgeStart=ageStart.toLowerCase().replace("years"," ").trim();
-        String mAgeEnd=ageEnd.toLowerCase().replace("years"," ").trim();
+
 
         if(view!=null) {
             view.showProgressIndicator(true);
-            retrofitApis.saveJackpotAudience(challenegId, userId, amount, keyDescription, priceWorth,
-                    limitedAccess, mWinners, radar, audZipcode, mAudMiles, personalAddress,
-                    categories, brands, mAgeStart, mAgeEnd, gender).enqueue(callback);
+            retrofitApis.saveJackpotAudience(challenegId, userId, amount,
+                    limitedAccess, winners, radar, country,audZipcode, audMiles, city,
+                    categories,  ageStart, ageEnd, gender).enqueue(callback);
         }
 
     }

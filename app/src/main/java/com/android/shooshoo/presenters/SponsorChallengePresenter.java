@@ -1,7 +1,6 @@
 package com.android.shooshoo.presenters;
 
 import android.net.Uri;
-import android.util.Log;
 
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CompanyResponse;
@@ -106,7 +105,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
         }
         if(view!=null)
         view.showProgressIndicator(true);
-        retrofitApis.saveComapany(body,getTextPart(userId),getTextPart(compName),getTextPart(email),getTextPart(firstName),getTextPart(lastName)
+        retrofitApis.saveCompany(body,getTextPart(userId),getTextPart(compName),getTextPart(email),getTextPart(firstName),getTextPart(lastName)
           ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(mobile)
         ,getTextPart(taxNum),getTextPart(companyEmail)).enqueue(companyResponseCallback);
 

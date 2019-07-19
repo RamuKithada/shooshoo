@@ -9,75 +9,105 @@
     tools:context=".activity.InviteFriendActivity">
     <include layout="@layout/jackpot_stagebar_layout"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="8dp"
-        >
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:focusable="false"
-            android:clickable="true"
-            android:fontFamily="@font/raleway_medium"
-            android:text="@string/invite_fnds"
-            android:textColorHint="@color/white_text"
-            android:textColor="@color/white_text"
-            android:layout_gravity="center_vertical"
-            />
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/edt_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPhonetic"
-            android:fontFamily="@font/raleway_medium"
-            android:minWidth="100dp"
-            android:gravity="center_vertical"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/ic_search_notification_icon"
-            android:hint="@string/search"
-            android:layout_marginLeft="10dp"
-            android:textColorHint="@color/white_text"
-            android:textColor="@color/white_text"
-            android:theme="@style/MyEditTextTheme" />
 
-        </LinearLayout>
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/select_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white_text"
-        android:text="All"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:fontFamily="@font/raleway_extrabold"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:gravity="center_vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginBottom="5dp"
-
-
-
-        />
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/friends_list"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_weight="1"
-        android:layout_gravity="center_horizontal"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        >
+        android:layout_weight="1">
+        <LinearLayout
+            android:id="@+id/data_layer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="8dp"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:fontFamily="@font/raleway_medium"
+                    android:text="@string/invite_fnds"
+                    android:textColorHint="@color/white_text"
+                    android:textColor="@color/white_text"
+                    android:layout_gravity="center_vertical"
+                    />
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/edt_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPhonetic"
+                    android:fontFamily="@font/raleway_medium"
+                    android:minWidth="100dp"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/ic_search_notification_icon"
+                    android:hint="@string/search"
+                    android:layout_marginLeft="10dp"
+                    android:textColorHint="@color/white_text"
+                    android:textColor="@color/white_text"
+                    android:theme="@style/MyEditTextTheme" />
+
+            </LinearLayout>
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white_text"
+                android:text="All"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/raleway_extrabold"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="55dp"
+                android:layout_marginBottom="5dp"
 
 
-    </android.support.v7.widget.RecyclerView>
+
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/friends_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                >
+
+
+
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+            android:text="You Don't have Followers"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_bold"
+            android:visibility="gone"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+            />
+    </RelativeLayout>
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/btn_next"
         android:layout_width="wrap_content"
