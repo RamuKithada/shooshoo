@@ -25,6 +25,8 @@ import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Language;
+import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -660,7 +662,17 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     }
 
-View view=null;
+    @Override
+    public void onRegionList(List<Region> regions) {
+
+    }
+
+    @Override
+    public void onLanguages(List<Language> languages) {
+
+    }
+
+    View view=null;
 
     /**
      * the view is use  to  hold whether user is clicked on next or more company button

@@ -114,6 +114,7 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
         city_name.setText(challenge.getCityName());
         age_range.setText(challenge.getAgeStart() + " - " + challenge.getAgeEnd());
         StringBuilder builderCat=new StringBuilder();
+        if(challenge.getCategoryNames()!=null)
         for (String name:challenge.getCategoryNames()) {
             if(builderCat.length()==0)
                 builderCat.append(name);

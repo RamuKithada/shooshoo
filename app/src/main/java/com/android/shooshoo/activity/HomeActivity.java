@@ -120,7 +120,6 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
                 startActivity(new Intent(HomeActivity.this,FeedsActivity.class));
-//                fragmentManager.beginTransaction().replace(R.id.home_fragment_container, FeedFragment.newInstance("Hi","Ram")).commit();
               break;
             case R.id.navigation_winners:
                 mTextMessage.setText(R.string.title_winners);

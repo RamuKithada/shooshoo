@@ -23,6 +23,7 @@ import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.NewPostsResponse;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
+import com.android.shooshoo.models.RegionResult;
 import com.android.shooshoo.models.RulesResponse;
 import com.android.shooshoo.models.ViewAllChallengesResponse;
 import com.android.shooshoo.models.WinnersResponce;
@@ -196,7 +197,7 @@ public interface RetrofitApis {
                                         @Field("prizesInfo") String prizesInfo,@Field("totalPrize") String totalPrize,
                                         @Field("winners") String winners,@Field("radar") String radar,@Field("audZipcode") String audZipcode,
                                         @Field("audMiles") String audMiles,@Field("audCountry") String audCountry,@Field("audCity") String audCity,
-                                         @Field("categories") String categories,
+                                         @Field("categories") String categories, @Field("audRegion") String audRegion, @Field("language") String language,
                                         @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("gender") String gender);
 
     @FormUrlEncoded
@@ -234,8 +235,8 @@ public interface RetrofitApis {
     Call<JackpotResult> saveJackpotAudience(@Field("challengeId") String challengeId, @Field("createdBy") String createdBy, @Field("amount") String amount,
                                             @Field("limited") String limited,
                                             @Field("winners") String winners, @Field("radar") String radar, @Field("audCountry") String country,
-                                            @Field("audZipcode") String audZipcode,@Field("audMiles") String audMiles,
-                                            @Field("audCity") String city, @Field("categories") String categories,
+                                            @Field("audZipcode") String audZipcode,@Field("audMiles") String audMiles,@Field("audCity") String city,
+                                            @Field("categories") String categories,@Field("audRegion") String audRegion, @Field("language") String language,
                                             @Field("ageStart") String ageStart, @Field("ageEnd") String ageEnd, @Field("audGender") String gender);
 
 
@@ -359,6 +360,12 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("invitations")
     Call<FollowerResult> inviteMyFollowers(@Field("challengeId") String challengeId,@Field("invitations") String invitations);
+
+    @GET("regions")
+    Call<RegionResult> getRegions();
+
+    @GET("languages")
+    Call<RegionResult> getLanguages();
 
 
 }

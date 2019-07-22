@@ -208,12 +208,14 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/country_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -302,6 +304,77 @@
 
                 </LinearLayout>
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/region_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/region_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Regions"
+                    android:fontFamily="@font/raleway_extrabold"
+                    android:textAllCaps="true"
+                    android:textColor="#85868A"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/regions_list"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="45dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:layout_below="@+id/region_title"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    tools:itemCount="0"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/add_category_item"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@id/regions_list"
+                    >
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edt_region"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:hint="Region"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        android:minWidth="150dp"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/btn_more_regions"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:paddingLeft="5dp"
+
+                        android:src="@drawable/add_plus_icon" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -511,6 +584,79 @@
                         />
                 </RelativeLayout>
             </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/language_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/language_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/language"
+                    android:fontFamily="@font/raleway_extrabold"
+                    android:textAllCaps="true"
+                    android:textColor="#85868A"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/language_list"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="45dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="5dp"
+                    android:layout_below="@+id/language_title"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    android:orientation="vertical"
+                    tools:itemCount="0"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/add_category_item"
+                    >
+
+                </android.support.v7.widget.RecyclerView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginRight="5dp"
+                    android:layout_below="@id/language_list"
+                    >
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edt_language"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_margin="5dp"
+                        android:hint="Language"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:inputType="textPersonName"
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        android:minWidth="150dp"
+                        />
+
+
+
+                    <ImageView
+                        android:id="@+id/btn_more_languages"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:paddingLeft="5dp"
+
+                        android:src="@drawable/add_plus_icon" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

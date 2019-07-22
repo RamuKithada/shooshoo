@@ -84,12 +84,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        ></FrameLayout>
+        >
+
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradiant_home_bottom_navi"
+        android:background="@color/bg_color"
         >
         <include layout="@layout/bottom_navi"/>
     </RelativeLayout>

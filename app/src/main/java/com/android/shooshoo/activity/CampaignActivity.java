@@ -107,14 +107,16 @@ public class CampaignActivity extends BaseActivity implements SponsorChallengeVi
             city_name.setText(challenge.getCityName());
             age_range.setText(challenge.getAgeStart() + " - " + challenge.getAgeEnd());
             StringBuilder builderCat=new StringBuilder();
-            for (String name:challenge.getCategoryNames()) {
-                if(builderCat.length()==0)
-                    builderCat.append(name);
-                else{
-                    builderCat.append(',').append(name);
+            if(challenge.getCategoryNames()!=null) {
+                for (String name : challenge.getCategoryNames()) {
+                    if (builderCat.length() == 0)
+                        builderCat.append(name);
+                    else {
+                        builderCat.append(',').append(name);
+                    }
                 }
+                categories.setText(builderCat.toString());
             }
-            categories.setText(builderCat.toString());
             zip_code.setText(challenge.getAudZipcode());
             gender.setText(challenge.getAudGender());
         }

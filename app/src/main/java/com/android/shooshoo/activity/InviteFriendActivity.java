@@ -83,7 +83,6 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
     private ArrayList<ContactsModel> contactsModelArrayList=new ArrayList<>();
     private HashMap<String,String> filterContacts_hmap;
 
-    RetrofitApis retrofitApis;
     ConnectionDetector connectionDetector;
     UserSession userSession;
     ArrayList<Follower> followers=new ArrayList<>();
@@ -125,7 +124,6 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
         });
 
         connectionDetector=new ConnectionDetector(this);
-        retrofitApis=RetrofitApis.Factory.create(this);
         userSession=new UserSession(this);
         inviteFriendsPresenter=new InviteFriendsPresenter();
         if(connectionDetector.isConnectingToInternet()){
@@ -271,7 +269,7 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()){
             case R.id.btn_next:
                 if (findContactsAdapter.getItemCount()>0)
-                 sendNotification();
+                      sendNotification();
                 else {
                     onSuccessFullInvitation("");
                 }

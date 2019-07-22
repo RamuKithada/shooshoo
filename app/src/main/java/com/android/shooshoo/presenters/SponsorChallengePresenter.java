@@ -150,11 +150,11 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
    public  void createAudience( String companyId, String userId, String prizesInfo, String totalPrize,
                                String winners,String radar,String audZipcode,String audMiles, String countryId,String cityId,
-                                String categories,String ageStart, String ageEnd,String gender){
+                                String categories, String audRegion, String language,String ageStart, String ageEnd,String gender){
        if(view!=null)
        view.showProgressIndicator(true);
         retrofitApis.saveAudience(companyId, userId, prizesInfo, totalPrize, winners, radar, audZipcode, audMiles, countryId,cityId,
-                          categories,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
+                          categories,audRegion,language,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
 
 
    }

@@ -4,6 +4,7 @@ import com.android.shooshoo.models.CategoryList;
 import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.CountryResult;
+import com.android.shooshoo.models.RegionResult;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.DataLoadView;
 
@@ -140,6 +141,68 @@ public class DataLoadPresenter implements BasePresenter<DataLoadView> {
                 if(view!=null){ view.showProgressIndicator(false);
                 view.showMessage(t.getMessage());
             }
+            }
+        });
+
+    }
+    public void loadRegion(){
+        if(view!=null)
+            view.showProgressIndicator(true);
+        retrofitApis.getRegions().enqueue(new Callback<RegionResult>() {
+            @Override
+            public void onResponse(Call<RegionResult> call, Response<RegionResult> response) {
+                if(view!=null)
+                    view.showProgressIndicator(false);
+                if(response.isSuccessful()){
+                    RegionResult profileResponce=response.body();
+                    if(view!=null)
+                    {
+                        view.onRegionList(profileResponce.getRegions());
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RegionResult> call, Throwable t) {
+                if(view!=null) {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
+
+
+            }
+        });
+
+    }
+    public void loadLanguages(){
+        if(view!=null)
+            view.showProgressIndicator(true);
+        retrofitApis.getLanguages().enqueue(new Callback<RegionResult>() {
+            @Override
+            public void onResponse(Call<RegionResult> call, Response<RegionResult> response) {
+                if(view!=null)
+                    view.showProgressIndicator(false);
+                if(response.isSuccessful()){
+                    RegionResult profileResponce=response.body();
+                    if(view!=null)
+                    {
+                        view.onLanguages(profileResponce.getLanguages());
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RegionResult> call, Throwable t) {
+                if(view!=null) {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
+
+
             }
         });
 

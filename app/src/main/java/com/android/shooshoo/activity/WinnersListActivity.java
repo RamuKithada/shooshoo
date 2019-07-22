@@ -1,23 +1,14 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.WinnersListAdapter;
-import com.android.shooshoo.fragment.ChallengersFragment;
-import com.android.shooshoo.fragment.FeedFragment;
-import com.android.shooshoo.fragment.HomeFragment;
-import com.android.shooshoo.fragment.RadarFragment;
-import com.android.shooshoo.fragment.WinnersFragment;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Winner;
 import com.android.shooshoo.presenters.WinnersPresenter;
@@ -25,9 +16,6 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.WinnersListView;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 

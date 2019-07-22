@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:hint="Region"
+        android:focusable="false"
+        android:enabled="false"
+        android:fontFamily="@font/raleway_medium"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/white_text"
+        android:textColor="@color/white_text"
+        android:theme="@style/MyEditTextTheme"
+        android:minWidth="150dp"
+        />
+
+</RelativeLayout>

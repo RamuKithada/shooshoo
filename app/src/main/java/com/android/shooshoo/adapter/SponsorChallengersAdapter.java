@@ -95,7 +95,11 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
     public int getItemCount() {
         if(challenges==null)
         return 0;
+//        if(challenges.size()>4)
+//            return 4;
+
         return challenges.size();
+
     }
     public void setChallenges(List<Challenge> challenges){
        this.challenges=challenges;
@@ -118,7 +122,6 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
             subtitle=itemView.findViewById(R.id.sub_title);
             brand=itemView.findViewById(R.id.brand);
             time=itemView.findViewById(R.id.time);
-
         }
     }
 }

@@ -3,6 +3,8 @@ package com.android.shooshoo.views;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Language;
+import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 
 import java.util.List;
@@ -25,5 +27,21 @@ public interface DataLoadView  extends BaseView {
      * @param categories are all categories and sub brands of the Category
      */
     void onAllCategories(List<Category> categories);
+
+    /**
+     * onRegionList is called from {@link DataLoadPresenter}
+     * @param regions list of the regions
+     */
+    void onRegionList(List<Region> regions);
+
+    /**
+     * onRegionList is called from {@link DataLoadPresenter}
+     * @param languages list of the languages
+     */
+    void onLanguages(List<Language> languages);
+
+
+
+
 
 }

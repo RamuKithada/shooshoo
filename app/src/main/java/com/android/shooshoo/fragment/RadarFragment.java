@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
 import com.android.shooshoo.models.ChallengeModel;
+import com.android.shooshoo.models.CircleEntity;
 import com.android.shooshoo.utils.OnRadarListener;
 import com.android.shooshoo.utils.RadarView;
 
@@ -41,6 +42,7 @@ public class RadarFragment extends Fragment implements OnRadarListener {
     RadarView radarView;
     AppCompatSeekBar seekBar;
     TextView milesLabel;
+    RecyclerView local_user_list;
     public RadarFragment() {
         // Required empty public constructor
     }
@@ -87,6 +89,7 @@ public class RadarFragment extends Fragment implements OnRadarListener {
         radarView.setOnRadarListener(this);
         seekBar=view.findViewById(R.id.seekbar);
         milesLabel=view.findViewById(R.id.miles_lable);
+        local_user_list=view.findViewById(R.id.local_user_list);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -118,7 +121,12 @@ public class RadarFragment extends Fragment implements OnRadarListener {
         pointFS.add(new PointF(-66,80));
         pointFS.add(new PointF(44,50));
         pointFS.add(new PointF(-10,10));
-        radarView.setPointFS(pointFS);
+        ArrayList<CircleEntity> circleEntities=new ArrayList<CircleEntity>();
+        for (int i=0;i<pointFS.size();i++)
+        {
+            circleEntities.add(new CircleEntity(pointFS.get(i),i%2));
+        }
+        radarView.setPointFS(circleEntities);
         challenge_list.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
@@ -142,15 +150,20 @@ public class RadarFragment extends Fragment implements OnRadarListener {
     }
 
     @Override
-    public void onItemClicked(float x, float y) {
-        if(popupWindow!=null)
-            if(popupWindow.isShowing())
-                popupWindow.dismiss();
-        showDialog((int) x,(int) y);
+    public void onItemClicked(float x, float y,CircleEntity entity) {
+        if(entity.getType()==0) {
+            if (popupWindow != null)
+                if (popupWindow.isShowing())
+                    popupWindow.dismiss();
+            showDialog((int) x, (int) y);
+        }else if(entity.getType()==1){
+            local_user_list.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void dismissPopup() {
+        local_user_list.setVisibility(View.GONE);
         if(popupWindow!=null)
             if(popupWindow.isShowing())
                 popupWindow.dismiss();

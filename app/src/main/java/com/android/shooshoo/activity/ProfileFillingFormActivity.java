@@ -31,6 +31,8 @@ import android.widget.Toast;
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Category;
+import com.android.shooshoo.models.Language;
+import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -52,6 +54,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -148,19 +151,6 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     @BindView(R.id.edt_country_code)
     AppCompatEditText edt_country_code;
 
-
-    View.OnClickListener dropdownOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.country_lay:
-
-                    break;
-            }
-
-        }
-    };
-
     DataLoadPresenter dataLoadPresenter;
     UpdateUserInfoPresenter updateUserInfoPresenter;
     final String genders[] = new String[]{"Male", "Female", "Others"};
@@ -199,6 +189,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
      */
     private GoogleApiClient mGoogleApiClient;
 
+    List<Language> languages=new ArrayList<Language>();
+    List<Region> regions=new ArrayList<Region>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,18 +208,6 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         next_lay.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
-     /*   setFocusChange(edt_first_name, R.id.firstname_line, iv_user_fname, new int[]{R.drawable.lastname_active, R.drawable.lastname_normal});
-        setFocusChange(edt_last_name, R.id.lastname_line, iv_user_lname, new int[]{R.drawable.lastname_active, R.drawable.lastname_normal});
-        setFocusChange(edt_dob, R.id.dob_line, iv_dob, new int[]{R.drawable.date_birth_active, R.drawable.date_birth_normal});
-        setFocusChange(edt_city, R.id.city_line, iv_city, new int[]{R.drawable.city_active, R.drawable.city_normal});
-        setFocusChange(edt_country, R.id.country_line, iv_country, new int[]{R.drawable.country_active, R.drawable.country_normal});
-        setFocusChange(edt_gender, R.id.gender_line, iv_gender, new int[]{R.drawable.gender_active, R.drawable.gender_normal});
-        setFocusChange(edt_zipcode, R.id.zipcode_line, iv_zip_code, new int[]{R.drawable.zipcode_active, R.drawable.zipcode_normal});
-        setFocusChange(edt_Street, R.id.street_line, iv_street_name, new int[]{R.drawable.street_active, R.drawable.street_normal});
-        setFocusChange(edt_street_number, R.id.number_line, iv_street_no, new int[]{R.drawable.streetno_active, R.drawable.streetno_normal});
-        setFocusChange(edt_mobile, R.id.country_code_line, iv_mobile, new int[]{R.drawable.mobile_active, R.drawable.mobile_normal});
-        iv_dropdown_city.setOnClickListener(dropdownOnClickListener);
-        country_lay.setOnClickListener(dropdownOnClickListener);*/
         edt_dob.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -906,6 +887,17 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
     @Override
     public void onAllCategories(List<Category> categories) {
+
+    }
+
+    @Override
+    public void onRegionList(List<Region> regions) {
+        this.regions=regions;
+    }
+
+    @Override
+    public void onLanguages(List<Language> languages) {
+        this.languages=languages;
 
     }
 

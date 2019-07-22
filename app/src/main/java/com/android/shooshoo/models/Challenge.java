@@ -332,6 +332,8 @@ public class Challenge implements Parcelable{
     }
 
     public String getPhotoEntries() {
+        if(photoEntries==null)
+            return "no";
         return photoEntries;
     }
 
@@ -340,6 +342,9 @@ public class Challenge implements Parcelable{
     }
 
     public String getVideoEntries() {
+        if(videoEntries==null)
+            return "no";
+
         return videoEntries;
     }
 

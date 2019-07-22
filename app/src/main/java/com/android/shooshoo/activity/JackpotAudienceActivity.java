@@ -5,23 +5,29 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
+import com.android.shooshoo.adapter.LanguagesAdapter;
+import com.android.shooshoo.adapter.RegionsAdapter;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Language;
+import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -29,6 +35,7 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.FragmentListDialogListener;
 import com.android.shooshoo.utils.RetrofitApis;
+import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.JackpotChallengeView;
 
@@ -56,7 +63,7 @@ import retrofit2.Response;
  * minAgePos,maxAgePos are the positions of the spinner_min_age adapter and spinner_max_age adapter to get limits of the audience age
  *  spinner_miles is used to show surrounding area  in miles to participants can participate in this challenge.
  */
-public class JackpotAudienceActivity extends BaseActivity implements DataLoadView, FragmentListDialogListener,JackpotChallengeView,CompoundButton.OnCheckedChangeListener,View.OnClickListener{
+public class JackpotAudienceActivity extends BaseActivity implements DataLoadView, FragmentListDialogListener,JackpotChallengeView,CompoundButton.OnCheckedChangeListener,View.OnClickListener, BaseView {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -133,6 +140,34 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     AppCompatEditText edt_max_age;
 
 
+    @BindView(R.id.region_lay)
+    RelativeLayout region_lay;
+
+
+    @BindView(R.id.btn_more_regions)
+    ImageView btn_more_regions;
+
+    @BindView(R.id.edt_region)
+    AppCompatEditText edt_region;
+
+    @BindView(R.id.regions_list)
+    RecyclerView regions_list;
+
+
+    @BindView(R.id.btn_more_languages)
+    ImageView btn_more_languages;
+
+    @BindView(R.id.edt_language)
+    AppCompatEditText edt_language;
+
+    @BindView(R.id.language_list)
+    RecyclerView language_list;
+
+    @BindView(R.id.country_lay)
+    LinearLayout country_lay;
+
+
+
     DataLoadPresenter dataLoadPresenter;
     ConnectionDetector connectionDetector;
     CategorySelectionAdapter categorySelectionAdapter;
@@ -141,9 +176,14 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     List<Category> categoryArrayList=new ArrayList<Category>();
     List<Country> countries=new ArrayList<Country>();
     List<City> cities=new ArrayList<City>();
+    List<Language> languages=new ArrayList<Language>();
+    List<Region> regions=new ArrayList<Region>();
+    RegionsAdapter regionsAdapter;
+    LanguagesAdapter languagesAdapter;
+
     Country country;
     City city;
-    int city_pos=-1,country_pos=-1;
+    int city_pos=-1,country_pos=-1,region_pos=-1,languages_pos=-1;
 
 
 
@@ -167,10 +207,21 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         connectionDetector=new ConnectionDetector(this);
         checkbox_male.setOnCheckedChangeListener(this);
         checkbox_female.setOnCheckedChangeListener(this);
+        btn_more_regions.setOnClickListener(this);
+        btn_more_languages.setOnClickListener(this);
+        regionsAdapter=new RegionsAdapter(this);
+        regions_list.setLayoutManager(new LinearLayoutManager(this));
+        regions_list.setAdapter(regionsAdapter);
+
+        languagesAdapter=new LanguagesAdapter(this);
+        language_list.setLayoutManager(new LinearLayoutManager(this));
+        language_list.setAdapter(languagesAdapter);
 
         if(connectionDetector.isConnectingToInternet()){
             dataLoadPresenter.loadAllcategoriesList();
             dataLoadPresenter.loadCountryData();
+            dataLoadPresenter.loadLanguages();
+            dataLoadPresenter.loadRegion();
         }
 
 
@@ -228,7 +279,50 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 showFragment.show(getSupportFragmentManager(),"city");
             }
         });
+        edt_region.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(regions==null)
+                    return;
+
+                final String[] lables=new String[regions.size()];
+                for(int index=0;index<regions.size();index++)
+                {
+                    lables[index]=regions.get(index).getRegName();
+                }
+
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_region.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"region");
+
+            }
+        });
+        edt_language.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(languages==null)
+                    return;
+
+                final String[] lables=new String[languages.size()];
+                for(int index=0;index<languages.size();index++)
+                {
+                    lables[index]=languages.get(index).getName();
+                }
+
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_language.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"language");
+
+            }
+        });
 
     }
 
@@ -243,11 +337,15 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                     tv_national.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_international.setTextColor(Color.parseColor("#85868A"));
                     nationalization = 0;
+                    region_lay.setVisibility(View.GONE);
+                    country_lay.setVisibility(View.VISIBLE);
                     break;
                 case R.id.international_lay:
                     tv_international.setTextColor(Color.parseColor("#FFFFFF"));
                     tv_national.setTextColor(Color.parseColor("#85868A"));
                     nationalization = 1;
+                    region_lay.setVisibility(View.VISIBLE);
+                    country_lay.setVisibility(View.GONE);
                     break;
             }
 
@@ -264,53 +362,9 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
                 if(validate())
                 {
+                    submitData();
 
-
-                    String radar="national";
-                    if(nationalization==1){
-                        radar="international";
-                    }
-                    StringBuilder  gender=new StringBuilder();
-                    if(checkbox_male.isChecked()){
-                        gender.append("male");
-
-                }
-                if(checkbox_female.isChecked()){
-                    if(gender.length()>0){
-                        gender.append(',').append("female");
-                    }else {
-                        gender.append("female");
-                    }
-
-                }
-
-           StringBuilder cats=new StringBuilder();
-                    for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
-                        if(categoryArrayList.size()>categoryModel.getCategory()){
-                            Category mCategory= categoryArrayList.get(categoryModel.getCategory());
-                            if (cats.length() > 0) {
-                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
-                                    cats.append(',').append(mCategory.getCategoryId());
-                            } else {
-                                if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
-                                    cats.append(mCategory.getCategoryId());
-                            }
-                        }
-
-                    }
-
-                    if(!connectionDetector.isConnectingToInternet())
-                    {
-                        showMessage("Please check internet connection !");
-                        break;
-                    }
-jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId(),
-        userSession.getUserId(),edt_amount.getText().toString(),
-        edt_limited_access.getText().toString(),no_of_winners.getText().toString(), radar,
-        edt_zipcode.getText().toString(),edt_miles.getText().toString(),
-        countries.get(country_pos).getCountryId(),cities.get(city_pos).getCityId(),
-        cats.toString(),edt_min_age.getText().toString(),edt_max_age.getText().toString(),gender.toString());
-        }
+}
 
 //
                 break;
@@ -320,8 +374,129 @@ jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId
             case R.id.btn_more_categories:
                 categorySelectionAdapter.add();
                 break;
+            case R.id.btn_more_regions:
+                if(region_pos>0&&region_pos<regions.size()){
+                    regionsAdapter.add(regions.remove(region_pos));
+                    region_pos=-1;
+                    edt_region.setText("Region");
+                    edt_region.setError(null);
+                }
+                break;
+            case R.id.btn_more_languages:
+                if(languages_pos>0&&languages_pos<languages.size()){
+                    languagesAdapter.add(languages.remove(languages_pos));
+                    languages_pos=-1;
+                    edt_language.setText("Language");
+                    edt_language.setError(null);
+                }
+                break;
 
         }
+    }
+
+    private void submitData() {
+
+
+        String radar="national";
+        if(nationalization==1){
+            radar="international";
+        }
+        StringBuilder  gender=new StringBuilder();
+        if(checkbox_male.isChecked()){
+            gender.append("Male");
+
+        }
+        if(checkbox_female.isChecked()){
+            if(gender.length()>0){
+                gender.append(',').append("Female");
+            }else {
+                gender.append("Female");
+            }
+
+        }
+
+        StringBuilder cats=new StringBuilder();
+        for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
+            if(categoryArrayList.size()>categoryModel.getCategory()){
+                Category mCategory= categoryArrayList.get(categoryModel.getCategory());
+                if (cats.length() > 0) {
+                    if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                        cats.append(',').append(mCategory.getCategoryId());
+                } else {
+                    if (mCategory.getCategoryId() != null && !cats.toString().contains(mCategory.getCategoryId()))
+                        cats.append(mCategory.getCategoryId());
+                }
+            }
+
+        }
+
+        StringBuilder regions=new StringBuilder();
+        if(nationalization==1){
+            for (Region region:regionsAdapter.selectedRegions()){
+                if(regions.length()<=0){
+                    regions.append(region.getRegId());
+                }else {
+                    regions.append(',').append(region.getRegId());
+                }
+
+            }
+            if(region_pos>0&&region_pos<this.regions.size()){
+                if(regions.length()<=0){
+                    regions.append( this.regions.get(region_pos).getRegId());
+                }else {
+                    regions.append(',').append( this.regions.get(region_pos).getRegId());
+                }
+
+            }
+
+        }
+
+        StringBuilder languageBuilder=new StringBuilder();
+        for (Language language:languagesAdapter.selectedLanguages()) {
+            if(languageBuilder.length()<=0){
+                languageBuilder.append(language.getId());
+            }else {
+                languageBuilder.append(',').append(language.getId());
+            }
+
+        }
+        if(languages_pos>0&&languages_pos<this.languages.size()){
+            if(languageBuilder.length()<=0){
+                languageBuilder.append( this.languages.get(languages_pos).getId());
+            }else {
+                languageBuilder.append(',').append( this.languages.get(region_pos).getId());
+            }
+
+        }
+
+        String cityId="",countryId="",zipCode="",miles="";
+        if(nationalization==0){
+            cityId= cities.get(city_pos).getCityId();
+            countryId=countries.get(country_pos).getCountryId();
+            zipCode=edt_zipcode.getText().toString();
+            miles=edt_miles.getText().toString();
+        }
+
+        if(!connectionDetector.isConnectingToInternet())
+        {
+            showMessage("Please check internet connection !");
+            return;
+        }
+
+
+
+
+
+
+
+
+
+        jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId(),
+                userSession.getUserId(),edt_amount.getText().toString(),
+                edt_limited_access.getText().toString(),no_of_winners.getText().toString(), radar,
+                zipCode,miles, countryId,cityId,cats.toString(),regions.toString(),languageBuilder.toString(),
+                edt_min_age.getText().toString(),edt_max_age.getText().toString(),gender.toString());
+
     }
 
     private boolean validate() {
@@ -350,29 +525,44 @@ jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId
             edt_limited_access.requestFocus();
             return false;
         }
-        if(country_pos<0){
-            showMessage("Please select Country");
-            edt_country.requestFocus();
-            return false;
-        }
-        if(!ApiUrls.validateString(edt_zipcode.getText().toString())) {
-            edt_zipcode.setError("Enter ZipCode ");
-            edt_zipcode.requestFocus();
-            return false;
-        }
+        if(nationalization==0) {
+            if (country_pos < 0) {
+                showMessage("Please select Country");
+                edt_country.requestFocus();
+                return false;
+            }
+            if (!ApiUrls.validateString(edt_zipcode.getText().toString())) {
+                edt_zipcode.setError("Enter ZipCode ");
+                edt_zipcode.requestFocus();
+                return false;
+            }
 
-        if(city_pos<0){
-            showMessage("Please select City");
-            edt_city.requestFocus();
-            return false;
-        }
+            if (city_pos < 0) {
+                showMessage("Please select City");
+                edt_city.requestFocus();
+                return false;
+            }
 
-        if(!ApiUrls.validateString(edt_miles.getText().toString())) {
-            edt_miles.setError("Enter miles for challenge range");
-            edt_miles.requestFocus();
-            return false;
-        }
+            if (!ApiUrls.validateString(edt_miles.getText().toString())) {
+                edt_miles.setError("Enter miles for challenge range");
+                edt_miles.requestFocus();
+                return false;
+            }
+        }else if(nationalization==1){
+            if(regionsAdapter.selectedRegions()==null){
+                edt_region.setError("Select Region");
+                edt_region.requestFocus();
 
+                return false;
+            }
+            if(regionsAdapter.getItemCount()<=0){
+                edt_region.setError("Select Region");
+                edt_region.requestFocus();
+
+                return false;
+            }
+
+        }
         if(categorySelectionAdapter.getItemCount()<3){
             showMessage("Please select at least 3 categories");
             return false;
@@ -419,7 +609,18 @@ jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId
             return false;
         }
 
+        if(languagesAdapter.selectedLanguages()==null){
+            edt_language.setError("Select At Least one language");
+            edt_language.requestFocus();
+            return false;
+        }
+        if(languagesAdapter.getItemCount()<=0){
+            edt_language.setError("Select At least one language");
+            edt_language.requestFocus();
+            return false;
+        }
         return true;
+
     }
     /**
      * setStage is for selection one of registration step
@@ -471,7 +672,7 @@ jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId
         this.cat_subcat_list.setAdapter(this.categorySelectionAdapter);
     }
 
-    int winnerPos=0,maxAgePos=0,minAgePos=0,milesPos=0;
+//    int winnerPos=0,maxAgePos=0,minAgePos=0,milesPos=0;
 /*    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
@@ -605,7 +806,33 @@ jackpotChallengePresenter.createAudience(userSession.getJackpot().getChallengeId
                 }
 
                 break;
+            case R.id.edt_region:
+                if(regions!=null)
+                {
+                    edt_region.setText(regions.get(position).getRegName());
+                    region_pos=position;
+                }
+
+                break;
+            case R.id.edt_language:
+                if(languages!=null)
+                {
+                    edt_language.setText(languages.get(position).getName());
+                    languages_pos=position;
+                }
+
+                break;
 
         }
+    }
+
+    @Override
+    public void onRegionList(List<Region> regions) {
+       this.regions=regions;
+    }
+
+    @Override
+    public void onLanguages(List<Language> languages) {
+       this.languages=languages;
     }
 }

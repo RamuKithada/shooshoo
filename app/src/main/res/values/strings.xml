@@ -163,4 +163,6 @@
     <string name="rewards_selection">Reward selection</string>
     <string name="invite_fnds">Invite others</string>
     <string name="per_user">Per User</string>
+    <string name="radar_switch_text">Find Challenges and users in  \n  your area</string>
+    <string name="Regions">REGIONS</string>
 </resources>

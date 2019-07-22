@@ -9,26 +9,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.FindContactsAdapter;
+import com.android.shooshoo.adapter.InviteFriendsAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
+import com.android.shooshoo.models.Follower;
+import com.android.shooshoo.presenters.InviteFriendsPresenter;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RetrofitApis;
+import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.InviteFriendsView;
 import com.android.shooshoo.views.PostChallengeView;
 import com.squareup.picasso.Picasso;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostVideoActivity extends BaseActivity implements View.OnClickListener,PostChallengeView {
+public class PostVideoActivity extends BaseActivity implements View.OnClickListener,PostChallengeView , InviteFriendsView {
     //    @BindView(R.id.challenge_video_layout)
 //    FrameLayout challenge_video_layout;
     @BindView(R.id.video_post_layout)
@@ -37,6 +46,8 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     ImageView iv_playpause_post;
     @BindView(R.id.video_thumb_post)
     ImageView video_thumb_post;
+    @BindView(R.id.list_friends)
+    RecyclerView list_friends;
 
     //    @BindView(R.id.iv_back)
 //    ImageView iv_back;
@@ -49,6 +60,12 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     Challenge challenge=null;
 
     Uri uri;
+
+    RetrofitApis retrofitApis;
+    UserSession userSession;
+    ArrayList<Follower> followers=new ArrayList<>();
+    InviteFriendsPresenter inviteFriendsPresenter;
+    InviteFriendsAdapter inviteFriendsAdapter;
 
     boolean isImagePost=false;
     @Override
@@ -64,6 +81,14 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
         detector=new ConnectionDetector(this);
         challengePresenter=new PostChallengePresenter();
         challengePresenter.attachView(this);
+        userSession=new UserSession(this);
+        inviteFriendsPresenter=new InviteFriendsPresenter();
+        inviteFriendsPresenter.attachView(this);
+        inviteFriendsAdapter=new InviteFriendsAdapter(this,followers);
+        if(detector.isConnectingToInternet()){
+            inviteFriendsPresenter.getFollowers(userSession.getUserId());
+        }
+
 //        challenge_video_layout.setOnClickListener(this);
         if(isImagePost)
         {
@@ -129,5 +154,38 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onRules(List<String> rules) {
 
+    }
+
+    @Override
+    public void onFriendsList(List<Follower> mFollowers) {
+        if(mFollowers!=null){
+            followers.addAll(mFollowers);
+            inviteFriendsAdapter=new InviteFriendsAdapter(PostVideoActivity.this,followers);
+            list_friends.setAdapter(inviteFriendsAdapter);
+        }
+    }
+
+    @Override
+    public void onSuccessFullInvitation(String message) {
+
+    }
+    private void sendNotification() {
+        StringBuilder invites=new StringBuilder();
+        for (Follower follower :followers) {
+            if(follower.isSelected())
+                if(invites.length()==0){
+                    invites.append(follower.getFromId());
+                }else {
+                    invites.append(',').append(follower.getFromId());
+
+                }
+
+        }
+        if(invites.length()>0) {
+            if (detector.isConnectingToInternet())
+                inviteFriendsPresenter.sendInvitations(userSession.getJackpot().getChallengeId(), invites.toString());
+        }else {
+            onSuccessFullInvitation("");
+        }
     }
 }

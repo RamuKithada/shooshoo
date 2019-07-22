@@ -32,7 +32,9 @@ import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.LoginSuccess;
+import com.android.shooshoo.models.Region;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.ProfilePresenter;
@@ -662,6 +664,16 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
 
         }
+
+    }
+
+    @Override
+    public void onRegionList(List<Region> regions) {
+
+    }
+
+    @Override
+    public void onLanguages(List<Language> languages) {
 
     }
 

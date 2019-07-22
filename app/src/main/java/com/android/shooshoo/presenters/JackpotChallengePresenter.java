@@ -131,16 +131,16 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     public void createAudience(String challenegId, String userId,String amount, String limitedAccess,
                                String winners,String radar,String audZipcode,String audMiles,String country, String city,
-                               String categories,String ageStart, String ageEnd,String gender) {
+                               String categories,String audRegion,String languages,String ageStart, String ageEnd,String gender) {
 
 
 
-        if(view!=null) {
+  /*      if(view!=null) {
             view.showProgressIndicator(true);
             retrofitApis.saveJackpotAudience(challenegId, userId, amount,
                     limitedAccess, winners, radar, country,audZipcode, audMiles, city,
-                    categories,  ageStart, ageEnd, gender).enqueue(callback);
-        }
+                    categories,audRegion,languages,  ageStart, ageEnd, gender).enqueue(callback);
+        }*/
 
     }
 }
