@@ -377,6 +377,8 @@ public class Challenge implements Parcelable{
     }
 
     public String getAmount() {
+        if(amount==null)
+            amount="";
         return amount;
     }
 
@@ -401,6 +403,8 @@ public class Challenge implements Parcelable{
     }
 
     public String getTotalPrize() {
+        if(totalPrize==null)
+            totalPrize="";
         return totalPrize;
     }
 

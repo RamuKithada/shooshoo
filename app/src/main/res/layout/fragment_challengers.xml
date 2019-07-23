@@ -23,9 +23,11 @@
                 android:orientation="vertical"
                 >
                 <RelativeLayout
+                    android:id="@+id/entered_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bg_color"
+                    android:visibility="gone"
                     android:padding="5dp">
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_title_entered"
@@ -72,9 +74,11 @@
 
                 </RelativeLayout>
                       <RelativeLayout
+                          android:id="@+id/created_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bg_color"
+                          android:visibility="gone"
                     android:padding="5dp">
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_title_created"
@@ -121,9 +125,11 @@
 
                 </RelativeLayout>
                       <RelativeLayout
+                          android:id="@+id/saved_lay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/bg_color"
+                          android:visibility="gone"
                     android:padding="5dp">
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_title_saved"

@@ -30,6 +30,7 @@ import com.android.shooshoo.models.WinnersResponce;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -39,6 +40,7 @@ import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
@@ -366,6 +368,12 @@ public interface RetrofitApis {
 
     @GET("languages")
     Call<RegionResult> getLanguages();
+
+    @FormUrlEncoded
+    @POST("challengeInfo")
+    Call<ResponseBody> getChallengeInfo(@FieldMap Map<String, String> parameters);
+
+//            @Field("challengeId") String challengeId,@Field("type") String type,@Field("userId") String userId);
 
 
 }

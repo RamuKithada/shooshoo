@@ -57,6 +57,8 @@ import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -493,6 +495,12 @@ Challenge challenge;
     if(rules!=null)
         ruleList.addAll(rules);
     }
+
+    @Override
+    public void onChallengeInfo(ResponseBody responseBody) {
+
+    }
+
     public boolean checkingPermissionAreEnabledOrNot() {
         int camera = ContextCompat.checkSelfPermission(this, CAMERA);
         int write = ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE);

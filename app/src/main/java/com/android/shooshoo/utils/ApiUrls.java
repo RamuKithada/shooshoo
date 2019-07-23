@@ -140,7 +140,14 @@ public class ApiUrls {
             Date date=simpleDateFormat.parse(newsdatetime);
             CharSequence relativeDate =
                     DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
-                            0L,DateUtils.FORMAT_NO_YEAR);
+                            0L,DateUtils.FORMAT_ABBREV_RELATIVE);
+//            String actcualDate=relativeDate.toString();
+//            String output=null;
+//            output=actcualDate;
+//            if(actcualDate.toLowerCase().contains("in")){
+//                output=actcualDate.replaceAll("In","")+" left";
+//            }
+
             return relativeDate.toString();
         }catch (ParseException e){
             e.printStackTrace();

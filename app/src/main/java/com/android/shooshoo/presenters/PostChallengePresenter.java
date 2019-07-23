@@ -8,6 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -183,6 +186,40 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
             });
 
         }
+    }
+    public void getChallengeInfo(String challengeId,String type,String userId){
+        if (view != null) {
+            view.showProgressIndicator(true);
+            Map<String,String> map=new HashMap<String, String>();
+            map.put("challengeId",challengeId);
+            map.put("type",type);
+            if(userId!=null){
+                map.put("userId",userId);
+            }
+
+
+            retrofitApis.getChallengeInfo(map).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful())
+                        if (view != null) {
+                            view.showProgressIndicator(false);
+                            view.onChallengeInfo(response.body());
+                        }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if (view != null) {
+                        view.showProgressIndicator(false);
+                    }
+                }
+            });
+
+        }
+
+
+
     }
 
 }

@@ -179,7 +179,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
                     et_description.setText(profile_description.getText().toString());
                     profile_description.setVisibility(View.GONE);
 
-                }else if(view.getText().toString().equalsIgnoreCase("Done")){
+                }else if(view.getText().toString().equalsIgnoreCase("save")){
                     view.setText("Edit");
 
                     profile_description.setVisibility(View.VISIBLE);

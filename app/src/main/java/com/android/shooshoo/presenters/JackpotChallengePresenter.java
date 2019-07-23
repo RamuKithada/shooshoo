@@ -2,7 +2,6 @@ package com.android.shooshoo.presenters;
 import com.android.shooshoo.models.JackpotResult;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.JackpotChallengeView;
-
 import java.io.File;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -135,12 +134,12 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
 
 
-  /*      if(view!=null) {
+        if(view!=null) {
             view.showProgressIndicator(true);
             retrofitApis.saveJackpotAudience(challenegId, userId, amount,
                     limitedAccess, winners, radar, country,audZipcode, audMiles, city,
                     categories,audRegion,languages,  ageStart, ageEnd, gender).enqueue(callback);
-        }*/
+        }
 
     }
 }

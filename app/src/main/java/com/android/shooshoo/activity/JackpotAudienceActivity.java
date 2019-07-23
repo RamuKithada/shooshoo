@@ -416,6 +416,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         }
 
         StringBuilder cats=new StringBuilder();
+        if(categorySelectionAdapter.getCategoryModels()!=null)
         for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
             if(categoryArrayList.size()>categoryModel.getCategory()){
                 Category mCategory= categoryArrayList.get(categoryModel.getCategory());
@@ -432,6 +433,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
         StringBuilder regions=new StringBuilder();
         if(nationalization==1){
+            if(regionsAdapter.selectedRegions()!=null)
             for (Region region:regionsAdapter.selectedRegions()){
                 if(regions.length()<=0){
                     regions.append(region.getRegId());
@@ -452,6 +454,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         }
 
         StringBuilder languageBuilder=new StringBuilder();
+
+        if(languagesAdapter.selectedLanguages()!=null)
         for (Language language:languagesAdapter.selectedLanguages()) {
             if(languageBuilder.length()<=0){
                 languageBuilder.append(language.getId());
@@ -549,18 +553,13 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 return false;
             }
         }else if(nationalization==1){
-            if(regionsAdapter.selectedRegions()==null){
+            if(region_pos<=0&&regionsAdapter.getItemCount()<=0){
                 edt_region.setError("Select Region");
                 edt_region.requestFocus();
-
                 return false;
             }
-            if(regionsAdapter.getItemCount()<=0){
-                edt_region.setError("Select Region");
-                edt_region.requestFocus();
 
-                return false;
-            }
+
 
         }
         if(categorySelectionAdapter.getItemCount()<3){
@@ -608,17 +607,13 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             showMessage("Select atleast one gender ");
             return false;
         }
+          if(languages_pos<0&&languagesAdapter.getItemCount()<=0)
+          {
+              edt_language.setError("Select At Least one language");
+              edt_language.requestFocus();
+              return false;
+          }
 
-        if(languagesAdapter.selectedLanguages()==null){
-            edt_language.setError("Select At Least one language");
-            edt_language.requestFocus();
-            return false;
-        }
-        if(languagesAdapter.getItemCount()<=0){
-            edt_language.setError("Select At least one language");
-            edt_language.requestFocus();
-            return false;
-        }
         return true;
 
     }
@@ -810,6 +805,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 if(regions!=null)
                 {
                     edt_region.setText(regions.get(position).getRegName());
+                    edt_region.setError(null);
                     region_pos=position;
                 }
 
@@ -818,6 +814,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 if(languages!=null)
                 {
                     edt_language.setText(languages.get(position).getName());
+                    edt_language.setError(null);
                     languages_pos=position;
                 }
 

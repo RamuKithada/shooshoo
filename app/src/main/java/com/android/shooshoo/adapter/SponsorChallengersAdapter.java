@@ -62,7 +62,7 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
 
                        }
                    catViewHolder.brand.setBackgroundColor(Color.parseColor("#F31F68"));
-                   catViewHolder.brand.setText(challenge.getTotalPrize());
+                   catViewHolder.brand.setText(challenge.getTotalPrize().replaceAll(".00",""));
                }
                  else if(challenge.getType().equalsIgnoreCase("jackpot"))
                {
@@ -74,7 +74,7 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                        builder.append(' ').append(challenge.getLastName());
 
                    catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
-                   catViewHolder.brand.setText(challenge.getAmount());
+                   catViewHolder.brand.setText(challenge.getAmount().replace(".00",""));
 
 
 

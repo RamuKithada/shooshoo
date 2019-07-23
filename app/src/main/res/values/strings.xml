@@ -165,4 +165,5 @@
     <string name="per_user">Per User</string>
     <string name="radar_switch_text">Find Challenges and users in  \n  your area</string>
     <string name="Regions">REGIONS</string>
+    <string name="my_challenges">My Challenges</string>
 </resources>

@@ -68,9 +68,6 @@ LinearLayout third_winner;
 TextView third_winner_prize;
 
 
-
-
-
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
     @BindView(R.id.navigation_challengers)

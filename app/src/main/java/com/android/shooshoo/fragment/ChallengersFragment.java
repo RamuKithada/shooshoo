@@ -13,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.CreatedChallengeViewActivity;
+import com.android.shooshoo.activity.EnteredChallengeViewActivity;
 import com.android.shooshoo.activity.JackpotChallengeFormActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.activity.SponsorChallenge;
@@ -50,6 +53,7 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
     private String mParam1;
     private String mParam2;
     RecyclerView list_entered,list_created,list_saved;
+    RelativeLayout entered_lay,created_lay,saved_lay;
     NestedScrollView nested_scroll_view;
     LinearLayout bottom_navi_view;
     SponsorChallengersAdapter enteredListAdapter,createdListAdapter,savedListAdapter;
@@ -107,9 +111,13 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
         list_saved=view.findViewById(R.id.list_saved);
         nested_scroll_view=view.findViewById(R.id.nested_scroll_view);
         bottom_navi_view=view.findViewById(R.id.bottom_navi_view);
+        bottom_navi_view.setOnClickListener(this) ;
         tv_all_saved=view.findViewById(R.id.tv_all_saved);
         tv_all_created=view.findViewById(R.id.tv_all_created);
         tv_all_entered=view.findViewById(R.id.tv_all_entered);
+        entered_lay=view.findViewById(R.id.entered_lay);
+        saved_lay=view.findViewById(R.id.saved_lay);
+        created_lay=view.findViewById(R.id.created_lay);
         tv_all_saved.setOnClickListener(this);
         tv_all_created.setOnClickListener(this);
         tv_all_entered.setOnClickListener(this);
@@ -130,16 +138,13 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
             challengesPresenter.getChallenges(userSession.getUserId());
         }  else
             showMessage("No Internet Connection");
-//
-
-
     }
 
     private void setListenersForLists() {
         list_created.addOnItemTouchListener(new RecyclerTouchListener(getContext(), list_created, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                Intent intent=new Intent(getActivity(), CreatedChallengeViewActivity.class);
                 intent.putExtra("challenge",created.get(position));
                 startActivity(intent);
             }
@@ -152,7 +157,7 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
         list_entered.addOnItemTouchListener(new RecyclerTouchListener(getContext(), list_entered, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                Intent intent=new Intent(getActivity(), EnteredChallengeViewActivity.class);
                 intent.putExtra("challenge",entered.get(position));
                 startActivity(intent);
             }
@@ -215,23 +220,42 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onSavedChallenges(List<Challenge> challengeList) {
-        if(challengeList!=null)
+        if(challengeList!=null){
         saved.addAll(challengeList);
         savedListAdapter.notifyDataSetChanged();
+        }
+        if(savedListAdapter.getItemCount()>0)
+            saved_lay.setVisibility(View.VISIBLE);
+    else
+        saved_lay.setVisibility(View.GONE);
+
     }
 
     @Override
     public void onEnteredChallenges(List<Challenge> challengeList) {
-        if(challengeList!=null)
+        if(challengeList!=null){
         entered.addAll(challengeList);
         enteredListAdapter.notifyDataSetChanged();
+        }
+        if(enteredListAdapter.getItemCount()>0)
+            entered_lay.setVisibility(View.VISIBLE);
+    else
+        entered_lay.setVisibility(View.GONE);
+
     }
 
     @Override
     public void onCreatedChallenges(List<Challenge> challengeList) {
-        if(challengeList!=null)
-        created.addAll(challengeList);
-        createdListAdapter.notifyDataSetChanged();
+        if(challengeList!=null) {
+            created.addAll(challengeList);
+            createdListAdapter.notifyDataSetChanged();
+        }
+        if(createdListAdapter.getItemCount()>0)
+            created_lay.setVisibility(View.VISIBLE);
+        else
+            created_lay.setVisibility(View.GONE);
+
+
     }
 
     @Override

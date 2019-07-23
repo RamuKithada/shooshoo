@@ -1,8 +1,10 @@
 package com.android.shooshoo.activity;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.opengl.GLException;
@@ -28,6 +30,8 @@ import com.daasuu.camerarecorder.CameraRecordListener;
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Request;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -48,6 +52,7 @@ import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static android.content.ContentUris.parseId;
 import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
 import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
 
@@ -195,7 +200,8 @@ Challenge mChallenge;
                 if(isImageChallenge)
                 intent.putExtra("mpost", imageUri);
                 else
-                intent.putExtra("mpost", videoFileUri);
+                    intent.putExtra("mpost", videoFileUri);
+                    intent.putExtra("thumb",thumb);
                 intent.putExtra("challenge",getIntent().getParcelableExtra("challenge"));
                 intent.putExtra("type",isImageChallenge);
                 startActivity(intent);
@@ -298,6 +304,8 @@ Challenge mChallenge;
                     public void onRecordComplete() {
                         if(wantToSave)
                              exportMp4ToGallery(getApplicationContext(), filepath);
+
+                        Log.e("onRecordComplete",""+filepath);
                     }
 
                     @Override
@@ -410,8 +418,9 @@ Challenge mChallenge;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                setVideo(contentUri);
                 showProgressIndicator(false);
+                setVideo(contentUri);
+
             }
         },2000);
 
@@ -496,6 +505,7 @@ Challenge mChallenge;
         result_layout.setVisibility(View.VISIBLE);
     }
     Uri videoFileUri,imageUri;
+    Bitmap thumb=null;
     private void setVideo(Uri videoUri) {
         try {
            String challengeVideoUri= ApiUrls.getFilePath(this,videoUri);
@@ -504,14 +514,16 @@ Challenge mChallenge;
             if(challengeVideoUri!=null) {
                 Bitmap bMap = ThumbnailUtils.createVideoThumbnail(challengeVideoUri, MediaStore.Video.Thumbnails.MICRO_KIND);
                 if(bMap!=null){
-                    image_view.setImageBitmap(bMap);
-                    image_view.setVisibility(View.VISIBLE);
-                    result_layout.setVisibility(View.VISIBLE);
-                }
-
-
+                    {
+                        image_view.setImageBitmap(bMap);
+                        thumb=bMap;
+                    }
+                }else
+                    setVideo(videoUri);
+//                    image_view.setImageResource(R.mipmap.ic_launcher_round);
+                image_view.setVisibility(View.VISIBLE);
+                result_layout.setVisibility(View.VISIBLE);
             }
-
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -569,11 +581,23 @@ public  void startTimer(final long duration){
             if(isRecordingvideo){
                 cameraRecorder.stop();
                 isRecordingvideo=false;
-                camera_icon.setImageResource(R.drawable.ic_stop_black_24dp);
+                camera_icon.setImageResource(R.drawable.ic_camera_black_24dp);
             }
         }
     };
     mCountDownTimer.start();
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

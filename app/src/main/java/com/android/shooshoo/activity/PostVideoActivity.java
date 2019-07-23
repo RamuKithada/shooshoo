@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.FindContactsAdapter;
 import com.android.shooshoo.adapter.InviteFriendsAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
@@ -36,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 
 public class PostVideoActivity extends BaseActivity implements View.OnClickListener,PostChallengeView , InviteFriendsView {
     //    @BindView(R.id.challenge_video_layout)
@@ -90,6 +90,10 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
         }
 
 //        challenge_video_layout.setOnClickListener(this);
+        Bitmap thumb=getIntent().getParcelableExtra("thumb");
+        if(thumb!=null)
+            video_thumb_post.setImageBitmap(thumb);
+
         if(isImagePost)
         {
             iv_playpause_post.setVisibility(View.GONE);
@@ -153,6 +157,11 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onRules(List<String> rules) {
+
+    }
+
+    @Override
+    public void onChallengeInfo(ResponseBody responseBody) {
 
     }
 

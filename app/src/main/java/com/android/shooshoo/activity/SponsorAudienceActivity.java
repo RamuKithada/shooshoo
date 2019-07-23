@@ -651,6 +651,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         }
        StringBuilder regions=new StringBuilder();
        if(nationalization==1){
+           if(regionsAdapter.selectedRegions()!=null)
            for (Region region:regionsAdapter.selectedRegions()){
                if(regions.length()<=0){
                    regions.append(region.getRegId());
@@ -671,6 +672,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
        }
 
 StringBuilder languageBuilder=new StringBuilder();
+       if(languagesAdapter.selectedLanguages()!=null)
         for (Language language:languagesAdapter.selectedLanguages()) {
             if(languageBuilder.length()<=0){
                 languageBuilder.append(language.getId());
@@ -787,8 +789,10 @@ StringBuilder languageBuilder=new StringBuilder();
 
     private boolean validate() {
             if(priceWorthAdapter.getItemCount()<=0){
-              showMessage("Please Prizes Description to winners");
-              return false;
+                 if(addPrize()==null) {
+                     showMessage("Please Prizes Description to winners");
+                     return false;
+                 }
                 }
 
           if(!ApiUrls.validateString(no_of_winners.getText().toString())){
@@ -825,18 +829,11 @@ StringBuilder languageBuilder=new StringBuilder();
 
 
           }else if(nationalization==1){
-              if(regionsAdapter.selectedRegions()==null){
+              if(region_pos<=0&&regionsAdapter.getItemCount()<=0){
                   edt_region.setError("Select Region");
                   edt_region.requestFocus();
-
                   return false;
               }
-                  if(regionsAdapter.getItemCount()<=0){
-                      edt_region.setError("Select Region");
-                      edt_region.requestFocus();
-
-                      return false;
-                  }
 
           }
 
@@ -891,8 +888,9 @@ StringBuilder languageBuilder=new StringBuilder();
             edt_language.requestFocus();
             return false;
         }
-        if(languagesAdapter.getItemCount()<=0){
-            edt_language.setError("Select At least one language");
+        if(languages_pos<0&&languagesAdapter.getItemCount()<=0)
+        {
+            edt_language.setError("Select At Least one language");
             edt_language.requestFocus();
             return false;
         }
@@ -1118,6 +1116,7 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(regions!=null)
                 {
                     edt_region.setText(regions.get(position).getRegName());
+                    edt_region.setError(null);
                     region_pos=position;
                 }
 
@@ -1126,6 +1125,7 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(languages!=null)
                 {
                     edt_language.setText(languages.get(position).getName());
+                    edt_language.setError(null);
                     languages_pos=position;
                 }
 
