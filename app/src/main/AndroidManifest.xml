@@ -29,8 +29,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".activity.HomeSearchActivity"
             android:screenOrientation="portrait"
-            />
+            >
 
+        </activity>
         <activity
             android:name=".activity.CompanyDetailsActivity"
             android:screenOrientation="portrait" />
@@ -95,8 +96,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
 
-
-
         </activity>
         <activity
             android:name=".activity.InviteFriendActivity"
@@ -148,7 +147,12 @@
         <activity
             android:name=".activity.ProfileFillingFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.BrandChooseActivity"
             android:screenOrientation="portrait"
@@ -164,10 +168,10 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
+    <!--        <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.CreateSponsorChallengeActivity"

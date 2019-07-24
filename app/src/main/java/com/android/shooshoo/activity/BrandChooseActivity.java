@@ -83,7 +83,7 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         recyclerView.setAdapter(chooseAdapter);
         next_lay.setOnClickListener(this);
-        tv_title.setText("Choose Brands");
+        tv_title.setText("YOUR Brands");
         setState();
         next_lay.setOnClickListener(this);
         iv_back.setOnClickListener(this);

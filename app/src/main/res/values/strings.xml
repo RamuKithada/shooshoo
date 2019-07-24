@@ -3,7 +3,7 @@
     <string name="motive">The first global digital stadium </string>
     <string name="signin_tag">SIGN IN WITH \nYOUR ACCOUNT</string>
     <string name="signup_tag">SIGN UP WITH YOUR \nACCOUNT</string>
-    <string name="username">Username</string>
+    <string name="username">User Name</string>
     <string name="emial_hint">E-mail</string>
     <string name="pws">Password</string>
     <string name="forget_pws">Forgot Password?</string>
@@ -61,7 +61,7 @@
     <string name="pay">Pay</string>
     <string name="publish">Submit</string>
     <string name="mini_game">Mini game</string>
-    <string name="search">Search here!</string>
+    <string name="users">Search here!</string>
     <string name="audience_guide">It\'s time to define your requirements</string>
     <string name="audience_guide2">Tell us about the competitors and \nthe jackpot</string>
     <string name="audience_guide3">It\'s time to define your outreach</string>
@@ -120,8 +120,8 @@
     <string name="age">Age</string>
     <string name="some_text"> <![CDATA[normal color <font color=\'#06a7eb\'>special color</font>]]>    </string>
     <string name="profile_preview">profile preview</string>
-    <string name="search_filter">search filter</string>
-    <string name="search_line">Choose the information other users can find you with in the search filter</string>
+    <string name="search_filter">users filter</string>
+    <string name="search_line">Choose the information other users can find you with in the users filter</string>
     <string name="profile_visibility">Visibility</string>
     <string name="off">off</string>
     <string name="on">on</string>

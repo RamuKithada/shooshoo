@@ -44,8 +44,12 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
             body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
         }
+
         if(view!=null)
+        {
             view.showProgressIndicator(true);
+        }
+
         retrofitApis.updateProfile(body,
                 getTextPart(userName),
                 getTextPart(password),

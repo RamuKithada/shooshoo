@@ -54,7 +54,7 @@
                     android:gravity="center_vertical"
                     android:drawablePadding="5dp"
                     android:drawableLeft="@drawable/ic_search_notification_icon"
-                    android:hint="@string/search"
+                    android:hint="@string/users"
                     android:layout_marginLeft="10dp"
                     android:textColorHint="@color/white_text"
                     android:textColor="@color/white_text"

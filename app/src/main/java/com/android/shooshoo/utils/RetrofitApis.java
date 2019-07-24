@@ -9,6 +9,7 @@ import com.android.shooshoo.models.CategoryList;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.models.ChallengeResponse;
+import com.android.shooshoo.models.ChallengeSearchResponse;
 import com.android.shooshoo.models.ChallengesResponse;
 import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CommentsResponce;
@@ -25,6 +26,7 @@ import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RegionResult;
 import com.android.shooshoo.models.RulesResponse;
+import com.android.shooshoo.models.UserSearchResponse;
 import com.android.shooshoo.models.ViewAllChallengesResponse;
 import com.android.shooshoo.models.WinnersResponce;
 import com.google.gson.Gson;
@@ -54,6 +56,7 @@ import retrofit2.http.Url;
  * Here we using the Retrofit Library for service calls
  */
 public interface RetrofitApis {
+
 
 
 
@@ -372,9 +375,13 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("challengeInfo")
     Call<ResponseBody> getChallengeInfo(@FieldMap Map<String, String> parameters);
+    @FormUrlEncoded
+    @POST("search")
+    Call<UserSearchResponse> searchUsers(@Field("searchKey") String searchKey, @Field("type") String type);
 
-//            @Field("challengeId") String challengeId,@Field("type") String type,@Field("userId") String userId);
-
+    @FormUrlEncoded
+    @POST("search")
+    Call<ChallengeSearchResponse> searchChallenge(@Field("searchKey") String searchKey, @Field("type") String type);
 
 }
 

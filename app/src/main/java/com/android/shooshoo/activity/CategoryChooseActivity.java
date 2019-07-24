@@ -81,7 +81,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         presenter.attachView(this);
         recyclerView.setLayoutManager(new GridLayoutManager(this,3));
         recyclerView.setAdapter(chooseAdapter);
-        tv_title.setText("Choose Categories");
+        tv_title.setText("YOUR Categories");
         next_lay.setOnClickListener(this);
         setState();
         iv_back.setOnClickListener(this);

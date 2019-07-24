@@ -18,11 +18,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * Created by Manish on 10/3/2017.
- */
-
 public class ViewallChallengesAdapter extends RecyclerView.Adapter<ViewallChallengesAdapter.ViewHolder>{
 
     private Activity context;

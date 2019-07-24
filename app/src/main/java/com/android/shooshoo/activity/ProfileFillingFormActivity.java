@@ -54,8 +54,11 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -228,7 +231,11 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
         if (connectionDetector.isConnectingToInternet())
             loadData();
-            buildGoogleApiClient();
+        if(checkPermissions())
+          buildGoogleApiClient();
+        else {
+            requestPermissions();
+        }
 
 
     }
@@ -269,7 +276,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                edt_dob.setText(year + "-" + (month + 1) + "-" + dayOfMonth);
+                edt_dob.setText(dayOfMonth + "-" + (month + 1) + "-" +year );
 
             }
         },
@@ -291,6 +298,11 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         switch (v.getId()) {
             case R.id.next_lay:
                 if (connectionDetector.isConnectingToInternet()) {
+                    if (newsImage == null) {
+                        showMessage("Please Select Profile image");
+                        return;
+                    }
+
                     if (validateInputs()) {
                             updateProfile();
 
@@ -315,19 +327,38 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
     City city = new City();
 
     private void updateProfile() {
+
+
+
         if (newsImage != null)
         {
+            String date=edt_dob.getText().toString();
+            Log.e("date before",date);
+            SimpleDateFormat inFormat=new SimpleDateFormat("dd-MM-yyyy");
+            try
+            {
+                Date date1=inFormat.parse(date);
+                SimpleDateFormat outFormat= new SimpleDateFormat("yyyy-MM-dd");
+                date=outFormat.format(date1);
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+            Log.e("date after",date);
+
+
             updateUserInfoPresenter.updateUserProfile(newsImage,
                     edt_user_name.getText().toString(), edt_cnf_pws.getText().toString(),
                     edt_first_name.getText().toString(), edt_last_name.getText().toString(),
-                    edt_dob.getText().toString(), country.getCountryId(),
+                    date, country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(),
                     edt_Street.getText().toString(), edt_street_number.getText().toString(),
                     edt_mobile.getText().toString(),edt_user_email.getText().toString(),
                     gender.toLowerCase(),lat, lng, userSession.getToken());
-        }else {
-            showMessage("Please Select Profile image ");
         }
+
+
     }
 
 
@@ -371,12 +402,17 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         if (mGoogleApiClient != null) {
             return;
         }
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .enableAutoManage(this, this)
-                .addApi(LocationServices.API)
-                .build();
-        createLocationRequest();
+        try {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .enableAutoManage(this, this)
+                    .addApi(LocationServices.API)
+                    .build();
+            createLocationRequest();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -736,11 +772,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            edt_country.requestFocus();
            return false;
        }
-       if(city_pos<0){
-           edt_city.setError("Please Select City");
-           edt_city.requestFocus();
-           return false;
-       }
+
 
 
 
@@ -764,6 +796,11 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            edt_zipcode.requestFocus();
            return false;
 
+       }
+       if(city_pos<0){
+           edt_city.setError("Please Select City");
+           edt_city.requestFocus();
+           return false;
        }
 
        if(!ApiUrls.validateString(edt_Street.getText().toString())){
@@ -851,18 +888,6 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
            return false;
 
        }
-
-
-
-
-
-
-
-
-
-
-
-
 
         return true;
 

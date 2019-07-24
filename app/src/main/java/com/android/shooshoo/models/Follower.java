@@ -13,7 +13,7 @@ public class Follower {
     private String userName;
     @SerializedName("image")
     @Expose
-    private Object image;
+    private String image;
 
     private boolean selected=false;
 
@@ -37,7 +37,7 @@ public class Follower {
         return image;
     }
 
-    public void setImage(Object image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

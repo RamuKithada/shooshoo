@@ -33,16 +33,17 @@
            android:src="@drawable/photo_upload"
            android:padding="2dp"
            />
+
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:layout_gravity="center"
-           android:gravity="center"
-           android:textColor="#FFFFFF"
            android:layout_marginTop="8dp"
-           android:fontFamily="@font/raleway_medium"
+           android:fontFamily="@font/raleway_extrabold"
+           android:gravity="center"
            android:text="Upload Photo"
-           />
+           android:textAllCaps="true"
+           android:textColor="#FFFFFF" />
 
 
    </LinearLayout>
@@ -340,7 +341,7 @@
                     android:enabled="false"
                     android:focusable="false"
                     android:fontFamily="@font/raleway_medium"
-                    android:hint="+49"
+                    android:hint="   "
                     android:maxEms="5"
                     android:minEms="2"
                     android:text=""
