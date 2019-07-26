@@ -268,6 +268,8 @@ public class Challenge implements Parcelable{
     };
 
     public String getChallengeId() {
+        if(challengeId==null)
+            return "";
         return challengeId;
     }
 

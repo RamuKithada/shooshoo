@@ -40,6 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:nestedScrollingEnabled="false"
         tools:listitem="@layout/challengers_item"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         >

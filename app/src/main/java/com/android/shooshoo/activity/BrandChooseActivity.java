@@ -9,19 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.PaginationScrollListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.adapter.BrandChooseAdapter;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.views.UpdateUserInfoView;
-
 import org.json.JSONObject;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
@@ -35,6 +33,25 @@ import retrofit2.Response;
  *
  */
 public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoView, View.OnClickListener {
+
+    // Index from which pagination should start (0 is 1st page in our case)
+    private static final int PAGE_START = 0;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // total no. of pages to load. Initial load is page 0, after which 2 more pages will load.
+    private int TOTAL_PAGES = 1;
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = PAGE_START;
+    // indicates the current page which Pagination is fetching.
+    private int LIMIT = 20;
+
+
+
     //this is list view used to show  list of  brands
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;
@@ -68,6 +85,7 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
     BrandChooseAdapter chooseAdapter;
     ConnectionDetector connectionDetector;//network checking by isConnectingToInternet method  of ConnectionDetector class
     UpdateUserInfoPresenter presenter;
+    String cats="";
     //UpdateUserInfoPresenter is used to call the user in
     // updating services.It uses UpdateUserInfoView to update the service call response to ui
 
@@ -80,29 +98,72 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
         chooseAdapter=new BrandChooseAdapter(this);
         presenter=new UpdateUserInfoPresenter();
         presenter.attachView(this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(this,3);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(chooseAdapter);
         next_lay.setOnClickListener(this);
         tv_title.setText("YOUR Brands");
         setState();
         next_lay.setOnClickListener(this);
         iv_back.setOnClickListener(this);
-       String cats= userSession.getCats();
-        loadData(cats);
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                loadNextPage();
+            }
+
+            @Override
+            public int getTotalPageCount() { return TOTAL_PAGES; }
+
+            @Override
+            public boolean isLastPage() { return isLastPage; }
+
+            @Override
+            public boolean isLoading() { return isLoading; }
+        });
+
+
+
+
+        cats= userSession.getCats();
+        if(connectionDetector.isConnectingToInternet())
+        {
+            isLoading=true;
+            loadNextPage();
+        }
+        else
+        showMessage("Please Check Your internet connection");
 
 
     }
 
-    private void loadData(String ids) {
+    private void loadNextPage() {
+        if (currentPage < TOTAL_PAGES) {
+            if (connectionDetector.isConnectingToInternet())
+                loadData(cats,currentPage);
+            chooseAdapter.addLoadingFooter();
+        }
+        else
+            isLastPage = true;
+    }
+
+    private void loadData(String ids,int offset) {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getBrands(ids,"100","0").enqueue(new Callback<BrandsResult>() {
+        RetrofitApis.Factory.create(this).getBrands(ids,String.valueOf(LIMIT),String.valueOf(offset)).enqueue(new Callback<BrandsResult>() {
             @Override
             public void onResponse(Call<BrandsResult> call, Response<BrandsResult> response) {
                 showProgressIndicator(false);
+                isLoading=false;
                 if(response.isSuccessful()){
-                    BrandsResult brandsResult=response.body();
-                    chooseAdapter.setBrands(brandsResult.getBrands());
 
+                    BrandsResult brandsResult=response.body();
+                    if(brandsResult.getStatus()==1) {
+                        chooseAdapter.setBrands(brandsResult.getBrands());
+                        TOTAL_PAGES = brandsResult.getCount();
+                    }
+                    currentPage=chooseAdapter.getItemCount();
+                    chooseAdapter.removeLoadingFooter();
                 }
             }
 
@@ -121,7 +182,8 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
                     if (chooseAdapter.selectedSize() >= 3) {
                         if(connectionDetector.isConnectingToInternet())
                         {
-                          presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
+                            Log.e("ids",chooseAdapter.getBrandIds());
+//                          presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
                         }
                         else showMessage("please check internet connection");
                     } else {

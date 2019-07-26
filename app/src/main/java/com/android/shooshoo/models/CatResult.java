@@ -13,6 +13,9 @@ public class CatResult {
     @SerializedName("status")
     @Expose
     private Integer status;
+    @SerializedName("count")
+    @Expose
+    private Integer count;
     @SerializedName("categories")
     @Expose
     private List<Category> categories = null;
@@ -41,4 +44,11 @@ public class CatResult {
         this.categories = categories;
     }
 
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 }

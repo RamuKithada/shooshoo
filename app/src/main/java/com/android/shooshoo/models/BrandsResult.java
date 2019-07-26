@@ -12,9 +12,12 @@ public class BrandsResult{
         @SerializedName("status")
         @Expose
         private Integer status;
+        @SerializedName("count")
+        @Expose
+        private Integer count;
         @SerializedName("brands")
         @Expose
-        private List<Brand> brands = null;
+        private List<Company> brands = null;
 
         public String getMessage() {
             return message;
@@ -32,11 +35,19 @@ public class BrandsResult{
             this.status = status;
         }
 
-        public List<Brand> getBrands() {
+        public Integer getCount() {
+           return count;
+            }
+
+        public void setCount(Integer count) {
+          this.count = count;
+        }
+
+        public List<Company> getBrands() {
             return brands;
         }
 
-        public void setBrands(List<Brand> brands) {
+        public void setBrands(List<Company> brands) {
             this.brands = brands;
         }
 

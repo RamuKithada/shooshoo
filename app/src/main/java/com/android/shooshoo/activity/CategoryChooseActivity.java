@@ -16,6 +16,7 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.UpdateUserInfoPresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.PaginationScrollListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.adapter.CategoryChooseAdapter;
 import com.android.shooshoo.models.CatResult;
@@ -36,6 +37,22 @@ import retrofit2.Response;
 
 public class CategoryChooseActivity extends BaseActivity implements UpdateUserInfoView,View.OnClickListener{
 
+
+    // Index from which pagination should start (0 is 1st page in our case)
+    private static final int PAGE_START = 0;
+
+    // Indicates if footer ProgressBar is shown (i.e. next page is loading)
+    private boolean isLoading = false;
+
+    // If current page is the last page (Pagination will stop after this page load)
+    private boolean isLastPage = false;
+
+    // total no. of pages to load. Initial load is page 0, after which 2 more pages will load.
+    private int TOTAL_PAGES = 1;
+    // indicates the current page which Pagination is fetching.
+    private int currentPage = PAGE_START;
+    // indicates the current page which Pagination is fetching.
+    private int LIMIT = 20;
 
     @BindView(R.id.list_categories)
     RecyclerView recyclerView;
@@ -79,36 +96,76 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         chooseAdapter=new CategoryChooseAdapter(this);
         presenter=new UpdateUserInfoPresenter();
         presenter.attachView(this);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        GridLayoutManager gridLayoutManager=new GridLayoutManager(this,3);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(chooseAdapter);
         tv_title.setText("YOUR Categories");
         next_lay.setOnClickListener(this);
         setState();
         iv_back.setOnClickListener(this);
+        recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
+            @Override
+            protected void loadMoreItems() {
+                isLoading = true;
+                if(connectionDetector.isConnectingToInternet()){
+                      loadNextPage();
+
+                }else
+                    showMessage("Please Check Internet connection ");
+            }
+
+            @Override
+            public int getTotalPageCount() { return TOTAL_PAGES; }
+
+            @Override
+            public boolean isLastPage() { return isLastPage; }
+
+            @Override
+            public boolean isLoading() { return isLoading; }
+        });
+
 
         if(connectionDetector.isConnectingToInternet()){
-            loadCategory(0);
+            isLoading = true;
+            loadNextPage();
+        }else
+            showMessage("Please Check Internet connection ");
 
-        }else showMessage("Please Check Internet connection ");
 
 
+
+    }
+    private void loadNextPage() {
+        if (currentPage < TOTAL_PAGES) {
+            if (connectionDetector.isConnectingToInternet())
+                loadCategory(currentPage);
+                chooseAdapter.addLoadingFooter();
+        }
+        else
+            isLastPage = true;
     }
 
     private void loadCategory(int offset) {
         showProgressIndicator(true);
-        RetrofitApis.Factory.create(this).getCategories("30",""+offset).enqueue(new Callback<CatResult>() {
+        RetrofitApis.Factory.create(this).getCategories(String.valueOf(LIMIT),String.valueOf(offset)).enqueue(new Callback<CatResult>() {
             @Override
             public void onResponse(Call<CatResult> call, Response<CatResult> response) {
                 showProgressIndicator(false);
-                if(response.isSuccessful()){
-                    CatResult catResult=response.body();
-                    chooseAdapter.setCategories(catResult.getCategories());
+                if(response.isSuccessful()) {
+                    CatResult catResult = response.body();
+                    if (catResult.getStatus() == 1){
+                        chooseAdapter.setCategories(catResult.getCategories());
+                    isLoading = false;
+                    chooseAdapter.removeLoadingFooter();
+                    currentPage = chooseAdapter.getItemCount();
+                    TOTAL_PAGES = catResult.getCount();
+                }
                 }
             }
 
             @Override
             public void onFailure(Call<CatResult> call, Throwable t) {
-                showProgressIndicator(false);
+                       showProgressIndicator(false);
 
             }
         });

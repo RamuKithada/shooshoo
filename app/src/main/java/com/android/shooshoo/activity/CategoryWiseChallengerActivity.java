@@ -14,21 +14,28 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.WinnersListAdapter;
+import com.android.shooshoo.models.CatResult;
+import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.utils.RetrofitApis;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * {@link CategoryWiseChallengerActivity} is used to show the all challenges of respective category of the home page category wise challenges.
  * this is called from home fragment
  *
  */
 
-public class CategoryWiseChallengerActivity extends AppCompatActivity {
+public class CategoryWiseChallengerActivity extends BaseActivity {
 
 
     RecyclerView challengesList;
@@ -47,44 +54,9 @@ public class CategoryWiseChallengerActivity extends AppCompatActivity {
     LinearLayout navigation_winners;
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
-    String[] titles=new String[]{"Beard \nChallenge","Drink Challenge","Eating Challenge","Handstand Challenge","Hips Exercise Challenge",
-            "Ice Skating Challenge","Laugh Challenge","Pullups Challenge","Running Challenge","Yoga Challenge","BlackFly ","Closeup smile ","Dance music ","Drink Challenge","Holiday Challenge",
-            "Hotel Challenge","Ice Bucket Challenge","Swimming Challenge","World music Contest","Young Challenge"};
-    int[] images=new int[]{R.drawable.beard_challange,R.drawable.drink_challange,R.drawable.eating_challange,R.drawable.handstand_challange,
-            R.drawable.hips_excersize_chalange,R.drawable.iceskating_challange,R.drawable.laugh_challange,R.drawable.pullup_challange,R.drawable.running_challange
-            ,R.drawable.yoga_challange,R.drawable.blackfly_challange,R.drawable.closeup_smile_challange,R.drawable.dance_music_challange,R.drawable.drinks_challange,
-            R.drawable.holiday_challange,R.drawable.hotel_challange,R.drawable.icebucket_challange,R.drawable.swimmimg_challange,R.drawable.world_music_contest
-            ,R.drawable.young_challange};
-    String[] des=new String[]{"Large Beard","Drink 2 Liters coke","Eating 2 Biryani","1 hour Handstand ","100 HipsUps",
-            "1 kilometer Ice Skating in 2 minutes","Laugh loud ","30 Pullups in 5minutes","2k Running in 90sec","5 hours Yoga",
-            "BlackFly bird capture","Closeup smile ads","Dance music to Puma","Drink  Coke ads","Holiday Trip flight",
-            "Hotel Banjara","Ice Bucket Challenge","World Swimming Day","World music Day","Young India "};
 
-    int[] catimgs=new int[]{
-            R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
-            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
-            R.drawable.style,R.drawable.travel,R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
-            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
-            R.drawable.style,R.drawable.travel,R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
-            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
-            R.drawable.style,R.drawable.travel,R.drawable.animals,R.drawable.art,R.drawable.cars,R.drawable.comics,
-            R.drawable.electronics,R.drawable.fitness,R.drawable.games,R.drawable.humor,R.drawable.movie,R.drawable.shopping,
-            R.drawable.style,R.drawable.travel
-    };
-    String[] catNames=new String[]{
-            "Animals","Art","Cars","Comics","Electronics",
-            "Fitness","Games","Humor","Movies","Shopping",
-            "Style","Travel", "Animals","Art","Cars","Comics","Electronics",
-            "Fitness","Games","Humor","Movies","Shopping",
-            "Style","Travel", "Animals","Art","Cars","Comics","Electronics",
-            "Fitness","Games","Humor","Movies","Shopping",
-            "Style","Travel", "Animals","Art","Cars","Comics","Electronics",
-            "Fitness","Games","Humor","Movies","Shopping",
-            "Style","Travel"
-    };
     
-    ArrayList<ChallengeModel> challengeModels=new ArrayList<ChallengeModel>();
-    JackpotChallengersAdapter jackpotChallengersAdapter;
+    ArrayList<Category> challengeModels=new ArrayList<Category>();
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -127,30 +99,25 @@ public class CategoryWiseChallengerActivity extends AppCompatActivity {
                 finish();
             }
         });
-        for (int index = 0; index < titles.length; index++) {
-            ChallengeModel model = new ChallengeModel();
-            model.setDescription(des[index]);
-            model.setTitle(titles[index]);
-            model.setImage(images[index]);
-            challengeModels.add(model);
-        }
         String title = getIntent().getStringExtra("title");
         if (title != null)
             tv_title.setText(title);
         int catId = getIntent().getIntExtra("catId", 0);
         if (catId == 3) {
             challengesList.setLayoutManager(new GridLayoutManager(this,4));
-            homeCategoryAdapter=new HomeCategoryAdapter(this,null);
+            homeCategoryAdapter=new HomeCategoryAdapter(this,challengeModels);
             challengesList.setAdapter(homeCategoryAdapter);
-            
-        } else {
-            jackpotChallengersAdapter = new JackpotChallengersAdapter(this,null);
-            challengesList.setAdapter(jackpotChallengersAdapter);
+            loadCategory(0);
             navigation_home.setOnClickListener(bottomNavigationOnClickListener);
             navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
             navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
             navigation_winners.setOnClickListener(bottomNavigationOnClickListener);
             navigation_radar.setOnClickListener(bottomNavigationOnClickListener);
+            
+        } /*else {
+            jackpotChallengersAdapter = new JackpotChallengersAdapter(this,null);
+            challengesList.setAdapter(jackpotChallengersAdapter);
+
             challengesList.addOnItemTouchListener(new RecyclerTouchListener(this, challengesList, new ClickListener() {
                 @Override
                 public void onClick(View view, int position) {
@@ -166,6 +133,30 @@ public class CategoryWiseChallengerActivity extends AppCompatActivity {
 
                 }
             }));
-        }
+        }*/
+    }
+
+
+    private void loadCategory(int offset) {
+        showProgressIndicator(true);
+        RetrofitApis.Factory.create(this).getCategories("100",""+offset).enqueue(new Callback<CatResult>() {
+            @Override
+            public void onResponse(Call<CatResult> call, Response<CatResult> response) {
+                showProgressIndicator(false);
+                if(response.isSuccessful()){
+                    CatResult catResult=response.body();
+                    if(catResult.getCategories()!=null)
+                    challengeModels.addAll(catResult.getCategories());
+                    homeCategoryAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CatResult> call, Throwable t) {
+                showProgressIndicator(false);
+
+            }
+        });
+
     }
 }

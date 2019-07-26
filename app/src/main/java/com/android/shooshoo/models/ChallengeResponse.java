@@ -2,9 +2,7 @@ package com.android.shooshoo.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
-
 public class ChallengeResponse {
 
     @SerializedName("status")

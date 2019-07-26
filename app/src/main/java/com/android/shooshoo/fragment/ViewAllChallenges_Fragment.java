@@ -140,6 +140,10 @@ public class ViewAllChallenges_Fragment extends Fragment implements BaseView {
                             if (viewAllChallengesResponse.getSponsors() != null && viewAllChallengesResponse.getSponsors().size() > 0)
                                 challengeArrayList.addAll(viewAllChallengesResponse.getSponsors());
                         }
+                        else if(intentType.equalsIgnoreCase(ApiUrls.PRIVATE)) {
+                            if (viewAllChallengesResponse.getPrivates() != null && viewAllChallengesResponse.getPrivates().size() > 0)
+                                challengeArrayList.addAll(viewAllChallengesResponse.getPrivates());
+                        }
                         else if(intentType.equalsIgnoreCase(ApiUrls.JACKPOTS))
                         {
                             if (viewAllChallengesResponse.getJackpots() != null && viewAllChallengesResponse.getJackpots().size() > 0)

@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAdapter.CatViewHolder> {
     String active="#CCCCCC",inactive="#FFFFFF";
-   int[] isActive=new int[0];
    List<Category> categories=new ArrayList<Category>();
    Context context;
+    boolean isLoadingAdded;
 
     public CategoryChooseAdapter(Context context) {
         this.context = context;
@@ -37,8 +37,7 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
     public void setCategories(List<Category> categories) {
 
         if(categories!=null) {
-            this.categories = categories;
-            isActive = new int[categories.size()];
+            this.categories.addAll(categories);
             notifyDataSetChanged();
         }
     }
@@ -53,13 +52,13 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-        Category category=categories.get(i);
+       final Category category=categories.get(i);
         catViewHolder.textView.setText(category.getCategoryName());
         /**
          * here change color of the selected background
          */
 
-        if(isActive[i]==1)
+        if(category.getSelected()==1)
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
             catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
@@ -76,8 +75,8 @@ public class CategoryChooseAdapter extends RecyclerView.Adapter<CategoryChooseAd
              */
               @Override
               public void onClick(View v) {
-                  isActive[i]=Math.abs(isActive[i]-1);
-                  if(isActive[i]==1)
+                  category.setSelected(Math.abs(category.getSelected()-1));
+                  if(category.getSelected()==1)
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
                       catViewHolder.textView.setTextColor(context.getResources().getColor(R.color.white_text));
@@ -110,7 +109,7 @@ StringBuilder builder=new StringBuilder();
         for (int index=0;index<categories.size();index++){
 
 
-            if(isActive[index]==1)
+            if(categories.get(index).getSelected()==1)
             if(builder.length()==0){
                 builder.append(categories.get(index).getCategoryId());
             }else {
@@ -131,12 +130,18 @@ StringBuilder builder=new StringBuilder();
         int selected_size=0;
         if(categories!=null&&categories.size()>0)
             for (int index=0;index<categories.size();index++){
-                if(isActive[index]==1)
+                if(categories.get(index).getSelected()==1)
                     selected_size++;
 
         }
-
         return selected_size;
+    }
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

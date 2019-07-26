@@ -30,6 +30,7 @@ import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Currency;
 import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.PrizeBaseModel;
 import com.android.shooshoo.models.PrizeModel;
@@ -116,8 +117,8 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     AppCompatEditText et_prize_type;
     @BindView(R.id.et_cash_amount)
     AppCompatEditText et_cash_amount;
-    @BindView(R.id.et_cash_currency)
-    AppCompatEditText et_cash_currency;
+   /* @BindView(R.id.et_cash_currency)
+    AppCompatEditText et_cash_currency;*/
     @BindView(R.id.et_cash_number)
     AppCompatEditText et_cash_number;
     @BindView(R.id.et_prize_name)
@@ -166,6 +167,9 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     @BindView(R.id.btn_more_regions)
     ImageView btn_more_regions;
 
+    @BindView(R.id.edt_currency)
+    AppCompatEditText edt_currency;
+
     @BindView(R.id.edt_region)
     AppCompatEditText edt_region;
 
@@ -212,15 +216,17 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     List<City> cities=new ArrayList<City>();
     List<Region> regions=new ArrayList<Region>();
     List<Language> languages=new ArrayList<Language>();
+    List<Currency> currencies=new ArrayList<Currency>();
     Country country;
     City city;
-    int city_pos=-1,country_pos=-1,region_pos=-1,languages_pos=-1;
+    int city_pos=-1,country_pos=-1,region_pos=-1,languages_pos=-1,currency_pos=-1;
 
 
 
     ArrayList<PrizeBaseModel> prices = new ArrayList<PrizeBaseModel>();
     PrizeListAdapter priceWorthAdapter = null;
     double total = 0;
+    int totalWinners=0;
     RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -230,12 +236,16 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
 
                      double price=model.getPrizeAmount();
-                     total=total+price;
+                     total=+price;
+                     totalWinners=+model.getQuantity();
+
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
           }
           tv_price_total.setText(String.valueOf(total));
+            no_of_winners.setText(String.valueOf(totalWinners));
         }
     };
 
@@ -283,6 +293,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         sponsorChallengePresenter = new SponsorChallengePresenter();
         sponsorChallengePresenter.attachView(this);
         connectionDetector = new ConnectionDetector(this);
+//        tv_price_total.as
 
         et_prize_type.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -404,7 +415,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                         value =Integer.valueOf(et_cash_amount.getText().toString());
                     double mTotal=total+value*number;
                     tv_price_total.setText(String.valueOf(mTotal));
-                    tv_price_total.setText(String.valueOf(mTotal));
+                    no_of_winners.setText(String.valueOf(totalWinners+number));
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -433,6 +444,8 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                         value =Integer.valueOf(et_prize_worth.getText().toString());
                     double mTotal=total+value*number;
                     tv_price_total.setText(String.valueOf(mTotal));
+                    no_of_winners.setText(String.valueOf(totalWinners+number));
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -511,8 +524,32 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     }
 
     private void spinnersInti() {
+
+        currencies.add(new Currency("Indian rupee","INR","₹"));
+        currencies.add(new Currency("US dollar","USD","$"));
+        currencies.add(new Currency("Euro","EUR","€"));
+
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
+        edt_currency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] strings=new String[currencies.size()];
+                for(int index=0;index<currencies.size();index++){
+                    Currency currency=currencies.get(index);
+                    strings[index]=currency.getName()+"  "+currency.getCode()+" ( "+currency.getSymbol()+" )";
+                }
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",strings);
+                args.putInt("view",edt_currency.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"currency");
+
+
+
+            }
+        });
     }
 
     int nationalization = 0;
@@ -562,7 +599,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                 for (int index=0;index<models.size();index++){
                     CategoryModel model=models.get(index);
                     if(model.getCategory()<=0){
-                        showMessage("please select category at "+(index+1));
+                        showMessage("please select  at least 3 categories");//+(index+1));
                         return;
                     }
 
@@ -580,7 +617,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                         cash_lay.setVisibility(View.VISIBLE);
                         product_lay.setVisibility(View.GONE);
                         et_cash_amount.setText(null);
-                        et_cash_currency.setText(null);
+//                        et_cash_currency.setText(null);
                         et_cash_number.setText(null);
                         et_prize_name.setText(null);
                         et_prize_number.setText(null);
@@ -727,11 +764,11 @@ StringBuilder languageBuilder=new StringBuilder();
             }
 
             cashModel.setAmount(et_cash_amount.getText().toString());
-            if(!ApiUrls.validateString(et_cash_currency.getText().toString())){
+            /*if(!ApiUrls.validateString(et_cash_currency.getText().toString())){
                 showMessage("Please enter Currency");
                 return prizeBaseModel;
             }
-            cashModel.setCurrency(et_cash_currency.getText().toString());
+            cashModel.setCurrency(et_cash_currency.getText().toString());*/
             if(!ApiUrls.validateString(et_cash_number.getText().toString())){
                 showMessage("Please enter number");
                 return prizeBaseModel;
@@ -800,6 +837,12 @@ StringBuilder languageBuilder=new StringBuilder();
               no_of_winners.requestFocus();
             return false;
         }
+
+        if(currency_pos<0){
+            showMessage("Please select Currency");
+            return false;
+        }
+
           if(nationalization==0){
               if(country_pos<0){
                   showMessage("Please select Country");
@@ -846,7 +889,7 @@ StringBuilder languageBuilder=new StringBuilder();
      for (int index=0;index<models.size();index++){
          CategoryModel model=models.get(index);
          if(model.getCategory()<=0){
-             showMessage("please select category at "+index+1);
+             showMessage("please select at least 3 categories ");//+index+1);
              return false;
          }
 
@@ -1127,6 +1170,15 @@ StringBuilder languageBuilder=new StringBuilder();
                     edt_language.setText(languages.get(position).getName());
                     edt_language.setError(null);
                     languages_pos=position;
+                }
+
+                break;
+                case R.id.edt_currency:
+                if(currencies!=null)
+                {
+                    edt_currency.setText(currencies.get(position).getCode()+"("+currencies.get(position).getSymbol()+")");
+                    edt_currency.setError(null);
+                    currency_pos=position;
                 }
 
                 break;

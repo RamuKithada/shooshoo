@@ -1,9 +1,7 @@
 package com.android.shooshoo.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +35,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int position) {
         catViewHolder.name.setText(categoryList.get(position).getCategoryName());
-        Picasso.with(context).load(ApiUrls.IMAGE_URL+"category/"+categoryList.get(position).getIcon()).into(catViewHolder.image);
+        Picasso.with(context).load(ApiUrls.IMAGE_URL+"category/"+categoryList.get(position).getIcon()).resize(200,0).placeholder(R.drawable.giphy).into(catViewHolder.image);
     }
 
     @Override

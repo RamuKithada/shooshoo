@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment"
     android:background="@color/bg_color">
 
-   <ScrollView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+
+    <!--   android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+
+       >-->
        <LinearLayout
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -22,28 +24,19 @@
                >
                <android.support.v7.widget.RecyclerView
                    android:id="@+id/brands_list"
-                   android:layout_width="0dp"
-                   android:layout_weight="1"
+                   android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:orientation="horizontal"
                    android:layout_marginTop="5dp"
                    android:layout_marginLeft="5dp"
                    android:layout_marginBottom="5dp"
-                   android:layout_toLeftOf="@+id/radar_icon"
+                   android:nestedScrollingEnabled="false"
                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                    tools:listitem="@layout/home_brand_item"
                    >
 
                </android.support.v7.widget.RecyclerView>
-               <View
-                   android:layout_width="2dp"
-                   android:layout_height="match_parent"
-                   android:layout_marginLeft="2dp"
-                   android:layout_marginRight="2dp"
-                   android:layout_marginTop="5dp"
-                   android:layout_marginBottom="5dp"
-                   android:background="#FFFFFF"
-                   />
+              <!--
                <LinearLayout
                    android:id="@+id/radar_icon"
                    android:layout_width="wrap_content"
@@ -71,7 +64,7 @@
                    android:gravity="center"
                    android:textColor="@color/white_text"
                    />
-               </LinearLayout>
+               </LinearLayout>-->
 
            </LinearLayout>
 
@@ -125,6 +118,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   android:nestedScrollingEnabled="false"
                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                    tools:listitem="@layout/challengers_item"
                    android:orientation="horizontal"
@@ -198,6 +192,7 @@
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"
+                   android:nestedScrollingEnabled="false"
                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                    tools:listitem="@layout/challengers_item"
                    android:orientation="horizontal"
@@ -265,6 +260,7 @@
                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                    tools:listitem="@layout/home_cat_item"
                    android:orientation="horizontal"
+                   android:nestedScrollingEnabled="false"
                    android:layout_marginBottom="10dp"
                    android:layout_marginLeft="5dp"
                    >
@@ -272,6 +268,64 @@
 
                </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
+
+           </RelativeLayout>
+
+           <RelativeLayout
+               android:id="@+id/private_sponsor_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               >
+               <RelativeLayout
+                   android:id="@+id/private_sponsor_title_lay"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <android.support.v7.widget.AppCompatTextView
+                       android:id="@+id/private_sponsor_title"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:textColor="@color/white_text"
+                       android:text="@string/private_challenges"
+                       android:textAllCaps="true"
+                       android:layout_margin="5dp"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                       android:fontFamily="@font/raleway_extrabold"
+                       />
+                   <android.support.v7.widget.AppCompatTextView
+                       android:id="@+id/private_sponsor_viewall"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/white_text"
+                       android:text="All"
+                       android:layout_centerVertical="true"
+                       android:layout_alignParentRight="true"
+                       android:fontFamily="@font/raleway_extrabold"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                       android:layout_margin="2dp"
+                       android:gravity="center_vertical"
+
+                       />
+
+
+               </RelativeLayout>
+
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/private_sponsor_challengers_list"
+                   android:layout_below="@+id/private_sponsor_title_lay"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="5dp"
+                   android:nestedScrollingEnabled="false"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
+                   >
+
+
+               </android.support.v7.widget.RecyclerView>
 
            </RelativeLayout>
          <RelativeLayout
@@ -302,6 +356,7 @@
                android:layout_height="match_parent"
                android:layout_marginTop="5dp"
                android:nestedScrollingEnabled="false"
+               app:layout_behavior="@string/appbar_scrolling_view_behavior"
                tools:listitem="@layout/list_of_list_item"
                >
            </android.support.v7.widget.RecyclerView>
@@ -310,6 +365,7 @@
 
 
        </LinearLayout>
-   </ScrollView>
+   </android.support.v4.widget.NestedScrollView>
+<!--
 
-</FrameLayout>
+</RelativeLayout>-->

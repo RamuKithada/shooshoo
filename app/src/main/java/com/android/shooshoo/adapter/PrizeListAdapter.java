@@ -70,7 +70,7 @@ public class PrizeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 CashViewHolder holder= (CashViewHolder) viewHolder;
                 holder.et_cash.setText(cashModel.getType());
                 holder.et_cash_amount.setText(""+cashModel.getAmount());
-                holder.et_cash_currency.setText(cashModel.getCurrency());
+//                holder.et_cash_currency.setText(cashModel.getCurrency());
                 holder.et_cash_number.setText(cashModel.getNumber());
 
 
@@ -131,13 +131,13 @@ public class PrizeListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class CashViewHolder extends RecyclerView.ViewHolder{
 
-        EditText et_cash,et_cash_amount,et_cash_currency,et_cash_number;
+        EditText et_cash,et_cash_amount,et_cash_number;//,et_cash_currency
 
         public CashViewHolder(@NonNull View itemView) {
             super(itemView);
             et_cash= itemView.findViewById(R.id.et_cash);
             et_cash_amount=  itemView.findViewById(R.id.et_cash_amount);
-            et_cash_currency= itemView.findViewById(R.id.et_cash_currency);
+//            et_cash_currency= itemView.findViewById(R.id.et_cash_currency);
             et_cash_number= itemView.findViewById(R.id.et_cash_number);
 
 

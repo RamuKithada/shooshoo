@@ -4,14 +4,14 @@ public class CashModel implements PrizeBaseModel{
 
     String amount="";
     String currency="";
-    String number;
+    String number="";
 
     @Override
     public double getPrizeAmount() {
         int value=0,number=1;
         try {
             value=Integer.valueOf(getAmount());
-            number=Integer.valueOf(getNumber());
+            number=getQuantity();
         }catch (Exception e){
 
         }
@@ -22,6 +22,17 @@ public class CashModel implements PrizeBaseModel{
     @Override
     public String getType() {
         return "Cash";
+    }
+
+    @Override
+    public int getQuantity() {
+        int number=1;
+        try {
+            number=Integer.valueOf(getNumber());
+        }catch (Exception e){
+
+        }
+        return number;
     }
 
     public String getAmount() {

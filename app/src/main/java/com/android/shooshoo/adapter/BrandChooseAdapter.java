@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.models.Brand;
 import com.squareup.picasso.Picasso;
@@ -22,18 +23,17 @@ import java.util.List;
  * BrandChooseAdapter is used to present the list of Brands When the user registration process
  */
 public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.CatViewHolder> {
-   int[] isActive=new int[0];
-   List<Brand> brands=new ArrayList<Brand>();
+   List<Company> brands=new ArrayList<Company>();
    Context context;
+    private boolean isLoadingAdded=false;
 
     public BrandChooseAdapter(Context context) {
         this.context = context;
     }
 
-    public void setBrands(List<Brand> brands) {
+    public void setBrands(List<Company> brands) {
    if(brands!=null){
-       isActive=new int[brands.size()];
-       this.brands = brands;
+       this.brands.addAll(brands);
        notifyDataSetChanged();
    }
     }
@@ -48,8 +48,8 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
-
-        if(isActive[i]==1)
+      final   Company brand=brands.get(i);
+        if(brand.getSelected()==1)
         {
             catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
         }
@@ -64,8 +64,8 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
                   /**
                    * here change color of the selected background
                    */
-                  isActive[i]=Math.abs(isActive[i]-1);
-                  if(isActive[i]==1)
+                  brand.setSelected(Math.abs(brand.getSelected()-1));
+                  if(brand.getSelected()==1)
                   {
                       catViewHolder.cardView.setBackgroundResource(R.drawable.cat_selected);
                   }
@@ -75,9 +75,9 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
                   }
               }
           });
-        Brand brand=brands.get(i);
+
 //        catViewHolder.textView.setText(brand.getBrandName());
-        Picasso.with(context).load(ApiUrls.IMAGE_URL+"brands/"+brand.getIcon()).into(catViewHolder.imageView);
+        Picasso.with(context).load(ApiUrls.IMAGE_URL+"companies/"+brand.getCompanyLogo()).into(catViewHolder.imageView);
 
     }
 
@@ -96,7 +96,7 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
         int selected_size=0;
         if(brands!=null&&brands.size()>0)
             for (int index=0;index<brands.size();index++){
-                if(isActive[index]==1)
+                if(brands.get(index).getSelected()==1)
                     selected_size++;
 
             }
@@ -111,17 +111,32 @@ public class BrandChooseAdapter extends RecyclerView.Adapter<BrandChooseAdapter.
         StringBuilder builder=new StringBuilder();
         if(brands!=null&&brands.size()>0)
             for (int index=0;index<brands.size();index++){
-                if(isActive[index]==1)
+                if(brands.get(index).getSelected()==1)
                     if(builder.length()==0){
-                        builder.append(brands.get(index).getBrandId());
+                        builder.append(brands.get(index).getCompanyId());
                     }else {
                         builder.append(',');
-                        builder.append(brands.get(index).getBrandId());
+                        builder.append(brands.get(index).getCompanyId());
                     }
             }
 
         return builder.toString();
 
+    }
+    public void addLoadingFooter() {
+        isLoadingAdded = true;
+//        add(new Comment());
+    }
+
+    public void removeLoadingFooter() {
+        isLoadingAdded = false;
+
+      /*  int position = comments.size() - 1;
+        Comment item = getItem(position);
+        if (item != null) {
+            comments.remove(position);
+            notifyItemRemoved(position);
+        }*/
     }
 
     public class CatViewHolder extends RecyclerView.ViewHolder{

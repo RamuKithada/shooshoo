@@ -31,6 +31,7 @@ import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 public class ApiUrls {
     public static final String SPONSERS="sponsors";
     public static final String JACKPOTS="jackpots";
+    public static final String PRIVATE="privates";
     public static final String ENTERED="entered";
     public static final String SAVED="saved";
     public static final String CREATED="created";

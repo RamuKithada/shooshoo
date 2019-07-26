@@ -32,6 +32,15 @@ public class Category {
     private List<Brand> brands = null;
 
     private int brandPosition;
+    private int selected=0;
+
+    public int getSelected() {
+        return selected;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
 
     public int getBrandPosition() {
         return brandPosition;

@@ -1,12 +1,10 @@
 package com.android.shooshoo.models;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Company {
+
+        private int selected =0;
 
         @SerializedName("companyId")
         @Expose
@@ -208,4 +206,11 @@ public class Company {
         this.status = status;
     }
 
+    public int getSelected() {
+        return selected;
     }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
+    }
+}

@@ -97,10 +97,10 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void loadNextPage() {
-        if (currentPage <= TOTAL_PAGES) {
+        if (currentPage < TOTAL_PAGES) {
             if (connectionDetector.isConnectingToInternet())
                 presenter.getComments(getIntent().getStringExtra("feedId"), "8", "" + currentPage);
-            feedCommentsAdapter.addLoadingFooter();
+                feedCommentsAdapter.addLoadingFooter();
         }
         else
             isLastPage = true;
@@ -161,6 +161,8 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         feedCommentsAdapter.addAll(comments);
         currentPage=feedCommentsAdapter.getItemCount();
         total_comments.setText("All Comments("+totalPages+")");
+        isLoading=false;
+        feedCommentsAdapter.removeLoadingFooter();
 //        feedCommentsAdapter.removeLoadingFooter();
     }
 

@@ -11,7 +11,7 @@ public class PrizeModel implements PrizeBaseModel {
         int value=0,number=1;
         try {
              value=Integer.valueOf(getWorth());
-             number=Integer.valueOf(getNumber());
+             number=getQuantity();
         }catch (Exception e){
 
         }
@@ -24,6 +24,17 @@ public class PrizeModel implements PrizeBaseModel {
     @Override
     public String getType() {
         return "Product";
+    }
+
+    @Override
+    public int getQuantity() {
+        int number=1;
+        try {
+            number=Integer.valueOf(getNumber());
+        }catch (Exception e){
+
+        }
+        return number;
     }
 
     public String getWorth() {

@@ -518,9 +518,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
     }
 
     @Override
-    public void onChallengeResponse(Challenge company) {
-        userSession.setSponsorChallenge(company.getChallengeId());
-        userSession.savaChallenge(company);
+    public void onChallengeResponse(Challenge challenge) {
+
+
+        userSession.setSponsorChallenge(challenge.getChallengeId());
+        userSession.savaChallenge(challenge);
         userSession.setSponsorIds(null);
         Intent intent=new Intent(this, SponsorAudienceActivity.class);
         startActivity(intent);

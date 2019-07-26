@@ -15,6 +15,9 @@ public class ViewAllChallengesResponse {
     @SerializedName("sponsors")
     @Expose
     private List<Challenge> sponsors = null;
+    @SerializedName("privates")
+    @Expose
+    private List<Challenge> privates = null;
     @SerializedName("jackpots")
     @Expose
     private List<Challenge> jackpots = null;
@@ -53,6 +56,14 @@ public class ViewAllChallengesResponse {
 
     public void setSponsors(List<Challenge> sponsors) {
         this.sponsors = sponsors;
+    }
+
+    public List<Challenge> getPrivates() {
+        return privates;
+    }
+
+    public void setPrivates(List<Challenge> privates) {
+        this.privates = privates;
     }
 
     public Integer getCount() {

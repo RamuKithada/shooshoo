@@ -192,7 +192,7 @@
                                     android:textColor="@color/white_text"
                                     android:theme="@style/MyEditTextTheme" />
 
-                                <android.support.v7.widget.AppCompatEditText
+                            <!--    <android.support.v7.widget.AppCompatEditText
                                     android:id="@+id/et_cash_currency"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
                                     android:textColorHint="@color/white_text"
                                     android:textColor="@color/white_text"
                                     android:theme="@style/MyEditTextTheme"
-                                    />
+                                    />-->
                                 <android.support.v7.widget.AppCompatEditText
                                     android:id="@+id/et_cash_number"
                                     android:layout_width="0dp"
@@ -286,12 +286,28 @@
                         android:minWidth="100dp"
                         android:gravity="center"
                         android:hint="winners"
+                        android:enabled="false"
                         android:layout_marginLeft="10dp"
                         android:textColorHint="@color/white_text"
                         android:textColor="@color/white_text"
                         android:theme="@style/MyEditTextTheme" />
 
-
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edt_currency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minWidth="150dp"
+                        android:layout_marginLeft="20dp"
+                        android:inputType="textPersonName"
+                        android:hint="Currency"
+                        android:focusable="false"
+                        android:clickable="true"
+                        android:fontFamily="@font/raleway_medium"
+                        android:text=""
+                        android:textColorHint="@color/white_text"
+                        android:textColor="@color/white_text"
+                        android:theme="@style/MyEditTextTheme"
+                        />
 
                 </LinearLayout>
 

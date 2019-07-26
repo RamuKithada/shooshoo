@@ -58,7 +58,6 @@ public class HomePresenter implements BasePresenter<HomeView> {
                 });
     }
   /*  public void loadJackpots(){
-
         homeView.showProgressIndicator(true);
         retrofitApis.getHomeJackpots()
                 .enqueue(new Callback<HomeResponse>() {

@@ -20,9 +20,13 @@ public class HomeResponse {
     @SerializedName("jackpot")
     @Expose
     private List<Challenge> jackpotsChallenges = null;
+
+    @SerializedName("private")
+    @Expose
+    private List<Challenge> privateChallenges = null;
     @SerializedName("brands")
     @Expose
-    private List<Brand> brands = null;
+    private List<Company> brands = null;
     @SerializedName("categories")
     @Expose
     private List<Category> categories = null;
@@ -59,11 +63,19 @@ public class HomeResponse {
         this.jackpotsChallenges = jackpotsChallenges;
     }
 
-    public List<Brand> getBrands() {
+    public List<Challenge> getPrivateChallenges() {
+        return privateChallenges;
+    }
+
+    public void setPrivateChallenges(List<Challenge> privateChallenges) {
+        this.privateChallenges = privateChallenges;
+    }
+
+    public List<Company> getBrands() {
         return brands;
     }
 
-    public void setBrands(List<Brand> brands) {
+    public void setBrands(List<Company> brands) {
         this.brands = brands;
     }
 
