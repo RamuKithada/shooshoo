@@ -27,11 +27,11 @@ public class WinnersPresenter implements BasePresenter<WinnersListView>
         retrofitApis=null;
 
     }
-    public void getWinnersListForTheChallenge(Challenge challenge,String type){
+    public void getWinnersListForTheChallenge(Challenge challenge){
         if(view!=null)
             view.showProgressIndicator(true);
         if(retrofitApis!=null)
-            retrofitApis.getWinnersList(challenge.getChallengeId(),type)
+            retrofitApis.getWinnersList(challenge.getChallengeId(),challenge.getType())
             .enqueue(new Callback<WinnersResponce>() {
                 @Override
                 public void onResponse(Call<WinnersResponce> call, Response<WinnersResponce> response) {

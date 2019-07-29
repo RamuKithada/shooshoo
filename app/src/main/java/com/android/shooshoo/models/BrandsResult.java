@@ -18,6 +18,9 @@ public class BrandsResult{
         @SerializedName("brands")
         @Expose
         private List<Company> brands = null;
+        @SerializedName("companies")
+        @Expose
+        private List<Company> companies = null;
 
         public String getMessage() {
             return message;
@@ -51,4 +54,11 @@ public class BrandsResult{
             this.brands = brands;
         }
 
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
 }

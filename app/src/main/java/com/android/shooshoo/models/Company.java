@@ -1,8 +1,11 @@
 package com.android.shooshoo.models;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Company {
+public class Company implements Parcelable {
 
         private int selected =0;
 
@@ -62,7 +65,41 @@ public class Company {
         @Expose
         private String status;
 
-        public String getCompanyId() {
+    protected Company(Parcel in) {
+        selected = in.readInt();
+        companyId = in.readString();
+        companyLogo = in.readString();
+        companyName = in.readString();
+        country = in.readString();
+        city = in.readString();
+        zipcode = in.readString();
+        street = in.readString();
+        streetNumber = in.readString();
+        mobileNumber = in.readString();
+        taxNumber = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        emailId = in.readString();
+        companyEmail = in.readString();
+        createdBy = in.readString();
+        createdOn = in.readString();
+        updatedOn = in.readString();
+        status = in.readString();
+    }
+
+    public static final Creator<Company> CREATOR = new Creator<Company>() {
+        @Override
+        public Company createFromParcel(Parcel in) {
+            return new Company(in);
+        }
+
+        @Override
+        public Company[] newArray(int size) {
+            return new Company[size];
+        }
+    };
+
+    public String getCompanyId() {
         return companyId;
     }
 
@@ -212,5 +249,33 @@ public class Company {
 
     public void setSelected(int selected) {
         this.selected = selected;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(selected);
+        dest.writeString(companyId);
+        dest.writeString(companyLogo);
+        dest.writeString(companyName);
+        dest.writeString(country);
+        dest.writeString(city);
+        dest.writeString(zipcode);
+        dest.writeString(street);
+        dest.writeString(streetNumber);
+        dest.writeString(mobileNumber);
+        dest.writeString(taxNumber);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(emailId);
+        dest.writeString(companyEmail);
+        dest.writeString(createdBy);
+        dest.writeString(createdOn);
+        dest.writeString(updatedOn);
+        dest.writeString(status);
     }
 }

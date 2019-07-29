@@ -18,9 +18,6 @@ import retrofit2.Response;
  * ,cites from selected country and all categories and their available brands
  */
 public class DataLoadPresenter implements BasePresenter<DataLoadView> {
-
-
-
     DataLoadView view;
     RetrofitApis retrofitApis;
 

@@ -23,6 +23,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
@@ -91,8 +92,15 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
 
     @BindView(R.id.iv_report)
     ImageView iv_report;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
+
+    @BindView(R.id.brands_list)
+    RecyclerView brands_list;
+
+    @BindView(R.id.tv_no_data)
+    TextView tv_no_data;
 
 
 
@@ -241,6 +249,10 @@ Challenge challenge;
         }
          else
              showMessage("Check Internet connection");
+
+        HomeBrandAdapter homeBrandAdapter=new HomeBrandAdapter(this,challenge.getCompanies(),1);
+        brands_list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        brands_list.setAdapter(homeBrandAdapter);
     }
 
     @Override
@@ -272,7 +284,7 @@ Challenge challenge;
 
             break;
         case R.id.save_challenge:
-            challengePresenter.saveChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getCompanies()==null?"jackpot":"sponsor");
+            challengePresenter.saveChallenge(userSession.getUserId(),challenge.getChallengeId(),challenge.getType());
             break;
         case R.id.iv_report:
 
@@ -485,7 +497,19 @@ Challenge challenge;
     /*    if(feeds!=null)
         feeds.addAll(feeds);
         recentPostAdapter.notifyDataSetChanged();*/
-    rv_recent_posts.setAdapter(new RecentPostAdapter(this,feeds));
+    if(feeds==null)
+    {
+        tv_no_data.setVisibility(View.VISIBLE);
+        return;
+    }
+
+        if(feeds.size()>0)
+        {
+            rv_recent_posts.setAdapter(new RecentPostAdapter(this,feeds));
+            rv_recent_posts.setVisibility(View.GONE);
+        }
+        else
+            tv_no_data.setVisibility(View.VISIBLE);
 
 //        Log.e("count",""+recentPostAdapter.getItemCount() );
     }

@@ -91,8 +91,10 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
             public void onClick(View view) {
                 if(upper_layer.getVisibility()==View.VISIBLE){
                      upper_layer.setVisibility(View.GONE);
+                    options_lay.setVisibility(View.GONE);
                 }else {
-                    upper_layer.setVisibility(View.VISIBLE);
+                      upper_layer.setVisibility(View.VISIBLE);
+                    options_lay.setVisibility(View.VISIBLE);
                 }
 
 

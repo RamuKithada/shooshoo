@@ -132,7 +132,7 @@ TextView third_winner_prize;
         winnersPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
         if(connectionDetector.isConnectingToInternet()){
-            winnersPresenter.getWinnersListForTheChallenge((Challenge) getIntent().getParcelableExtra("challenge"),getIntent().getStringExtra("type"));
+            winnersPresenter.getWinnersListForTheChallenge((Challenge) getIntent().getParcelableExtra("challenge"));
 
         }
 

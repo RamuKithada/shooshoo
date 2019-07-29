@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
         privateSponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),privateChallenges);
         //new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands);
+        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands,0);
         homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);

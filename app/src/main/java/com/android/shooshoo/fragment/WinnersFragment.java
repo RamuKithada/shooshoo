@@ -129,10 +129,7 @@ public class WinnersFragment extends Fragment implements HomeView {
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), WinnersListActivity.class);
                 intent.putExtra("challenge",myChallenges.get(position));
-                if(myChallenges.get(position).getCompanies()!=null)
-                    intent.putExtra("type","sponsor");
-                else
-                    intent.putExtra("type","jackpot");
+
 //                intent.putExtra("image",schallengeModels.get(position).getImage());
 //                intent.putExtra("name",schallengeModels.get(position).getTitle());
 //                intent.putExtra("des",schallengeModels.get(position).getDescription());

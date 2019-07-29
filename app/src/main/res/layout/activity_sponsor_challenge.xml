@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
+    android:orientation="vertical"
     tools:context=".activity.SponsorChallenge">
     <RelativeLayout
+        android:id="@+id/top_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -42,67 +44,127 @@
             />
     </RelativeLayout>
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
-
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         >
         <LinearLayout
-            android:id="@+id/private_sponsor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_pic"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:src="@drawable/profile_1"
-            />
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Private Sponsor"
-                android:fontFamily="@font/raleway_medium"
-                android:textColor="@color/white_text"
+                android:orientation="horizontal"
+
+                >
+                <LinearLayout
+                    android:id="@+id/private_sponsor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/profile_1"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/raleway_medium"
+                        android:gravity="center"
+                        android:text="Private Sponsor"
+                        android:textColor="@color/white_text" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/company_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <ImageView
+                        android:id="@+id/company_image"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/plus_icon2"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Register Company"
+                        android:fontFamily="@font/raleway_medium"
+                        android:textColor="@color/white_text"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/authorized"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/authorized_companies"
+                android:textColor="@color/gray_text"
+                android:fontFamily="@font/raleway_black"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="12sp"
                 />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list_categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/campany_list_item"
+                app:spanCount="2"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+
+                >
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/company_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-        <ImageView
-            android:id="@+id/company_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:src="@drawable/plus_icon2"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Register Company"
-            android:fontFamily="@font/raleway_medium"
-            android:textColor="@color/white_text"
-            />
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="@string/next"
+        android:fontFamily="@font/raleway_black"
+        android:textSize="18sp"
+        android:textColor="#FFF"
+        android:background="@drawable/submit_button"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        />
+</RelativeLayout>
 
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

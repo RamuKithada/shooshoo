@@ -57,9 +57,6 @@ import retrofit2.http.Url;
  */
 public interface RetrofitApis {
 
-
-
-
     class Factory {
             public static RetrofitApis create(Context contextOfApplication) {
                 // default time out is 15 seconds
@@ -99,6 +96,10 @@ public interface RetrofitApis {
         @FormUrlEncoded
         @POST("brands")
         Call<BrandsResult> getBrands(@Field("categoryIds") String categoryIds,@Field("limit") String limit,@Field("offset") String offset);
+
+        @FormUrlEncoded
+        @POST("userbrands")
+        Call<BrandsResult> getUserBrands(@Field("createdBy") String categoryIds,@Field("limit") String limit,@Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("cities")
@@ -181,11 +182,16 @@ public interface RetrofitApis {
     Call<LoginSuccess> forgetPassword(@Field("email") String email);
     @Multipart
     @POST("company")
-    Call<CompanyResponse> saveCompany(@Part MultipartBody.Part  logoImage, @Part("createdBy") RequestBody userId, @Part("companyName") RequestBody compName, @Part("emailId") RequestBody email,
+    Call<CompanyResponse> saveCompany(@Part MultipartBody.Part  logoImage, @Part("createdBy") RequestBody userId,
+                                      @Part("companyName") RequestBody compName, @Part("emailId") RequestBody email,
                                       @Part("firstName") RequestBody firstName, @Part("lastName") RequestBody  lastName,
-                                      @Part("country") RequestBody  country, @Part("city") RequestBody  city, @Part("zipcode") RequestBody  zipcode,
-                                      @Part("street") RequestBody  street, @Part("streetNumber") RequestBody  streetNum, @Part("mobileNumber") RequestBody  mobile, @Part("taxNumber") RequestBody  taxNum,
-                                      @Part("companyEmail") RequestBody  companyEmail);
+                                      @Part("country") RequestBody  country, @Part("city") RequestBody  city,
+                                      @Part("zipcode") RequestBody  zipcode,@Part("street") RequestBody  street,
+                                      @Part("streetNumber") RequestBody  streetNum, @Part("phoneCode") RequestBody  phoneCode,
+                                      @Part("mobileNumber") RequestBody  mobile,
+                                      @Part("taxNumber") RequestBody  taxNum,@Part("companyEmail") RequestBody  companyEmail,
+                                      @Part("categoryId") RequestBody  categoryId
+    );
 
 
     @Multipart

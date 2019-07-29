@@ -249,10 +249,78 @@ public class Challenge implements Parcelable{
         limited = in.readString();
         address = in.readString();
         audGender = in.readString();
+        companies = in.createTypedArrayList(Company.CREATOR);
         userName = in.readString();
         fullName = in.readString();
         countryName = in.readString();
         cityName = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(challengeId);
+        dest.writeString(challengeName);
+        dest.writeString(type);
+        dest.writeString(startDate);
+        dest.writeString(startTime);
+        dest.writeString(endDate);
+        dest.writeString(endTime);
+        dest.writeString(description);
+        dest.writeString(photoEntries);
+        dest.writeString(videoEntries);
+        dest.writeString(bannerImage);
+        dest.writeString(challengeVideo);
+        dest.writeString(maxLength);
+        dest.writeString(amount);
+        dest.writeString(keyDescription);
+        dest.writeString(prizesInfo);
+        dest.writeString(totalPrize);
+        dest.writeString(winners);
+        dest.writeString(radar);
+        dest.writeString(audZipcode);
+        dest.writeString(audCountry);
+        dest.writeString(audCity);
+        dest.writeString(audMiles);
+        dest.writeString(personalAddress);
+        dest.writeString(categories);
+        dest.writeStringArray(categoryNames);
+        dest.writeString(brands);
+        dest.writeString(ageStart);
+        dest.writeString(ageEnd);
+        dest.writeString(gender);
+        dest.writeString(participants);
+        dest.writeString(budget);
+        dest.writeString(summery);
+        dest.writeString(sponsoredBy);
+        dest.writeString(createdBy);
+        dest.writeString(createdOn);
+        dest.writeString(updatedOn);
+        dest.writeString(status);
+        dest.writeString(userFirst);
+        dest.writeString(userLast);
+        dest.writeString(masterLogo);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(dob);
+        dest.writeString(country);
+        dest.writeString(city);
+        dest.writeString(zipcode);
+        dest.writeString(street);
+        dest.writeString(streetNumber);
+        dest.writeString(mobileNumber);
+        dest.writeString(limited);
+        dest.writeString(address);
+        dest.writeString(audGender);
+        dest.writeTypedList(companies);
+        dest.writeString(userName);
+        dest.writeString(fullName);
+        dest.writeString(countryName);
+        dest.writeString(cityName);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
@@ -744,70 +812,4 @@ public class Challenge implements Parcelable{
         this.cityName = cityName;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(challengeId);
-        dest.writeString(challengeName);
-        dest.writeString(type);
-        dest.writeString(startDate);
-        dest.writeString(startTime);
-        dest.writeString(endDate);
-        dest.writeString(endTime);
-        dest.writeString(description);
-        dest.writeString(photoEntries);
-        dest.writeString(videoEntries);
-        dest.writeString(bannerImage);
-        dest.writeString(challengeVideo);
-        dest.writeString(maxLength);
-        dest.writeString(amount);
-        dest.writeString(keyDescription);
-        dest.writeString(prizesInfo);
-        dest.writeString(totalPrize);
-        dest.writeString(winners);
-        dest.writeString(radar);
-        dest.writeString(audZipcode);
-        dest.writeString(audCountry);
-        dest.writeString(audCity);
-        dest.writeString(audMiles);
-        dest.writeString(personalAddress);
-        dest.writeString(categories);
-        dest.writeStringArray(categoryNames);
-        dest.writeString(brands);
-        dest.writeString(ageStart);
-        dest.writeString(ageEnd);
-        dest.writeString(gender);
-        dest.writeString(participants);
-        dest.writeString(budget);
-        dest.writeString(summery);
-        dest.writeString(sponsoredBy);
-        dest.writeString(createdBy);
-        dest.writeString(createdOn);
-        dest.writeString(updatedOn);
-        dest.writeString(status);
-        dest.writeString(userFirst);
-        dest.writeString(userLast);
-        dest.writeString(masterLogo);
-        dest.writeString(firstName);
-        dest.writeString(lastName);
-        dest.writeString(dob);
-        dest.writeString(country);
-        dest.writeString(city);
-        dest.writeString(zipcode);
-        dest.writeString(street);
-        dest.writeString(streetNumber);
-        dest.writeString(mobileNumber);
-        dest.writeString(limited);
-        dest.writeString(address);
-        dest.writeString(audGender);
-        dest.writeString(userName);
-        dest.writeString(fullName);
-        dest.writeString(countryName);
-        dest.writeString(cityName);
-    }
 }

@@ -29,11 +29,11 @@ public class BrandDetailsPresenter implements BasePresenter<BrandProfileView>{
             retrofitApis=null;
         }
     Call<CompanyDetails> companyDetailsCall=null;
-        public void getBrandDetails(String comanyId){
+        public void getBrandDetails(String companyId){
         if(view!=null)
             view.showProgressIndicator(true);
 
-         companyDetailsCall=retrofitApis.getCompanyDetails(comanyId);
+         companyDetailsCall=retrofitApis.getCompanyDetails(companyId);
             companyDetailsCall.enqueue(new Callback<CompanyDetails>() {
             @Override
             public void onResponse(Call<CompanyDetails> call, Response<CompanyDetails> response) {

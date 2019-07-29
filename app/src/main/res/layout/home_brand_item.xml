@@ -24,11 +24,12 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
             android:text="Name"
             android:visibility="gone"
-            android:textColor="#FFF"
+            android:textColor="@color/white_text"
+            android:fontFamily="@font/raleway_medium"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:paddingTop="5dp"
 
             />

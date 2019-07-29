@@ -75,14 +75,35 @@
                     android:theme="@style/MyEditTextTheme"
                     />
             </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/edit_icon"
+            >
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edt_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:hint="Select Category"
+                android:focusable="false"
+                android:clickable="true"
+                android:fontFamily="@font/raleway_medium"
+                android:inputType="textPersonName"
+                android:textColorHint="@color/white_text"
+                android:textColor="@color/white_text"
+                android:theme="@style/MyEditTextTheme"
+                />
+        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/edit_icon"
                 >
-
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/edt_country"

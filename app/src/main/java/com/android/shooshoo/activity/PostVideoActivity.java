@@ -130,7 +130,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
                 if(detector.isConnectingToInternet()){
                     try {
                         String challengeVideoUri= ApiUrls.getFilePath(this,uri);
-                        challengePresenter.postChallenge(userSession.getUserId(),challenge.getChallengeId(),challengeVideoUri,"sponsor",about_video.getText().toString());
+                        challengePresenter.postChallenge(userSession.getUserId(),challenge.getChallengeId(),challengeVideoUri,challenge.getType(),about_video.getText().toString());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }

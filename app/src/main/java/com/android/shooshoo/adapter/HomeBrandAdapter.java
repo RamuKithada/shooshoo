@@ -29,10 +29,12 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
 
     Context context;
     List<Company> brandList;
+    int visibleAll=0;
 
-    public HomeBrandAdapter(Context context, List<Company> brandList) {
+    public HomeBrandAdapter(Context context, List<Company> brandList,int visibileAll) {
         this.context = context;
         this.brandList = brandList;
+        this.visibleAll=visibileAll;
     }
 
     @NonNull
@@ -47,12 +49,13 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int i) {
         Picasso.with(context).load(ApiUrls.IMAGE_URL+"companies/"+brandList.get(i).getCompanyLogo()).into(catViewHolder.image);
         catViewHolder.brandName.setText(brandList.get(i).getCompanyName());
-//          catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//             @Override
-//             public void onClick(View v) {
-//                 context.startActivity(new Intent(context, CompanyDetailsActivity.class));
-//             }
-//         });
+          catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent intent=new Intent(context, CompanyDetailsActivity.class);
+                 context.startActivity(intent);
+             }
+         });
 
     }
 
@@ -68,6 +71,10 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
             super(itemView);
             image=itemView.findViewById(R.id.image);
             brandName=itemView.findViewById(R.id.name);
+            if(visibleAll==1)
+                brandName.setVisibility(View.VISIBLE);
+            else
+                brandName.setVisibility(View.GONE);
         }
     }
 }

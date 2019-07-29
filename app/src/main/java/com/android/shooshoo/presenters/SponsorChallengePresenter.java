@@ -93,7 +93,7 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
     public void createCompany(Uri companyLogo, String userId,String compName, String email, String firstName, String  lastName,
                               String  country, String  city, String  zipcode, String  street, String  streetNumber,
-                              String mobile, String taxNum, String  companyEmail){
+                              String phoneCode, String mobile, String taxNum, String  companyEmail, String  categoryId){
 
         File file=null;
         MultipartBody.Part body=null;
@@ -101,13 +101,14 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
         {
             file = new File(companyLogo.getPath());
             RequestBody reqFile= RequestBody.create(MediaType.parse("image/*"), file);
-            body = MultipartBody.Part.createFormData("compLogo", file.getName(), reqFile);
+            body = MultipartBody.Part.createFormData("companyLogo", file.getName(), reqFile);
         }
         if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.saveCompany(body,getTextPart(userId),getTextPart(compName),getTextPart(email),getTextPart(firstName),getTextPart(lastName)
-          ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(mobile)
-        ,getTextPart(taxNum),getTextPart(companyEmail)).enqueue(companyResponseCallback);
+          ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(phoneCode)
+                ,getTextPart(mobile)
+        ,getTextPart(taxNum),getTextPart(companyEmail),getTextPart(categoryId)).enqueue(companyResponseCallback);
 
     }
 

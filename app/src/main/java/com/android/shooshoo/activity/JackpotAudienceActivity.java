@@ -468,7 +468,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             if(languageBuilder.length()<=0){
                 languageBuilder.append( this.languages.get(languages_pos).getId());
             }else {
-                languageBuilder.append(',').append( this.languages.get(region_pos).getId());
+                languageBuilder.append(',').append( this.languages.get(languages_pos).getId());
             }
 
         }

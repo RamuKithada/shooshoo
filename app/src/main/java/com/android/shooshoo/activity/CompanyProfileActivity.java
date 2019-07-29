@@ -117,6 +117,9 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     @BindView(R.id.btn_preview)
     AppCompatTextView btn_preview;
 
+    @BindView(R.id.edt_category)
+    AppCompatEditText edt_category;
+
     @BindView(R.id.edt_country)
     AppCompatEditText edt_country;
 
@@ -125,18 +128,11 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     @BindView(R.id.edt_company_business_email)
     AppCompatEditText edt_company_business_email;
-
-
-
-
-
     DataLoadPresenter dataLoadPresenter;
     SponsorChallengePresenter sponsorChallengePresenter;
     ConnectionDetector connectionDetector;
-
     ArrayList<String> sponsorIds=new ArrayList<>();
-
-
+    List<Category> categories=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -154,6 +150,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     private void loadData() {
         dataLoadPresenter.loadCountryData();
+        dataLoadPresenter.loadAllcategoriesList();
 
     }
 
@@ -164,6 +161,32 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         btn_more_companies.setOnClickListener(this);
         title.setText("Company Profile");
         setStage(0);
+        edt_category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(categories==null)
+                {
+                    showMessage("There no categories to select");
+                    return;
+                }
+
+                    final String[] lables=new String[categories.size()];
+                for(int index=0;index<categories.size();index++)
+                {
+                    lables[index]=categories.get(index).getCategoryName();
+                }
+
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_category.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"category");
+
+
+            }
+        });
+
   }
 
     @Override
@@ -180,8 +203,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                 sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                     city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
-                        edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
-                            edt_company_business_email.getText().toString());
+                        edt_country_code.getText().toString() , edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
+                            edt_company_business_email.getText().toString(),categories.get(category_pos).getCategoryId());
                             }
                             else
                                 showMessage("Please Check Internet connection");
@@ -206,8 +229,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                         sponsorChallengePresenter.createCompany(newsImage,userSession.getUserId(), edt_company_name.getText().toString(), edt_user_email.getText().toString(),
                                 edt_first_name.getText().toString(), edt_last_name.getText().toString(), country.getCountryId(),
                                 city.getCityId(), edt_zipcode.getText().toString(), edt_Street.getText().toString(), edt_number.getText().toString(),
-                                edt_country_code.getText().toString() + edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
-                                 edt_company_business_email.getText().toString());
+                                edt_country_code.getText().toString() , edt_mobile.getText().toString(), edt_tax_number.getText().toString(),
+                                 edt_company_business_email.getText().toString(),categories.get(category_pos).getCategoryId());
 
                     }
                     else
@@ -237,6 +260,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         edt_city.setText(null);
         country_pos=-1;
         city_pos=-1;
+        category_pos=-1;
         city=null;
         country=null;
     }
@@ -261,6 +285,13 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         if(edt_company_name.getText().toString().length()>70)
         {
             edt_company_name.setError("Company Name is too Long");
+            return false;
+        }
+
+        if(category_pos<0)
+        {
+            edt_category.requestFocus();
+            edt_category.setError("Please select your a Category");
             return false;
         }
 
@@ -569,7 +600,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     City city=new City();
 
-    int country_pos=-1,city_pos=-1;
+    int country_pos=-1,city_pos=-1,category_pos=-1;
 
     /**
      *  country_pos is used to hold the selected country position and city_pos is used to hold the selected country position
@@ -659,6 +690,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onAllCategories(List<Category> categories) {
+               this.categories=categories;
 
     }
 
@@ -740,6 +772,14 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                     edt_city.setError(null);
                     city=cities.get(position);
                     city_pos=position;
+                }
+                break;
+            case R.id.edt_category:
+                if(categories!=null)
+                {
+                    edt_category.setText(categories.get(position).getCategoryName());
+                    edt_category.setError(null);
+                    category_pos=position;
                 }
                 break;
         }
