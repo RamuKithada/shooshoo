@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.adapter.LanguagesAdapter;
 import com.android.shooshoo.adapter.PrizeListAdapter;
@@ -70,8 +71,8 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
     @BindView(R.id.iv_back)
     ImageView iv_back;
 
-    @BindView(R.id.iv_help)
-    ImageView iv_help;
+     @BindView(R.id.iv_help)
+     ImageView iv_help;
 
     @BindViews({R.id.button1, R.id.button2, R.id.button3, R.id.button4, R.id.button5})
     List<Button> buttons;
@@ -255,6 +256,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sponsor_audience);
         ButterKnife.bind(this);
+        connectionDetector = new ConnectionDetector(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         iv_help.setOnClickListener(this);
@@ -270,18 +272,12 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         setStage(2);
         spinnersInti();
         categorySelectionAdapter = new CategorySelectionAdapter(this, categoryArrayList);
-
-
         regionsAdapter=new RegionsAdapter(this);
         regions_list.setLayoutManager(new LinearLayoutManager(this));
         regions_list.setAdapter(regionsAdapter);
-
         languagesAdapter=new LanguagesAdapter(this);
         language_list.setLayoutManager(new LinearLayoutManager(this));
         language_list.setAdapter(languagesAdapter);
-
-
-
         priceWorthAdapter = new PrizeListAdapter(this, prices);
         priceWorthAdapter.registerAdapterDataObserver(adapterDataObserver);
         btn_more_prizes.setOnClickListener(this);
@@ -292,7 +288,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         dataLoadPresenter.attachView(this);
         sponsorChallengePresenter = new SponsorChallengePresenter();
         sponsorChallengePresenter.attachView(this);
-        connectionDetector = new ConnectionDetector(this);
+
 //        tv_price_total.as
 
         et_prize_type.setOnClickListener(new View.OnClickListener() {
@@ -531,6 +527,11 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
+        tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+        tv_international.setTextColor(Color.parseColor("#85868A"));
+        nationalization = 0;
+        region_lay.setVisibility(View.GONE);
+        country_lay.setVisibility(View.VISIBLE);
         edt_currency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -872,7 +873,7 @@ StringBuilder languageBuilder=new StringBuilder();
 
 
           }else if(nationalization==1){
-              if(region_pos<=0&&regionsAdapter.getItemCount()<=0){
+              if(region_pos<0&&regionsAdapter.getItemCount()<=0){
                   edt_region.setError("Select Region");
                   edt_region.requestFocus();
                   return false;

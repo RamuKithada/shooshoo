@@ -1,9 +1,14 @@
 package com.android.shooshoo.models;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.android.shooshoo.utils.ApiUrls;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
+
+import okhttp3.internal.Util;
+
 public class Challenge implements Parcelable{
 
     @SerializedName("challengeId")
@@ -194,6 +199,9 @@ public class Challenge implements Parcelable{
     @Expose
     private String cityName;
 
+    @SerializedName("currency")
+    private String currency;
+
 
     protected Challenge(Parcel in) {
         challengeId = in.readString();
@@ -254,6 +262,7 @@ public class Challenge implements Parcelable{
         fullName = in.readString();
         countryName = in.readString();
         cityName = in.readString();
+        currency=in.readString();
     }
 
     @Override
@@ -316,6 +325,7 @@ public class Challenge implements Parcelable{
         dest.writeString(fullName);
         dest.writeString(countryName);
         dest.writeString(cityName);
+        dest.writeString(currency);
     }
 
     @Override
@@ -475,6 +485,9 @@ public class Challenge implements Parcelable{
     public String getTotalPrize() {
         if(totalPrize==null)
             totalPrize="";
+//        totalPrize.replaceFirst("\\.0*$|(\\.\\d*?)0+$", "$1");
+
+
         return totalPrize;
     }
 
@@ -812,4 +825,29 @@ public class Challenge implements Parcelable{
         this.cityName = cityName;
     }
 
+    public String getCurrency() {
+        if(currency==null)
+            return "€";
+        if(currency.toLowerCase().contains("null"))
+            return "€";
+
+        switch (currency.toLowerCase()){
+
+            case "inr":
+                currency="₹";break;
+            case "usd":
+                currency="$";break;
+            case "eur":
+                currency="€";break;
+        }
+
+
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+
+
+        this.currency = currency;
+    }
 }

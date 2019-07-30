@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".activity.SponsorChallengeFormActivity">
-    <include layout="@layout/jackpot_stagebar_layout"
+    tools:context=".sponsor.SponsorChallengeFormActivity">
+    <include layout="@layout/stagebar_layout"
         />
     <ScrollView
         android:layout_width="match_parent"

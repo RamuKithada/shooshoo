@@ -175,7 +175,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
           String pws=edt_pws.getText().toString();
           if(!ApiUrls.validateString(name)){
               edt_user_name.requestFocus();
-              edt_user_name.setError("Enter User name");
+              edt_user_name.setError("Enter User Name");
               return false;
           }
         if(!ApiUrls.validateString(pws)){

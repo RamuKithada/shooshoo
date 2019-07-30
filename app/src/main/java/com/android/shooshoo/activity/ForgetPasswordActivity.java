@@ -56,7 +56,7 @@ public class ForgetPasswordActivity extends BaseActivity implements LoginView {
                 }
                 else{
                     email.requestFocus();
-                    email.setError("Enter email here");
+                    email.setError("Please enter Email");
                 }
 
             }

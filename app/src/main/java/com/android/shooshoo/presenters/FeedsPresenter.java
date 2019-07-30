@@ -107,10 +107,10 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
 
 
      }
-     public void loadFeeds(String type,int limit,int offset){
+     public void loadFeeds(String type,int limit,int offset,String userid){
          if(view!=null) {
              view.showProgressIndicator(true);
-             retrofitApis.loadFeeds(type, ""+offset, ""+limit).enqueue(new Callback<FeedsResponse>() {
+             retrofitApis.loadFeeds(type, ""+offset, ""+limit,userid).enqueue(new Callback<FeedsResponse>() {
                  @Override
                  public void onResponse(Call<FeedsResponse> call, Response<FeedsResponse> response) {
                      if(view!=null)

@@ -27,7 +27,6 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  */
 
 public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolder> implements SimplePlayerViewHolder.VideoViewedListener, CacheManager {
-
     private ArrayList<Feed> modelArrayList;
     private Context context;
     FeedClickListener clickListener;

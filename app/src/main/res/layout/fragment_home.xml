@@ -102,7 +102,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:textColor="@color/white_text"
-                   android:text="All"
+                   android:text="View"
                    android:layout_centerVertical="true"
                    android:layout_alignParentRight="true"
                    android:fontFamily="@font/raleway_extrabold"
@@ -130,12 +130,16 @@
                    android:id="@+id/challengers_note"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
-                   android:padding="10dp"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:paddingTop="10dp"
+                   android:paddingBottom="10dp"
                    android:layout_marginTop="5dp"
                    android:layout_marginBottom="5dp"
                    android:text="@string/s_challengers_result"
                    android:textColor="#FFF"
                    android:gravity="center"
+                   android:textSize="18sp"
                    android:fontFamily="@font/raleway_extrabold"
                    android:layout_below="@+id/sponsor_challengers_list"
                    android:background="@color/pink_drak"
@@ -173,7 +177,7 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:textColor="@color/white_text"
-                   android:text="All"
+                   android:text="View"
                    android:layout_centerVertical="true"
                    android:layout_alignParentRight="true"
                    android:fontFamily="@font/raleway_extrabold"
@@ -234,19 +238,20 @@
     android:layout_below="@+id/category_title_lay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/category_viewall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white_text"
-        android:text="All"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:fontFamily="@font/raleway_extrabold"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
         android:layout_marginLeft="5dp"
+        android:layout_marginRight="28dp"
+        android:fontFamily="@font/raleway_extrabold"
         android:gravity="center_vertical"
+        android:text="View"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+        android:textColor="@color/white_text"
 
         />
 
@@ -262,7 +267,7 @@
                    android:orientation="horizontal"
                    android:nestedScrollingEnabled="false"
                    android:layout_marginBottom="10dp"
-                   android:layout_marginLeft="5dp"
+                   android:layout_marginLeft="10dp"
                    >
 
 
@@ -315,6 +320,62 @@
                <android.support.v7.widget.RecyclerView
                    android:id="@+id/private_sponsor_challengers_list"
                    android:layout_below="@+id/private_sponsor_title_lay"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="5dp"
+                   android:nestedScrollingEnabled="false"
+                   app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                   tools:listitem="@layout/challengers_item"
+                   android:orientation="horizontal"
+                   >
+
+
+               </android.support.v7.widget.RecyclerView>
+
+           </RelativeLayout>    <RelativeLayout
+               android:id="@+id/final_call_layout"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               >
+               <RelativeLayout
+                   android:id="@+id/final_call_title_lay"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <android.support.v7.widget.AppCompatTextView
+                       android:id="@+id/final_call_title"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentLeft="true"
+                       android:layout_alignParentTop="true"
+                       android:textColor="@color/white_text"
+                       android:text="@string/final_call_callenges"
+                       android:textAllCaps="true"
+                       android:layout_margin="5dp"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                       android:fontFamily="@font/raleway_extrabold"
+                       />
+                   <android.support.v7.widget.AppCompatTextView
+                       android:id="@+id/final_call_viewall"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/white_text"
+                       android:text="All"
+                       android:layout_centerVertical="true"
+                       android:layout_alignParentRight="true"
+                       android:fontFamily="@font/raleway_extrabold"
+                       android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                       android:layout_margin="2dp"
+                       android:gravity="center_vertical"
+
+                       />
+
+
+               </RelativeLayout>
+
+               <android.support.v7.widget.RecyclerView
+                   android:id="@+id/final_call_challengers_list"
+                   android:layout_below="@+id/final_call_title_lay"
                    android:layout_width="match_parent"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="5dp"

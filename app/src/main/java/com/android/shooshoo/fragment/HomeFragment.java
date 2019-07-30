@@ -74,6 +74,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     @BindView(R.id.private_sponsor_viewall)
     AppCompatTextView private_sponsor_viewall;
 
+    @BindView(R.id.final_call_viewall)
+    AppCompatTextView final_call_viewall;
+
 
     @BindView(R.id.sponsor_layout)
     RelativeLayout sponsor_layout;
@@ -86,6 +89,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     @BindView(R.id.private_sponsor_layout)
     RelativeLayout private_sponsor_layout;
+
+    @BindView(R.id.final_call_layout)
+    RelativeLayout final_call_layout;
+
     @BindView(R.id.brands_list)
     RecyclerView brandsList;
     @BindView(R.id.sponsor_challengers_list)
@@ -94,6 +101,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     RecyclerView jackpotList;
     @BindView(R.id.private_sponsor_challengers_list)
     RecyclerView privateList;
+    @BindView(R.id.final_call_challengers_list)
+    RecyclerView finalCallList;
     @BindView(R.id.category_challengers_list)
     RecyclerView catList;
     @BindView(R.id.extra_list)
@@ -114,6 +123,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     //Private Sponsor challenge List adapter
     SponsorChallengersAdapter privateSponsorChallengersAdapter;
+    //Final Call challenge List adapter
+    SponsorChallengersAdapter finalCallChallengersAdapter;
 
     //Brand  List adapter to show brand list view
     HomeBrandAdapter homeBrandAdapter;
@@ -127,6 +138,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     //  jackpoy challengeModels is used to hold Sponsor challenges list
     ArrayList<Challenge> jackpotChallenges=new ArrayList<Challenge>();
     ArrayList<Challenge> privateChallenges=new ArrayList<Challenge>();
+    ArrayList<Challenge> finalCallChallenges=new ArrayList<Challenge>();
 
     ArrayList<Company> brands=new ArrayList<Company>();
     ArrayList<Category> categories=new ArrayList<Category>();
@@ -191,15 +203,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         jackpot_viewall.setOnClickListener(this);
         category_viewall.setOnClickListener(this);
         private_sponsor_viewall.setOnClickListener(this);
+        final_call_viewall.setOnClickListener(this);
 
         setLayoutManager(sponsorList);
         setLayoutManager(brandsList);
         setLayoutManager(jackpotList);
         setLayoutManager(catList);
         setLayoutManager(privateList);
+        setLayoutManager(finalCallList);
         jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
         sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
         privateSponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),privateChallenges);
+        finalCallChallengersAdapter=new SponsorChallengersAdapter(getContext(),finalCallChallenges);
         //new SponsorChallengersAdapter(getContext(),null);
         homeBrandAdapter=new HomeBrandAdapter(getContext(),brands,0);
         homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
@@ -207,6 +222,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         sponsorList.setAdapter(sponsorChallengersAdapter);
         jackpotList.setAdapter(jackpotChallengersAdapter);
         privateList.setAdapter(privateSponsorChallengersAdapter);
+        finalCallList.setAdapter(finalCallChallengersAdapter);
         catList.setAdapter(homeCategoryAdapter);
         /**
          * to get item from the sponsor list when selected one item.
@@ -217,10 +233,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
                 intent.putExtra("challenge",sponsorChallenges.get(position));
-                intent.putExtra("type",1);
-//                intent.putExtra("image",schallengeModels.get(position).getImage());
-//                intent.putExtra("name",schallengeModels.get(position).getTitle());
-//                intent.putExtra("des",schallengeModels.get(position).getDescription());
 //                // to  open Challenge details  activity
                 startActivity(intent);
             }
@@ -239,10 +251,40 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             public void onClick(View view, int position) {
                 Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
                 intent.putExtra("challenge",jackpotChallenges.get(position));
-                intent.putExtra("type",2);
-//                intent.putExtra("image",challengeModels.get(position).getImage());
-//                intent.putExtra("name",challengeModels.get(position).getTitle());
-//                intent.putExtra("des",challengeModels.get(position).getDescription());
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));  /**
+         * to get item from the jackpot challenges list when selected one item.
+         * onItemclick listener for Recyclerview.
+         */
+        privateList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), jackpotList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("challenge",privateChallenges.get(position));
+
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));  /**
+         * to get item from the jackpot challenges list when selected one item.
+         * onItemclick listener for Recyclerview.
+         */
+        finalCallList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), jackpotList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), MyChallengesActivity.class);
+                intent.putExtra("challenge",finalCallChallenges.get(position));
                 startActivity(intent);
             }
 
@@ -329,6 +371,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
                 intent.putExtra("title","Private Challenges");
                 startActivity(intent);
                 break;
+            case R.id.final_call_viewall:
+                 intent=new Intent(getActivity(), ViewAllChallengesActivity.class);
+                intent.putExtra(SERVICE_TYPE,ApiUrls.PRIVATE);
+                intent.putExtra("title","Final Call");
+                startActivity(intent);
+                break;
         }
 
     }
@@ -347,22 +395,34 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             if(response.getSponsorChallenges()!=null) {
                 sponsorChallenges.addAll(response.getSponsorChallenges());
                 sponsorChallengersAdapter.notifyDataSetChanged();
-            }else {
+            }
+            if(sponsorChallengersAdapter.getItemCount()<=0)
                 sponsor_layout.setVisibility(View.GONE);
 
-            }
+
             if(response.getPrivateChallenges()!=null) {
                 privateChallenges.addAll(response.getPrivateChallenges());
                 privateSponsorChallengersAdapter.notifyDataSetChanged();
-            }else
+            }
+                if(privateSponsorChallengersAdapter.getItemCount()<=0)
                 private_sponsor_layout.setVisibility(View.GONE);
 
 
         if(response.getJackpotsChallenges()!=null) {
             jackpotChallenges.addAll(response.getJackpotsChallenges());
             jackpotChallengersAdapter.notifyDataSetChanged();
-        }else
+        }
+        if(jackpotChallengersAdapter.getItemCount()<=0)
             jackpot_layout.setVisibility(View.GONE);
+
+
+
+        if(response.getFinalcall()!=null) {
+            finalCallChallenges.addAll(response.getFinalcall());
+            finalCallChallengersAdapter.notifyDataSetChanged();
+        }
+        if(finalCallChallengersAdapter.getItemCount()<=0)
+            final_call_layout.setVisibility(View.GONE);
 
             if(response.getBrands()!=null)
             brands.addAll(response.getBrands());

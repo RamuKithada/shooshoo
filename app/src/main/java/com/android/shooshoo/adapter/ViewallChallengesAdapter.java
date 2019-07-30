@@ -1,6 +1,7 @@
 package com.android.shooshoo.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +44,22 @@ public class ViewallChallengesAdapter extends RecyclerView.Adapter<ViewallChalle
         holder.tv_challenge_name.setText(model.getChallengeName());
         holder.tv_personname.setText(model.getUserName());
         holder.tv_tag.setText(model.getDescription());
-        holder.tv_price.setText(" "+model.getBudget()+" € ");
+
         if(model.getType().equalsIgnoreCase("sponsor"))
+        {
             imagebaseurl=ApiUrls.SPONSOR_BANNER_IMAGE_URL;
+            holder.tv_price.setBackgroundColor(Color.parseColor("#F31F68"));
+            holder.tv_price.setText(ApiUrls.removeDecimals(model.getTotalPrize())+" "+model.getCurrency());
+        }
         else if(model.getType().equalsIgnoreCase("jackpot"))
+        {
             imagebaseurl=ApiUrls.JACKPOT_BANNER_IMAGE_URL;
+//            holder.tv_price.setText(" "+model.getBudget()+" € ");
+            holder.tv_price.setBackgroundColor(Color.parseColor("#549BC1"));
+            holder.tv_price.setText(ApiUrls.removeDecimals(model.getAmount())+" "+model.getCurrency());
+        }
+
+
 
         Picasso.with(context).load(imagebaseurl+model.getBannerImage()).error(R.drawable.h_m)
                 .placeholder(R.drawable.h_m).into(holder.iv_videothumb);

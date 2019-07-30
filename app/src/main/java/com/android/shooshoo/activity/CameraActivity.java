@@ -1,10 +1,8 @@
 package com.android.shooshoo.activity;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.opengl.GLException;
@@ -12,7 +10,6 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -30,8 +27,6 @@ import com.daasuu.camerarecorder.CameraRecordListener;
 import com.daasuu.camerarecorder.CameraRecorder;
 import com.daasuu.camerarecorder.CameraRecorderBuilder;
 import com.daasuu.camerarecorder.LensFacing;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Request;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
@@ -51,10 +46,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-import static android.content.ContentUris.parseId;
-import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
-import static com.android.shooshoo.activity.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
+import static com.android.shooshoo.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
+import static com.android.shooshoo.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
 
 public class CameraActivity extends BaseActivity implements View.OnClickListener {
 

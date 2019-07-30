@@ -29,6 +29,7 @@ import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
+import com.android.shooshoo.sponsor.SponsorChallengeFormActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
@@ -738,7 +739,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
                 }
                 userSession.setSponsorIds(ids.toString());
-                Intent privateSponsor=new Intent(this,SponsorChallengeFormActivity.class);
+                Intent privateSponsor=new Intent(this, SponsorChallengeFormActivity.class);
                 privateSponsor.putExtra("privateSponsor",0);
                 startActivity(privateSponsor);
             }

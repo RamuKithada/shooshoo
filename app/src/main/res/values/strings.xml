@@ -23,7 +23,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="s_challengers_result">Total Prizes  2.234.3215 - - Biggest Jackpot</string>
+    <string name="s_challengers_result">Total Prizes  2.234.3215 - Biggest Jackpot</string>
     <string name="view_more_challenger">View More Challengers</string>
     <string name="quote1">Great! Now it\'s time to describe \n your Challenge</string>
     <string name="quote2">Think about a way, that most \n people can represent your brand</string>
@@ -168,4 +168,5 @@
     <string name="my_challenges">My Challenges</string>
     <string name="private_challenges">Private Challenges</string>
     <string name="authorized_companies">AUTHORIZED COMPANIES</string>
+    <string name="final_call_callenges">Final call</string>
 </resources>

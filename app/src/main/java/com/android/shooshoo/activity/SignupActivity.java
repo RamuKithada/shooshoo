@@ -157,7 +157,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
         if(!ApiUrls.validateString(email))
         {
 
-            edt_user_email.setError("Enter email");
+            edt_user_email.setError("Please enter Email");
             edt_user_email.requestFocus();
             return false;
         }
@@ -173,7 +173,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
 
-            edt_user_email.setError("Enter valid email");
+            edt_user_email.setError("Enter valid Email");
             edt_user_email.requestFocus();
             return false;
         }

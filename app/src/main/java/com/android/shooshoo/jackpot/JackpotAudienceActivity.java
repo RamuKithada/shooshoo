@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.jackpot;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.adapter.LanguagesAdapter;
 import com.android.shooshoo.adapter.RegionsAdapter;
@@ -229,11 +230,13 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     }
 
     private void spinnersInti() {
-
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
-
-
+        tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+        tv_international.setTextColor(Color.parseColor("#85868A"));
+        nationalization = 0;
+        region_lay.setVisibility(View.GONE);
+        country_lay.setVisibility(View.VISIBLE);
         edt_country.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -348,7 +351,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                     country_lay.setVisibility(View.GONE);
                     break;
             }
-
             getSizeofAudience();
         }
     };
@@ -553,9 +555,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 return false;
             }
         }else if(nationalization==1){
-            if(region_pos<=0&&regionsAdapter.getItemCount()<=0){
-                edt_region.setError("Select Region");
-                edt_region.requestFocus();
+            if(region_pos<0&&regionsAdapter.getItemCount()<=0){
+                   showMessage("Select Challenge Region");
                 return false;
             }
 

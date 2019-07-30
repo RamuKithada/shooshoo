@@ -821,6 +821,8 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             case R.id.profile_lay:
                 Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
                 userProfileIntent.putExtra("userId",feed.getUserId());
+                userProfileIntent.putExtra("follow",feed.getFollwerstatus());
+
                 startActivity(userProfileIntent);
                 break;
 
@@ -876,6 +878,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
     @Override
     public void onFollowed(int status, String message) {
+        if(status==1)
+            if(feed!=null)
+                feed.setFollwerstatus("1");
         showMessage(message);
     }
 

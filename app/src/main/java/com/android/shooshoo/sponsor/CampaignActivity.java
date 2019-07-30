@@ -1,9 +1,7 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,18 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.views.SponsorChallengeView;
-
-import org.json.JSONObject;
 
 import java.util.List;
 

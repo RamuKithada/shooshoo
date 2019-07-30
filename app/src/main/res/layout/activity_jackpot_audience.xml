@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".activity.JackpotAudienceActivity">
+    tools:context=".jackpot.JackpotAudienceActivity">
    <include layout="@layout/jackpot_stagebar_layout"/>
 
     <android.support.v4.widget.NestedScrollView
@@ -499,7 +499,7 @@
                     android:textColor="@color/white_text"
                     android:theme="@style/MyEditTextTheme" />
                 <View
-                    android:layout_width="20dp"
+                    android:layout_width="15dp"
                     android:layout_height="1dp"
                     android:background="@color/white_text"
                     android:layout_gravity="center_vertical"

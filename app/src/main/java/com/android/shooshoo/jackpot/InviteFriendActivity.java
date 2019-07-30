@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.jackpot;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.adapter.FindContactsAdapter;
 import com.android.shooshoo.models.ContactsModel;
 import com.android.shooshoo.models.Follower;

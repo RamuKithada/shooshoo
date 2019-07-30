@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,30 +8,34 @@ import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.presenters.JackpotChallengePresenter;
+import com.android.shooshoo.models.Company;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
+import com.android.shooshoo.sponsor.SponsorAudienceActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.CustomListFragmentDialog;
 import com.android.shooshoo.utils.FragmentListDialogListener;
-import com.android.shooshoo.views.JackpotChallengeView;
-//import com.crashlytics.android.Crashlytics;
+import com.android.shooshoo.utils.CustomListFragmentDialog;
+import com.android.shooshoo.views.SponsorChallengeView;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -48,49 +52,47 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-/**{@link JackpotChallengeFormActivity} is The
- * Challenge screen in process of jackpot challenge creation.
- * Here we show the challenge name and audience size from previous screen and for name challenge is stored in preferences
- *
- *
- */
-public class JackpotChallengeFormActivity extends BaseActivity implements View.OnClickListener ,JackpotChallengeView, FragmentListDialogListener {
-
+public class SponsorChallengeFormActivity extends BaseActivity implements View.OnClickListener , SponsorChallengeView , FragmentListDialogListener {
     @BindView(R.id.btn_next)
-    TextView btn_next;
+    AppCompatTextView btn_next;
+
+
+    @BindView(R.id.btn_preview)
+    AppCompatTextView btn_preview;
+
     @BindView(R.id.iv_back)
     ImageView iv_back;
-
     @BindView(R.id.iv_help)
     ImageView iv_help;
-    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4})
+
+    @BindViews({R.id.button1,R.id.button2,R.id.button3,R.id.button4,R.id.button5})
     List<Button> buttons;
 
     @BindView(R.id.tv_title)
     TextView title;
 
     @BindView(R.id.edt_challenge_name)
-    EditText edt_challenge_name;
+    AppCompatEditText edt_challenge_name;
 
     @BindView(R.id.edt_startdate)
-    EditText edt_startdate;
+    AppCompatEditText edt_startdate;
 
     @BindView(R.id.edt_start_time)
-    EditText edt_start_time;
+    AppCompatEditText edt_start_time;
 
     @BindView(R.id.edt_enddate)
-    EditText edt_enddate;
+    AppCompatEditText edt_enddate;
 
     @BindView(R.id.edt_end_time)
-    EditText edt_end_time;
+    AppCompatEditText edt_end_time;
 
     @BindView(R.id.edt_challenge_des)
-    EditText edt_challenge_des;
+    AppCompatEditText edt_challenge_des;
+
+
 
     @BindView(R.id.edit_video_sizes)
-    EditText edt_video_sizes;
-
-
+    AppCompatEditText edt_video_sizes;
 
     @BindView(R.id.banner_card)
     CardView bannerCard;
@@ -106,47 +108,42 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     @BindView(R.id.ch_video_entites)
     CheckBox ch_video_entites;
 
-   /* @BindView(R.id.ch_mini_game)
-    CheckBox ch_mini_game;*/
+
 
     ConnectionDetector connectionDetector;
-    JackpotChallengePresenter sponcerChallengePresenter;
+    SponsorChallengePresenter sponsorChallengePresenter;
     String  challengeImageUri=null;
     String challengeVideoUri=null;
     private int sizePos=-1;
     final String[] lables=new String[]{"1 min","50 sec","40 sec","30 sec","20 sec"};
+    private int privateSponsor=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jackpot_challenge_form);
+        setContentView(R.layout.activity_sponsor_challenge_form);
         ButterKnife.bind(this);
         btn_next.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         bannerCard.setOnClickListener(this);
         videoCard.setOnClickListener(this);
-
         edt_start_time.setOnClickListener(this);
         edt_startdate.setOnClickListener(this);
         edt_enddate.setOnClickListener(this);
         edt_end_time.setOnClickListener(this);
-      edt_video_sizes.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
-              Bundle args = new Bundle();
-              args.putStringArray("list",lables);
-              args.putInt("view",edt_video_sizes.getId());
-              showFragment.setArguments(args);
-              showFragment.show(getSupportFragmentManager(),"limit");
-          }
-      });
+        iv_help.setOnClickListener(this);
+
         connectionDetector=new ConnectionDetector(this);
-        sponcerChallengePresenter=new JackpotChallengePresenter();
-        sponcerChallengePresenter.attachView(this);
+        sponsorChallengePresenter =new SponsorChallengePresenter();
+        sponsorChallengePresenter.attachView(this);
         title.setText("The Challenge");
-        setStage(0);
+        setStage(1);
         viewInitilization();
+        if(getIntent().hasExtra("privateSponsor")){
+            privateSponsor=getIntent().getIntExtra("privateSponsor",0);
+        }
+
+
 
     }
 
@@ -157,8 +154,18 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 //        setFocusChange(edt_enddate,R.id.enddate_line);
 //        setFocusChange(edt_end_time,R.id.endtime_line);
 //        setFocusChange(edt_challenge_des,R.id.edt_challenge_des_line);
-//        setFocusChange(edt_photo_entries,R.id.edt_photo_entries_line);
-//        setFocusChange(edt_video_entries,R.id.edt_video_entries_line);
+        edt_video_sizes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",lables);
+                args.putInt("view",edt_video_sizes.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"size");
+            }
+        });
+
     }
 
     @Override
@@ -175,10 +182,17 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
                         if(ch_video_entites.isChecked())
                             videos="yes";
-                        sponcerChallengePresenter.createChallenge(userSession.getUserId(), challengeImageUri, challengeVideoUri,
-                                edt_challenge_name.getText().toString(), edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
+
+                        String sponsorIds=userSession.getSponsorIds();
+
+                        if(sponsorIds!=null&&sponsorIds.trim().length()==0){
+                            showMessage("Please save a company");
+                            return;
+                        }
+                        sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,privateSponsor,edt_challenge_name.getText().toString(),
+                                edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
                                 , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
-                                videos,lables[sizePos]);
+                                videos, lables[sizePos], challengeImageUri, challengeVideoUri);
 
                     } else showMessage("Please Check Internet connection");
                 }
@@ -186,15 +200,16 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             case R.id.iv_back:
                 finish();
                 break;
+            case R.id.iv_help:
+            showMessage("Help");
+                break;
             case R.id.edt_start_time:
             case R.id.edt_end_time:
-                setTime((EditText) view);
+                setTime((AppCompatEditText) view);
                 break;
             case R.id.edt_startdate:
-                setDate((EditText) view);
-                break;
             case R.id.edt_enddate:
-                setDate((EditText) view);
+                setDate((AppCompatEditText) view);
                 break;
             case R.id.banner_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
@@ -203,9 +218,10 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
                 break;
             case R.id.video_card:
                 if (checkPermission(WRITE_EXTERNAL_STORAGE))
-                       getGalleryVideos();
+                    getGalleryVideos();
                 else requestPermission(WRITE_EXTERNAL_STORAGE);
                 break;
+
         }
     }
 
@@ -238,25 +254,28 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             return false;
         }
 
-            try
-            {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
-                String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
-                Date date1 = format.parse(dateStr);
-                Date date2 = format.parse(dateEnd);
 
-                if(date2.before(date1)){
-                    showMessage("Please select End time  after the Start time");
-                    return false;
-                }
+        try
+        {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String dateStr=edt_startdate.getText().toString()+" "+edt_start_time.getText().toString();
+            String dateEnd=edt_enddate.getText().toString()+" "+edt_end_time.getText().toString();
+            Date date1 = format.parse(dateStr);
+            Date date2 = format.parse(dateEnd);
 
-
+            if(date2.before(date1)){
+                showMessage("Please select End time  after the Start time");
+                return false;
             }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
+
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
 
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
             edt_challenge_des.setError("Provide Description");
@@ -273,7 +292,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
 
         if(!ch_video_entites.isChecked()&&!ch_photo_entites.isChecked()){
-            showMessage("Select at least one type from videos Entries and Photo Entries");
+            showMessage("Select atleast one type from videos Entries and Photo Entries");
             return false;
         }
 
@@ -297,8 +316,8 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         return true;
     }
 
- /*   String active="#FFFFFF",inactive="#CCCCCC";
-    void setFocusChange(EditText editText, int id){
+   /* String active="#FFFFFF",inactive="#CCCCCC";
+    void setFocusChange(AppCompatEditText editText, int id){
         final View view=findViewById(id);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -327,20 +346,21 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     }
     public final static int RESULT_LOAD_IMAGE = 100,RESULT_LOAD_VIDEO = 200,PERMISSION_REQUEST_CODE=2;
     private void getGalleryImages() {
-        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, RESULT_LOAD_IMAGE);
     }
 
     private void getGalleryVideos() {
-
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+//        intent.setType("video/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select a Video"), RESULT_LOAD_VIDEO);
 
     }
     private void requestPermission(String permission) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-         /*   Toast.makeText(this, "Get account permission allows us to get your email",
-                    Toast.LENGTH_LONG).show();*/
+            Toast.makeText(this, "Get account permission allows us to get your email",
+                    Toast.LENGTH_LONG).show();
         }
         ActivityCompat.requestPermissions(this, new String[]{permission}, PERMISSION_REQUEST_CODE);
     }
@@ -381,8 +401,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
         if (requestCode == RESULT_LOAD_VIDEO && resultCode == RESULT_OK && null != data) {
             Uri videoUri = data.getData();
             setVideo(videoUri);
-
-
             /*CropImage.activity(imageUri).setAspectRatio(4,3)
                     .start(this);*/
         }
@@ -425,21 +443,20 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             if(index<=i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-//                    buttons.get(index).setText(String.valueOf(i+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 
         }
     }
-int startDate=0,startYear=0,startMonth=0;
+
+    int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
-    private void setDate(final EditText edt_dob) {
+    private void setDate(final AppCompatEditText edt_dob) {
 
         Calendar c = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
                 if(edt_dob.getId()==R.id.edt_startdate) {
                     startYear = year;
                     startDate = dayOfMonth;
@@ -462,13 +479,13 @@ int startDate=0,startYear=0,startMonth=0;
             }else {
                 showMessage("Please select first Starting date and time");
                 return;
-        }
+            }
         }
         datePickerDialog.show();
     }
 
     TimePickerDialog timePickerDialog;
-    private void setTime(final EditText time) {
+    private void setTime(final AppCompatEditText time) {
 
         Calendar c = Calendar.getInstance();
         timePickerDialog = new TimePickerDialog(this, R.style.datepicker, new TimePickerDialog.OnTimeSetListener() {
@@ -482,7 +499,6 @@ int startDate=0,startYear=0,startMonth=0;
                     calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                     calendar.set(Calendar.MINUTE, minute);
                     Date date = calendar.getTime();
-
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat();
                     simpleDateFormat.applyPattern("HH:mm:ss");
                     time.setText(simpleDateFormat.format(date));
@@ -499,17 +515,28 @@ int startDate=0,startYear=0,startMonth=0;
     }
 
     @Override
-    public void onChallengeUpdated(Challenge result) {
-        userSession.saveJackpot(result);
-        Intent intent=new Intent(this, JackpotAudienceActivity.class);
-        intent.putExtra("challengeId",result.getChallengeId());
-        startActivity(intent);
+    public void onCompanyRegister(Company company) {
+
     }
 
     @Override
-    public void onEditView(int view, int position) {
-          sizePos=position;
-        if(lables.length>position)
-        edt_video_sizes.setText(lables[position]);
+    public void onChallengeResponse(Challenge challenge) {
+
+
+        userSession.setSponsorChallenge(challenge.getChallengeId());
+        userSession.savaChallenge(challenge);
+        userSession.setSponsorIds(null);
+        Intent intent=new Intent(this, SponsorAudienceActivity.class);
+        startActivity(intent);
+//        intent.putExtra("challenge_type",1);
+//        startActivity(intent);
+
     }
+
+    @Override
+    public void onEditView(int view, int pos) {
+               sizePos=pos;
+               edt_video_sizes.setText(lables[pos]);
+    }
+
 }

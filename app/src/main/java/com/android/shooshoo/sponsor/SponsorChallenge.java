@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.CompanyProfileActivity;
 import com.android.shooshoo.adapter.CompanyListAdapter;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.Company;

@@ -39,7 +39,7 @@
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="105dp"
         android:scaleType="centerCrop"
         android:src="@drawable/drink_challange"
         />
@@ -58,6 +58,7 @@
             android:lineSpacingMultiplier="0.8"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
+            android:textSize="12sp"
             android:textColor="#FFF" />
     <TextView
         android:id="@+id/sub_title"
@@ -71,7 +72,7 @@
         android:maxLines="1"
         android:layout_marginLeft="2dp"
         android:layout_marginRight="2dp"
-        android:textSize="12sp"
+        android:textSize="10sp"
         android:text="Subtitle"
         />
     <RelativeLayout
@@ -89,6 +90,7 @@
             android:gravity="center"
             android:text="5000 €"
             android:padding="1dp"
+            android:textSize="12sp"
             android:background="@color/pink_drak"
             android:fontFamily="@font/raleway_extrabold"
             android:layout_alignParentLeft="true"
@@ -100,7 +102,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|right"
             android:text="2h ago"
-            android:textSize="12sp"
+            android:textSize="10sp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:fontFamily="@font/raleway_medium"

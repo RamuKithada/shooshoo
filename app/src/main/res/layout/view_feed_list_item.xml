@@ -130,96 +130,6 @@
                 android:layout_alignParentRight="true"
                 android:background="#BE000000"
                 >
-                <LinearLayout
-                    android:id="@+id/comment_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    >
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/comments"
-                        android:padding="5dp"
-                        android:layout_gravity="center"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white_text"
-                        android:text="Comments"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:textSize="12sp"
-
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/donation_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    >
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/donations"
-                        android:padding="5dp"
-                        android:layout_gravity="center"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textColor="@color/white_text"
-                        android:text="Donations"
-
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/likes_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    >
-                    <ImageView
-                        android:id="@+id/iv_like"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/like_normal"
-                        android:layout_gravity="center"
-                        android:padding="5dp"
-                        />
-                    <TextView
-                        android:id="@+id/tv_like_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:textColor="@color/white_text"
-                        android:text="80.06K"
-                        android:textSize="12sp"
-
-                        />
-
-                </LinearLayout>
 
 
 
@@ -230,13 +140,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="right|center_vertical"
+                android:gravity="center_horizontal"
                 android:padding="5dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginBottom="30dp"
                 android:layout_above="@+id/options_layout_horizontal"
                 android:background="#BE000000"
                 >
-
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -292,6 +202,93 @@
                         />
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/comment_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/comments"
+                        android:padding="5dp"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white_text"
+                        android:text="Comments"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textSize="12sp"
+
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/donation_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+
+                    >
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/donations"
+                        android:padding="5dp"
+                        android:layout_gravity="center_horizontal"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:text="Donations"
+
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/likes_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/like_normal"
+                        android:layout_gravity="center"
+                        android:padding="5dp"
+                        />
+                    <TextView
+                        android:id="@+id/tv_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/white_text"
+                        android:text="80.06K"
+                        android:textSize="12sp"
+
+                        />
+
+                </LinearLayout>
+
 
 
 

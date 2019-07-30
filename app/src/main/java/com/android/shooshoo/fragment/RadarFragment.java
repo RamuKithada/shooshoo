@@ -2,6 +2,8 @@ package com.android.shooshoo.fragment;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -186,4 +188,5 @@ public class RadarFragment extends Fragment implements OnRadarListener {
         popupWindow.showAsDropDown(radarView, x, -(radarView.getHeight()-y));
 
     }
+
 }

@@ -24,13 +24,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:textSize="10sp"
             android:maxLines="1"
             android:maxEms="10"
             android:text="category"
-            android:visibility="gone"
-            android:textColor="#96918F"
+            android:visibility="visible"
+            android:textColor="@color/white_text"
 
             />
 

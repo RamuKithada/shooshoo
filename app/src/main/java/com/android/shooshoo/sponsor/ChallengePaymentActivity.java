@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.HomeActivity;
 import com.android.shooshoo.models.Challenge;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -169,7 +171,7 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
             case R.id.btn_next:
                 userSession.setSponsorChallenge(null);
                 userSession.savaChallenge(null);
-                Intent homeIntent=new Intent(this,HomeActivity.class);
+                Intent homeIntent=new Intent(this, HomeActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(homeIntent);
                 break;

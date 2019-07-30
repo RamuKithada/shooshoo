@@ -62,7 +62,8 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
 
                        }
                    catViewHolder.brand.setBackgroundColor(Color.parseColor("#F31F68"));
-                   catViewHolder.brand.setText(challenge.getTotalPrize().replaceAll(".00",""));
+                   catViewHolder.brand.setText(ApiUrls.removeDecimals(challenge.getTotalPrize())+" "+challenge.getCurrency());
+
                }
                  else if(challenge.getType().equalsIgnoreCase("jackpot"))
                {
@@ -74,10 +75,7 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                        builder.append(' ').append(challenge.getLastName());
 
                    catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
-                   catViewHolder.brand.setText(challenge.getAmount().replace(".00",""));
-
-
-
+                   catViewHolder.brand.setText(ApiUrls.removeDecimals(challenge.getAmount())+" "+challenge.getCurrency());
                }
 
               Picasso.with(context)

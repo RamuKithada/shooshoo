@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,16 +21,25 @@ import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.ProfileView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
@@ -40,8 +50,6 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     @BindView(R.id.rv_list_brand)
     RecyclerView brandRecyclerView;
 
-
-
     @BindView(R.id.bottom_view)
     RelativeLayout bottomNavigation;
 
@@ -51,7 +59,8 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     TextView profile_name;
     @BindView(R.id.followers_count)
     TextView followers_count;
-
+    @BindView(R.id.tv_follow)
+    TextView tv_follow;
 
     @BindView(R.id.profile_description)
     TextView profile_quotes;
@@ -71,7 +80,7 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     UserSession userSession;
     ProfilePresenter presenter;
     List<Brand> brandList=new ArrayList<Brand>();
-    String userId=null;
+    String userId=null,follow;
 
 
    View.OnClickListener tabsOnClickListener=new View.OnClickListener() {
@@ -106,6 +115,12 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
         connectionDetector=new ConnectionDetector(this);
         userSession=new UserSession(this);
         userId=getIntent().getStringExtra("userId");
+        follow=getIntent().getStringExtra("follow");
+        if(follow.equalsIgnoreCase("1")){
+            tv_follow.setText("Follow");
+        }else {
+            tv_follow.setText("Unfollow");
+        }
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         brandRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false));
@@ -121,6 +136,14 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
         if(connectionDetector.isConnectingToInternet()){
             presenter.loadProfile(userId);
         }
+
+        tv_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                followUser();
+
+            }
+        });
 
 
 
@@ -191,4 +214,58 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     public void onPageScrollStateChanged(int i) {
 
     }
+    public void followUser(){
+
+     showProgressIndicator(true);
+        RetrofitApis  retrofitApis=RetrofitApis.Factory.create(this);
+              retrofitApis.followUser(userSession.getUserId(),userId).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                  showProgressIndicator(false);
+
+                    if(response.isSuccessful()){
+                        try {
+                            String res=  response.body().string();
+                            JSONObject object=new JSONObject(res);
+                            String msg=object.optString("message");
+                            int status=object.optInt("status");
+                            if(status==1){
+                                toogleFollow();
+                            }
+                            showMessage(msg);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                   showProgressIndicator(false);
+                      showMessage(t.getMessage());
+
+
+                }
+            });
+
+
+        }
+
+    private void toogleFollow() {
+        if(tv_follow.getText().toString().equalsIgnoreCase("follow")){
+            tv_follow.setText("Unfollow");
+        }else {
+            tv_follow.setText("Follow");
+        }
+
+    }
+
+
 }

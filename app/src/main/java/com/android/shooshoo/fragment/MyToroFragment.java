@@ -170,7 +170,7 @@ FullVideoAdapter.FeedClickListener clickListener=new FullVideoAdapter.FeedClickL
 
         if(feeds.isEmpty())
         if(connectionDetector.isConnectingToInternet())
-               feedsPresenter.loadFeeds(string,limit,0);
+               feedsPresenter.loadFeeds(string,limit,0,userSession.getUserId());
         else
             showMessage("Check Internet connection");
     }
@@ -242,7 +242,7 @@ showMessage(getContext().getString(stringId));
         Log.e("currentPage-->"+currentPage,"TOTAL_PAGES-->"+TOTAL_PAGES);
         if (currentPage < TOTAL_PAGES) {
             if (connectionDetector.isConnectingToInternet())
-                feedsPresenter.loadFeeds(string,limit,feeds.size());
+                feedsPresenter.loadFeeds(string,limit,feeds.size(),userSession.getUserId());
             else
                 showMessage("Check Internet connection");
             adapter.addLoadingFooter();

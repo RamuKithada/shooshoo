@@ -198,4 +198,7 @@ public class ApiUrls {
     }
 
 
+    public static String removeDecimals(String s) {
+        return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
 }

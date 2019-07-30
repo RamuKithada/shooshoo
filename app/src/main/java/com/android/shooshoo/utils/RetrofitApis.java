@@ -273,7 +273,7 @@ public interface RetrofitApis {
     Call<ChallengeFeeds> getChallengeFeeds();
       @FormUrlEncoded
      @POST("feeds")
-     Call<FeedsResponse> loadFeeds(@Field("type") String type ,@Field("offset") String offset,@Field("limit") String limit);
+     Call<FeedsResponse> loadFeeds(@Field("type") String type ,@Field("offset") String offset,@Field("limit") String limit,@Field("userId") String userId);
     @FormUrlEncoded
     @POST("likeFeed")
     Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId);

@@ -155,7 +155,7 @@ public class GridFragment extends Fragment implements FeedsView {
 
         if(feeds.isEmpty())
         if(connectionDetector.isConnectingToInternet())
-            feedsPresenter.loadFeeds(string,limit,0);
+            feedsPresenter.loadFeeds(string,limit,0,"");
         else
             showMessage("Check Internet connection");
     }
@@ -178,7 +178,7 @@ public class GridFragment extends Fragment implements FeedsView {
     private void loadNextPage() {
         if (currentPage <= TOTAL_PAGES) {
             if (connectionDetector.isConnectingToInternet())
-                feedsPresenter.loadFeeds(string,limit,feeds.size());
+                feedsPresenter.loadFeeds(string,limit,feeds.size(),"");
             else
                 showMessage("Check Internet connection");
             adapter.addLoadingFooter();

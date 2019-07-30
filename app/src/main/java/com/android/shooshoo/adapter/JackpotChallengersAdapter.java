@@ -50,7 +50,7 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
                     .into(catViewHolder.imageView);
             catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
             catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
-            catViewHolder.brand.setText(challenge.getAmount());
+            catViewHolder.brand.setText(ApiUrls.removeDecimals(challenge.getAmount())+" "+challenge.getCurrency());
             StringBuilder builder=new StringBuilder();
             if(challenge.getFirstName()!=null)
                 builder.append(challenge.getFirstName());

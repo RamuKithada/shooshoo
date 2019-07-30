@@ -53,6 +53,7 @@ public class HomeBrandAdapter extends RecyclerView.Adapter<HomeBrandAdapter.CatV
              @Override
              public void onClick(View v) {
                  Intent intent=new Intent(context, CompanyDetailsActivity.class);
+                 intent.putExtra("brand",brandList.get(i));
                  context.startActivity(intent);
              }
          });

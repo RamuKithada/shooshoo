@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.jackpot;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.HomeActivity;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.squareup.picasso.Picasso;
