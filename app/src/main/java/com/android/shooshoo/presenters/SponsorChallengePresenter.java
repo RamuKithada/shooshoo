@@ -1,13 +1,18 @@
 package com.android.shooshoo.presenters;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.models.CompanyResponse;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.SponsorChallengeView;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -115,6 +120,9 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
    public void createChallenge(String  userId,String  sponsoredBy,int privateSponsor,String challName,String  startDate,String  startTime,
                                String  endDate,String  endtime,String  description,String  photoEntries,
                                String  videoEntries,String  videoLength,String  bannerImage,String challVideo){
+
+
+
 
 
        String  maxLength=videoLength;

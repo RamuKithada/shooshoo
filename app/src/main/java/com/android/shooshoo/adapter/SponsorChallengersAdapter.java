@@ -73,6 +73,8 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
                        builder.append(challenge.getFirstName());
                    if(challenge.getLastName()!=null)
                        builder.append(' ').append(challenge.getLastName());
+                   if(builder.length()<=0)
+                       builder.append(challenge.getUserName());
 
                    catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
                    catViewHolder.brand.setText(ApiUrls.removeDecimals(challenge.getAmount())+" "+challenge.getCurrency());
@@ -80,8 +82,8 @@ public class SponsorChallengersAdapter extends RecyclerView.Adapter<SponsorChall
 
               Picasso.with(context)
                       .load(uri+challenge.getBannerImage())
-                      .error(R.drawable.rose)
-                      .placeholder(R.drawable.rose)
+                      .error(R.drawable.error)
+                      .placeholder(R.drawable.giphy)
                       .into(catViewHolder.imageView);
               catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
               catViewHolder.subtitle.setText(builder.toString());

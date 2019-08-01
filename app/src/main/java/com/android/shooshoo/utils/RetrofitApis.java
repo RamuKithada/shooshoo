@@ -351,6 +351,11 @@ public interface RetrofitApis {
 
 
     @FormUrlEncoded
+    @POST("savebrand")
+    Call<ResponseBody> saveBrand(@Field("userId") String userId,@Field("companyId") String companyId);
+
+
+    @FormUrlEncoded
     @POST("reportChallenge")
     Call<ResponseBody> reportChallenge(@Field("userId") String userId,@Field("challengeId") String challengeId,@Field("type") String type );
 

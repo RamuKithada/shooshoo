@@ -48,7 +48,7 @@ public class JackpotChallengersAdapter extends RecyclerView.Adapter<JackpotChall
                     .error(R.drawable.rose)
                     .placeholder(R.drawable.rose)
                     .into(catViewHolder.imageView);
-            catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+            catViewHolder.time.setText(ApiUrls.getDurationTimeStamp(challenge.getEndDate()+" "+challenge.getEndTime()));
             catViewHolder.brand.setBackgroundColor(Color.parseColor("#549BC1"));
             catViewHolder.brand.setText(ApiUrls.removeDecimals(challenge.getAmount())+" "+challenge.getCurrency());
             StringBuilder builder=new StringBuilder();

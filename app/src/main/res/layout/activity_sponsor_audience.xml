@@ -97,7 +97,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:weightSum="4"
+                        android:weightSum="3"
                         >
 
 
@@ -118,7 +118,7 @@
                             />
                         <RelativeLayout
                             android:layout_width="0dp"
-                            android:layout_weight="3"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content">
                             <LinearLayout
                                 android:id="@+id/product_lay"
@@ -350,10 +350,10 @@
                     android:text="National"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:background="#00FFFFFF"
+                    android:background="#00F31F68"
                     android:fontFamily="@font/raleway_extrabold"
                     android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#F31F68"
 
                     />
                 </RelativeLayout>
@@ -403,7 +403,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
                         android:hint="Country"
                         android:focusable="false"
                         android:clickable="true"
@@ -446,7 +445,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
                         android:hint="City"
                         android:focusable="false"
                         android:clickable="true"
@@ -502,7 +500,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:background="#00FFFFFF"
-                    android:layout_margin="5dp"
                     android:textColor="#FFFFFF"
                     android:inputType="textPersonName"
                     android:textColorHint="#CCCCCC"
@@ -520,7 +517,7 @@
                 android:id="@+id/region_lay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 >
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/region_title"
@@ -562,7 +559,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
                     android:hint="Region"
                     android:focusable="false"
                     android:clickable="true"
@@ -671,7 +667,6 @@
                             android:layout_height="wrap_content"
                             android:minWidth="40dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_margin="5dp"
                             android:text=""
                             android:hint="Start"
                             android:paddingRight="15dp"
@@ -694,7 +689,6 @@
                     android:layout_height="wrap_content"
                     android:minWidth="40dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
                     android:text=""
                     android:hint="End"
                     android:paddingRight="15dp"
@@ -732,7 +726,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/raleway_medium"
                         android:drawableRight="@drawable/selector_check"
-                        android:textSize="20sp"
+                        android:textSize="14sp"
                         android:buttonTint="@color/colorAccent"
                         android:button="@null"
                         android:checked="true"
@@ -758,7 +752,7 @@
                         android:layout_centerVertical="true"
                         android:drawableRight="@drawable/selector_check"
                         android:buttonTint="@color/colorAccent"
-                        android:textSize="20sp"
+                        android:textSize="14sp"
                         android:button="@null"
                         android:checked="true"
                         android:drawablePadding="5dp"
@@ -811,7 +805,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
                         android:hint="Language"
                         android:focusable="false"
                         android:clickable="true"

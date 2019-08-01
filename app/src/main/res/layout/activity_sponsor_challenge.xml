@@ -104,7 +104,7 @@
                         android:layout_margin="5dp"
                         android:padding="10dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/plus_icon2"
+                        android:src="@drawable/plus_thin"
                         />
                     <TextView
                         android:layout_width="wrap_content"

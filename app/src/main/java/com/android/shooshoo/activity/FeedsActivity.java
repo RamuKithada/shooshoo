@@ -183,6 +183,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         iv_chat.setOnClickListener(this);
         iv_grid_toggle.setOnClickListener(this);
         iv_profile.setOnClickListener(this);
+        detector=new ConnectionDetector(this);
         showFullFragment();
 
 
@@ -795,7 +796,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,102);
                 else {
+                    if(detector.isConnectingToInternet())
                     feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
+                    else showMessage(R.string.internet_msg);
                 }
                 break;
             case R.id.share_view:
@@ -807,15 +810,18 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 if(!userSession.isLogin())
                     startActivityForResult(intent,103);
                 else {
-
+                    if(detector.isConnectingToInternet())
                     feedsPresenter.followUser(userSession.getUserId(),feed.getUserId());
+                    else showMessage(R.string.internet_msg);
                 }
                 break;
             case R.id.tv_report:
                 if(!userSession.isLogin())
                     startActivityForResult(intent,110);
                 else {
-                    feedsPresenter.reportPost(userSession.getUserId(),feed.getId());
+                    if(detector.isConnectingToInternet())
+                        feedsPresenter.reportPost(userSession.getUserId(),feed.getId());
+                    else showMessage(R.string.internet_msg);
                 }
                 break;
             case R.id.profile_lay:
@@ -835,7 +841,10 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     public void onView(Feed feed) {
         if(userSession.isLogin()){
         this.feed=feed;
-        feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
+            if(detector.isConnectingToInternet())
+                feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
+            else showMessage(R.string.internet_msg);
+
         }
     }
     @Override

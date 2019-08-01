@@ -36,7 +36,7 @@ Runnable runnable=new Runnable() {
         if(detector.isConnectingToInternet())
         new Handler().postDelayed(runnable,2000);
         else{
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.datepicker);
             // Add the buttons
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {

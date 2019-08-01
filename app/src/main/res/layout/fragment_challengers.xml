@@ -193,6 +193,7 @@
                 android:text="Challenge Creator"
                 android:fontFamily="@font/raleway_extrabold"
                 android:textSize="22sp"
+                android:textAllCaps="true"
                 android:textColor="#FFF"
                 android:padding="10dp"
 

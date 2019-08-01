@@ -7,10 +7,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.android.shooshoo.R;
 
@@ -21,7 +24,7 @@ public class CustomListFragmentDialog extends DialogFragment {
 
     String[] names;
     RecyclerView rv;
-    SearchView search_view;
+    EditText search_view;
     DialogListAdapter adapter;
     FragmentListDialogListener clickListener;
 
@@ -51,7 +54,23 @@ public class CustomListFragmentDialog extends DialogFragment {
 
         search_view=rootView.findViewById(R.id.search_view);
         if(names.length>10) {
-            search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            search_view.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    adapter.getFilter().filter(s);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+            /*new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String s) {
                     return false;
@@ -59,10 +78,10 @@ public class CustomListFragmentDialog extends DialogFragment {
 
                 @Override
                 public boolean onQueryTextChange(String s) {
-                    adapter.getFilter().filter(s);
+
                     return true;
                 }
-            });
+            }*/
         }else
             search_view.setVisibility(View.GONE);
 

@@ -381,7 +381,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                     regionsAdapter.add(regions.remove(region_pos));
                     region_pos=-1;
                     edt_region.setText("Region");
-                    edt_region.setError(null);
                 }
                 break;
             case R.id.btn_more_languages:
@@ -389,7 +388,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                     languagesAdapter.add(languages.remove(languages_pos));
                     languages_pos=-1;
                     edt_language.setText("Language");
-                    edt_language.setError(null);
                 }
                 break;
 
@@ -507,7 +505,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
     private boolean validate() {
         if(!ApiUrls.validateString(edt_amount.getText().toString())){
-            edt_amount.setError("Enter amount");
+            showMessage("Enter amount");
             edt_amount.requestFocus();
             return false;
         }
@@ -527,7 +525,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             return false;
         }
         if(!ApiUrls.validateString(edt_limited_access.getText().toString())) {
-            edt_limited_access.setError("Enter Limited access");
+            showMessage("Enter Limited access");
             edt_limited_access.requestFocus();
             return false;
         }
@@ -538,7 +536,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 return false;
             }
             if (!ApiUrls.validateString(edt_zipcode.getText().toString())) {
-                edt_zipcode.setError("Enter ZipCode ");
+                showMessage("Enter ZipCode ");
                 edt_zipcode.requestFocus();
                 return false;
             }
@@ -550,7 +548,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             }
 
             if (!ApiUrls.validateString(edt_miles.getText().toString())) {
-                edt_miles.setError("Enter miles for challenge range");
+                showMessage("Enter miles for challenge range");
                 edt_miles.requestFocus();
                 return false;
             }
@@ -610,7 +608,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         }
           if(languages_pos<0&&languagesAdapter.getItemCount()<=0)
           {
-              edt_language.setError("Select At Least one language");
+             showMessage("Select At Least one language");
               edt_language.requestFocus();
               return false;
           }
@@ -786,7 +784,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 if(cities!=null)
                 {
                     edt_city.setText(cities.get(position).getCityName());
-                    edt_city.setError(null);
                     city=cities.get(position);
                     city_pos=position;
                 }
@@ -796,7 +793,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 {
                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
                     edt_country.setText(countries.get(position).getCountryName());
-                    edt_city.setError(null);
                     country_pos=position;
                     country=countries.get(position);
                 }
@@ -806,7 +802,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 if(regions!=null)
                 {
                     edt_region.setText(regions.get(position).getRegName());
-                    edt_region.setError(null);
                     region_pos=position;
                 }
 
@@ -815,7 +810,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 if(languages!=null)
                 {
                     edt_language.setText(languages.get(position).getName());
-                    edt_language.setError(null);
                     languages_pos=position;
                 }
 

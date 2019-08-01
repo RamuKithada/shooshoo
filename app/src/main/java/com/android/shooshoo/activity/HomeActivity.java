@@ -100,7 +100,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 fragmentManager.beginTransaction().replace(R.id.home_fragment_container, HomeFragment.newInstance("Hi","Ram"),"home").commit();
                 break;
             case R.id.navigation_challengers:
-                mTextMessage.setText(R.string.title_challengers);
+                mTextMessage.setText(R.string.my_challenges);
                 iv_chat.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.VISIBLE);
                 iv_search.setVisibility(View.GONE);

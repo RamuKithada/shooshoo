@@ -14,9 +14,11 @@ import com.android.shooshoo.activity.CompanyProfileActivity;
 import com.android.shooshoo.adapter.CompanyListAdapter;
 import com.android.shooshoo.models.BrandsResult;
 import com.android.shooshoo.models.Company;
+import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.PaginationScrollListener;
 import com.android.shooshoo.utils.RetrofitApis;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
 public class SponsorChallenge extends BaseActivity implements View.OnClickListener, CompanyListAdapter.SelectedChangeListener {
 
@@ -57,6 +61,9 @@ public class SponsorChallenge extends BaseActivity implements View.OnClickListen
         @BindView(R.id.private_sponsor)
         LinearLayout privateChallenge;
 
+        @BindView(R.id.profile_pic)
+        ImageView profile_pic;
+
         @BindView(R.id.company_register)
         LinearLayout comapanyRegiser;
 
@@ -85,6 +92,10 @@ public class SponsorChallenge extends BaseActivity implements View.OnClickListen
         connectionDetector=new ConnectionDetector(this);
         companyListAdapter=new CompanyListAdapter(this,brandList);
         companyListAdapter.setSelectedChangeListener(this);
+        UserInfo userInfo=userSession.getUserInfo();
+        if(userInfo!=null)
+        Picasso.with(getContext()).load(PROFILE_IMAGE_URL+userInfo.getImage()).placeholder(R.drawable.giphy).error(R.drawable.error).into(profile_pic);
+
         GridLayoutManager gridLayoutManager=new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(companyListAdapter);

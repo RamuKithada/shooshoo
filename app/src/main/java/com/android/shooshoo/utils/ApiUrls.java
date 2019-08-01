@@ -34,6 +34,7 @@ public class ApiUrls {
     public static final String PRIVATE="privates";
     public static final String ENTERED="entered";
     public static final String SAVED="saved";
+    public static final String FINAL="finals";
     public static final String CREATED="created";
     public static final String BASE_URL="http://165.22.94.168/api/service/";//http://testingmadesimple.org/shooshoo/api/service/";
     public static  final String DEVICE_TYPE="android";
@@ -142,12 +143,12 @@ public class ApiUrls {
             CharSequence relativeDate =
                     DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
                             0L,DateUtils.FORMAT_ABBREV_RELATIVE);
-//            String actcualDate=relativeDate.toString();
-//            String output=null;
-//            output=actcualDate;
-//            if(actcualDate.toLowerCase().contains("in")){
-//                output=actcualDate.replaceAll("In","")+" left";
-//            }
+            String actcualDate=relativeDate.toString();
+            String output=null;
+            output=actcualDate;
+            if(actcualDate.toLowerCase().contains("in")){
+                relativeDate=actcualDate.replaceAll("In","")+" left";
+            }
 
             return relativeDate.toString();
         }catch (ParseException e){
@@ -200,5 +201,24 @@ public class ApiUrls {
 
     public static String removeDecimals(String s) {
         return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
+    }
+
+    public static String ChangeDateFormate(String date) {
+        Log.i("date before",date);
+        SimpleDateFormat inFormat=new SimpleDateFormat("dd-MM-yyyy");
+        try
+        {
+            Date date1=inFormat.parse(date);
+            SimpleDateFormat outFormat= new SimpleDateFormat("yyyy-MM-dd");
+            date=outFormat.format(date1);
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        Log.i("date after",date);
+
+    return date;
+
     }
 }

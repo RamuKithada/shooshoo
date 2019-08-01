@@ -134,6 +134,8 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     ConnectionDetector connectionDetector;
     ArrayList<String> sponsorIds=new ArrayList<>();
     List<Category> categories=null;
+    CustomListFragmentDialog showFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
@@ -160,11 +162,15 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
         btn_more_companies.setOnClickListener(this);
-        title.setText("Company Profile");
+        title.setText("COMPANY INFORMATION");
         setStage(0);
         edt_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(showFragment!=null)
+                    if(showFragment.isVisible())
+                    return;
+
                 if(categories==null)
                 {
                     showMessage("There no categories to select");
@@ -177,7 +183,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                     lables[index]=categories.get(index).getCategoryName();
                 }
 
-                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                 showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",edt_category.getId());
@@ -268,119 +274,108 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     private boolean validate() {
         if(newsImage==null){
-            showMessage("Please Select logo for your company");
+            showMessage("Please upload your company logo");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_company_name.getText().toString()))
         {
-            edt_company_name.requestFocus();
-            edt_company_name.setError("Please enter Company Name");
+            showMessage("Please enter Company Name");
         return false;
         }
         if(edt_company_name.getText().toString().length()<2)
         {
-            edt_company_name.setError("Company Name is too Short");
+            showMessage("Company Name contain at least 2 characters and maximum 70 characters");
             return false;
         }
         if(edt_company_name.getText().toString().length()>70)
         {
-            edt_company_name.setError("Company Name is too Long");
+            showMessage("Company Name contain at least 2 characters and maximum 70 characters");
             return false;
         }
 
         if(category_pos<0)
         {
-            edt_category.requestFocus();
-            edt_category.setError("Please select your a Category");
+            showMessage("Please select your a Category");
             return false;
         }
 
         if(country_pos<0)
         {
-            edt_country.requestFocus();
-            edt_country.setError("Please select your Country");
+
+            showMessage("Please select  Country");
+
             return false;
         }
         if(city_pos<0)
         {
-            edt_city.requestFocus();
-            edt_city.setError("Please select your City");
+            showMessage("Please select  City");
             return false;
         }
         if(!ApiUrls.validateString(edt_zipcode.getText().toString()))
         {
-            edt_zipcode.requestFocus();
-            edt_zipcode.setError("Please enter Zipcode");
+            showMessage("Please enter Zip Code");
             return false;
         }
 
         if(edt_zipcode.getText().toString().length()<3)
         {
-            edt_zipcode.setError("ZipCode is too Short");
+            showMessage("Zip code have at least 3 characters");
             return false;
         }
         if(edt_zipcode.getText().toString().length()>10)
         {
-            edt_zipcode.setError("ZipCode is too Long");
+            showMessage("Zip code have maximum 10 characters");
             return false;
         }
         if(!ApiUrls.validateString(edt_Street.getText().toString()))
         {
-            edt_Street.requestFocus();
-            edt_Street.setError("Please enter Street Name");
+            showMessage("Please enter Street");
             return false;
         }
         if(edt_Street.getText().toString().length()<3)
         {
-            edt_Street.setError("Street Name is too Short");
-            edt_Street.requestFocus();
+            showMessage(" Street  have at least 3 characters");
             return false;
         }
         if(edt_Street.getText().toString().length()>225)
         {
-            edt_Street.setError("Street Name  is too Long");
-            edt_Street.requestFocus();
+            showMessage(" Street  have maximum 255 characters");
+
             return false;
         }
 
 
         if(!ApiUrls.validateString(edt_mobile.getText().toString()))
         {
-            edt_mobile.requestFocus();
-            edt_mobile.setError("Please enter Mobile Number");
+            showMessage("Please enter Mobile Number");
             return false;
         }
        if (edt_mobile.getText().toString().length()<4)
        {
-           edt_mobile.requestFocus();
-           edt_mobile.setError("Please enter valid Mobile Number");
+           showMessage("Please enter valid Mobile Number");
            return false;
        }
 
         if (edt_mobile.getText().toString().length()>15)
         {
-            edt_mobile.requestFocus();
-            edt_mobile.setError("Please enter valid Mobile Number");
+            showMessage("Please enter valid Mobile Number");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_tax_number.getText().toString()))
         {
-            edt_tax_number.requestFocus();
-            edt_tax_number.setError("Please enter Tax Number");
+            showMessage("Please enter Tax Number");
             return false;
         }
         if(edt_tax_number.getText().toString().length()<5)
         {
-            edt_tax_number.requestFocus();
-            edt_tax_number.setError("Tax Number is Too Short");
+            showMessage("Tax Number is Too Short");
             return false;
         }
         if(edt_tax_number.getText().toString().length()>20)
         {
-            edt_tax_number.requestFocus();
-            edt_tax_number.setError("Tax Number is too Long");
+            showMessage("Tax Number is too Long");
             return false;
         }
 
@@ -388,91 +383,77 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
         if(!ApiUrls.validateString(edt_first_name.getText().toString()))
         {
-            edt_first_name.requestFocus();
-            edt_first_name.setError("Please enter First Name");
+            showMessage("Please enter First Name");
             return false;
         }
 
         if(edt_first_name.getText().toString().length()<2)
         {
-            edt_first_name.requestFocus();
-            edt_first_name.setError("First Name is Too Short");
+            showMessage("First Name is Too Short");
             return false;
         }
         if(edt_first_name.getText().toString().length()>70)
         {
-            edt_first_name.requestFocus();
-            edt_first_name.setError("First Name is too Long");
+            showMessage("First Name is too Long");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_last_name.getText().toString()))
         {
-            edt_last_name.requestFocus();
-            edt_last_name.setError("Please enter Last Name");
+            showMessage("Please enter Last Name");
             return false;
         }
         if(edt_last_name.getText().toString().length()<2)
         {
-            edt_last_name.requestFocus();
-            edt_last_name.setError("Last Name is Too Short");
+            showMessage("Last Name is Too Short");
             return false;
         }
         if(edt_last_name.getText().toString().length()>70)
         {
-            edt_last_name.requestFocus();
-            edt_last_name.setError("Last Name is too Long");
+            showMessage("Last Name is too Long");
             return false;
         }
 
 
         if(!ApiUrls.validateString(edt_user_email.getText().toString()))
         {
-            edt_user_email.requestFocus();
-            edt_user_email.setError("Please enter email");
+            showMessage("Please enter email");
             return false;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(edt_user_email.getText().toString()).matches()){
-            edt_user_email.requestFocus();
-            edt_user_email.setError("Please enter valid email");
+            showMessage("Please enter valid email");
             return false;
         }
 
         if(edt_user_email.getText().toString().length()<6)
         {
-            edt_user_email.requestFocus();
-            edt_user_email.setError("Email is Too Short");
+            showMessage("Email is Too Short");
             return false;
         }
         if(edt_user_email.getText().toString().length()>70)
         {
-            edt_user_email.requestFocus();
-            edt_user_email.setError("Email is too Long");
+            showMessage("Email is too Long");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_company_business_email.getText().toString()))
         {
-            edt_company_business_email.requestFocus();
-            edt_company_business_email.setError("Please enter company  email");
+            showMessage("Please enter company  email");
             return false;
         }
         if(!Patterns.EMAIL_ADDRESS.matcher(edt_company_business_email.getText().toString()).matches()){
-            edt_company_business_email.requestFocus();
-            edt_company_business_email.setError("Please enter valid email");
+            showMessage("Please enter valid email");
             return false;
         }
 
         if(edt_company_business_email.getText().toString().length()<6)
         {
-            edt_company_business_email.requestFocus();
-            edt_company_business_email.setError("Email is Too Short");
+            showMessage("Email is Too Short");
             return false;
         }
         if(edt_company_business_email.getText().toString().length()>70)
         {
-            edt_company_business_email.requestFocus();
-            edt_company_business_email.setError("Email is too Long");
+            showMessage("Email is too Long");
             return false;
         }
 
@@ -540,11 +521,13 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
     /**
      * getGalleryImages is used to call the gallery to select the images to select logo of the company .
      */
+    boolean isclicked=false;
     private void getGalleryImages() {
+if(isclicked)return;
 
+isclicked=true;
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setCropMenuCropButtonTitle("Choose a Picture")
                 .start(this);
 //
 //        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -575,6 +558,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        isclicked=false;
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri imageUri = data.getData();
             CropImage.activity(imageUri).setAspectRatio(4,3)
@@ -622,7 +606,10 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                if(showFragment!=null)
+                    if(showFragment.isVisible())
+                    return;
+                 showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());
@@ -662,7 +649,11 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+
+                if(showFragment!=null)
+                    if(showFragment.isVisible())
+                    return;
+                 showFragment=new CustomListFragmentDialog();
                 Bundle args = new Bundle();
                 args.putStringArray("list",lables);
                 args.putInt("view",editText.getId());
@@ -761,7 +752,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
                     edt_country_code.setText("+"+countries.get(position).getPhoneCode());
                     edt_country.setText(countries.get(position).getCountryName());
-                    edt_city.setError(null);
+//                    edt_city.setError(null);
                     country_pos=position;
                     country=countries.get(position);
                 }
@@ -770,7 +761,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                 if(cities!=null)
                 {
                     edt_city.setText(cities.get(position).getCityName());
-                    edt_city.setError(null);
+//                    edt_city.setError(null);
                     city=cities.get(position);
                     city_pos=position;
                 }
@@ -779,11 +770,11 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                 if(categories!=null)
                 {
                     edt_category.setText(categories.get(position).getCategoryName());
-                    edt_category.setError(null);
+//                    edt_category.setError(null);
                     category_pos=position;
                 }
                 break;
         }
-
+showFragment=null;
     }
 }

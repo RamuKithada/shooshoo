@@ -136,7 +136,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
         connectionDetector=new ConnectionDetector(this);
         sponsorChallengePresenter =new SponsorChallengePresenter();
         sponsorChallengePresenter.attachView(this);
-        title.setText("The Challenge");
+        title.setText("Challenge");
         setStage(1);
         viewInitilization();
         if(getIntent().hasExtra("privateSponsor")){
@@ -190,8 +190,8 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             return;
                         }
                         sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,privateSponsor,edt_challenge_name.getText().toString(),
-                                edt_startdate.getText().toString(),edt_start_time.getText().toString(),edt_enddate.getText().toString()
-                                , edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
+                                ApiUrls.ChangeDateFormate(edt_startdate.getText().toString()),edt_start_time.getText().toString(),ApiUrls.ChangeDateFormate(edt_enddate.getText().toString())
+                                ,edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
                                 videos, lables[sizePos], challengeImageUri, challengeVideoUri);
 
                     } else showMessage("Please Check Internet connection");
@@ -229,27 +229,65 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
     private boolean validate() {
         if(!ApiUrls.validateString(edt_challenge_name.getText().toString())){
-            edt_challenge_name.setError("Please enter Challenge Name");
+            showMessage("Please enter Challenge Name");
             edt_challenge_name.requestFocus();
             return false;
         }
+
+
+        if(edt_challenge_name.getText().toString().length()<2){
+
+            showMessage("Challenge Name have at least 2 characters");
+            return false;
+
+        }
+        if(edt_challenge_name.getText().toString().length()>30){
+
+            showMessage("Challenge Name have maximum 30 characters");
+            edt_challenge_name.requestFocus();
+            return false;
+
+        }
+
+
+
+
+        if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
+            showMessage("Enter Challenge Headline");
+            edt_challenge_des.requestFocus();
+            return false;
+        }
+
+
+        if(edt_challenge_des.getText().toString().length()<2){
+            showMessage("Challenge Headline have at least 2 characters");
+            return false;
+        }
+        if(edt_challenge_des.getText().toString().length()>70){
+            showMessage("Challenge Headline have maximum 70 characters");
+            edt_challenge_des.requestFocus();
+            return false;
+        }
+
+
+
         if(!ApiUrls.validateString(edt_startdate.getText().toString())){
-            edt_startdate.setError("Select  Date");
+            showMessage("Select  Date");
             edt_startdate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_start_time.getText().toString())){
-            edt_start_time.setError("Select Time");
+            showMessage("Select Time");
             edt_start_time.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_enddate.getText().toString())){
-            edt_enddate.setError("Select Date");
+            showMessage("Select Date");
             edt_enddate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_end_time.getText().toString())){
-            edt_end_time.setError("Select Time");
+            showMessage("Select Time");
             edt_end_time.requestFocus();
             return false;
         }
@@ -275,26 +313,21 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             e.printStackTrace();
         }
 
-
-
-        if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
-            edt_challenge_des.setError("Provide Description");
-            edt_challenge_des.requestFocus();
+        if(!ch_video_entites.isChecked()&&!ch_photo_entites.isChecked()){
+            showMessage("Select at least one type from videos Entries and Photo Entries");
             return false;
         }
 
 
+        if(ch_video_entites.isChecked())
         if(sizePos<0){
             edt_video_sizes.requestFocus();
-            edt_video_sizes.setError("Please set Limit?");
+            showMessage("Please set Limit?");
             return false;
         }
 
 
-        if(!ch_video_entites.isChecked()&&!ch_photo_entites.isChecked()){
-            showMessage("Select atleast one type from videos Entries and Photo Entries");
-            return false;
-        }
+
 
 
         if(challengeImageUri==null)
@@ -462,9 +495,9 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                     startDate = dayOfMonth;
                     startMonth = month;
                 }
-                edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
+                edt_dob.setText(dayOfMonth + "-" + (month + 1) + "-" +year );
                 edt_dob.clearFocus();
-                edt_dob.setError(null);
+
 
             }
         },
@@ -492,7 +525,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 time.clearFocus();
-                time.setError(null);
+
                 time.setText(hourOfDay+"-"+minute);
                 try {
                     Calendar calendar = Calendar.getInstance();

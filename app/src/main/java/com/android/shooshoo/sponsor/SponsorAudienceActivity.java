@@ -232,20 +232,21 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
         @Override
         public void onChanged() {
             total=0;
+            totalWinners=0;
             for (PrizeBaseModel model:prices){
                 try {
 
 
                      double price=model.getPrizeAmount();
-                     total=+price;
-                     totalWinners=+model.getQuantity();
+                     total=total+price;
+                     totalWinners=totalWinners+model.getQuantity();
 
 
                 }catch (Exception e){
                     e.printStackTrace();
                 }
           }
-          tv_price_total.setText(String.valueOf(total));
+            tv_price_total.setText(String.valueOf(total));
             no_of_winners.setText(String.valueOf(totalWinners));
         }
     };
@@ -632,7 +633,6 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                     regionsAdapter.add(regions.remove(region_pos));
                     region_pos=-1;
                     edt_region.setText("Region");
-                    edt_region.setError(null);
                 }
                 break;
             case R.id.btn_more_languages:
@@ -640,7 +640,6 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                     languagesAdapter.add(languages.remove(languages_pos));
                     languages_pos=-1;
                     edt_language.setText("Language");
-                    edt_language.setError(null);
                 }
                 break;
 
@@ -723,7 +722,7 @@ StringBuilder languageBuilder=new StringBuilder();
             if(languageBuilder.length()<=0){
                 languageBuilder.append( this.languages.get(languages_pos).getId());
             }else {
-                languageBuilder.append(',').append( this.languages.get(region_pos).getId());
+                languageBuilder.append(',').append( this.languages.get(languages_pos).getId());
             }
 
         }
@@ -851,7 +850,7 @@ StringBuilder languageBuilder=new StringBuilder();
                   return false;
               }
               if(!ApiUrls.validateString(edt_zipcode.getText().toString())) {
-                  edt_zipcode.setError("Enter Zip Code ");
+                  showMessage("Enter Zip Code ");
                   edt_zipcode.requestFocus();
                   return false;
               }
@@ -866,7 +865,7 @@ StringBuilder languageBuilder=new StringBuilder();
               }
 
               if(!ApiUrls.validateString(edt_miles.getText().toString())) {
-                  edt_miles.setError("Enter miles for challenge range");
+                  showMessage("Enter miles for challenge range");
                   edt_miles.requestFocus();
                   return false;
               }
@@ -874,7 +873,7 @@ StringBuilder languageBuilder=new StringBuilder();
 
           }else if(nationalization==1){
               if(region_pos<0&&regionsAdapter.getItemCount()<=0){
-                  edt_region.setError("Select Region");
+                  showMessage("Select Region");
                   edt_region.requestFocus();
                   return false;
               }
@@ -928,13 +927,13 @@ StringBuilder languageBuilder=new StringBuilder();
            return false;
         }
         if(languagesAdapter.selectedLanguages()==null){
-            edt_language.setError("Select At Least one language");
+            showMessage("Select At Least one language");
             edt_language.requestFocus();
             return false;
         }
         if(languages_pos<0&&languagesAdapter.getItemCount()<=0)
         {
-            edt_language.setError("Select At Least one language");
+            showMessage("Select At Least one language");
             edt_language.requestFocus();
             return false;
         }
@@ -1123,6 +1122,7 @@ StringBuilder languageBuilder=new StringBuilder();
     public void onEditView(int view, int position) {
         switch (view) {
             case R.id.et_prize_type:
+                priceWorthAdapter.notifyDataSetChanged();
                 if (position == 0) {
                     prizetype = 0;
                     et_prize_type.setText("Cash");
@@ -1140,7 +1140,6 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(cities!=null)
                 {
                     edt_city.setText(cities.get(position).getCityName());
-                    edt_city.setError(null);
                     city=cities.get(position);
                     city_pos=position;
                 }
@@ -1150,7 +1149,6 @@ StringBuilder languageBuilder=new StringBuilder();
                 {
                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
                     edt_country.setText(countries.get(position).getCountryName());
-                    edt_city.setError(null);
                     country_pos=position;
                     country=countries.get(position);
                 }
@@ -1160,7 +1158,6 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(regions!=null)
                 {
                     edt_region.setText(regions.get(position).getRegName());
-                    edt_region.setError(null);
                     region_pos=position;
                 }
 
@@ -1169,7 +1166,6 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(languages!=null)
                 {
                     edt_language.setText(languages.get(position).getName());
-                    edt_language.setError(null);
                     languages_pos=position;
                 }
 
@@ -1178,7 +1174,6 @@ StringBuilder languageBuilder=new StringBuilder();
                 if(currencies!=null)
                 {
                     edt_currency.setText(currencies.get(position).getCode()+"("+currencies.get(position).getSymbol()+")");
-                    edt_currency.setError(null);
                     currency_pos=position;
                 }
 

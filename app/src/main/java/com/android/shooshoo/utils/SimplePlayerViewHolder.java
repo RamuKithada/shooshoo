@@ -89,24 +89,28 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(upper_layer.getVisibility()==View.VISIBLE){
-                     upper_layer.setVisibility(View.GONE);
-                    options_lay.setVisibility(View.GONE);
-                }else {
-                      upper_layer.setVisibility(View.VISIBLE);
-                    options_lay.setVisibility(View.VISIBLE);
-                }
+
+                if(progress_circular.getVisibility()==View.VISIBLE)
+                    return;
+
 
 
                 if(helper==null)
                     return;
+
+                if(upper_layer.getVisibility()==View.VISIBLE){
+                    upper_layer.setVisibility(View.GONE);
+                    options_lay.setVisibility(View.GONE);
+                }else {
+                    upper_layer.setVisibility(View.VISIBLE);
+                    options_lay.setVisibility(View.VISIBLE);
+                }
 
                 if(progress_circular.getVisibility()!=View.VISIBLE) {
                     if (isPlay && isPlaying()) {
                         isPlay = false;
                         helper.pause();
                         iv_pauseresume.setVisibility(View.VISIBLE);
-
                     } else {
                         isPlay = true;
                         helper.play();

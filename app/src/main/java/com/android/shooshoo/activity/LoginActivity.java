@@ -175,15 +175,15 @@ public class LoginActivity extends BaseActivity implements LoginView {
           String pws=edt_pws.getText().toString();
           if(!ApiUrls.validateString(name)){
               edt_user_name.requestFocus();
-              edt_user_name.setError("Enter User Name");
+              showMessage("Enter User Name");
               return false;
           }
         if(!ApiUrls.validateString(pws)){
             edt_pws.requestFocus();
-            edt_pws.setError("Enter Password");
+            showMessage("Enter Password");
             return false;
         }else if(pws.length()<6){
-            edt_pws.setError("Password is too short" );
+            showMessage("Password is too short" );
             return false;
         }
 
@@ -196,6 +196,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         if(loginSuccess.getStatus()==1){
             try {
                 userSession.setUserId(loginSuccess.getUserInfo().getUserId());
+                userSession.saveUserInfo(loginSuccess.getUserInfo());
                 userSession.setVisibility(loginSuccess.getVisibility());
                 userSession.setNotification(loginSuccess.getNotificationSettings());
                 userSession.login();

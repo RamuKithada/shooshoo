@@ -150,7 +150,8 @@
         <activity
             android:name=".activity.ProfileFillingFormActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="adjustResize"
+            >
 
         </activity>
         <activity

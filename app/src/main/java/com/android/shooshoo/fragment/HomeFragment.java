@@ -21,12 +21,9 @@ import com.android.shooshoo.activity.ViewAllChallengesActivity;
 import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
-import com.android.shooshoo.adapter.JackpotChallengersAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.presenters.HomePresenter;
@@ -36,7 +33,6 @@ import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.HomeView;
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -105,8 +101,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     RecyclerView finalCallList;
     @BindView(R.id.category_challengers_list)
     RecyclerView catList;
-    @BindView(R.id.extra_list)
-    RecyclerView extralist;
+ /*   @BindView(R.id.extra_list)
+    RecyclerView extralist;*/
 
 
 
@@ -116,7 +112,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
     private HomeView mListener;
     //Jackpot challenge List adapter
-    JackpotChallengersAdapter jackpotChallengersAdapter;
+    SponsorChallengersAdapter jackpotChallengersAdapter;
 
     //Sponsor challenge List adapter
     SponsorChallengersAdapter sponsorChallengersAdapter;
@@ -196,9 +192,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        extralist.setLayoutManager(new LinearLayoutManager(getContext()));
+        /*extralist.setLayoutManager(new LinearLayoutManager(getContext()));
         extralist.setNestedScrollingEnabled(false);
-        extralist.setAdapter(new ChallengesMainListAdapter(getContext()));
+        extralist.setAdapter(new ChallengesMainListAdapter(getContext()));*/
         sponsor_viewall.setOnClickListener(this);
         jackpot_viewall.setOnClickListener(this);
         category_viewall.setOnClickListener(this);
@@ -211,7 +207,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         setLayoutManager(catList);
         setLayoutManager(privateList);
         setLayoutManager(finalCallList);
-        jackpotChallengersAdapter=new  JackpotChallengersAdapter(getContext(),jackpotChallenges);
+        jackpotChallengersAdapter=new  SponsorChallengersAdapter(getContext(),jackpotChallenges);
         sponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),sponsorChallenges);
         privateSponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),privateChallenges);
         finalCallChallengersAdapter=new SponsorChallengersAdapter(getContext(),finalCallChallenges);
@@ -373,7 +369,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
                 break;
             case R.id.final_call_viewall:
                  intent=new Intent(getActivity(), ViewAllChallengesActivity.class);
-                intent.putExtra(SERVICE_TYPE,ApiUrls.PRIVATE);
+                intent.putExtra(SERVICE_TYPE,ApiUrls.FINAL);
                 intent.putExtra("title","Final Call");
                 startActivity(intent);
                 break;
@@ -398,6 +394,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             }
             if(sponsorChallengersAdapter.getItemCount()<=0)
                 sponsor_layout.setVisibility(View.GONE);
+            else
+                sponsor_layout.setVisibility(View.VISIBLE);
 
 
             if(response.getPrivateChallenges()!=null) {
@@ -406,6 +404,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             }
                 if(privateSponsorChallengersAdapter.getItemCount()<=0)
                 private_sponsor_layout.setVisibility(View.GONE);
+                else
+                    private_sponsor_layout.setVisibility(View.VISIBLE);
 
 
         if(response.getJackpotsChallenges()!=null) {
@@ -414,6 +414,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         }
         if(jackpotChallengersAdapter.getItemCount()<=0)
             jackpot_layout.setVisibility(View.GONE);
+        else
+            jackpot_layout.setVisibility(View.VISIBLE);
 
 
 
@@ -423,6 +425,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         }
         if(finalCallChallengersAdapter.getItemCount()<=0)
             final_call_layout.setVisibility(View.GONE);
+        else
+            final_call_layout.setVisibility(View.VISIBLE);
 
             if(response.getBrands()!=null)
             brands.addAll(response.getBrands());
@@ -431,10 +435,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
             {
             categories.addAll(response.getCategories());
             homeCategoryAdapter.notifyDataSetChanged();
-            }else
-                {
-                category_layout.setVisibility(View.GONE);
             }
+            if(homeCategoryAdapter.getItemCount()<=0)
+                category_layout.setVisibility(View.GONE);
+            else
+                category_layout.setVisibility(View.VISIBLE);
 
         }
     }

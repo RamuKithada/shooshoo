@@ -1,7 +1,6 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +11,8 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
-import com.android.shooshoo.adapter.JackpotChallengersAdapter;
-import com.android.shooshoo.adapter.WinnersListAdapter;
 import com.android.shooshoo.models.CatResult;
 import com.android.shooshoo.models.Category;
-import com.android.shooshoo.models.ChallengeModel;
-import com.android.shooshoo.utils.ClickListener;
-import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.RetrofitApis;
 
 import java.util.ArrayList;

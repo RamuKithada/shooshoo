@@ -57,7 +57,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     @Override public void onBindViewHolder(final SimplePlayerViewHolder holder, final int position) {
         final Feed feed=modelArrayList.get(position);
         String url=SPONSOR_FEEDS_VIDEO_URL+feed.getType()+"/"+feed.getChallengeId()+"/";//+feed.getUrl();
-        Picasso.with(context).load(url+feed.getThumbnail()).error(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).into(holder.iv_thumb);
+        Picasso.with(context).load(url+feed.getThumbnail()).error(R.drawable.giphy).placeholder(R.drawable.giphy).into(holder.iv_thumb);
         Log.e("thumnailPath",""+url+feed.getThumbnail());
         holder.tv_report.setVisibility(View.GONE);
         if(feed.getUrl().endsWith(".jpg")||feed.getUrl().endsWith(".JPG")||feed.getUrl().endsWith(".jpeg")||feed.getUrl().endsWith(".png")||feed.getUrl().endsWith(".JPEG")||feed.getUrl().endsWith(".PNG"))

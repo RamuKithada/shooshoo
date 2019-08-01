@@ -136,7 +136,7 @@ public class ViewAllChallenges_Fragment extends Fragment implements BaseView {
                     if(viewAllChallengesResponse.getStatus()==1)
                     {
                         totalcount=viewAllChallengesResponse.getCount();
-                        if(intentType.equalsIgnoreCase(ApiUrls.SPONSERS)) {
+                   /*     if(intentType.equalsIgnoreCase(ApiUrls.SPONSERS)) {
                             if (viewAllChallengesResponse.getSponsors() != null && viewAllChallengesResponse.getSponsors().size() > 0)
                                 challengeArrayList.addAll(viewAllChallengesResponse.getSponsors());
                         }
@@ -163,7 +163,11 @@ public class ViewAllChallenges_Fragment extends Fragment implements BaseView {
                         {
                             if (viewAllChallengesResponse.getCreated() != null && viewAllChallengesResponse.getCreated().size() > 0)
                                 challengeArrayList.addAll(viewAllChallengesResponse.getCreated());
-                        }
+                        }   else if(intentType.equalsIgnoreCase(ApiUrls.FINAL))
+                        {*/
+                            if (viewAllChallengesResponse.getChallenges() != null && viewAllChallengesResponse.getChallenges().size() > 0)
+                                challengeArrayList.addAll(viewAllChallengesResponse.getChallenges());
+//                        }
                     }
                     viewallChallengesAdapter.notifyDataSetChanged();
                 }

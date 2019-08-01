@@ -182,11 +182,16 @@ public class BrandChooseActivity extends BaseActivity implements UpdateUserInfoV
                     if (chooseAdapter.selectedSize() >= 3) {
                         if(connectionDetector.isConnectingToInternet())
                         {
-                            Log.e("ids",chooseAdapter.getBrandIds());
-//                          presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
+//                            Log.e("ids",chooseAdapter.getBrandIds());
+                          presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
                         }
                         else showMessage("please check internet connection");
                     } else {
+                        if(chooseAdapter.getItemCount()==chooseAdapter.selectedSize())
+                        {
+                            presenter.updateUserBrand(userSession.getUserId(),chooseAdapter.getBrandIds());
+                            break;
+                        }
                         showMessage("Please select at least 3 Brands");
                     }
                 }

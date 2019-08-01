@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.NotificationSettings;
+import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.models.Visibility;
 import com.google.gson.Gson;
 
@@ -177,6 +178,26 @@ public  void logout(){
      */
     public String getSponsorIds(){
        return pref.getString(SPONSOR_BY,null);
+    }
+
+    /***
+     *  save Jackpot challenge in preference
+     * @param master
+     */
+    public void saveUserInfo(UserInfo master) {
+
+        if(master==null)
+            pref.edit().remove("user_info").commit();
+
+        putString("user_info", new Gson().toJson((Object) master));
+    }
+
+    /***
+     * this is used to get the Jackpot challenge reference to use all over step of the Challenge registration
+     * @return Jackpot challenge
+     */
+    public UserInfo getUserInfo() {
+        return (UserInfo) new Gson().fromJson(getString("user_info"), UserInfo.class);
     }
 
     /***

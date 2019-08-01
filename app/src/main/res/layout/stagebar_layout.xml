@@ -94,8 +94,8 @@
 
                 <Button
                     android:id="@+id/button1"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
+                    android:layout_width="@dimen/stage_sponsor_button"
+                    android:layout_height="@dimen/stage_sponsor_button"
                     android:background="@drawable/unselected"
                     android:layout_centerInParent="true"
                     android:textColor="@color/color_gray"
@@ -117,8 +117,8 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/button2"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
+                    android:layout_width="@dimen/stage_sponsor_button"
+                    android:layout_height="@dimen/stage_sponsor_button"
                     android:background="@drawable/selected"
                     android:layout_centerInParent="true"
 
@@ -137,8 +137,8 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/button3"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
+                    android:layout_width="@dimen/stage_sponsor_button"
+                    android:layout_height="@dimen/stage_sponsor_button"
                     android:background="@drawable/selected"
                     android:layout_centerInParent="true"
                     android:textColor="#FFFFFF"
@@ -156,8 +156,8 @@
                 android:layout_height="wrap_content">
                 <Button
                     android:id="@+id/button4"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
+                    android:layout_width="@dimen/stage_sponsor_button"
+                    android:layout_height="@dimen/stage_sponsor_button"
                     android:background="@drawable/selected"
                     android:layout_centerInParent="true"
                     android:textColor="@color/color_gray"
@@ -176,8 +176,8 @@
 
                 <Button
                     android:id="@+id/button5"
-                    android:layout_width="@dimen/stage_button"
-                    android:layout_height="@dimen/stage_button"
+                    android:layout_width="@dimen/stage_sponsor_button"
+                    android:layout_height="@dimen/stage_sponsor_button"
                     android:layout_centerInParent="true"
                     android:background="@drawable/selected"
                     android:textColor="@color/color_gray"

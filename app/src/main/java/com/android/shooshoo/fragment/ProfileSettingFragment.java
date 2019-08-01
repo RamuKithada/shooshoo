@@ -363,25 +363,25 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     private boolean validateBank() {
         if(!ApiUrls.validateString(edt_acc_owner.getText().toString())){
 
-            edt_acc_owner.setError("Enter Account Holder Name");
+           showMessage("Enter Account Holder Name");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_iban.getText().toString())){
 
-            edt_iban.setError("Enter IBN ");
+            showMessage("Enter IBN ");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_bank_name.getText().toString())){
 
-            edt_bank_name.setError("Enter Bank Name");
+            showMessage("Enter Bank Name");
             return false;
         }
 
         if(!ApiUrls.validateString(edt_bic_swift.getText().toString())){
 
-            edt_bic_swift.setError("Enter BIC SWIFT");
+            showMessage("Enter BIC SWIFT");
             return false;
         }
 
@@ -391,18 +391,18 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     private boolean validateSave() {
 
         if(!ApiUrls.validateString(edt_user_name.getText().toString())){
-            edt_user_name.setError("Enter User Name");
+            showMessage("Enter User Name");
             edt_user_name.requestFocus();
             return false;
         }
         if(edt_user_name.getText().toString().length()<2){
-            edt_user_name.setError("User Name have at least 2 letters");
+            showMessage("User Name have at least 2 letters");
             edt_user_name.requestFocus();
             return false;
 
         }
         if(edt_user_name.getText().toString().length()>70){
-            edt_user_name.setError("User Name have maximum 70 letters");
+            showMessage("User Name have maximum 70 letters");
             edt_user_name.requestFocus();
             return false;
 
@@ -410,13 +410,13 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             String email=edt_user_email.getText().toString();
         if(!ApiUrls.validateString(email))
         {
-            edt_user_email.setError("Enter email");
+            showMessage("Enter email");
             edt_user_email.requestFocus();
             return false;
         }
 
         if(edt_user_email.getText().toString().length()<6){
-            edt_user_email.setError("Email  is minimum 6 letters");
+            showMessage("Email  is minimum 6 letters");
             edt_user_email.requestFocus();
             return false;
 
@@ -425,27 +425,27 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
         {
-            edt_user_email.setError("Enter valid email");
+            showMessage("Enter valid email");
             edt_user_email.requestFocus();
             return false;
         }
 
 
         if(!ApiUrls.validateString(edt_first_name.getText().toString())){
-            edt_first_name.setError("Enter First Name");
+            showMessage("Enter First Name");
             edt_first_name.requestFocus();
             return false;
         }
         if(edt_first_name.getText().toString().length()<2){
 
-            edt_first_name.setError("First Name have at least 2 letters");
+            showMessage("First Name have at least 2 letters");
             edt_first_name.requestFocus();
             return false;
 
         }
         if(edt_first_name.getText().toString().length()>70){
 
-            edt_first_name.setError("First Name have maximum 70 letters");
+            showMessage("First Name have maximum 70 letters");
             edt_first_name.requestFocus();
             return false;
 
@@ -453,7 +453,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
 
         if(!ApiUrls.validateString(edt_last_name.getText().toString())){
-            edt_last_name.setError("Enter Last Name");
+            showMessage("Enter Last Name");
             edt_last_name.requestFocus();
             return false;
         }
@@ -461,14 +461,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(edt_last_name.getText().toString().length()<2){
 
-            edt_last_name.setError("Last Name have at least 2 letters");
+            showMessage("Last Name have at least 2 letters");
             edt_last_name.requestFocus();
             return false;
 
         }
         if(edt_last_name.getText().toString().length()>70){
 
-            edt_last_name.setError("Last Name have maximum 70 letters");
+            showMessage("Last Name have maximum 70 letters");
             edt_last_name.requestFocus();
             return false;
 
@@ -484,7 +484,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
 
         if(!ApiUrls.validateString(edt_zipcode.getText().toString())){
-            edt_zipcode.setError("Enter Zipcode Name");
+            showMessage("Enter Zip code Name");
             edt_zipcode.requestFocus();
             return false;
         }
@@ -492,21 +492,21 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(edt_zipcode.getText().toString().length()<3){
 
-            edt_zipcode.setError("Zipcode have at least 3 letters");
+            showMessage("Zip code have at least 3 letters");
             edt_zipcode.requestFocus();
             return false;
 
         }
         if(edt_zipcode.getText().toString().length()>10){
 
-            edt_zipcode.setError("Zipcode have maximum 10 letters");
+            showMessage("Zip code have maximum 10 letters");
             edt_zipcode.requestFocus();
             return false;
 
         }
 
         if(!ApiUrls.validateString(edt_street_name.getText().toString())){
-            edt_street_name.setError("Enter Street Name ");
+            showMessage("Enter Street Name ");
             edt_street_name.requestFocus();
             return false;
         }
@@ -514,14 +514,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(edt_street_name.getText().toString().length()<3){
 
-            edt_street_name.setError(" Street Name have at least 3 letters");
+            showMessage(" Street Name have at least 3 letters");
             edt_street_name.requestFocus();
             return false;
 
         }
         if(edt_street_name.getText().toString().length()>255){
 
-            edt_street_name.setError(" Street Name have maximum 255 letters");
+            showMessage(" Street Name have maximum 255 letters");
             edt_street_name.requestFocus();
             return false;
 
@@ -529,7 +529,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
 
         if(!ApiUrls.validateString(edt_mobile_number.getText().toString())){
-            edt_mobile_number.setError("Enter Mobile Number");
+            showMessage("Enter Mobile Number");
             edt_mobile_number.requestFocus();
             return false;
         }
@@ -537,19 +537,19 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
         if(edt_mobile_number.getText().toString().length()<4){
 
-            edt_mobile_number.setError(" Mobile Number have at least 4 digits");
+            showMessage(" Mobile Number have at least 4 digits");
             edt_mobile_number.requestFocus();
             return false;
 
         }
         if(edt_mobile_number.getText().toString().length()>15){
-            edt_mobile_number.setError("Mobile Number have maximum 15 digits");
+            showMessage("Mobile Number have maximum 15 digits");
             edt_mobile_number.requestFocus();
             return false;
 
         }
         if(!Patterns.PHONE.matcher(edt_mobile_number.getText().toString()).matches()){
-            edt_mobile_number.setError("Enter valid Mobile Number");
+            showMessage("Enter valid Mobile Number");
             edt_mobile_number.requestFocus();
             return false;
 

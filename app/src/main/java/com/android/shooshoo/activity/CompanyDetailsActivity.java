@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CompanyDetailsActivity extends BaseActivity implements BrandProfileView {
+public class CompanyDetailsActivity extends BaseActivity implements BrandProfileView,View.OnClickListener {
     @BindView(R.id.navigation_home)
     LinearLayout navigation_home;
     @BindView(R.id.navigation_challengers)
@@ -102,18 +102,20 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
         sponsorChallengersAdapter=new SponsorChallengersAdapter(this,sponsorChallenges);
         rv_challenge_list.setLayoutManager(new GridLayoutManager(this, 2));
         rv_challenge_list.setAdapter(sponsorChallengersAdapter);
+
         if(company!=null)
         setDetails(company);
 
     }
 
-    private void setDetails(Company company) {
+    private void setDetails( Company company) {
         if(connectionDetector.isConnectingToInternet()){
             brandDetailsPresenter.getBrandDetails(company.getCompanyId());
         }
         company_name.setText(company.getCompanyName());
-        sub_title.setText(company.describeContents());
+        sub_title.setText(""+company.getFirstName());
         tv_link.setText(company.getCompanyEmail());
+        save_brand.setOnClickListener(this);
 
 
     }
@@ -135,4 +137,9 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
         brandDetailsPresenter.detachView();
     }
 
+    @Override
+    public void onClick(View v) {
+            if(connectionDetector.isConnectingToInternet())
+               brandDetailsPresenter.saveBrand(userSession.getUserId(),company.getCompanyId());
+    }
 }

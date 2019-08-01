@@ -173,6 +173,7 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
                 userSession.savaChallenge(null);
                 Intent homeIntent=new Intent(this, HomeActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                homeIntent.putExtra("icon",1);
                 startActivity(homeIntent);
                 break;
             case R.id.iv_back:

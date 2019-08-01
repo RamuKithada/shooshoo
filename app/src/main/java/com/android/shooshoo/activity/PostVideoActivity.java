@@ -2,10 +2,7 @@ package com.android.shooshoo.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;

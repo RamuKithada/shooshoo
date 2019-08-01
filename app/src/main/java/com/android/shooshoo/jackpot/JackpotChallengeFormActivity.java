@@ -214,27 +214,27 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
     private boolean validate() {
         if(!ApiUrls.validateString(edt_challenge_name.getText().toString())){
-            edt_challenge_name.setError("Please enter Challenge Name");
+            showMessage("Please enter Challenge Name");
             edt_challenge_name.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_startdate.getText().toString())){
-            edt_startdate.setError("Select  Date");
+            showMessage("Select  Date");
             edt_startdate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_start_time.getText().toString())){
-            edt_start_time.setError("Select Time");
+            showMessage("Select Time");
             edt_start_time.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_enddate.getText().toString())){
-            edt_enddate.setError("Select Date");
+            showMessage("Select Date");
             edt_enddate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_end_time.getText().toString())){
-            edt_end_time.setError("Select Time");
+            showMessage("Select Time");
             edt_end_time.requestFocus();
             return false;
         }
@@ -260,7 +260,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
             }
 
         if(!ApiUrls.validateString(edt_challenge_des.getText().toString())){
-            edt_challenge_des.setError("Provide Description");
+            showMessage("Provide Description");
             edt_challenge_des.requestFocus();
             return false;
         }
@@ -268,7 +268,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 
         if(sizePos<0){
             edt_video_sizes.requestFocus();
-            edt_video_sizes.setError("Please set Limit?");
+            showMessage("Please set Limit?");
             return false;
         }
 
@@ -392,7 +392,7 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
     private void setVideo(Uri videoUri) {
         try {
             challengeVideoUri=ApiUrls.getFilePath(this,videoUri);
-            Log.e("Video path",""+challengeVideoUri);
+//            Log.e("Video path",""+challengeVideoUri);
             if(challengeVideoUri!=null) {
                 Bitmap bMap = ThumbnailUtils.createVideoThumbnail(challengeVideoUri, MediaStore.Video.Thumbnails.MICRO_KIND);
                 if(bMap!=null){
@@ -435,7 +435,6 @@ public class JackpotChallengeFormActivity extends BaseActivity implements View.O
 int startDate=0,startYear=0,startMonth=0;
     DatePickerDialog datePickerDialog;
     private void setDate(final EditText edt_dob) {
-
         Calendar c = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, R.style.datepicker, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -448,7 +447,6 @@ int startDate=0,startYear=0,startMonth=0;
                 }
                 edt_dob.setText(year+"-"+(month+1)+"-"+dayOfMonth);
                 edt_dob.clearFocus();
-                edt_dob.setError(null);
 
             }
         },
@@ -476,7 +474,6 @@ int startDate=0,startYear=0,startMonth=0;
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 time.clearFocus();
-                time.setError(null);
                 time.setText(hourOfDay+"-"+minute);
                 try {
                     Calendar calendar = Calendar.getInstance();

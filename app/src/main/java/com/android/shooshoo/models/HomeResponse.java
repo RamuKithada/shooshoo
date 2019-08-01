@@ -25,7 +25,7 @@ public class HomeResponse {
     @Expose
     private List<Challenge> privateChallenges = null;
 
-    @SerializedName("finalcall")
+    @SerializedName("final")
     @Expose
     private List<Challenge> finalcall = null;
     @SerializedName("brands")
