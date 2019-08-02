@@ -33,9 +33,17 @@ public class RecentPostAdapter extends RecyclerView.Adapter<RecentPostAdapter.Ca
 
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int pos) {
+        Feed feed=feeds.get(pos);
+        if(feed!=null)
+        {
+            if(feed.getUrl().endsWith(".jpg")||feed.getUrl().endsWith(".JPG")||feed.getUrl().endsWith(".jpeg")||feed.getUrl().endsWith(".png")||feed.getUrl().endsWith(".JPEG")||feed.getUrl().endsWith(".PNG"))
+            {
+                Picasso.with(context).load(feed.baseUrl()+feed.getUrl()).noPlaceholder().into(catViewHolder.imageView);
 
-        if(feeds!=null)
-        Picasso.with(context).load(feeds.get(pos).baseUrl()+feeds.get(pos).getThumbnail()).error(R.drawable.logo_pink).into(catViewHolder.imageView);
+            }
+            else
+            Picasso.with(context).load(feed.baseUrl()+feed.getThumbnail()).error(R.drawable.error).into(catViewHolder.imageView);
+        }
     }
 
     @Override

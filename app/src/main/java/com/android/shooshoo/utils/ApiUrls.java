@@ -158,18 +158,16 @@ public class ApiUrls {
 
     }
 
-    public  synchronized static String getAge(String newsdatetime) {
-       if(newsdatetime==null)
-           return null;
-        Calendar startDate=Calendar.getInstance();
-
-        Calendar endDate=Calendar.getInstance();
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+    public  synchronized static String getDurationTimeStamp2(String newsdatetime) {
+        if(newsdatetime==null)
+            return null;
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date=simpleDateFormat.parse(newsdatetime);
-            startDate.setTime(date);
-            DateCalculator dateCaculator=DateCalculator.calculateAge(startDate,endDate);
-            return ""+dateCaculator.getYear()+" Years";
+            CharSequence relativeDate =
+                    DateUtils.getRelativeTimeSpanString(date.getTime(),System.currentTimeMillis(),
+                            0L,DateUtils.FORMAT_ABBREV_RELATIVE);
+            return relativeDate.toString();
         }catch (ParseException e){
             e.printStackTrace();
             return newsdatetime;

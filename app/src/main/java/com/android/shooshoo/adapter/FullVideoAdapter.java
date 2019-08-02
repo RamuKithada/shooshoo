@@ -86,7 +86,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
         holder.tv_like_count.setText(feed.getLikes());
         if(ApiUrls.validateString(feed.getUserName()))
             holder.tv_name.setText(feed.getUserName());
-      holder.tv_time.setText(ApiUrls.getDurationTimeStamp(feed.getCreatedOn()));
+      holder.tv_time.setText(ApiUrls.getDurationTimeStamp2(feed.getCreatedOn()));
       if(feed.getLikestatus().equalsIgnoreCase("1"))
             holder.iv_like.setImageResource(R.drawable.like_active);
       else

@@ -19,9 +19,9 @@ public class ProfileResponse {
     @SerializedName("userinfo")
     @Expose
     private UserInfo userInfo;
-    @SerializedName("brands")
+    @SerializedName("companies")
     @Expose
-    private List<Brand> brands = null;
+    private List<Company> brands = null;
     public String getMessage() {
         return message;
     }
@@ -54,11 +54,11 @@ public class ProfileResponse {
         this.userInfo = userInfo;
     }
 
-    public List<Brand> getBrands() {
+    public List<Company> getBrands() {
         return brands;
     }
 
-    public void setBrands(List<Brand> brands) {
+    public void setBrands(List<Company> brands) {
         this.brands = brands;
     }
 

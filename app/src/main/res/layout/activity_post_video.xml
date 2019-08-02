@@ -117,9 +117,7 @@
                     android:id="@+id/video_thumb_post"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
-                    android:src="@drawable/food_context1"
-                    android:scaleType="centerInside"
+                    android:scaleType="fitCenter"
                     />
                 <ImageView
                     android:id="@+id/iv_playpause_post"

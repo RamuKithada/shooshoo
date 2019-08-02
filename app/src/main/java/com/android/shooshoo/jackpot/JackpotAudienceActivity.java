@@ -1,8 +1,10 @@
 package com.android.shooshoo.jackpot;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -509,6 +511,20 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             edt_amount.requestFocus();
             return false;
         }
+        try {
+            if(Integer.valueOf(edt_amount.getText().toString())<=0){
+                showMessage("Enter amount");
+                edt_amount.requestFocus();
+                return false;
+            }
+        }catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
   /*      if(!ApiUrls.validateString(edt_key_des.getText().toString())){
             edt_key_des.setError("Enter Key Description");
             edt_key_des.requestFocus();
@@ -524,11 +540,34 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             no_of_winners.requestFocus();
             return false;
         }
+        try {
+            if(Integer.valueOf(no_of_winners.getText().toString())<=0){
+                showMessage("Enter number of winners    ");
+                no_of_winners.requestFocus();
+                return false;
+            }
+        }catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+
         if(!ApiUrls.validateString(edt_limited_access.getText().toString())) {
             showMessage("Enter Limited access");
             edt_limited_access.requestFocus();
             return false;
         }
+
+        try {
+            if(Integer.valueOf(edt_limited_access.getText().toString())<=0){
+                showMessage("Enter Limited access");
+                edt_limited_access.requestFocus();
+                return false;
+            }
+        }catch (NumberFormatException e)
+        {
+            e.printStackTrace();
+        }
+
         if(nationalization==0) {
             if (country_pos < 0) {
                 showMessage("Please select Country");
@@ -569,7 +608,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         for (int index=0;index<models.size();index++){
             CategoryModel model=models.get(index);
             if(model.getCategory()<=0){
-                showMessage("please select category at "+index+1);
+                showMessage("please select at least 3 categories ");
                 return false;
             }
 
@@ -826,5 +865,40 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     @Override
     public void onLanguages(List<Language> languages) {
        this.languages=languages;
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertDialog();
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.datepicker);
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        // Add the buttons
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteChallenge();
+                dialog.dismiss();
+
+            }
+        });
+        builder.setMessage("Do you want discard the changes");
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void deleteChallenge() {
+        userSession.getSponsorChallenge();
+
     }
 }

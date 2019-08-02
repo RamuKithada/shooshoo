@@ -182,6 +182,7 @@ Challenge mChallenge;
                 }
                 break;
             case R.id.layout_gallery:
+                releaseCamera();
               if(isImageChallenge)
                   getGalleryImages();
               else
@@ -235,9 +236,17 @@ Challenge mChallenge;
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        releaseCamera();
+
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         releaseCamera();
+
     }
 
     private void releaseCamera() {

@@ -31,6 +31,7 @@ import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Country;
 import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.LoginSuccess;
@@ -266,7 +267,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                    ,edt_street_name.getText().toString(),edt_street_number.getText().toString(),edt_mobile_number.getText().toString()
                    ,gender,ApiUrls.DEVICE_TOKEN);
                    StringBuilder cats=new StringBuilder();
-//                   StringBuilder brands=new StringBuilder();
+//                   StringBuilder companyArrayList=new StringBuilder();
                    for (CategoryModel categoryModel: categorySelectionAdapter.getCategoryModels()) {
                        if(categoryArrayList.size()>categoryModel.getCategory()) {
                           Category mCategory= categoryArrayList.get(categoryModel.getCategory());
@@ -290,11 +291,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                                        cats.append(brand.getCategoryId());
                                    }
 
-                                 *//*  if(brands.length()>0){
-                                       if(brand.getBrandId()!=null&&!brands.toString().contains(brand.getBrandId()))
-                                        brands.append(',').append(brand.getBrandId());
+                                 *//*  if(companyArrayList.length()>0){
+                                       if(brand.getBrandId()!=null&&!companyArrayList.toString().contains(brand.getBrandId()))
+                                        companyArrayList.append(',').append(brand.getBrandId());
                                    }else{
-                                          brands.append(brand.getBrandId());
+                                          companyArrayList.append(brand.getBrandId());
                                    }*//*
 
 
@@ -305,8 +306,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                              Log.e("cats",cats.toString());
                              updateUserInfoPresenter.updateUserCat(userSession.getUserId(),cats.toString());
 
-//                           Log.e("brands",brands.toString());
-//                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),brands.toString());
+//                           Log.e("companyArrayList",companyArrayList.toString());
+//                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),companyArrayList.toString());
 
 
                }
@@ -841,7 +842,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onBrands(List<Brand> brands) {
+    public void onBrands(List<Company> brands) {
 
     }
 

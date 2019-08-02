@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
 import java.util.List;
@@ -14,9 +15,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileBrandAdapter extends RecyclerView.Adapter<ProfileBrandAdapter.CatViewHolder> {
    Context context;
-   List<Brand> brandList;
+   List<Company> brandList;
 
-    public ProfileBrandAdapter(Context context, List<Brand> brandList) {
+    public ProfileBrandAdapter(Context context, List<Company> brandList) {
         this.context = context;
         this.brandList = brandList;
     }
@@ -32,7 +33,7 @@ public class ProfileBrandAdapter extends RecyclerView.Adapter<ProfileBrandAdapte
     @Override
     public void onBindViewHolder(@NonNull final CatViewHolder catViewHolder,final int position) {
 
-        Picasso.with(context).load(ApiUrls.IMAGE_URL+"brands/"+brandList.get(position).getIcon()).into(catViewHolder.image);
+        Picasso.with(context).load(ApiUrls.IMAGE_URL+"companies/"+brandList.get(position).getCompanyLogo()).into(catViewHolder.image);
       /*   catViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {

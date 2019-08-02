@@ -42,7 +42,7 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
             if(filename!=null)
             {
                 file = new File(filename);
-                RequestBody reqFile= RequestBody.create(MediaType.parse("video/*"), file);
+                RequestBody reqFile= RequestBody.create(MediaType.parse("*/*"), file);
                 body = MultipartBody.Part.createFormData("content", file.getName(), reqFile);
             }
             view.showProgressIndicator(true);

@@ -1,8 +1,10 @@
 package com.android.shooshoo.sponsor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -748,7 +750,7 @@ StringBuilder languageBuilder=new StringBuilder();
         }
 
         sponsorChallengePresenter.createAudience(userSession.getSponsorChallenge(),userSession.getUserId(),
-                jsonArray.toString(),tv_price_total.getText().toString(),no_of_winners.getText().toString(),radar,
+                jsonArray.toString(),currencies.get(currency_pos).getCode(),tv_price_total.getText().toString(),no_of_winners.getText().toString(),radar,
                 zipCode,miles,countryId,
                 cityId,cats.toString(),regions.toString(),languageBuilder.toString(),
                 edt_min_age.getText().toString(),edt_max_age.getText().toString(),gender.toString());
@@ -869,6 +871,19 @@ StringBuilder languageBuilder=new StringBuilder();
                   edt_miles.requestFocus();
                   return false;
               }
+              try {
+                  if(Integer.parseInt(edt_miles.getText().toString())==0) {
+                      showMessage("Enter miles for challenge range");
+                      edt_miles.requestFocus();
+                      return false;
+                  }
+
+
+
+              }catch (NumberFormatException e){
+                  e.printStackTrace();
+              }
+
 
 
           }else if(nationalization==1){
@@ -895,8 +910,6 @@ StringBuilder languageBuilder=new StringBuilder();
 
      }
 
-
-
         if (!ApiUrls.validateString(edt_min_age.getText().toString())) {
             showMessage("Please enter starting age");
             edt_min_age.requestFocus();
@@ -912,8 +925,13 @@ StringBuilder languageBuilder=new StringBuilder();
        try {
            minAgePos=Integer.valueOf(edt_min_age.getText().toString());
            maxAgePos=Integer.valueOf(edt_max_age.getText().toString());
+           if(minAgePos<10){
+               showMessage("Minimum age must be more than 10 years");
+               return false;
+           }
+
            if (minAgePos >= maxAgePos) {
-               showMessage("Minimum age must be less the Maximum age");
+               showMessage("Minimum age must be less than the Maximum age");
                return false;
            }
        }catch (Exception e){
@@ -923,17 +941,17 @@ StringBuilder languageBuilder=new StringBuilder();
 
 
         if(!checkbox_female.isChecked()&&!checkbox_male.isChecked()){
-           showMessage("Select atleast one gender ");
+           showMessage("Please select gender ");
            return false;
         }
         if(languagesAdapter.selectedLanguages()==null){
-            showMessage("Select At Least one language");
+            showMessage("Select at least one language");
             edt_language.requestFocus();
             return false;
         }
         if(languages_pos<0&&languagesAdapter.getItemCount()<=0)
         {
-            showMessage("Select At Least one language");
+            showMessage("Select at least one language");
             edt_language.requestFocus();
             return false;
         }
@@ -1196,6 +1214,41 @@ StringBuilder languageBuilder=new StringBuilder();
     public void afterTextChanged(Editable s) {
         if(s.length()>0&&s.length()%2==0)
               getSizeofAudience();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        showAlertDialog();
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.datepicker);
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        // Add the buttons
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+              deleteChallenge();
+              dialog.dismiss();
+
+            }
+        });
+        builder.setMessage("Do you want discard the changes");
+
+
+// Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
+    private void deleteChallenge() {
+        userSession.getSponsorChallenge();
 
     }
 }

@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.sponsor;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
@@ -29,7 +30,6 @@ import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
-import com.android.shooshoo.sponsor.SponsorChallengeFormActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;
@@ -162,6 +162,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
         btn_more_companies.setOnClickListener(this);
+        btn_preview.setOnClickListener(this);
         title.setText("COMPANY INFORMATION");
         setStage(0);
         edt_category.setOnClickListener(new View.OnClickListener() {
@@ -244,6 +245,9 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
                         showMessage("Please Check Internet connection");
                 }
 
+                break;
+            case R.id.btn_preview:
+                showMessage("Under Development");
                 break;
         }
 
@@ -346,22 +350,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         }
 
 
-        if(!ApiUrls.validateString(edt_mobile.getText().toString()))
-        {
-            showMessage("Please enter Mobile Number");
-            return false;
-        }
-       if (edt_mobile.getText().toString().length()<4)
-       {
-           showMessage("Please enter valid Mobile Number");
-           return false;
-       }
 
-        if (edt_mobile.getText().toString().length()>15)
-        {
-            showMessage("Please enter valid Mobile Number");
-            return false;
-        }
 
         if(!ApiUrls.validateString(edt_tax_number.getText().toString()))
         {
@@ -427,12 +416,29 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
         if(edt_user_email.getText().toString().length()<6)
         {
-            showMessage("Email is Too Short");
+            showMessage("Email is too Short");
             return false;
         }
         if(edt_user_email.getText().toString().length()>70)
         {
             showMessage("Email is too Long");
+            return false;
+        }
+
+        if(!ApiUrls.validateString(edt_mobile.getText().toString()))
+        {
+            showMessage("Please enter Mobile Number");
+            return false;
+        }
+        if (edt_mobile.getText().toString().length()<4)
+        {
+            showMessage("Please enter valid Mobile Number");
+            return false;
+        }
+
+        if (edt_mobile.getText().toString().length()>15)
+        {
+            showMessage("Please enter valid Mobile Number");
             return false;
         }
 
@@ -448,7 +454,7 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
         if(edt_company_business_email.getText().toString().length()<6)
         {
-            showMessage("Email is Too Short");
+            showMessage("Email is too Short");
             return false;
         }
         if(edt_company_business_email.getText().toString().length()>70)
@@ -713,7 +719,7 @@ isclicked=true;
         if(view!=null){
             if(view.getId()==R.id.btn_more_companies){
                 clearAll();
-
+                showMessage(" Company is registered successfully .\n Enter data for another Company ");
                 iv_profile_pic.requestFocus();
                 if(sponsorIds.size()==2){
                     view.setVisibility(View.GONE);

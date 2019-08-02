@@ -1,24 +1,16 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
-import com.android.shooshoo.fragment.NotificationSettingFragment;
-import com.android.shooshoo.fragment.ProfileSettingFragment;
-import com.android.shooshoo.fragment.ProfileVisibilityFragment;
 import com.android.shooshoo.fragment.ViewAllChallenges_Fragment;
-import com.android.shooshoo.utils.ConnectionDetector;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

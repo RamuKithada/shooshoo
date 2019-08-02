@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.sponsor.CompanyProfileActivity;
 
 import java.util.List;
 

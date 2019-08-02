@@ -28,9 +28,9 @@ public class HomeResponse {
     @SerializedName("final")
     @Expose
     private List<Challenge> finalcall = null;
-    @SerializedName("brands")
+    @SerializedName("companies")
     @Expose
-    private List<Company> brands = null;
+    private List<Company> companyList = null;
     @SerializedName("categories")
     @Expose
     private List<Category> categories = null;
@@ -75,7 +75,7 @@ public class HomeResponse {
         this.privateChallenges = privateChallenges;
     }
 
-    public List<Challenge> getFinalcall() {
+    public List<Challenge> getFinalCall() {
         return finalcall;
     }
 
@@ -83,12 +83,12 @@ public class HomeResponse {
         this.finalcall = finalcall;
     }
 
-    public List<Company> getBrands() {
-        return brands;
+    public List<Company> getCompanyList() {
+        return companyList;
     }
 
-    public void setBrands(List<Company> brands) {
-        this.brands = brands;
+    public void setCompanyList(List<Company> brands) {
+        this.companyList = brands;
     }
 
     public List<Category> getCategories() {

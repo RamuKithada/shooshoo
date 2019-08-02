@@ -18,7 +18,6 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
 import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.activity.ViewAllChallengesActivity;
-import com.android.shooshoo.adapter.ChallengesMainListAdapter;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
@@ -122,7 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     //Final Call challenge List adapter
     SponsorChallengersAdapter finalCallChallengersAdapter;
 
-    //Brand  List adapter to show brand list view
+    //Brand  List adapter to show Company  list view
     HomeBrandAdapter homeBrandAdapter;
 
     //Category  List adapter to show Category list view
@@ -136,7 +135,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     ArrayList<Challenge> privateChallenges=new ArrayList<Challenge>();
     ArrayList<Challenge> finalCallChallenges=new ArrayList<Challenge>();
 
-    ArrayList<Company> brands=new ArrayList<Company>();
+    ArrayList<Company> companyArrayList =new ArrayList<Company>();
     ArrayList<Category> categories=new ArrayList<Category>();
 
 
@@ -212,7 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         privateSponsorChallengersAdapter=new SponsorChallengersAdapter(getContext(),privateChallenges);
         finalCallChallengersAdapter=new SponsorChallengersAdapter(getContext(),finalCallChallenges);
         //new SponsorChallengersAdapter(getContext(),null);
-        homeBrandAdapter=new HomeBrandAdapter(getContext(),brands,0);
+        homeBrandAdapter=new HomeBrandAdapter(getContext(), companyArrayList,0);
         homeCategoryAdapter=new HomeCategoryAdapter(getContext(),categories);
         brandsList.setAdapter(homeBrandAdapter);
         sponsorList.setAdapter(sponsorChallengersAdapter);
@@ -343,7 +342,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         Intent intent;
         switch (v.getId()){
             case R.id.sponsor_viewall:
-
          intent=new Intent(getActivity(), ViewAllChallengesActivity.class);
                intent.putExtra(SERVICE_TYPE, ApiUrls.SPONSERS);
                 intent.putExtra("title","Sponsor Challenges");
@@ -419,8 +417,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
 
 
 
-        if(response.getFinalcall()!=null) {
-            finalCallChallenges.addAll(response.getFinalcall());
+        if(response.getFinalCall()!=null) {
+            finalCallChallenges.addAll(response.getFinalCall());
             finalCallChallengersAdapter.notifyDataSetChanged();
         }
         if(finalCallChallengersAdapter.getItemCount()<=0)
@@ -428,9 +426,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         else
             final_call_layout.setVisibility(View.VISIBLE);
 
-            if(response.getBrands()!=null)
-            brands.addAll(response.getBrands());
+            if(response.getCompanyList()!=null)
+            companyArrayList.addAll(response.getCompanyList());
             homeBrandAdapter.notifyDataSetChanged();
+
+            if(homeBrandAdapter.getItemCount()<=0)
+                brandsList.setVisibility(View.GONE);
+            else
+                brandsList.setVisibility(View.VISIBLE);
+
             if(response.getCategories()!=null)
             {
             categories.addAll(response.getCategories());

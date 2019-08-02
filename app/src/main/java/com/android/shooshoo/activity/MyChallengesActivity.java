@@ -506,10 +506,13 @@ Challenge challenge;
         if(feeds.size()>0)
         {
             rv_recent_posts.setAdapter(new RecentPostAdapter(this,feeds));
-            rv_recent_posts.setVisibility(View.GONE);
+            tv_no_data.setVisibility(View.GONE);
         }
         else
+        {
+            rv_recent_posts.setVisibility(View.GONE);
             tv_no_data.setVisibility(View.VISIBLE);
+        }
 
 //        Log.e("count",""+recentPostAdapter.getItemCount() );
     }
@@ -570,6 +573,13 @@ switch (requestCode){
 
 
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        challengePresenter.getRecentPosts(challenge.getChallengeId(),challenge.getType());
+    }
+
     PopupWindow popupWindow;
     private void showPopup(View view) {
              TextView textView=new TextView(this);

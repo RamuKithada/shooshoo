@@ -205,11 +205,11 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("audience")
     Call<ChallengeResponse> saveAudience(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,
-                                        @Field("prizesInfo") String prizesInfo,@Field("totalPrize") String totalPrize,
+                                        @Field("prizesInfo") String prizesInfo, @Field("currency") String currency,@Field("totalPrize") String totalPrize,
                                         @Field("winners") String winners,@Field("radar") String radar,@Field("audZipcode") String audZipcode,
                                         @Field("audMiles") String audMiles,@Field("audCountry") String audCountry,@Field("audCity") String audCity,
                                          @Field("categories") String categories, @Field("audRegion") String audRegion, @Field("language") String language,
-                                        @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("gender") String gender);
+                                        @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
 
     @FormUrlEncoded
     @POST("campaign")

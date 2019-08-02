@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.ImagesModel;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
@@ -66,7 +67,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     ConnectionDetector connectionDetector;
     ProfilePresenter presenter;
     BaseView baseView;
-    List<Brand> brandList=new ArrayList<Brand>();
+    List<Company> brandList=new ArrayList<Company>();
 
     @BindView(R.id.profile_name)
     TextView profile_name;
@@ -256,7 +257,7 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     }
 
     @Override
-    public void onBrands(List<Brand> brands) {
+    public void onBrands(List<Company> brands) {
         if(brands!=null)
         {
             brandList.addAll(brands);

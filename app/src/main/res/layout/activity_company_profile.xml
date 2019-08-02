@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".activity.CompanyProfileActivity">
+    tools:context=".sponsor.CompanyProfileActivity">
 
     <include layout="@layout/stagebar_layout" />
     <ScrollView

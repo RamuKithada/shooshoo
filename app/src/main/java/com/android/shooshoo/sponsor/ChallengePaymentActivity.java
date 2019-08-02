@@ -194,21 +194,22 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
         participants.setText(challenge.getParticipants());
         videoUri =VIDEO_URL+challenge.getType()+"s/videos/"+challenge.getChallengeVideo();
         setUpVideo();
-        country_name.setText(challenge.getAudCountry());
-        city_name.setText(challenge.getAudCity());
-        age_range.setText(challenge.getAgeStart()+" - "+challenge.getAgeEnd());
-        StringBuilder builderCat=new StringBuilder();
-        if(challenge.getCategoryNames()!=null)
-        for (String name:challenge.getCategoryNames()) {
-            if(builderCat.length()==0)
-                builderCat.append(name);
-            else{
-                builderCat.append(',').append(name);
+            country_name.setText(challenge.getCountryName());
+            city_name.setText(challenge.getCityName());
+            age_range.setText(challenge.getAgeStart() + " - " + challenge.getAgeEnd());
+            StringBuilder builderCat=new StringBuilder();
+            if(challenge.getCategoryNames()!=null) {
+                for (String name : challenge.getCategoryNames()) {
+                    if (builderCat.length() == 0)
+                        builderCat.append(name);
+                    else {
+                        builderCat.append(',').append(name);
+                    }
+                }
+                categories.setText(builderCat.toString());
             }
-        }
-        categories.setText(builderCat.toString());
-        zip_code.setText(challenge.getAudZipcode());
-        gender.setText(challenge.getGender());
+            zip_code.setText(challenge.getAudZipcode());
+            gender.setText(challenge.getAudGender());
         audience_size.setText(userSession.getAudSize());
         video_layout.setOnClickListener(new View.OnClickListener() {
             @Override

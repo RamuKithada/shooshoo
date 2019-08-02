@@ -74,7 +74,9 @@
         <activity
             android:name=".activity.MyChallengesActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleInstance"
+            />
         <activity
             android:name=".activity.ChangePasswordActivity"
             android:screenOrientation="portrait"
@@ -123,7 +125,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.CompanyProfileActivity"
+            android:name=".sponsor.CompanyProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
@@ -198,6 +200,7 @@
             android:name=".sponsor.SponsorAudienceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
+
 
         </activity>
         <activity

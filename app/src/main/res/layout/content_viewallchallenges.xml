@@ -38,7 +38,6 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:textSize="18sp"
-            app:textAllCaps="true"
             android:fontFamily="@font/raleway_extrabold"
             android:textColor="#ffffff"
             />

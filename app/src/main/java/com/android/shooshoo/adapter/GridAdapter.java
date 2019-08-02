@@ -16,6 +16,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 
 public class GridAdapter extends RecyclerView.Adapter<GridAdapter.GridViewHolder> {
@@ -43,7 +47,8 @@ int width,height;
         String url=null;
         Log.e("mpos",""+mpos);
         if(pos<total-1) {
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
+            setImages(6,mpos,viewHolder);
+      /*      url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
             Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
 
             url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
@@ -59,21 +64,23 @@ int width,height;
             Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image5);
 
             url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+5).getType()+"/"+feeds.get(mpos+5).getChallengeId()+"/"+feeds.get(mpos+5).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image6);
+            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image6);*/
 
         }else if(pos==total-1&&reminder>0){
-            switch (reminder)
+            setImages(reminder,mpos,viewHolder);
+         /*   switch (reminder)
             {
                 case 1:
+                    setImages(1);
                     url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
                     Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
 
-
-                    viewHolder.iv_image2.setImageBitmap(null);
-                    viewHolder.iv_image3.setImageBitmap(null);
-                    viewHolder.iv_image4.setImageBitmap(null);
-                    viewHolder.iv_image5.setImageBitmap(null);
-                    viewHolder.iv_image6.setImageBitmap(null);
+//
+//                    viewHolder.iv_image2.setImageBitmap(null);
+//                    viewHolder.iv_image3.setImageBitmap(null);
+//                    viewHolder.iv_image4.setImageBitmap(null);
+//                    viewHolder.iv_image5.setImageBitmap(null);
+//                    viewHolder.iv_image6.setImageBitmap(null);
                     break;
                     case 2:
                         url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
@@ -135,7 +142,7 @@ int width,height;
                         Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image5);
                         viewHolder.iv_image6.setImageBitmap(null);
                         break;
-            }
+            }*/
 
         }
 
@@ -143,6 +150,25 @@ int width,height;
 
     }
 
+    private void setImages(int totalImages, int mpos, GridViewHolder viewHolder) {
+        for(int index=0;index<6;index++){
+            if(index<totalImages) {
+                if(feeds.get(mpos + index).getUrl().endsWith(".jpg")||feeds.get(mpos + index).getUrl().endsWith(".JPG")||feeds.get(mpos + index).getUrl().endsWith(".jpeg")||feeds.get(mpos + index).getUrl().endsWith(".png")||feeds.get(mpos + index).getUrl().endsWith(".JPEG")||feeds.get(mpos + index).getUrl().endsWith(".PNG"))
+                {
+                    String url = feeds.get(mpos + index).baseUrl() + "/" + feeds.get(mpos + index).getUrl();
+                    Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.imageViews.get(index));
+                }else {
+                    String url = feeds.get(mpos + index).baseUrl() + "/" + feeds.get(mpos + index).getThumbnail();
+
+                    Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.imageViews.get(index));
+                }
+            }else {
+                viewHolder.imageViews.get(index).setImageBitmap(null);
+            }
+
+        }
+
+    }
 
 
     int total,reminder;
@@ -191,24 +217,27 @@ int width,height;
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder{
-        ImageView iv_image1;
+   /*     ImageView iv_image1;
         ImageView iv_image2;
         ImageView iv_image3;
         ImageView iv_image4;
         ImageView iv_image5;
-        ImageView iv_image6;
+        ImageView iv_image6;*/
+        @BindViews({R.id.iv_image1,R.id.iv_image2,R.id.iv_image3,R.id.iv_image4,R.id.iv_image5,R.id.iv_image6})
+        List<ImageView> imageViews;
 
         public GridViewHolder(@NonNull View itemView) {
             super(itemView);
 //            itemView.getLayoutParams().width=width;
             itemView.getLayoutParams().height=height;
+            ButterKnife.bind(this,itemView);
 
-            iv_image1=itemView.findViewById(R.id.iv_image1);
-            iv_image2=itemView.findViewById(R.id.iv_image2);
-            iv_image3=itemView.findViewById(R.id.iv_image3);
-            iv_image4=itemView.findViewById(R.id.iv_image4);
-            iv_image5=itemView.findViewById(R.id.iv_image5);
-            iv_image6=itemView.findViewById(R.id.iv_image6);
+//            iv_image1=itemView.findViewById(R.id.iv_image1);
+//            iv_image2=itemView.findViewById(R.id.iv_image2);
+//            iv_image3=itemView.findViewById(R.id.iv_image3);
+//            iv_image4=itemView.findViewById(R.id.iv_image4);
+//            iv_image5=itemView.findViewById(R.id.iv_image5);
+//            iv_image6=itemView.findViewById(R.id.iv_image6);
         }
     }
 

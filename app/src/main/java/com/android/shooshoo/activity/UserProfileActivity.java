@@ -17,6 +17,7 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
 import com.android.shooshoo.models.Brand;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
@@ -79,7 +80,7 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     ConnectionDetector connectionDetector;
     UserSession userSession;
     ProfilePresenter presenter;
-    List<Brand> brandList=new ArrayList<Brand>();
+    List<Company> brandList=new ArrayList<Company>();
     String userId=null,follow;
 
 
@@ -176,7 +177,7 @@ public class UserProfileActivity extends BaseActivity implements ProfileView,Vie
     }
 
     @Override
-    public void onBrands(List<Brand> brands) {
+    public void onBrands(List<Company> brands) {
         if(brands!=null)
         {
             brandList.addAll(brands);

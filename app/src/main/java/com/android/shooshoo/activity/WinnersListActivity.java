@@ -110,7 +110,6 @@ TextView third_winner_prize;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_winners_list);
         ButterKnife.bind(this);
         winnersList=findViewById(R.id.winner_list);

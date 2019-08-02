@@ -57,8 +57,6 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     Challenge challenge=null;
 
     Uri uri;
-
-    RetrofitApis retrofitApis;
     UserSession userSession;
     ArrayList<Follower> followers=new ArrayList<>();
     InviteFriendsPresenter inviteFriendsPresenter;
@@ -193,5 +191,11 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
         }else {
             onSuccessFullInvitation("");
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,MyChallengesActivity.class));
+        finish();
     }
 }
