@@ -46,7 +46,7 @@ int width,height;
         int mpos=pos * 6;
         String url=null;
         Log.e("mpos",""+mpos);
-        if(pos<total-1) {
+        if(pos<=total-1&&reminder==0) {
             setImages(6,mpos,viewHolder);
       /*      url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
             Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
@@ -66,8 +66,10 @@ int width,height;
             url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+5).getType()+"/"+feeds.get(mpos+5).getChallengeId()+"/"+feeds.get(mpos+5).getThumbnail();
             Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image6);*/
 
-        }else if(pos==total-1&&reminder>0){
-            setImages(reminder,mpos,viewHolder);
+        }else if(pos==total-1&&reminder>=0) {
+            setImages(reminder, mpos, viewHolder);
+        }
+
          /*   switch (reminder)
             {
                 case 1:
@@ -144,13 +146,15 @@ int width,height;
                         break;
             }*/
 
-        }
+        //}
 
 
 
     }
 
     private void setImages(int totalImages, int mpos, GridViewHolder viewHolder) {
+//        if(totalImages==0)
+//            totalImages=5;
         for(int index=0;index<6;index++){
             if(index<totalImages) {
                 if(feeds.get(mpos + index).getUrl().endsWith(".jpg")||feeds.get(mpos + index).getUrl().endsWith(".JPG")||feeds.get(mpos + index).getUrl().endsWith(".jpeg")||feeds.get(mpos + index).getUrl().endsWith(".png")||feeds.get(mpos + index).getUrl().endsWith(".JPEG")||feeds.get(mpos + index).getUrl().endsWith(".PNG"))
@@ -171,7 +175,7 @@ int width,height;
     }
 
 
-    int total,reminder;
+    int total=-1,reminder=-1;
     @Override
     public int getItemCount() {
         if(feeds ==null)

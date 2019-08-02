@@ -513,7 +513,11 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                 showMessage("Please select first Starting date and time");
                 return;
             }
+        }else    if(edt_dob.getId()==R.id.edt_startdate){
+            datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         }
+
+
         datePickerDialog.show();
     }
 

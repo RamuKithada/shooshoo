@@ -458,10 +458,15 @@ int startDate=0,startYear=0,startMonth=0;
                 c.set(startYear, startMonth, startDate);
                 edt_startdate.getText();
                 datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
-            }else {
+
+        }
+            else {
                 showMessage("Please select first Starting date and time");
                 return;
         }
+        }
+        else    if(edt_dob.getId()==R.id.edt_startdate){
+            datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         }
         datePickerDialog.show();
     }

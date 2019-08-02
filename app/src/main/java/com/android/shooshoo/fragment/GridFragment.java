@@ -155,7 +155,7 @@ public class GridFragment extends Fragment implements FeedsView {
 
         if(feeds.isEmpty())
         if(connectionDetector.isConnectingToInternet())
-            feedsPresenter.loadFeeds(string,limit,0,"");
+              feedsPresenter.loadFeeds(string,limit,0,"");
         else
             showMessage("Check Internet connection");
     }
@@ -226,9 +226,18 @@ public class GridFragment extends Fragment implements FeedsView {
 
 
     }
-
-
 /*
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(getContext()!=null)
+        if(isVisibleToUser&&feeds.isEmpty())
+            loadNextPage();
+
+
+
+    }*/
+    /*
     @Override
     public void onClick(View view, Feed feed) {
 
