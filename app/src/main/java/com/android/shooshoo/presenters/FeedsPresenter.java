@@ -143,10 +143,10 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
      * Like the feed user watch
      * @param userId,feedId
      */
-    public void likeFeed(String userId,String feedId){
+    public void likeFeed(String userId,String feedId,String type){
         if(view!=null){
             view.showProgressIndicator(true);
-            retrofitApis.likeFeed(userId,feedId).enqueue(new Callback<ResponseBody>() {
+            retrofitApis.likeFeed(userId,feedId,type).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(view!=null)

@@ -32,9 +32,9 @@ public class LoginPresenter implements BasePresenter<LoginView> {
  @param pws is password of the user
  @param usr  is user mail when he provided registration time
  */
-    public void loginUser(String usr,String pws){
+    public void loginUser(String usr,String pws,String token){
         loginView.showProgressIndicator(true);
-       retrofitApis.loginUser(usr,pws, ApiUrls.DEVICE_TYPE,ApiUrls.DEVICE_TOKEN)
+       retrofitApis.loginUser(usr,pws, ApiUrls.DEVICE_TYPE,token)
                 .enqueue(new Callback<LoginSuccess>() {
                     @Override
                     public void onResponse(Call<LoginSuccess> call, Response<LoginSuccess> response) {

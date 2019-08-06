@@ -160,7 +160,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
      */
     private void login() {
         if(connectionDetector.isConnectingToInternet())//checking internet is available or not
-           loginPresenter.loginUser(edt_user_name.getText().toString(),edt_pws.getText().toString());
+           loginPresenter.loginUser(edt_user_name.getText().toString(),edt_pws.getText().toString(),userSession.getToken());
         else showMessage("Please Check internet connection !");
 
     }

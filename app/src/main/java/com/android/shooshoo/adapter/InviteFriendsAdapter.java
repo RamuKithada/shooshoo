@@ -85,11 +85,11 @@ public class InviteFriendsAdapter extends RecyclerView.Adapter<InviteFriendsAdap
         return filterArrayList.size();
     }
 
-    MyFillter myFillter=null;
+    MyFilter myFillter=null;
     @Override
     public Filter getFilter() {
         if(myFillter==null)
-            myFillter=new MyFillter();
+            myFillter=new MyFilter();
 
         return myFillter;
     }
@@ -119,7 +119,7 @@ public class InviteFriendsAdapter extends RecyclerView.Adapter<InviteFriendsAdap
         }
     }
 
-    public class MyFillter extends Filter{
+    public class MyFilter extends Filter{
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -144,7 +144,7 @@ public class InviteFriendsAdapter extends RecyclerView.Adapter<InviteFriendsAdap
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            if(results.count>0){
+            if(results.count>=0){
                 filterArrayList= (ArrayList<Follower>) results.values;
                 notifyDataSetChanged();
             }

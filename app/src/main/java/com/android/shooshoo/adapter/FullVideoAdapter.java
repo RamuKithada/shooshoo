@@ -111,40 +111,17 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             @Override
             public void onClick(View v) {
                 if(holder.tv_report.getVisibility()==View.GONE)
-                     holder.tv_report.setVisibility(View.VISIBLE);
+                    holder.tv_report.setVisibility(View.VISIBLE);
                 else
-                     holder.tv_report.setVisibility(View.GONE);
+                    holder.tv_report.setVisibility(View.GONE);
             }
         });
         holder.likes_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
 
-                    if(clickListener!=null)
-                        clickListener.onClick(v,feed);
-                        if(feed.getLikestatus().equalsIgnoreCase("0"))
-                        {
-                            holder.iv_like.setImageResource(R.drawable.like_active);
-                            feed.setLikestatus("1");
-                        }
-                        else
-                        {
-                            holder.iv_like.setImageResource(R.drawable.like_normal);
-                            feed.setLikestatus("0");
-                        }
-
-                    try {
-                        int likes = Integer.parseInt(feed.getLikes());
-                        if(feed.getLikestatus().equalsIgnoreCase("1"))
-                            likes++;
-                        else
-                            likes--;
-
-                        feed.setLikes(String.valueOf(likes));
-                        holder.tv_like_count.setText(feed.getLikes());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
             }
         });
@@ -152,7 +129,7 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             @Override
             public void onClick(View v) {
                 if(clickListener!=null)
-                     clickListener.onClick(v,feed);
+                    clickListener.onClick(v,feed);
             }
         });
         holder.donation_view.setOnClickListener(new View.OnClickListener() {
@@ -168,14 +145,14 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             public void onClick(View v) {
                 if(feed.getFollwerstatus().equalsIgnoreCase("0"))
                     if(clickListener!=null)
-                         clickListener.onClick(v,feed);
+                        clickListener.onClick(v,feed);
             }
         });
         holder.profile_lay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(clickListener!=null)
-                     clickListener.onClick(v,feed);
+                    clickListener.onClick(v,feed);
             }
         });
     }
@@ -255,6 +232,6 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
     public interface FeedClickListener{
         void onClick(View view,Feed feed);
         void onView(Feed feed);
-  }
+    }
 
 }

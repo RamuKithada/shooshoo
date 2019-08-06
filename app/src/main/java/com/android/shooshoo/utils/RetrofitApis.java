@@ -276,7 +276,7 @@ public interface RetrofitApis {
      Call<FeedsResponse> loadFeeds(@Field("type") String type ,@Field("offset") String offset,@Field("limit") String limit,@Field("userId") String userId);
     @FormUrlEncoded
     @POST("likeFeed")
-    Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId);
+    Call<ResponseBody> likeFeed(@Field("userId") String userId,@Field("postId") String postId,@Field("type") String type);
 
     @FormUrlEncoded
     @POST("views")

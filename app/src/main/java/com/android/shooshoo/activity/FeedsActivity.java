@@ -797,7 +797,43 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                     startActivityForResult(intent,102);
                 else {
                     if(detector.isConnectingToInternet())
-                    feedsPresenter.likeFeed(userSession.getUserId(),feed.getId());
+                    {
+                           if(!userSession.getUserInfo().getUserId().equalsIgnoreCase(feed.getUserId()))
+                           {
+
+                               ImageView iv_like=v.findViewById(R.id.iv_like);
+                               TextView tv_like_count=v.findViewById(R.id.tv_like_count);
+
+
+                               feedsPresenter.likeFeed(userSession.getUserId(),feed.getId(),feed.getType());
+
+                               if(feed.getLikestatus().equalsIgnoreCase("0"))
+                               {
+                                   iv_like.setImageResource(R.drawable.like_active);
+                                   feed.setLikestatus("1");
+                               }
+                               else
+                               {
+                                   iv_like.setImageResource(R.drawable.like_normal);
+                                   feed.setLikestatus("0");
+                               }
+
+                               try {
+                                   int likes = Integer.parseInt(feed.getLikes());
+                                   if(feed.getLikestatus().equalsIgnoreCase("1"))
+                                       likes++;
+                                   else
+                                       likes--;
+
+                                   feed.setLikes(String.valueOf(likes));
+                                   tv_like_count.setText(feed.getLikes());
+                               } catch (Exception e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                        else
+                            showMessage("You can not like your post");
+                    }
                     else showMessage(R.string.internet_msg);
                 }
                 break;

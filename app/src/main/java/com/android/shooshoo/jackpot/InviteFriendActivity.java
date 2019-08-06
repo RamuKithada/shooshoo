@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -93,7 +94,19 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onTextChanged(CharSequence text, int start, int before, int count) {
-                findContactsAdapter.getFilter().filter(text);
+                findContactsAdapter.getFilter().filter(text, new Filter.FilterListener() {
+                    @Override
+                    public void onFilterComplete(int count) {
+                        if(count<=0){
+                            tv_no_data.setVisibility(View.VISIBLE);
+                            select_all.setVisibility(View.INVISIBLE);
+                    }else {
+                            select_all.setVisibility(View.VISIBLE);
+                            tv_no_data.setVisibility(View.INVISIBLE);
+                        }
+
+                    }
+                });
             }
 
             @Override

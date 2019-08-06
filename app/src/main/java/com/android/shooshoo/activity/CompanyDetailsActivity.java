@@ -15,7 +15,9 @@ import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.presenters.BrandDetailsPresenter;
+import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.views.BrandProfileView;
 import java.util.ArrayList;
 import butterknife.BindView;
@@ -102,6 +104,21 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
         sponsorChallengersAdapter=new SponsorChallengersAdapter(this,sponsorChallenges);
         rv_challenge_list.setLayoutManager(new GridLayoutManager(this, 2));
         rv_challenge_list.setAdapter(sponsorChallengersAdapter);
+
+        rv_challenge_list.addOnItemTouchListener(new RecyclerTouchListener(getContext(), rv_challenge_list, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(CompanyDetailsActivity.this, MyChallengesActivity.class);
+                intent.putExtra("challenge",sponsorChallenges.get(position));
+//                // to  open Challenge details  activity
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         if(company!=null)
         setDetails(company);

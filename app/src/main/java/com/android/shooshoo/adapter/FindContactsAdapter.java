@@ -151,7 +151,7 @@ public class FindContactsAdapter extends RecyclerView.Adapter<FindContactsAdapte
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            if(results.count>0){
+            if(results.count>=0){
                 filterArrayList= (ArrayList<Follower>) results.values;
                 notifyDataSetChanged();
             }

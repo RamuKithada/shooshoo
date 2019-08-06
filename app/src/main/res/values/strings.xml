@@ -173,4 +173,6 @@
     <string name="internet_msg">Please Check your internet connection</string>
     <string name="sponsor">Sponsor</string>
     <string name="jackpot">Jackpot</string>
+    <string name="default_notification_channel_id">user follow</string>
+    <string name="notifications_admin_channel_name">User followers</string>
 </resources>

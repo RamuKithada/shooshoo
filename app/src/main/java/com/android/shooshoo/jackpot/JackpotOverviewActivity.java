@@ -101,7 +101,7 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
                     .error(R.drawable.rose)
                     .placeholder(R.drawable.rose)
                     .into(imageView);
-            time.setText(ApiUrls.getDurationTimeStamp(challenge.getCreatedOn()));
+            time.setText(ApiUrls.getDurationTimeStamp2(challenge.getEndDate()+" "+challenge.getEndTime()));
             brand.setBackgroundColor(Color.parseColor("#549BC1"));
             brand.setText(challenge.getAmount());
             StringBuilder builder=new StringBuilder();
@@ -134,7 +134,7 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
 
     private void setStage(int i) {
         for (int index = 0; index < buttons.size(); index++) {
-            if (index == i) {
+            if (index <= i) {
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
 //                buttons.get(index).setText(String.valueOf(i + 1));
             } else

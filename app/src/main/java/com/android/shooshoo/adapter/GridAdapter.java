@@ -46,110 +46,17 @@ int width,height;
         int mpos=pos * 6;
         String url=null;
         Log.e("mpos",""+mpos);
-        if(pos<=total-1&&reminder==0) {
+        Log.e("total",""+total);
+        Log.e("reminder",""+reminder);
+        if(pos<getItemCount()-1){
             setImages(6,mpos,viewHolder);
-      /*      url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image2);
-
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+2).getType()+"/"+feeds.get(mpos+2).getChallengeId()+"/"+feeds.get(mpos+2).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image3);
-
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+3).getType()+"/"+feeds.get(mpos+3).getChallengeId()+"/"+feeds.get(mpos+3).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image4);
-
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+4).getType()+"/"+feeds.get(mpos+4).getChallengeId()+"/"+feeds.get(mpos+4).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image5);
-
-            url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+5).getType()+"/"+feeds.get(mpos+5).getChallengeId()+"/"+feeds.get(mpos+5).getThumbnail();
-            Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image6);*/
-
-        }else if(pos==total-1&&reminder>=0) {
-            setImages(reminder, mpos, viewHolder);
+        }else if(pos==getItemCount()-1){
+            if(reminder>0){
+                setImages(reminder,mpos,viewHolder);
+            }else if(reminder==0){
+                setImages(6,mpos,viewHolder );
+            }
         }
-
-         /*   switch (reminder)
-            {
-                case 1:
-                    setImages(1);
-                    url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-                    Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-//
-//                    viewHolder.iv_image2.setImageBitmap(null);
-//                    viewHolder.iv_image3.setImageBitmap(null);
-//                    viewHolder.iv_image4.setImageBitmap(null);
-//                    viewHolder.iv_image5.setImageBitmap(null);
-//                    viewHolder.iv_image6.setImageBitmap(null);
-                    break;
-                    case 2:
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image2);
-
-                        viewHolder.iv_image3.setImageBitmap(null);
-                        viewHolder.iv_image4.setImageBitmap(null);
-                        viewHolder.iv_image5.setImageBitmap(null);
-                        viewHolder.iv_image6.setImageBitmap(null);
-
-                        break;
-                    case 3:
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image2);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+2).getType()+"/"+feeds.get(mpos+2).getChallengeId()+"/"+feeds.get(mpos+2).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image3);
-
-                        viewHolder.iv_image4.setImageBitmap(null);
-                        viewHolder.iv_image5.setImageBitmap(null);
-                        viewHolder.iv_image6.setImageBitmap(null);
-                        break;
-                    case 4:
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image2);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+2).getType()+"/"+feeds.get(mpos+2).getChallengeId()+"/"+feeds.get(mpos+2).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image3);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+3).getType()+"/"+feeds.get(mpos+3).getChallengeId()+"/"+feeds.get(mpos+3).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image4);
-                        viewHolder.iv_image5.setImageBitmap(null);
-                        viewHolder.iv_image6.setImageBitmap(null);
-
-                        break;
-                    case 5:
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos).getType()+"/"+feeds.get(mpos).getChallengeId()+"/"+feeds.get(mpos).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image1);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+1).getType()+"/"+feeds.get(mpos+1).getChallengeId()+"/"+feeds.get(mpos+1).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image2);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+2).getType()+"/"+feeds.get(mpos+2).getChallengeId()+"/"+feeds.get(mpos+2).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image3);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+3).getType()+"/"+feeds.get(mpos+3).getChallengeId()+"/"+feeds.get(mpos+3).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image4);
-
-                        url=SPONSOR_FEEDS_VIDEO_URL+feeds.get(mpos+4).getType()+"/"+feeds.get(mpos+4).getChallengeId()+"/"+feeds.get(mpos+4).getThumbnail();
-                        Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.iv_image5);
-                        viewHolder.iv_image6.setImageBitmap(null);
-                        break;
-            }*/
-
-        //}
-
-
-
     }
 
     private void setImages(int totalImages, int mpos, GridViewHolder viewHolder) {
@@ -178,8 +85,12 @@ int width,height;
     int total=-1,reminder=-1;
     @Override
     public int getItemCount() {
+        reminder=-1;
         if(feeds ==null)
             return 0;
+        if(feeds.isEmpty())
+            return 0;
+
         total=(int)(feeds.size()/6);
         reminder=(int)(feeds.size()%6);
         if(reminder>0){
