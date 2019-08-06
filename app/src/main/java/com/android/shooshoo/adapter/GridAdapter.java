@@ -1,6 +1,8 @@
 package com.android.shooshoo.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.SingleVideoViewActivity;
 import com.android.shooshoo.models.Comment;
 import com.android.shooshoo.models.Feed;
 import com.squareup.picasso.Picasso;
@@ -59,9 +62,7 @@ int width,height;
         }
     }
 
-    private void setImages(int totalImages, int mpos, GridViewHolder viewHolder) {
-//        if(totalImages==0)
-//            totalImages=5;
+    private void setImages(int totalImages, final int mpos, GridViewHolder viewHolder) {
         for(int index=0;index<6;index++){
             if(index<totalImages) {
                 if(feeds.get(mpos + index).getUrl().endsWith(".jpg")||feeds.get(mpos + index).getUrl().endsWith(".JPG")||feeds.get(mpos + index).getUrl().endsWith(".jpeg")||feeds.get(mpos + index).getUrl().endsWith(".png")||feeds.get(mpos + index).getUrl().endsWith(".JPEG")||feeds.get(mpos + index).getUrl().endsWith(".PNG"))
@@ -73,8 +74,20 @@ int width,height;
 
                     Picasso.with(context).load(url).placeholder(R.mipmap.ic_launcher).into(viewHolder.imageViews.get(index));
                 }
+                final int finalIndex = index;
+                viewHolder.imageViews.get(index).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent=new Intent(context, SingleVideoViewActivity.class);
+                            Feed feed= feeds.get(mpos+ finalIndex);
+                        intent.putExtra("uri", Uri.parse(feed.baseUrl()+feed.getUrl()));
+                        context.startActivity(intent);
+
+                    }
+                });
             }else {
-                viewHolder.imageViews.get(index).setImageBitmap(null);
+                   viewHolder.imageViews.get(index).setImageBitmap(null);
+                   viewHolder.imageViews.get(index).setOnClickListener(null);
             }
 
         }

@@ -86,7 +86,7 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
         title.setText("Summary");
         this.connectionDetector = new ConnectionDetector(this);
 
-        Challenge jackpot = this.userSession.getJackpot();
+        Challenge jackpot = userSession.getJackpot();
         if (jackpot != null)
             setChallenge(jackpot);
 

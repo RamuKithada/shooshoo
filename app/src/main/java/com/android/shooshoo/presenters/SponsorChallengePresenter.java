@@ -114,7 +114,6 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
           ,getTextPart(country),getTextPart(city),getTextPart(zipcode),getTextPart(street),getTextPart(streetNumber),getTextPart(phoneCode)
                 ,getTextPart(mobile)
         ,getTextPart(taxNum),getTextPart(companyEmail),getTextPart(categoryId)).enqueue(companyResponseCallback);
-
     }
 
    public void createChallenge(String  userId,String  sponsoredBy,int privateSponsor,String challName,String  startDate,String  startTime,

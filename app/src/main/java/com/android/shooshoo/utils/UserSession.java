@@ -159,7 +159,7 @@ public  void logout(){
         putString("sponsor_challenge", new Gson().toJson((Object) company));
     }
 
-    public Challenge getChallnge() {
+    public Challenge getChallenge() {
         return (Challenge) new Gson().fromJson(getString("sponsor_challenge"), Challenge.class);
     }
 

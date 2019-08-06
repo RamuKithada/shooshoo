@@ -141,7 +141,7 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
             stringBuilder.append(" Average/Day");
             textView.setText(stringBuilder.toString());*//*
         }*/
-        Challenge challenge = this.userSession.getChallnge();
+        Challenge challenge = this.userSession.getChallenge();
         if (challenge != null) {
             setChallenge(challenge);
 
@@ -209,7 +209,7 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
                 categories.setText(builderCat.toString());
             }
             zip_code.setText(challenge.getAudZipcode());
-            gender.setText(challenge.getAudGender());
+            gender.setText(challenge.getGender());
         audience_size.setText(userSession.getAudSize());
         video_layout.setOnClickListener(new View.OnClickListener() {
             @Override

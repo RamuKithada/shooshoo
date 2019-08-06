@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.BaseActivity;
@@ -50,7 +51,7 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
     @BindView(R.id.edt_search)
     AppCompatEditText edt_search;
     @BindView(R.id.select_all)
-    AppCompatTextView select_all;
+    RelativeLayout select_all;
 
     @BindView(R.id.tv_no_data)
     AppCompatTextView tv_no_data;
@@ -126,8 +127,6 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void sendNotification() {
-
-
         StringBuilder invites=new StringBuilder();
         for (Follower follower :followers) {
             if(follower.isSelected())
@@ -263,7 +262,7 @@ public class InviteFriendActivity extends BaseActivity implements View.OnClickLi
                 if (findContactsAdapter.getItemCount()>0)
                       sendNotification();
                 else {
-                    onSuccessFullInvitation("");
+                     onSuccessFullInvitation("");
                 }
                 break;
             case R.id.iv_back:

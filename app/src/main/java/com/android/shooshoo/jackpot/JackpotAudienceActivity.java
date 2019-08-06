@@ -1,5 +1,4 @@
 package com.android.shooshoo.jackpot;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,6 +8,8 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
@@ -29,6 +29,7 @@ import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.City;
 import com.android.shooshoo.models.Country;
+import com.android.shooshoo.models.Currency;
 import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.Region;
 import com.android.shooshoo.presenters.DataLoadPresenter;
@@ -66,7 +67,7 @@ import retrofit2.Response;
  * minAgePos,maxAgePos are the positions of the spinner_min_age adapter and spinner_max_age adapter to get limits of the audience age
  *  spinner_miles is used to show surrounding area  in miles to participants can participate in this challenge.
  */
-public class JackpotAudienceActivity extends BaseActivity implements DataLoadView, FragmentListDialogListener,JackpotChallengeView,CompoundButton.OnCheckedChangeListener,View.OnClickListener, BaseView {
+public class JackpotAudienceActivity extends BaseActivity implements DataLoadView, FragmentListDialogListener,JackpotChallengeView,CompoundButton.OnCheckedChangeListener,View.OnClickListener, BaseView, TextWatcher {
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -127,6 +128,9 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     @BindView(R.id.edt_miles)
     AppCompatEditText edt_miles;
 
+    @BindView(R.id.edt_currency)
+    AppCompatEditText edt_currency;
+
 
 
     @BindView(R.id.checkbox_male)
@@ -186,7 +190,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
     Country country;
     City city;
-    int city_pos=-1,country_pos=-1,region_pos=-1,languages_pos=-1;
+    int city_pos=-1,country_pos=-1,region_pos=-1,languages_pos=-1,currency_pos=-1;
+    List<Currency> currencies=new ArrayList<Currency>();
 
 
 
@@ -215,6 +220,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         regionsAdapter=new RegionsAdapter(this);
         regions_list.setLayoutManager(new LinearLayoutManager(this));
         regions_list.setAdapter(regionsAdapter);
+        edt_min_age.addTextChangedListener(this);
+        edt_max_age.addTextChangedListener(this);
 
         languagesAdapter=new LanguagesAdapter(this);
         language_list.setLayoutManager(new LinearLayoutManager(this));
@@ -232,6 +239,10 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     }
 
     private void spinnersInti() {
+        currencies.add(new Currency("Indian Rupee","INR","₹"));
+        currencies.add(new Currency("US Dollar","USD","$"));
+        currencies.add(new Currency("Euro","EUR","€"));
+
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
         tv_national.setTextColor(Color.parseColor("#FFFFFF"));
@@ -257,6 +268,25 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 args.putInt("view",edt_country.getId());
                 showFragment.setArguments(args);
                 showFragment.show(getSupportFragmentManager(),"country");
+
+
+            }
+        });
+        edt_currency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] strings=new String[currencies.size()];
+                for(int index=0;index<currencies.size();index++){
+                    Currency currency=currencies.get(index);
+                    strings[index]=currency.getName()+"  "+currency.getCode()+" ( "+currency.getSymbol()+" )";
+                }
+                CustomListFragmentDialog showFragment=new CustomListFragmentDialog();
+                Bundle args = new Bundle();
+                args.putStringArray("list",strings);
+                args.putInt("view",edt_currency.getId());
+                showFragment.setArguments(args);
+                showFragment.show(getSupportFragmentManager(),"currency");
+
 
 
             }
@@ -339,14 +369,14 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
             switch (v.getId()) {
                 case R.id.national_lay:
-                    tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+                    tv_national.setTextColor(Color.parseColor("#F31F68"));
                     tv_international.setTextColor(Color.parseColor("#85868A"));
                     nationalization = 0;
                     region_lay.setVisibility(View.GONE);
                     country_lay.setVisibility(View.VISIBLE);
                     break;
                 case R.id.international_lay:
-                    tv_international.setTextColor(Color.parseColor("#FFFFFF"));
+                    tv_international.setTextColor(Color.parseColor("#F31F68"));
                     tv_national.setTextColor(Color.parseColor("#85868A"));
                     nationalization = 1;
                     region_lay.setVisibility(View.VISIBLE);
@@ -373,7 +403,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 //
                 break;
             case R.id.iv_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.btn_more_categories:
                 categorySelectionAdapter.add();
@@ -523,7 +553,10 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         }
 
 
-
+        if(currency_pos<0){
+            showMessage("Please select Currency");
+            return false;
+        }
 
   /*      if(!ApiUrls.validateString(edt_key_des.getText().toString())){
             edt_key_des.setError("Enter Key Description");
@@ -813,6 +846,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
     @Override
     public void onChallengeUpdated(Challenge result) {
+       if(result!=null)
         this.userSession.saveJackpot(result);
         startActivity(new Intent(this,InviteFriendActivity.class));
     }
@@ -853,6 +887,15 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 }
 
                 break;
+            case R.id.edt_currency:
+                if(currencies!=null)
+                {
+                    edt_currency.setText(currencies.get(position).getCode()+"("+currencies.get(position).getSymbol()+")");
+                    currency_pos=position;
+                }
+
+                break;
+
 
         }
     }
@@ -875,15 +918,16 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.datepicker);
         // Add the buttons
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                deleteChallenge();
                 dialog.dismiss();
             }
         });
         // Add the buttons
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                deleteChallenge();
+
                 dialog.dismiss();
 
             }
@@ -897,8 +941,26 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
     }
 
-    private void deleteChallenge() {
-        userSession.getSponsorChallenge();
+        private void deleteChallenge() {
+                  if(userSession.getJackpot()!=null)
+            RetrofitApis.Factory.create(this).deleteChallenge(userSession.getJackpot().getChallengeId(),userSession.getJackpot().getType());
+            finish();
+        }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(s.length()>0&&s.length()%2==0)
+            getSizeofAudience();
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
 
     }
 }

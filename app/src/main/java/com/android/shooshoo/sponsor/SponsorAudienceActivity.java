@@ -524,8 +524,8 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
 
     private void spinnersInti() {
 
-        currencies.add(new Currency("Indian rupee","INR","₹"));
-        currencies.add(new Currency("US dollar","USD","$"));
+        currencies.add(new Currency("Indian Rupee","INR","₹"));
+        currencies.add(new Currency("US Dollar","USD","$"));
         currencies.add(new Currency("Euro","EUR","€"));
 
         national_lay.setOnClickListener(radioClickListener);
@@ -593,7 +593,7 @@ public class SponsorAudienceActivity extends BaseActivity implements DataLoadVie
                     }
                 break;
             case R.id.iv_back:
-                finish();
+                onBackPressed();
                 break;
             case R.id.iv_help:
                 showMessage("Help");
@@ -1207,13 +1207,13 @@ StringBuilder languageBuilder=new StringBuilder();
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+        if(s.length()>0&&s.length()%2==0)
+            getSizeofAudience();
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(s.length()>0&&s.length()%2==0)
-              getSizeofAudience();
+
 
     }
 
@@ -1225,20 +1225,24 @@ StringBuilder languageBuilder=new StringBuilder();
     private void showAlertDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.datepicker);
         // Add the buttons
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+
+                deleteChallenge();
                 dialog.dismiss();
+
             }
         });
         // Add the buttons
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-              deleteChallenge();
+
               dialog.dismiss();
+
 
             }
         });
-        builder.setMessage("Do you want discard the changes");
+        builder.setMessage("Do you want discard the changes ?");
 
 
 // Create the AlertDialog
@@ -1248,7 +1252,8 @@ StringBuilder languageBuilder=new StringBuilder();
     }
 
     private void deleteChallenge() {
-        userSession.getSponsorChallenge();
-
+        if(userSession.getChallenge()!=null)
+        RetrofitApis.Factory.create(this).deleteChallenge(userSession.getChallenge().getChallengeId(),userSession.getChallenge().getType());
+        finish();
     }
 }

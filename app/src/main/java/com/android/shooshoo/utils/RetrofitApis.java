@@ -209,7 +209,7 @@ public interface RetrofitApis {
                                         @Field("winners") String winners,@Field("radar") String radar,@Field("audZipcode") String audZipcode,
                                         @Field("audMiles") String audMiles,@Field("audCountry") String audCountry,@Field("audCity") String audCity,
                                          @Field("categories") String categories, @Field("audRegion") String audRegion, @Field("language") String language,
-                                        @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("audGender") String gender);
+                                        @Field("ageStart") String ageStart,@Field("ageEnd") String ageEnd,@Field("gender") String gender);
 
     @FormUrlEncoded
     @POST("campaign")
@@ -393,6 +393,10 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("search")
     Call<ChallengeSearchResponse> searchChallenge(@Field("searchKey") String searchKey, @Field("type") String type);
+
+    @FormUrlEncoded
+    @POST("deleteChallenge")
+    Call<ResponseBody> deleteChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
 
 }
 

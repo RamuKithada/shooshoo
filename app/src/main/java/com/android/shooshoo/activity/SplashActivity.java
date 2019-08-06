@@ -90,8 +90,6 @@ getInstanceId();
                             Log.w("onComplete", "getInstanceId failed", task.getException());
                             return;
                         }
-
-
                         // Get new Instance ID token
                         final String token = task.getResult().getToken();
                         if (token != null)

@@ -67,6 +67,11 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
             holder.bind(Uri.parse(url+feed.getUrl()));
             holder.setListener(this);
             holder.card.setVisibility(View.GONE);
+            if(feed.getFollwerstatus().equalsIgnoreCase("0")){
+               holder.plus_mark.setVisibility(View.VISIBLE);
+            }else {
+                holder.plus_mark.setVisibility(View.GONE);
+            }
                if(feed.getViewstatus().equalsIgnoreCase("0"))
                {
                 viewed();

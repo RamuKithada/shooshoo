@@ -27,7 +27,7 @@
                 android:padding="2dp"
                 android:gravity="center"
                 android:textAllCaps="true"
-                android:text="@string/entry_fees"
+                android:text="@string/admission"
                 android:fontFamily="@font/raleway_extrabold"
                 android:textColor="#85868A"
                 />
@@ -59,6 +59,8 @@
                     android:minWidth="100dp"
                     android:gravity="center_vertical"
                     android:hint="Currency"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:layout_marginLeft="10dp"
                     android:textColorHint="@color/white_text"
                     android:textColor="@color/white_text"
@@ -173,7 +175,7 @@
                         android:background="#00FFFFFF"
                         android:fontFamily="@font/raleway_extrabold"
                         android:textAllCaps="true"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/pink_lite"
 
                         />
                 </RelativeLayout>

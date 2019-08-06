@@ -114,7 +114,7 @@ public class CampaignActivity extends BaseActivity implements SponsorChallengeVi
                 categories.setText(builderCat.toString());
             }
             zip_code.setText(challenge.getAudZipcode());
-            gender.setText(challenge.getAudGender());
+            gender.setText(challenge.getGender());
         }
 
 
