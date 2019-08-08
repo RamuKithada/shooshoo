@@ -1,6 +1,7 @@
 package com.android.shooshoo.presenters;
 
 import com.android.shooshoo.models.ChallengeSearchResponse;
+import com.android.shooshoo.models.CompanySearchResponse;
 import com.android.shooshoo.models.UserSearchResponse;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.SearchView;
@@ -25,6 +26,9 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
         retrofitApis=null;
     }
     public void searchUsers(String searchKey){
+        if(searchKey.isEmpty())
+            searchKey="a";
+
         retrofitApis.searchUsers(searchKey,"users").enqueue(new Callback<UserSearchResponse>() {
             @Override
             public void onResponse(Call<UserSearchResponse> call, Response<UserSearchResponse> response) {
@@ -51,8 +55,8 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
     }
 
   public void searchChallenges(String searchKey){
-//        if(view!=null)
-//            view.showProgressIndicator(true);
+      if(searchKey.isEmpty())
+          searchKey="a";
         retrofitApis.searchChallenge(searchKey,"challenges").enqueue(new Callback<ChallengeSearchResponse>() {
             @Override
             public void onResponse(Call<ChallengeSearchResponse> call, Response<ChallengeSearchResponse> response) {
@@ -68,6 +72,33 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
 
             @Override
             public void onFailure(Call<ChallengeSearchResponse> call, Throwable t) {
+                if(view!=null)
+                {
+                    view.showProgressIndicator(false);
+                    view.showMessage(t.getMessage());
+                }
+            }
+        });
+
+    }
+  public void searchCompany(String searchKey){
+      if(searchKey.isEmpty())
+          searchKey="a";
+        retrofitApis.searchCompanies(searchKey,"companies").enqueue(new Callback<CompanySearchResponse>() {
+            @Override
+            public void onResponse(Call<CompanySearchResponse> call, Response<CompanySearchResponse> response) {
+                if(view!=null)
+                    view. showProgressIndicator(false);
+                if(response.isSuccessful()){
+                    CompanySearchResponse followerResult=response.body();
+                    if(view!=null)
+                        view.onBrandSearchResult(followerResult.getChallenges());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CompanySearchResponse> call, Throwable t) {
                 if(view!=null)
                 {
                     view.showProgressIndicator(false);

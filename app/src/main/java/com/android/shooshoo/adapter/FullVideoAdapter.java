@@ -13,12 +13,9 @@ import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.SimplePlayerViewHolder;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import im.ene.toro.CacheManager;
-
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
 

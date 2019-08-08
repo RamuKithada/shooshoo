@@ -156,13 +156,13 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
 
    }
 
-   public  void createAudience( String companyId, String userId, String prizesInfo,String currency, String totalPrize,
+   public  void createAudience(String companyId, String userId, String prizesInfo,String currency, String totalPrize,
                                String winners,String radar,String audZipcode,String audMiles, String countryId,String cityId,
                                 String categories, String audRegion, String language,String ageStart, String ageEnd,String gender){
        if(view!=null)
-       view.showProgressIndicator(true);
+        view.showProgressIndicator(true);
         retrofitApis.saveAudience(companyId, userId, prizesInfo,currency, totalPrize, winners, radar, audZipcode, audMiles, countryId,cityId,
-                          categories,audRegion,language,ageStart,ageEnd, gender).enqueue(challengeResponseCallback);
+                          categories,audRegion,language,ageStart,ageEnd,gender).enqueue(challengeResponseCallback);
 
 
    }
@@ -171,6 +171,13 @@ public class SponsorChallengePresenter implements BasePresenter<SponsorChallenge
        if(view!=null)
         view.showProgressIndicator(true);
         retrofitApis.saveCampaign(challengeId,userId,budget,summery).enqueue(challengeResponseCallback);
+
+
+   }
+   public void sponsorSummery(String challengeId){
+       if(view!=null)
+        view.showProgressIndicator(true);
+        retrofitApis.sponsorSummery(challengeId).enqueue(challengeResponseCallback);
 
 
    }

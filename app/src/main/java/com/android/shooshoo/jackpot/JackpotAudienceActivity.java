@@ -245,7 +245,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
 
         national_lay.setOnClickListener(radioClickListener);
         international_lay.setOnClickListener(radioClickListener);
-        tv_national.setTextColor(Color.parseColor("#FFFFFF"));
+        tv_national.setTextColor(Color.parseColor("#F31F68"));
         tv_international.setTextColor(Color.parseColor("#85868A"));
         nationalization = 0;
         region_lay.setVisibility(View.GONE);
@@ -409,7 +409,7 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                 categorySelectionAdapter.add();
                 break;
             case R.id.btn_more_regions:
-                if(region_pos>0&&region_pos<regions.size()){
+                if(region_pos>=0&&region_pos<regions.size()){
                     regionsAdapter.add(regions.remove(region_pos));
                     region_pos=-1;
                     edt_region.setText("Region");

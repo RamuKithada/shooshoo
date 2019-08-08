@@ -1,11 +1,13 @@
 package com.android.shooshoo.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
-
-public class Feed {
+public class Feed implements Parcelable {
 
     @SerializedName("postId")
     @Expose
@@ -61,6 +63,37 @@ public class Feed {
     @SerializedName("viewstatus")
     @Expose
     private  String viewstatus;
+
+    protected Feed(Parcel in) {
+        id = in.readString();
+        challengeId = in.readString();
+        userId = in.readString();
+        type = in.readString();
+        url = in.readString();
+        thumbnail = in.readString();
+        postDescription = in.readString();
+        createdOn = in.readString();
+        userName = in.readString();
+        image = in.readString();
+        likes = in.readString();
+        views = in.readString();
+        followers = in.readString();
+        likestatus = in.readString();
+        follwerstatus = in.readString();
+        viewstatus = in.readString();
+    }
+
+    public static final Creator<Feed> CREATOR = new Creator<Feed>() {
+        @Override
+        public Feed createFromParcel(Parcel in) {
+            return new Feed(in);
+        }
+
+        @Override
+        public Feed[] newArray(int size) {
+            return new Feed[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -192,5 +225,30 @@ public class Feed {
 
     public String baseUrl(){
         return SPONSOR_FEEDS_VIDEO_URL+getType()+"/"+getChallengeId()+"/";
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(challengeId);
+        dest.writeString(userId);
+        dest.writeString(type);
+        dest.writeString(url);
+        dest.writeString(thumbnail);
+        dest.writeString(postDescription);
+        dest.writeString(createdOn);
+        dest.writeString(userName);
+        dest.writeString(image);
+        dest.writeString(likes);
+        dest.writeString(views);
+        dest.writeString(followers);
+        dest.writeString(likestatus);
+        dest.writeString(follwerstatus);
+        dest.writeString(viewstatus);
     }
 }

@@ -13,6 +13,10 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.activity.HomeActivity;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Company;
+import com.android.shooshoo.presenters.SponsorChallengePresenter;
+import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.SponsorChallengeView;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -44,7 +48,7 @@ import static com.android.shooshoo.utils.ApiUrls.VIDEO_URL;
 /**{@link ChallengePaymentActivity} is used to show payment screen of the Jockpot challenge registration screen
 
  */
-public class ChallengePaymentActivity extends BaseActivity implements View.OnClickListener ,SimpleExoPlayer.EventListener{
+public class ChallengePaymentActivity extends BaseActivity implements View.OnClickListener , SponsorChallengeView,SimpleExoPlayer.EventListener{
 
     @BindView(R.id.btn_next)
     TextView btn_next;
@@ -117,7 +121,8 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
    /* @BindView(R.id.tc_checkbox)
     CheckBox tc_checkbox;*/
 
-
+    ConnectionDetector connectionDetector;
+    SponsorChallengePresenter sponsorChallengePresenter;
 
 
 
@@ -146,7 +151,9 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
             setChallenge(challenge);
 
         }
-
+        this.connectionDetector = new ConnectionDetector(this);
+        this.sponsorChallengePresenter = new SponsorChallengePresenter();
+        this.sponsorChallengePresenter.attachView(this);
     }
     /**
      * setStage is for selection one of registration step
@@ -169,12 +176,14 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
         switch (view.getId())
         {
             case R.id.btn_next:
-                userSession.setSponsorChallenge(null);
-                userSession.savaChallenge(null);
-                Intent homeIntent=new Intent(this, HomeActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                homeIntent.putExtra("icon",1);
-                startActivity(homeIntent);
+
+                if (this.connectionDetector.isConnectingToInternet()) {
+                    sponsorChallengePresenter.sponsorSummery(userSession.getChallenge().getChallengeId());
+                    return;
+                }
+                else
+                    showMessage("Please check your Internet Connection");
+;
                 break;
             case R.id.iv_back:
                 finish();
@@ -379,5 +388,20 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
     protected void onDestroy() {
         super.onDestroy();
         releasePlayer();
+    }
+
+    @Override
+    public void onCompanyRegister(Company company) {
+
+    }
+
+    @Override
+    public void onChallengeResponse(Challenge challenge) {
+        userSession.setSponsorChallenge(null);
+        userSession.savaChallenge(null);
+        Intent homeIntent=new Intent(this, HomeActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        homeIntent.putExtra("icon",1);
+        startActivity(homeIntent);
     }
 }

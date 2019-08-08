@@ -1,9 +1,19 @@
 package com.android.shooshoo.utils;
 
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.android.shooshoo.R;
+import com.android.shooshoo.activity.HomeActivity;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -53,14 +63,14 @@ public class FirebaseService extends  FirebaseMessagingService {
 
 
 
-//        // Check if message contains a notification payload.
-//        if (remoteMessage.getNotification() != null) {
-//            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-//            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
-//            Log.d(TAG, "Message Notification BodyLocalizationKey: " + remoteMessage.getNotification().getBodyLocalizationKey());
-//            Log.d(TAG, "Message Notification ClickAction: " + remoteMessage.getNotification().getClickAction());
-//            sendNotification(remoteMessage.getNotification().getBody());
-//        }
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() != null) {
+            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
+            Log.d(TAG, "Message Notification BodyLocalizationKey: " + remoteMessage.getNotification().getBodyLocalizationKey());
+            Log.d(TAG, "Message Notification ClickAction: " + remoteMessage.getNotification().getClickAction());
+            sendNotification(remoteMessage.getNotification().getBody());
+        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -180,43 +190,44 @@ public class FirebaseService extends  FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-//    private void sendNotification(String messageBody) {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-//                PendingIntent.FLAG_ONE_SHOT);
-//
-//        String channelId = getString(R.string.default_notification_channel_id);
-//        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        NotificationCompat.Builder notificationBuilder =
-//                new NotificationCompat.Builder(this, channelId)
-//                        .setSmallIcon(R.mipmap.appicon)
-//                        .setContentTitle(getString(R.string.app_name))
-//                        .setContentText(messageBody)
-//                        .setAutoCancel(true)
-//                        .setSound(defaultSoundUri)
-//                        .setContentIntent(pendingIntent);
-//        if(messageBody.length()>20){
-//            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody));
-//        }else {
-//            notificationBuilder.setContentText(messageBody);
-//
-//        }
-//
-//
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        // Since android Oreo notification channel is needed.
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel = new NotificationChannel(channelId,
-//                    getString(R.string.notifications_admin_channel_name),
-//                    NotificationManager.IMPORTANCE_DEFAULT);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//
-//        notificationManager.notify(2 /* ID of notification */, notificationBuilder.build());
-//    }
+    private void sendNotification(String messageBody) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("icon",7);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+        String channelId = getString(R.string.default_notification_channel_id);
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, channelId)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(getString(R.string.app_name))
+                        .setContentText(messageBody)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+        if(messageBody.length()>20){
+            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(messageBody));
+        }else {
+            notificationBuilder.setContentText(messageBody);
+
+        }
+
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    getString(R.string.notifications_admin_channel_name),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(1 /* ID of notification */, notificationBuilder.build());
+    }
 //    private void loadData(Map<String,String> map){
 //        String   textContent=(String) map.get("text");
 //        String image_utl=(String) map.get("image");

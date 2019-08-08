@@ -286,6 +286,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 case 100:
                     intent=new Intent(this,FeedCommentsActivity.class);
                     intent.putExtra("feedId",feed.getId());
+                    intent.putExtra("type",feed.getType());
                     startActivity(intent);
                     break;
                 case 101:

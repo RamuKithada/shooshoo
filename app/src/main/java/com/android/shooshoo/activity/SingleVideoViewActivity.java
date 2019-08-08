@@ -1,12 +1,11 @@
 package com.android.shooshoo.activity;
-
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.android.shooshoo.R;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -30,15 +29,21 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SingleVideoViewActivity extends AppCompatActivity implements  SimpleExoPlayer.EventListener{
+    private static final String TAG = SingleVideoViewActivity.class.getSimpleName();
     @BindView(R.id.player)
     SimpleExoPlayerView playerView;
     @BindView(R.id.iv_playpause)
     ImageView iv_playpause;
+
+    @BindView(R.id.video_thumb)
+    ImageView video_thumb;
+
     @BindView(R.id.video_layout)
     RelativeLayout video_layout;
     Uri videoUri;
@@ -51,6 +56,8 @@ public class SingleVideoViewActivity extends AppCompatActivity implements  Simpl
         ButterKnife.bind(this);
         videoUri= getIntent().getParcelableExtra("uri");
 //        videoUri ="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+
+
         setUpVideo();
         video_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,7 +187,9 @@ public class SingleVideoViewActivity extends AppCompatActivity implements  Simpl
 
     @Override
     public void onPlayerError(ExoPlaybackException error) {
-
+        Log.e(TAG, "onPlayerError: "+error.toString() );
+        Picasso.with(this).load(videoUri).error(R.drawable.error).into(video_thumb);
+        video_thumb.setVisibility(View.VISIBLE );
     }
 
     @Override
@@ -221,6 +230,9 @@ public class SingleVideoViewActivity extends AppCompatActivity implements  Simpl
     protected void onDestroy() {
         super.onDestroy();
         releasePlayer();
+    }
+    public void close(View view){
+        finish();
     }
 
 

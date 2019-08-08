@@ -19,9 +19,13 @@ import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.views.BrandProfileView;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.android.shooshoo.utils.ApiUrls.IMAGE_URL;
 
 public class CompanyDetailsActivity extends BaseActivity implements BrandProfileView,View.OnClickListener {
     @BindView(R.id.navigation_home)
@@ -40,6 +44,9 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
 
     @BindView(R.id.save_brand)
     ImageView save_brand;
+
+    @BindView(R.id.iv_brand_icon)
+    ImageView iv_brand_icon;
 
     @BindView(R.id.sub_title)
     TextView sub_title;
@@ -133,6 +140,7 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
         sub_title.setText(""+company.getFirstName());
         tv_link.setText(company.getCompanyEmail());
         save_brand.setOnClickListener(this);
+        Picasso.with(this).load(IMAGE_URL+ "companies/" + company.getCompanyLogo()).error(R.drawable.h_m).into(iv_brand_icon);
 
 
     }

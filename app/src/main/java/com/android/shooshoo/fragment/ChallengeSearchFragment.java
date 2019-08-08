@@ -1,7 +1,6 @@
 package com.android.shooshoo.fragment;
-
-
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +12,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.HomeSearchActivity;
+import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.adapter.ViewallChallengesAdapter;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.utils.ClickListener;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +100,22 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
         super.onViewCreated(view, savedInstanceState);
         rv_list.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_list.setAdapter(viewallChallengesAdapter);
+        rv_list.addOnItemTouchListener(new RecyclerTouchListener(getContext(), rv_list, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent intent=new Intent(getContext(), MyChallengesActivity.class);
+                intent.putExtra("challenge",arrayList.get(position));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+        if(homeSearchActivity!=null)
+            if(arrayList.isEmpty())
+            homeSearchActivity.getHomeSearchPresenter().searchChallenges("a");
     }
 
     @Override
@@ -117,7 +133,13 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
         super.onDetach();
 
     }
-
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if(getContext()!=null)
+            if(isVisibleToUser)
+                viewallChallengesAdapter.notifyDataSetChanged();
+        super.setUserVisibleHint(isVisibleToUser);
+    }
     public void onChallengeSearchResult(List<Challenge> challenges){
         arrayList.clear();
         if(challenges!=null)

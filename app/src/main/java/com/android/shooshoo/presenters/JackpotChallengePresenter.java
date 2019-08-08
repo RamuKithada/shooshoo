@@ -119,6 +119,14 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
 
     }
 
+    public void jackpotSummery(String challengeId){
+        if(view!=null){
+            view.showProgressIndicator(true);
+            retrofitApis.jackpotSummery(challengeId)
+                    .enqueue(callback);
+        }
+    }
+
 
 
     private RequestBody getTextPart(String s) {
@@ -131,8 +139,6 @@ public class JackpotChallengePresenter implements BasePresenter<JackpotChallenge
     public void createAudience(String challenegId, String userId,String amount, String limitedAccess,
                                String winners,String radar,String audZipcode,String audMiles,String country, String city,
                                String categories,String audRegion,String languages,String ageStart, String ageEnd,String gender) {
-
-
 
         if(view!=null) {
             view.showProgressIndicator(true);

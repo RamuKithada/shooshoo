@@ -15,6 +15,7 @@ import com.android.shooshoo.models.CityResult;
 import com.android.shooshoo.models.CommentsResponce;
 import com.android.shooshoo.models.CompanyDetails;
 import com.android.shooshoo.models.CompanyResponse;
+import com.android.shooshoo.models.CompanySearchResponse;
 import com.android.shooshoo.models.CountryResult;
 import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.models.FollowerResult;
@@ -22,6 +23,7 @@ import com.android.shooshoo.models.JackpotResult;
 import com.android.shooshoo.models.HomeResponse;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.NewPostsResponse;
+import com.android.shooshoo.models.NotificationResult;
 import com.android.shooshoo.models.ProfileResponse;
 import com.android.shooshoo.models.RecentPostsResponce;
 import com.android.shooshoo.models.RegionResult;
@@ -163,10 +165,10 @@ public interface RetrofitApis {
                                      @Part("gender") RequestBody gender,
                                      @Part("deviceToken") RequestBody deviceToken);
 
-    @FormUrlEncoded
+/*    @FormUrlEncoded
     @POST("bankDetails")
     Call<ResponseBody> saveBankDetails(@Field("userId") String userId,@Field("iban") String iban,@Field("bic_swift") String bic_swift,@Field("accountOwner") String accountOwner,
-                                       @Field("bankName") String bankName);
+                                       @Field("bankName") String bankName);*/
 
 
 
@@ -215,6 +217,12 @@ public interface RetrofitApis {
     @POST("campaign")
     Call<ChallengeResponse> saveCampaign(@Field("challengeId") String challengeId,@Field("createdBy") String createdBy,@Field("budget") String budget,@Field("summery") String summery);
 
+    @FormUrlEncoded
+    @POST("sponsorSummery")
+    Call<ChallengeResponse> sponsorSummery(@Field("challengeId") String challengeId);
+
+
+
     @GET("allcategories")
     Call<CategoryList> getAllCategories();
 
@@ -251,6 +259,9 @@ public interface RetrofitApis {
                                             @Field("ageStart") String ageStart, @Field("ageEnd") String ageEnd, @Field("audGender") String gender);
 
 
+    @FormUrlEncoded
+    @POST("jackpotSummery")
+    Call<JackpotResult> jackpotSummery(@Field("challengeId") String challengeId);
      @GET("home")
      Call<HomeResponse> getHomeData();
 
@@ -304,11 +315,11 @@ public interface RetrofitApis {
 
     @FormUrlEncoded
     @POST("addComment")
-    Call<ResponseBody> addComments(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment);
+    Call<ResponseBody> addComments(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment,@Field("type") String type);
 
     @FormUrlEncoded
     @POST("replyComment")
-    Call<ResponseBody> replyComment(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment,@Field("commentId") String commentId);
+    Call<ResponseBody> replyComment(@Field("postId") String postId,@Field("userId") String userId,@Field("comment") String comment,@Field("commentId") String commentId,@Field("type") String type);
 
     @GET("rules")
    Call<RulesResponse> getRules();
@@ -395,8 +406,16 @@ public interface RetrofitApis {
     Call<ChallengeSearchResponse> searchChallenge(@Field("searchKey") String searchKey, @Field("type") String type);
 
     @FormUrlEncoded
+    @POST("search")
+    Call<CompanySearchResponse> searchCompanies(@Field("searchKey") String searchKey, @Field("type") String type);
+
+    @FormUrlEncoded
     @POST("deleteChallenge")
     Call<ResponseBody> deleteChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
+
+    @FormUrlEncoded
+    @POST("notificationList")
+    Call<NotificationResult>  getMyNotifications(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
 
 }
 

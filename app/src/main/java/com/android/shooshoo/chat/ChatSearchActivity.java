@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.chat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.HomeActivity;
 import com.android.shooshoo.adapter.SearchChatFriendAdapter;
 
 import butterknife.BindView;
@@ -46,7 +47,7 @@ public class ChatSearchActivity extends AppCompatActivity implements View.OnClic
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(ChatSearchActivity.this,HomeActivity.class);
+            Intent intent=new Intent(ChatSearchActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
                 case R.id.navigation_home:

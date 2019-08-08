@@ -71,5 +71,10 @@
     <style name="TextAppearance.Small" parent="TextAppearance.AppCompat.Small">
         <item name="android:textSize">11sp</item>
     </style>
+    <style name="MyDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 
 </resources>

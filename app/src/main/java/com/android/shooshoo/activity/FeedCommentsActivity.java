@@ -1,24 +1,25 @@
 package com.android.shooshoo.activity;
-
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FeedCommentsAdapter;
 import com.android.shooshoo.models.Comment;
+import com.android.shooshoo.models.CommentReply;
 import com.android.shooshoo.presenters.FeedCommentsPresenter;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.PaginationScrollListener;
 import com.android.shooshoo.views.FeedCommentsView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
 public class FeedCommentsActivity extends BaseActivity implements View.OnClickListener, FeedCommentsView, FeedCommentsAdapter.FeedCommentListener {
     /**{@link FeedCommentsActivity} is used show list of comment for a feed and provide to comment on the feed
      *
@@ -37,19 +38,11 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     private int TOTAL_PAGES = 3;
     // indicates the current page which Pagination is fetching.
     private int currentPage = PAGE_START;
-
-
-
-
-
-
-
-
     RecyclerView commentList;
     FeedCommentsAdapter feedCommentsAdapter;
-    ImageView iv_back, iv_send_cmnt;
+    ImageView iv_back,iv_profile_pic;
     EditText edt_comment;
-    TextView total_comments, reply_for;
+    TextView total_comments, reply_for,iv_send_cmnt;
 //    List<Comment> comments;
     FeedCommentsPresenter presenter;
     ConnectionDetector connectionDetector;
@@ -59,9 +52,12 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_comments);
+        setFinishOnTouchOutside(true);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         commentList=findViewById(R.id.comment_list);
         iv_back=findViewById(R.id.iv_back);
         iv_send_cmnt =findViewById(R.id.iv_send_msg);
+        iv_profile_pic =findViewById(R.id.iv_profile_pic);
         reply_for =findViewById(R.id.reply_for);
         edt_comment =findViewById(R.id.edt_message);
         total_comments =findViewById(R.id.total_comments);
@@ -74,6 +70,8 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         commentList.setAdapter(feedCommentsAdapter);
         presenter=new FeedCommentsPresenter();
         presenter.attachView(this);
+        if(userSession.getUserInfo()!=null)
+        Picasso.with(this).load(ApiUrls.PROFILE_IMAGE_URL+userSession.getUserInfo().getImage()).noPlaceholder().into(iv_profile_pic);
         commentList.addOnScrollListener(new PaginationScrollListener(linearLayoutManager) {
             @Override
             protected void loadMoreItems() {
@@ -114,10 +112,17 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
                 if(edt_comment.getText().toString().length()>0) {
                     if(connectionDetector.isConnectingToInternet()) {
                         if(isComment)
-                                presenter.postComment(getIntent().getStringExtra("feedId"),userSession.getUserId(),edt_comment.getText().toString());
+                                presenter.postComment(getIntent().getStringExtra("feedId"),userSession.getUserId(),edt_comment.getText().toString(),getIntent().getStringExtra("type"));
                          else {
                              if(comment!=null){
-                                 presenter.postReply(comment.getPostId(),userSession.getUserId(),comment.getCommentId(),edt_comment.getText().toString());
+                                 presenter.postReply(comment.getPostId(),userSession.getUserId(),comment.getCommentId(),edt_comment.getText().toString(),getIntent().getStringExtra("type"));
+                                 CommentReply  commentReply=new CommentReply();
+                                 commentReply.setComment(edt_comment.getText().toString());
+                                 commentReply.setCreatedOn(ApiUrls.getCurrentTime("yyyy-MM-dd HH:mm:ss"));
+                                 commentReply.setUserId(userSession.getUserInfo().getUserId());
+                                 commentReply.setImage(userSession.getUserInfo().getImage());
+                                 commentReply.setPostId(comment.getPostId());
+                                 comment.getCommentReply().add(0,commentReply);
                              }
                         }
                     }else {
@@ -152,6 +157,8 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
             reply_for.setText("");
             reply_for.setVisibility(View.GONE);
             edt_comment.setText(null);
+            feedCommentsAdapter.notifyDataSetChanged();
+            comment=null;
         }
     }
 
@@ -160,7 +167,7 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         TOTAL_PAGES=totalPages;
         feedCommentsAdapter.addAll(comments);
         currentPage=feedCommentsAdapter.getItemCount();
-        total_comments.setText("All Comments("+totalPages+")");
+//        total_comments.setText("All Comments("+totalPages+")");
         isLoading=false;
         feedCommentsAdapter.removeLoadingFooter();
 //        feedCommentsAdapter.removeLoadingFooter();
@@ -174,11 +181,10 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         reply_for.setVisibility(View.VISIBLE);
         reply_for.setText("Reply @ "+comment.getComment());
         edt_comment.setHint("Type your reply here");
-
     }
 
     @Override
-    public void onReport(Comment comment) {
+    public void onLike(Comment comment) {
 
     }
 

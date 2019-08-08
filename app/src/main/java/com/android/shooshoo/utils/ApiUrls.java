@@ -158,6 +158,12 @@ public class ApiUrls {
 
     }
 
+    public synchronized static String getCurrentTime(String format){
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(format);
+        String output=simpleDateFormat.format(new Date());
+       return output;
+    }
+
     public  synchronized static String getDurationTimeStamp2(String newsdatetime) {
         if(newsdatetime==null)
             return null;

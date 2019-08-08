@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_home"
     android:orientation="vertical"
-    tools:context=".activity.ChatSearchActivity">
+    tools:context=".chat.ChatSearchActivity">
 
     <LinearLayout
         android:id="@+id/tool_bar"

@@ -11,8 +11,10 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.activity.HomeActivity;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.presenters.JackpotChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.views.JackpotChallengeView;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -26,7 +28,7 @@ import butterknife.ButterKnife;
  *
  *
  */
-public class JackpotOverviewActivity extends BaseActivity implements View.OnClickListener {
+public class JackpotOverviewActivity extends BaseActivity implements View.OnClickListener , JackpotChallengeView {
 
 
     @BindView(R.id.btn_next)
@@ -72,6 +74,8 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
     @BindView(R.id.audience_size)
     AppCompatTextView audience_size;
 
+    JackpotChallengePresenter jackpotChallengePresenter;
+
 
 
 
@@ -87,6 +91,9 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
         this.connectionDetector = new ConnectionDetector(this);
 
         Challenge jackpot = userSession.getJackpot();
+        jackpotChallengePresenter=new JackpotChallengePresenter();
+        jackpotChallengePresenter.attachView(this);
+
         if (jackpot != null)
             setChallenge(jackpot);
 
@@ -147,13 +154,23 @@ public class JackpotOverviewActivity extends BaseActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_next:
-                Intent homeIntent = new Intent(this, HomeActivity.class);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
+                if(connectionDetector.isConnectingToInternet())
+                {
+                    if(userSession.getJackpot()!=null)
+                    jackpotChallengePresenter.jackpotSummery(userSession.getJackpot().getChallengeId());
+                }
+
                 break;
             case R.id.iv_back:
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onChallengeUpdated(Challenge result) {
+        Intent homeIntent = new Intent(this, HomeActivity.class);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
     }
 }

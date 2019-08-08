@@ -205,7 +205,7 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
 
     }
 
-    public void saveBankDetails(String userid,String iban,String bic_swift,String accountOwner,String bankName){
+  /*  public void saveBankDetails(String userid,String iban,String bic_swift,String accountOwner,String bankName){
         if(view!=null)
             view.showProgressIndicator(true);
         retrofitApis.saveBankDetails(userid, iban, bic_swift, accountOwner, bankName).enqueue(new Callback<ResponseBody>() {
@@ -229,7 +229,7 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
             }
         });
 
-    }
+    }*/
 
     private RequestBody getTextPart(String s) {
         if (s == null) {

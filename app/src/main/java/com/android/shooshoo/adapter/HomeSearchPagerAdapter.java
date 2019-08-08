@@ -42,10 +42,8 @@ public class HomeSearchPagerAdapter extends FragmentPagerAdapter {
                 break;
             case 3:
                 fragment= BrandSearchFragment.newInstance("BrandSearchFragment","");
-
                 break;
         }
-
                 return fragment;
     }
 

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/image_profile"
@@ -24,10 +25,9 @@
         android:text="Notification Title"
         android:layout_marginTop="10dp"
         android:padding="2dp"
-        android:minLines="1"
+        android:minLines="2"
         android:maxLines="2"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:fontFamily="@font/futura_medium_bt"
+        android:fontFamily="@font/raleway_medium"
         android:textColor="#FFF"
         />
 
@@ -41,8 +41,8 @@
         android:text="10mins ago"
         android:padding="5dp"
         android:textColor="@color/gray_text"
-        android:fontFamily="@font/futura_book_font"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:fontFamily="@font/raleway_medium"
+        android:textSize="12sp"
         />
     <ImageView
         android:id="@+id/image_pic"

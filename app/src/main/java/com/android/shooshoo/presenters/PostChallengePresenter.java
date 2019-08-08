@@ -31,7 +31,7 @@ public class PostChallengePresenter implements BasePresenter<PostChallengeView> 
     @Override
     public void detachView() {
         if(view!=null)
-        view.showProgressIndicator(false);
+            view.showProgressIndicator(false);
         view=null;
         retrofitApis=null;
     }

@@ -45,9 +45,10 @@ List<Winner> winners;
 
     @Override
     public void onBindViewHolder(final WinnerViewHolder holder, final int position) {
-                holder.rank.setText((position+3)+"th");
-                holder.prizeMoney.setText(1000+"E Cash");
+                holder.rank.setText((position+4)+"th");
+
                 Winner winner=winners.get(position);
+        holder.prizeMoney.setText(winner.getViews()+" Views ");
         Picasso.with(context).load(PROFILE_IMAGE_URL+winner.getImage()).error(R.drawable.profile_1).into(holder.image);
         holder.name.setText(winner.getUserName());
 
@@ -55,7 +56,8 @@ List<Winner> winners;
 
     @Override
     public int getItemCount() {
-        if(winners==null)return 0;
+        if(winners==null)
+            return 0;
 
         return winners.size();
     }
@@ -71,7 +73,7 @@ List<Winner> winners;
             name=itemView.findViewById(R.id.name);
             rank=itemView.findViewById(R.id.rank);
             prizeMoney=itemView.findViewById(R.id.prize_money);
-            image=itemView.findViewById(R.id.image);
+            image=itemView.findViewById(R.id.profile_pic);
 
 
 

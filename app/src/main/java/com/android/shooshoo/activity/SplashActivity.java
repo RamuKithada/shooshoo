@@ -1,5 +1,4 @@
 package com.android.shooshoo.activity;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.DialogInterface;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
@@ -19,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseActivity{
     UserSession userSession;
     ConnectionDetector detector;
 Runnable runnable=new Runnable() {

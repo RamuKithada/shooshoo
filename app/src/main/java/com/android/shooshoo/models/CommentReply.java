@@ -21,6 +21,10 @@ public class CommentReply {
     @SerializedName("comment")
     @Expose
     private String comment;
+    private String createdOn;
+    @SerializedName("image")
+    @Expose
+    private String image;
 
     public String getId() {
         return id;
@@ -62,4 +66,19 @@ public class CommentReply {
         this.comment = comment;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
 }

@@ -21,6 +21,7 @@ import com.android.shooshoo.fragment.FilterSearchFragment;
 import com.android.shooshoo.fragment.UserSearchFragment;
 import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Challenge;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.User;
 import com.android.shooshoo.presenters.HomeSearchPresenter;
 import com.android.shooshoo.utils.ApiUrls;
@@ -58,24 +59,6 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
         view_pager.setAdapter(homeSearchPagerAdapter);
         tabLayout.setupWithViewPager(view_pager);
         search_view.addTextChangedListener(this);
-        view_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-//                Log.e("onPageScrolled",""+i);
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-//                search_view.setText(null);
-//                Log.e("onPageSelected",""+i);
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-//                Log.e("ScrollStateChanged",""+i);
-            }
-        });
         for(int i=0;i<tabLayout.getTabCount();i++){
             View view= LayoutInflater.from(this).inflate(R.layout.custome_tab,null);
             ImageView image=view.findViewById(R.id.tab_image);
@@ -103,7 +86,7 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
     }
 
     @Override
-    public void onBrandSearchResult(List<Brand> brands) {
+    public void onBrandSearchResult(List<Company> brands) {
         if(homeSearchPagerAdapter.getItem(3)!=null) {
             BrandSearchFragment fragment = (BrandSearchFragment) homeSearchPagerAdapter.getItem(3);
             fragment.onBrandSearchResult(brands);

@@ -22,10 +22,10 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
-            android:padding="5dp"
+            android:padding="8dp"
             android:layout_margin="5dp"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            app:srcCompat="@drawable/back_arrow"
             />
         <TextView
             android:id="@+id/total_comments"
@@ -34,8 +34,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textColor="@color/white_text"
-            android:fontFamily="@font/futura_medium_bt"
-            android:text="All Comments(0)"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textSize="22sp"
+            android:text="Comments"
             android:layout_margin="5dp"
             />
 
@@ -94,6 +95,12 @@
         android:orientation="horizontal"
         android:background="@drawable/gradiant_home_bottom_navi"
         >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            />
         <EditText
             android:id="@+id/edt_message"
             android:layout_width="wrap_content"
@@ -101,23 +108,26 @@
             android:layout_weight="1"
             android:minLines="1"
             android:maxLines="2"
-            android:textColorHint="@color/gray_text"
+            android:textColorHint="@color/white_text"
             android:textColor="@color/white_text"
-            android:hint="Type your comment here"
+            android:hint="New Comment ..."
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:padding="5dp"
             android:layout_gravity="center_vertical"
-            android:background="#d0454444"
-            android:layout_margin="10dp"
+            android:background="#00454444"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="0dp"
             />
-        <ImageView
+        <TextView
             android:id="@+id/iv_send_msg"
-            android:layout_width="35dp"
+            android:layout_width="wrap_content"
             android:layout_height="35dp"
-            app:srcCompat="@drawable/ic_send_white_24dp"
             android:padding="8dp"
+            android:text="@string/send"
             android:layout_marginRight="5dp"
-            android:background="@drawable/search_view_bg"
+            android:textSize="12sp"
+            android:textColor="@color/white_text"
             android:layout_gravity="center_vertical|right"
 
             />

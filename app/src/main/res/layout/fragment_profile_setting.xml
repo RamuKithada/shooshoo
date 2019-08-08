@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/bg_color"
     tools:context=".fragment.ProfileSettingFragment">
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -321,7 +321,6 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         android:orientation="vertical"
         android:nestedScrollingEnabled="false"
-        tools:itemCount="1"
         tools:listitem="@layout/add_category_item"
         >
 
@@ -452,5 +451,5 @@
 
 
 </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </RelativeLayout>

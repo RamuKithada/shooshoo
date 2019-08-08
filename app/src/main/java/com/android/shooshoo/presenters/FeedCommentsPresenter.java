@@ -1,5 +1,7 @@
 package com.android.shooshoo.presenters;
+import com.android.shooshoo.models.CommentReply;
 import com.android.shooshoo.models.CommentsResponce;
+import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.FeedCommentsView;
 import org.json.JSONException;
@@ -27,9 +29,9 @@ public class FeedCommentsPresenter implements BasePresenter<FeedCommentsView>{
         this.retrofitApis=null;
         view=null;
     }
-    public void postReply(String feedId,String userId,String commentId,String comment){
+    public void postReply(final String feedId, final String userId, String commentId, final String comment, String type){
             view.showProgressIndicator(true);
-            retrofitApis.replyComment(feedId,userId,comment,commentId).enqueue(new Callback<ResponseBody>() {
+            retrofitApis.replyComment(feedId,userId,comment,commentId,type).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(view!=null)
@@ -40,6 +42,8 @@ public class FeedCommentsPresenter implements BasePresenter<FeedCommentsView>{
                             JSONObject object=new JSONObject(res);
                             String msg=object.optString("message");
                             int status=object.optInt("status");
+
+
                             if(view!=null)
                                 view.onReplyPosted(status,msg);
 
@@ -66,10 +70,10 @@ public class FeedCommentsPresenter implements BasePresenter<FeedCommentsView>{
 
 
     }
-    public void postComment(String feedId,String userId,String comment){
+    public void postComment(String feedId,String userId,String comment,String type){
 
             view.showProgressIndicator(true);
-            retrofitApis.addComments(feedId,userId,comment).enqueue(new Callback<ResponseBody>() {
+            retrofitApis.addComments(feedId,userId,comment,type).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if(view!=null)

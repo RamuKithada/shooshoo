@@ -141,35 +141,43 @@ TextView third_winner_prize;
     public void onWinnersListresult(List<Winner> winners) {
         if(winners!=null){
             if(winners.size()>3){
-               topWinners.add(winners.remove(0));
-               topWinners.add(winners.remove(1));
-               topWinners.add(winners.remove(2));
-               this.winners=winners;
-               if(topWinners.size()>0){
-                   Winner first=topWinners.get(0);
-                   first_winner.setVisibility(View.VISIBLE);
-                   first_winner_name.setText(first.getUserName());
-                   Picasso.with(this).load(PROFILE_IMAGE_URL+first.getImage()).error(R.drawable.profile_1).into(first_winner_image);
+                topWinners=winners.subList(0,3);
 
-               }  if(topWinners.size()>1){
-                   Winner second=topWinners.get(1);
-                   second_winner.setVisibility(View.VISIBLE);
-                   second_winner_name.setText(second.getUserName());
-                   Picasso.with(this).load(PROFILE_IMAGE_URL+second.getImage()).error(R.drawable.profile_1).into(second_winner_image);
+                try {
+                    List<Winner> remainingList=winners.subList(3,winners.size());
+                    if(remainingList!=null)
+                    this.winners.addAll(remainingList);
+                }catch (Exception e){
 
-               }  if(topWinners.size()>2){
-                   Winner third=topWinners.get(2);
-                   third_winner.setVisibility(View.VISIBLE);
-                   third_winner_name.setText(third.getUserName());
-                   Picasso.with(this).load(PROFILE_IMAGE_URL+third.getImage()).error(R.drawable.profile_1).into(third_winner_image);
+                }
 
-               }
-
+                listAdapter.notifyDataSetChanged();
             }else {
                 topWinners=winners;
             }
 
+            if(topWinners.size()>=1){
+                Winner first=topWinners.get(0);
+                first_winner.setVisibility(View.VISIBLE);
+                first_winner_name.setText(first.getUserName());
+                first_winner_prize.setText(first.getViews()+" Views ");
+                Picasso.with(this).load(PROFILE_IMAGE_URL+first.getImage()).error(R.drawable.error).into(first_winner_image);
 
+            }  if(topWinners.size()>=2){
+                Winner second=topWinners.get(1);
+                second_winner.setVisibility(View.VISIBLE);
+                second_winner_name.setText(second.getUserName());
+                second_winner_prize.setText(second.getViews()+" Views ");
+                Picasso.with(this).load(PROFILE_IMAGE_URL+second.getImage()).error(R.drawable.error).into(second_winner_image);
+
+            }  if(topWinners.size()>=3){
+                Winner third=topWinners.get(2);
+                third_winner.setVisibility(View.VISIBLE);
+                third_winner_name.setText(third.getUserName());
+                third_winner_prize.setText(third.getViews()+" Views ");
+                Picasso.with(this).load(PROFILE_IMAGE_URL+third.getImage()).error(R.drawable.error).into(third_winner_image);
+
+            }
 
         }
 

@@ -34,6 +34,7 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.My
     private Context context;
     private List<User> contactsModelArrayList;
     private List<User> filterArrayList=new ArrayList<User>();
+    private  FollowUserListner followUserListner=null;
     public UserFollowAdapter(Context context, List<User> users)
     {
         this.context=context;
@@ -41,6 +42,10 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.My
         if(contactsModelArrayList!=null)
           this.filterArrayList=contactsModelArrayList;
         Log.e("size",""+filterArrayList.size());
+    }
+
+    public void setFollowUserListner(FollowUserListner followUserListner) {
+        this.followUserListner = followUserListner;
     }
 
     @Override
@@ -71,14 +76,16 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                model.setSelected(!model.isSelected());
-                if(model.isSelected()){
+                if(followUserListner!=null)
+                    followUserListner.onFollow(model);
+
+              /*  if(model.isSelected()){
                     holder.added.setVisibility(View.VISIBLE);
                     holder.add.setVisibility(View.INVISIBLE);
                 }else {
                     holder.added.setVisibility(View.INVISIBLE);
                     holder.add.setVisibility(View.VISIBLE);
-                }
+                }*/
 
             }
         });
@@ -162,4 +169,9 @@ public class UserFollowAdapter extends RecyclerView.Adapter<UserFollowAdapter.My
 
         }
     }
+
+    public interface FollowUserListner{
+        void onFollow(User  user);
+    }
+
 }

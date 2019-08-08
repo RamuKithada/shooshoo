@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +18,32 @@ import com.android.shooshoo.activity.HomeSearchActivity;
 import com.android.shooshoo.adapter.UserFollowAdapter;
 import com.android.shooshoo.models.User;
 import com.android.shooshoo.models.UserSearchResponse;
+import com.android.shooshoo.presenters.FeedsPresenter;
+import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
+import com.android.shooshoo.utils.UserSession;
+import com.android.shooshoo.views.BaseView;
+import com.android.shooshoo.views.FeedsView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link UserSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserSearchFragment extends Fragment implements TextWatcher {
+public class UserSearchFragment extends Fragment implements TextWatcher,UserFollowAdapter.FollowUserListner{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -47,7 +57,11 @@ public class UserSearchFragment extends Fragment implements TextWatcher {
     RecyclerView list;
 
     HomeSearchActivity homeSearchActivity;
-   UserFollowAdapter userFollowAdapter;
+    UserFollowAdapter userFollowAdapter;
+
+    ConnectionDetector connectionDetector;
+    UserSession userSession;
+
 
     ArrayList<User> users=new ArrayList<>();
 
@@ -100,9 +114,13 @@ public class UserSearchFragment extends Fragment implements TextWatcher {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
         userFollowAdapter=new UserFollowAdapter(getContext(),users);
+        userFollowAdapter.setFollowUserListner(this);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         list.setAdapter(userFollowAdapter);
-//        searchUsers("ram");
+        if(homeSearchActivity!=null){
+            if(users.isEmpty())
+            homeSearchActivity.getHomeSearchPresenter().searchUsers("a");
+        }
     }
 
 
@@ -127,6 +145,8 @@ public class UserSearchFragment extends Fragment implements TextWatcher {
         if(context instanceof HomeSearchActivity){
             homeSearchActivity= (HomeSearchActivity) context;
         }
+        connectionDetector=new ConnectionDetector(context);
+        userSession=new UserSession(context);
 
     }
 
@@ -151,31 +171,73 @@ public class UserSearchFragment extends Fragment implements TextWatcher {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        if(getContext()!=null)
         if(isVisibleToUser)
             userFollowAdapter.notifyDataSetChanged();
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-//    RetrofitApis retrofitApis;
-//    public void searchUsers(String searchKey){
-//        if(retrofitApis==null)
-//            retrofitApis=RetrofitApis.Factory.create(getContext());
-//        retrofitApis.searchUsers(searchKey,"users").enqueue(new Callback<UserSearchResponse>() {
-//            @Override
-//            public void onResponse(Call<UserSearchResponse> call, Response<UserSearchResponse> response) {
-//
-//                if(response.isSuccessful()){
-//                    UserSearchResponse followerResult=response.body();
-//                     onUserSearchResult(followerResult.getUsers());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<UserSearchResponse> call, Throwable t) {
-//
-//            }
-//        });
-//
-//    }
+    User user;
+    @Override
+    public void onFollow(User user) {
+        this.user=user;
+        followUser(userSession.getUserInfo().getUserId(),user.getUserId());
+    }
+
+    /**
+     * Follow the user watch
+     * @param userId,profileId
+     */
+    public void followUser(String userId,String profileId){
+        Log.e("userid :"+userId,"feedId : "+profileId);
+        if(homeSearchActivity!=null){
+            homeSearchActivity.showProgressIndicator(true);
+            RetrofitApis.Factory.create(getContext()).followUser(userId,profileId).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if(homeSearchActivity!=null)
+                        homeSearchActivity.showProgressIndicator(false);
+
+                    if(response.isSuccessful()){
+                        try {
+                            String res=  response.body().string();
+                            JSONObject object=new JSONObject(res);
+                            String msg=object.optString("message");
+                            int status=object.optInt("status");
+                            if(status==1){
+                                if(user!=null){
+                                user.setSelected(!user.isSelected());
+                                userFollowAdapter.notifyDataSetChanged();
+                            }
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if(homeSearchActivity!=null)
+                    {
+                        homeSearchActivity.showProgressIndicator(false);
+                        homeSearchActivity.showMessage(t.getMessage());
+                    }
+
+                }
+            });
+
+
+        }
+
+    }
+
+
 }

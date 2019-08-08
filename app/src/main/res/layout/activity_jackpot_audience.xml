@@ -315,7 +315,6 @@
                     android:textAllCaps="true"
                     android:textColor="#85868A"
                     android:paddingTop="10dp"
-                    android:paddingLeft="5dp"
                     />
 
                 <android.support.v7.widget.RecyclerView
@@ -324,10 +323,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="45dp"
                     android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_below="@+id/region_title"
                     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
                     android:orientation="vertical"
-                    tools:itemCount="0"
+                    tools:itemCount="2"
                     android:nestedScrollingEnabled="false"
                     tools:listitem="@layout/add_category_item"
                     >
@@ -342,10 +342,9 @@
                     >
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/edt_region"
-                        android:layout_width="wrap_content"
+                        android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
                         android:hint="Region"
                         android:focusable="false"
                         android:clickable="true"
@@ -622,7 +621,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:hint="Language"
                         android:focusable="false"
                         android:clickable="true"

@@ -49,10 +49,13 @@ import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.ProfileView;
 import com.android.shooshoo.views.UpdateUserInfoView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -306,9 +309,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                              Log.e("cats",cats.toString());
                              updateUserInfoPresenter.updateUserCat(userSession.getUserId(),cats.toString());
 
-//                           Log.e("companyArrayList",companyArrayList.toString());
-//                           updateUserInfoPresenter.updateUserCat(userSession.getUserId(),companyArrayList.toString());
-
 
                }
 
@@ -319,7 +319,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.btn_more_categories:
                 if(categorySelectionAdapter!=null)
-                categorySelectionAdapter.add();
+                  categorySelectionAdapter.add();
                 break;
             case R.id.ll_upload_photo_layout:
                         CropImage.activity()
@@ -845,9 +845,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
     public void onBrands(List<Company> brands) {
 
     }
-
-
-
   /*  @Override
     public void onBankDetails(UserBankDetails bankDetails) {
       *//*  if(bankDetails!=null){
@@ -860,6 +857,18 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onUpdateUserInfo(ResponseBody responseBody) {
+//        try {
+//            Log.e("onUpdateUserInfo",""+responseBody.string());
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Gson gson=new Gson();
+//        try {
+//            JsonObject jsonObject
+//            gson.fromJson(,LoginSuccess.class);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 

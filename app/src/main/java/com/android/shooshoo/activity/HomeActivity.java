@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.chat.ChatSearchActivity;
 import com.android.shooshoo.fragment.ChallengersFragment;
 import com.android.shooshoo.fragment.ChatsFragment;
 import com.android.shooshoo.fragment.HomeFragment;
@@ -276,7 +277,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.iv_chat:
-                mTextMessage.setText("Chats");
+                mTextMessage.setText("NOTIFICATIONS");
                 iv_chat.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
                 iv_help.setVisibility(View.GONE);
@@ -297,7 +298,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 }
                 ChatsFragment chatsFragment = (ChatsFragment) getSupportFragmentManager().findFragmentByTag("chat");
                 if (chatsFragment != null && chatsFragment.isVisible()) {
-                    Intent intentsearch=new Intent(this,ChatSearchActivity.class);
+                    Intent intentsearch=new Intent(this, ChatSearchActivity.class);
                     startActivity(intentsearch);
                     return;
                 }
