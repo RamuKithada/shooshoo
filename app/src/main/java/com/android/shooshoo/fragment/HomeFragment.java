@@ -30,6 +30,7 @@ import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;
+import com.android.shooshoo.utils.RecyclerViewScrollSmooth;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.HomeView;
 import java.util.ArrayList;
@@ -300,6 +301,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
         brandsList.setLayoutManager(manager);
         brandsList.setNestedScrollingEnabled(false);
         brandsList.setHasFixedSize(true);
+        brandsList.addOnItemTouchListener(new RecyclerViewScrollSmooth());
     }
 
 

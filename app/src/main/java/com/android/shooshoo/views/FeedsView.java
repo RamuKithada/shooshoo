@@ -9,5 +9,6 @@ public interface FeedsView extends BaseView{
     void onFeedsLoaded(ChallengeFeeds feeds);
     void onFeedsLoaded(List<Feed> feeds,int count);
     void onFeedLike(int status,String message);
+    void onUserTag(int status,String message);
     void onFollowed(int status,String message);
 }

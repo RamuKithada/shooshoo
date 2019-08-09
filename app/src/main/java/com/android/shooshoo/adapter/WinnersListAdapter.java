@@ -49,7 +49,7 @@ List<Winner> winners;
 
                 Winner winner=winners.get(position);
         holder.prizeMoney.setText(winner.getViews()+" Views ");
-        Picasso.with(context).load(PROFILE_IMAGE_URL+winner.getImage()).error(R.drawable.profile_1).into(holder.image);
+        Picasso.with(context).load(PROFILE_IMAGE_URL+winner.getImage()).error(R.drawable.error).into(holder.image);
         holder.name.setText(winner.getUserName());
 
     }

@@ -412,6 +412,10 @@ public interface RetrofitApis {
     @FormUrlEncoded
     @POST("deleteChallenge")
     Call<ResponseBody> deleteChallenge(@Field("challengeId") String challengeId,@Field("type") String type);
+    @FormUrlEncoded
+
+    @POST("tagFeed")
+    Call<ResponseBody> tagUserOnPost(@Field("userId") String userId ,@Field("postId") String postId,@Field("fromId") String fromId  ,@Field("type") String type);
 
     @FormUrlEncoded
     @POST("notificationList")

@@ -157,6 +157,13 @@ public class FullVideoAdapter extends RecyclerView.Adapter<SimplePlayerViewHolde
                     clickListener.onClick(v,feed);
             }
         });
+        holder.tag_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(clickListener!=null)
+                    clickListener.onClick(v,feed);
+            }
+        });
     }
 
     @Override public int getItemCount() {

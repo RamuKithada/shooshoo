@@ -143,6 +143,56 @@ public class FeedsPresenter implements BasePresenter<FeedsView>{
      * Like the feed user watch
      * @param userId,feedId
      */
+    public void tagUserOnFeed(String userId,String fromId,String feedId,String type){
+        if(view!=null){
+            view.showProgressIndicator(true);
+            retrofitApis.tagUserOnPost(userId,feedId,fromId,type).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if(view!=null)
+                        view.showProgressIndicator(false);
+
+                    if(response.isSuccessful()){
+                        try {
+                            String res=  response.body().string();
+                            JSONObject object=new JSONObject(res);
+                            String msg=object.optString("message");
+                            int status=object.optInt("status");
+                            if(view!=null)
+                                 view.onUserTag(status,msg);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    if(view!=null)
+                    {
+                        view.showProgressIndicator(false);
+                        view.showMessage(t.getMessage());
+                    }
+
+                }
+            });
+
+
+        }
+
+    }
+
+    /**
+     * Like the feed user watch
+     * @param userId,feedId
+     */
     public void likeFeed(String userId,String feedId,String type){
         if(view!=null){
             view.showProgressIndicator(true);

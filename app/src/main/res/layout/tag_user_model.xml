@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/layout_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_profileimage"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/rose"
+            android:layout_centerVertical="true"
+            />
+
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_profileimage"
+            android:layout_toLeftOf="@+id/layout_followcontainer"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:id="@+id/tv_personname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Harikrishna"
+                android:fontFamily="@font/raleway_semibold"
+                android:textAppearance="?android:attr/textAppearanceSmallInverse"
+                android:textColor="#FFF"
+                />
+            <TextView
+                android:id="@+id/tv_personnumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+919848224480"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_followcontainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+            <RelativeLayout
+                android:id="@+id/tag_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="visible"
+                android:background="@drawable/pink_circle"
+                >
+                <ImageView
+                    android:id="@+id/iv_tag"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_margin="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tag"
+                    />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="invisible"
+        android:layout_below="@+id/layout_container"
+        android:background="@color/gray_text"></View>
+</RelativeLayout>

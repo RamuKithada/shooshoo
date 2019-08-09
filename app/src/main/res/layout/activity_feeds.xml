@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
+<android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".activity.FeedsActivity"
     >
 
@@ -300,13 +306,13 @@
         android:id="@+id/feeds_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
-
-
+        android:layout_alignParentStart="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
     </RelativeLayout>
+
+
     <RelativeLayout
         android:id="@+id/bottom_view"
         android:layout_width="match_parent"
@@ -317,5 +323,75 @@
 
 
     </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
+    <RelativeLayout
+        android:id="@+id/full_view_tag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        >
+
+
+    <RelativeLayout
+        android:id="@+id/tag_friend_lay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:padding="5dp"
+        android:background="@color/bg_color"
+        >
+        <RelativeLayout
+            android:id="@+id/tag_title_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/close_tags"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_close_white_24dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tag"
+                android:textColor="@color/white_text"
+                android:fontFamily="@font/raleway_black"
+                android:textSize="22sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/search_friends"
+            android:layout_below="@+id/tag_title_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search"
+            android:textColorHint="@color/white_text"
+            android:textColor="@color/white_text"
+            android:textSize="18sp"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            >
+
+        </android.support.v7.widget.AppCompatEditText>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/friends_list"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_below="@+id/search_friends"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
 

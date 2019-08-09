@@ -1,5 +1,6 @@
 package com.android.shooshoo.activity;
 
+import android.animation.Animator;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,9 +18,17 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,12 +39,17 @@ import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
+import com.android.shooshoo.adapter.UserTadAdapter;
 import com.android.shooshoo.fragment.FeedsGridFragment;
 import com.android.shooshoo.fragment.FeedsListFragment;
+import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeFeeds;
+import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.models.ImagesModel;
+import com.android.shooshoo.models.User;
 import com.android.shooshoo.presenters.FeedsPresenter;
+import com.android.shooshoo.presenters.HomeSearchPresenter;
 import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
@@ -69,7 +83,7 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  *
  */
 
-public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView , FeedsListFragment.OnFragmentInteractionListener, FeedsGridFragment.OnFragmentInteractionListener,View.OnClickListener{
+public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView,UserTadAdapter.TagUserListener , FeedsListFragment.OnFragmentInteractionListener, FeedsGridFragment.OnFragmentInteractionListener,View.OnClickListener, com.android.shooshoo.views.SearchView {
 
 
     @BindView(R.id.navigation_home)
@@ -83,6 +97,19 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     @BindView(R.id.navigation_radar)
     LinearLayout navigation_radar;
 
+    @BindView(R.id.tag_friend_lay)
+    RelativeLayout tag_friend_lay;
+    @BindView(R.id.full_view_tag)
+    RelativeLayout full_view_tag;
+
+    @BindView(R.id.search_friends)
+    AppCompatEditText search_friends;
+
+
+    @BindView(R.id.friends_list)
+    RecyclerView friends_list;
+
+
     @BindView(R.id.iv_help)
     ImageView iv_help;
 
@@ -94,6 +121,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
     @BindView(R.id.iv_profile)
     ImageView iv_profile;
+    @BindView(R.id.close_tags)
+    ImageView close_tags;
+
 
 /*    @BindView(R.id.full_view_layout)
     RelativeLayout full_view_layout;
@@ -135,6 +165,8 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     ConnectionDetector detector;
     View view=null;
     FeedsPresenter feedsPresenter;
+    HomeSearchPresenter homeSearchPresenter;
+    ConnectionDetector connectionDetector;
 
     /**
      * random View setting and variables
@@ -158,10 +190,35 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
           feedsPresenter=new FeedsPresenter();
           feedsPresenter.attachView(this);
+          homeSearchPresenter=new HomeSearchPresenter();
+          homeSearchPresenter.attachView(this);
+          connectionDetector=new ConnectionDetector(this);
+        search_friends.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(connectionDetector.isConnectingToInternet())
+                    homeSearchPresenter.searchUsers(s.toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
         layoutParams.setBehavior(new BottomNavigationBehavior());
         setTagClickListener();
+        close_tags.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeTagView();
+            }
+        });
 
     }
 
@@ -382,7 +439,6 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                                     @Override
                                     public boolean onKey(DialogInterface arg0, int keyCode,
                                                          KeyEvent event) {
-                                        // TODO Auto-generated method stub
                                         if (keyCode == KeyEvent.KEYCODE_BACK) {
                                             progressDialog.dismiss();
                                             cancel(true);
@@ -750,6 +806,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 break;
 
         }
+        if(tag_friend_lay.getVisibility()==View.VISIBLE){
+            closeTagView();
+        }
 
     }
 
@@ -843,6 +902,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
                 onDownloadImage(url,null);
                 break;
+                case R.id.tag_view:
+                   openTagView();
+                break;
             case R.id.plus_mark:
                 if(!userSession.isLogin())
                     startActivityForResult(intent,103);
@@ -873,6 +935,73 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
         }
     }
+
+    private void openTagView() {
+        if(tag_friend_lay.getVisibility()==View.GONE)
+            tag_friend_lay.animate().translationY(0).setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    if(tag_friend_lay.getVisibility()==View.GONE)
+                    {
+                        full_view_tag.setVisibility(View.VISIBLE);
+                        tag_friend_lay.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    full_view_tag.setBackgroundColor(Color.parseColor("#a9000000"));
+                    full_view_tag.setOnTouchListener(closeClick);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+    }
+   View.OnTouchListener closeClick=new View.OnTouchListener() {
+       @Override
+       public boolean onTouch(View v, MotionEvent event) {
+           closeTagView();
+           return false;
+       }
+   };
+    private void closeTagView() {
+        search_friends.setText(null);
+        if(tag_friend_lay.getVisibility()==View.VISIBLE)
+         tag_friend_lay.animate().translationY(tag_friend_lay.getHeight()).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                full_view_tag.setBackgroundColor(Color.parseColor("#00FFFFFF"));
+                full_view_tag.setOnTouchListener(null);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(tag_friend_lay.getVisibility()==View.VISIBLE)
+                {
+                    tag_friend_lay.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onView(Feed feed) {
@@ -906,6 +1035,15 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         }*/
 
     }
+
+    @Override
+    public void onUserTag(int status, String message) {
+    if(status==1) {
+        user.setSelected(!user.isSelected());
+        if (userTadAdapter != null)
+            userTadAdapter.notifyDataSetChanged();
+    }
+    }
 /*
     @Override
     public void onFeedViewed(int status, String message) {
@@ -932,17 +1070,47 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         feedsPresenter.detachView();
+        homeSearchPresenter.detachView();
+        super.onDestroy();
     }
 
+    UserTadAdapter userTadAdapter;
+    @Override
+    public void onUserSearchResult(List<User> users) {
+        friends_list.setLayoutManager(new LinearLayoutManager(this));
+         userTadAdapter=new UserTadAdapter(this,users);
+        userTadAdapter.setTagUserListener(this);
+        friends_list.setAdapter(userTadAdapter);
+
+    }
+
+    @Override
+    public void onChallengeSearchResult(List<Challenge> challenges) {
+
+    }
+
+    @Override
+    public void onBrandSearchResult(List<Company> brands) {
+
+    }
+
+    @Override
+    public void onFilterSearchResult(List<User> users) {
+
+    }
+
+    User user;
+    @Override
+    public void onTag(User user) {
+        this.user=user;
+        if(feed!=null){
+            if(user!=null){
+                // TODO Call the service to tag user to the feed
+                feedsPresenter.tagUserOnFeed(userSession.getUserInfo().getUserId(),user.getUserId(),feed.getId(),feed.getType());
 
 
-
-
-
-
-
-
-
+            }
+        }
+    }
 }

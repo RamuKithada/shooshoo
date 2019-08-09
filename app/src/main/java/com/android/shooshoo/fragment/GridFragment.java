@@ -193,6 +193,10 @@ public class GridFragment extends Fragment implements FeedsView {
 
     }
 
+    @Override
+    public void onUserTag(int status, String message) {
+
+    }
 
 
     @Override

@@ -203,6 +203,12 @@ FullVideoAdapter.FeedClickListener clickListener=new FullVideoAdapter.FeedClickL
     public void onFeedLike(int status, String message) {
 
     }
+
+    @Override
+    public void onUserTag(int status, String message) {
+
+    }
+
     @Override
     public void onFollowed(int status, String message) {
 

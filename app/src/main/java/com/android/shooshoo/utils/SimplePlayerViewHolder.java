@@ -45,7 +45,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
     public ProgressBar progress_circular;
     public Uri mediaUri;
     public boolean isPlay=true;
-    public LinearLayout comment_view,likes_view,share_view,donation_view;
+    public LinearLayout comment_view,likes_view,share_view,donation_view,tag_view;
     public RelativeLayout options_lay;
     public LinearLayout message_lay;
     public LinearLayout profile_lay;
@@ -81,6 +81,7 @@ public class SimplePlayerViewHolder extends RecyclerView.ViewHolder implements T
         tv_name=itemView.findViewById(R.id.tv_name);
         tv_time=itemView.findViewById(R.id.tv_time);
         iv_like=itemView.findViewById(R.id.iv_like);
+        tag_view=itemView.findViewById(R.id.tag_view);
         tv_like_count=itemView.findViewById(R.id.tv_like_count);
         tv_views_count=itemView.findViewById(R.id.tv_views_count);
         upper_layer=itemView.findViewById(R.id.upper_layer);
