@@ -20,6 +20,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -287,6 +288,8 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+        datePickerDialog.setTitle(null);
+        datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         datePickerDialog.show();
         hideKeyboard(this, edt_dob);
 
@@ -769,7 +772,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
        if(!ApiUrls.validateString(edt_dob.getText().toString())){
 
-           showMessage(" Select Birth date");
+           showMessage("Please update Date of Birth");
            edt_dob.requestFocus();
            return false;
 

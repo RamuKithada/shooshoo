@@ -78,7 +78,7 @@
                 android:orientation="horizontal"
                 tools:listitem="@layout/invite_friends_item"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:background="#6D6F77"
                 >
 

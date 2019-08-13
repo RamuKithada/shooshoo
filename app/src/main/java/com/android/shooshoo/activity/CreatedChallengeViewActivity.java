@@ -200,9 +200,9 @@ public class CreatedChallengeViewActivity extends  BaseActivity implements PostC
                 if(jsonArray!=null){
                     if(jsonArray.length()>0){
                         JSONObject object1=jsonArray.getJSONObject(0);
-                        no_of_posts.setText(object1.getString("postsCount"));
-                        no_of_likes.setText(object1.getString("likesCount"));
-                        no_of_views.setText(object1.getString("viewsCount"));
+                        no_of_posts.setText(object1.optString("postsCount"));
+                        no_of_likes.setText(object1.optString("likesCount"));
+                        no_of_views.setText(object1.optString("viewsCount"));
                     }
                 }
 

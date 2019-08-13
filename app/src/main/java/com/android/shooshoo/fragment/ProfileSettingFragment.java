@@ -17,6 +17,7 @@ import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -348,6 +349,8 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH),
                 c.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+        datePickerDialog.setTitle(null);
+        datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         datePickerDialog.show();
         hideKeyboard(getContext(), edt_dob);
 

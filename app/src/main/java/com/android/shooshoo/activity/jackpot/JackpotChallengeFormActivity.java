@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -468,6 +469,9 @@ int startDate=0,startYear=0,startMonth=0;
         else    if(edt_dob.getId()==R.id.edt_startdate){
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         }
+
+        datePickerDialog.setTitle(null);
+        datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         datePickerDialog.show();
     }
 

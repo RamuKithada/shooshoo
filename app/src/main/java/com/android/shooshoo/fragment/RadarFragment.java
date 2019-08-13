@@ -21,9 +21,11 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.adapter.InviteFriendsAdapter;
 import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
 import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.models.CircleEntity;
+import com.android.shooshoo.models.Follower;
 import com.android.shooshoo.utils.OnRadarListener;
 import com.android.shooshoo.utils.RadarView;
 
@@ -45,6 +47,8 @@ public class RadarFragment extends Fragment implements OnRadarListener {
     AppCompatSeekBar seekBar;
     TextView milesLabel;
     RecyclerView local_user_list;
+    InviteFriendsAdapter inviteFriendsAdapter;
+    private ArrayList<Follower> contactsModelArrayList=new ArrayList<Follower>();
     public RadarFragment() {
         // Required empty public constructor
     }
@@ -92,6 +96,8 @@ public class RadarFragment extends Fragment implements OnRadarListener {
         seekBar=view.findViewById(R.id.seekbar);
         milesLabel=view.findViewById(R.id.miles_lable);
         local_user_list=view.findViewById(R.id.local_user_list);
+        inviteFriendsAdapter=new InviteFriendsAdapter(getContext(),contactsModelArrayList);
+        local_user_list.setAdapter(inviteFriendsAdapter);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -160,6 +166,12 @@ public class RadarFragment extends Fragment implements OnRadarListener {
             showDialog((int) x, (int) y);
         }else if(entity.getType()==1){
             local_user_list.setVisibility(View.VISIBLE);
+            Follower follower=new Follower();
+            follower.setUserName("Dummy");
+            follower.setImage("");
+            follower.setFromId("");
+            contactsModelArrayList.add(follower);
+            inviteFriendsAdapter.notifyDataSetChanged();
         }
     }
 

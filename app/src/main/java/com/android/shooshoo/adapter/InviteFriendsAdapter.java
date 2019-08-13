@@ -82,6 +82,7 @@ public class InviteFriendsAdapter extends RecyclerView.Adapter<InviteFriendsAdap
     @Override
     public int getItemCount()
     {
+
         return filterArrayList.size();
     }
 

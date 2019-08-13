@@ -17,6 +17,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -516,7 +517,8 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
             datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
         }
 
-
+        datePickerDialog.setTitle(null);
+        datePickerDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         datePickerDialog.show();
     }
 

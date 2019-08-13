@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -212,9 +213,14 @@ public class EnteredChallengeViewActivity extends  BaseActivity implements PostC
                 if(jsonArray!=null){
                     if(jsonArray.length()>0){
                         JSONObject object1=jsonArray.getJSONObject(0);
-                        no_of_posts.setText(object1.getString("postsCount"));
-                        no_of_likes.setText(object1.getString("likesCount"));
-                        no_of_views.setText(object1.getString("viewsCount"));
+                        no_of_posts.setText(object1.optString("postsCount"));
+                        no_of_likes.setText(object1.optString("likesCount"));
+                        no_of_views.setText(object1.optString("viewsCount"));
+                        if(TextUtils.isEmpty(object1.optString("viewsCount"))){
+                               Log.e("empty","");
+                        }else{
+                            Log.e("Not-empty",""+object1.optString("viewsCount"));
+                        }
                     }
                 }
 
