@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.HomeSearchActivity;
-import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.adapter.ViewallChallengesAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.utils.ClickListener;

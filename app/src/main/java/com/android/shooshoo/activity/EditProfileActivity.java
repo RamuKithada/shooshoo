@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.registration.ChangePasswordActivity;
 import com.android.shooshoo.adapter.ProfileViewPagerAdapter;
 import com.android.shooshoo.fragment.NotificationSettingFragment;
 import com.android.shooshoo.fragment.ProfileSettingFragment;
@@ -229,7 +230,7 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
                 finishAffinity();
                 break;
             case R.id.change_pws_item:
-                startActivity(new Intent(this,ChangePasswordActivity.class));
+                startActivity(new Intent(this, ChangePasswordActivity.class));
                 break;
             case R.id.terms_of_use_item:
 

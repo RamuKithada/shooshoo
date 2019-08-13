@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -49,15 +48,11 @@ import com.android.shooshoo.views.BaseView;
 import com.android.shooshoo.views.DataLoadView;
 import com.android.shooshoo.views.ProfileView;
 import com.android.shooshoo.views.UpdateUserInfoView;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -67,7 +62,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 
 import static android.app.Activity.RESULT_OK;
-import static com.android.shooshoo.activity.ProfileFillingFormActivity.RESULT_LOAD_IMAGE;
+import static com.android.shooshoo.activity.registration.ProfileFillingFormActivity.RESULT_LOAD_IMAGE;
 import static com.android.shooshoo.utils.ApiUrls.PROFILE_IMAGE_URL;
 
 /**

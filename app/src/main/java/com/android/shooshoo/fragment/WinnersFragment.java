@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.MyChallengesActivity;
 import com.android.shooshoo.activity.WinnersListActivity;
 import com.android.shooshoo.adapter.WinnersMyChallengersAdapter;
 import com.android.shooshoo.models.Challenge;

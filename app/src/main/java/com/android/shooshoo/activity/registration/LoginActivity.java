@@ -1,17 +1,17 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.registration;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.ForgetPasswordActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.LoginPresenter;
@@ -135,7 +135,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
         sign_up_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupIntent=new Intent(LoginActivity.this,ProfileFillingFormActivity.class);
+                Intent signupIntent=new Intent(LoginActivity.this, ProfileFillingFormActivity.class);
                 startActivity(signupIntent);
                 finish();
 
@@ -145,7 +145,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             @Override
             public void onClick(View v) {
 
-                Intent forgetPwsIntent=new Intent(LoginActivity.this,ForgetPasswordActivity.class);
+                Intent forgetPwsIntent=new Intent(LoginActivity.this, ForgetPasswordActivity.class);
                 startActivity(forgetPwsIntent);
 
             }

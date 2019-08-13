@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradiant_home"
-    tools:context=".activity.BrandChooseActivity">
+    tools:context=".activity.registration.BrandChooseActivity">
     <LinearLayout
         android:id="@+id/top_lay"
         android:layout_width="match_parent"

@@ -1,5 +1,4 @@
-package com.android.shooshoo.activity;
-import android.content.Context;
+package com.android.shooshoo.activity.participate;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,7 +14,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +21,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.CompanyDetailsActivity;
+import com.android.shooshoo.activity.HomeActivity;
+import com.android.shooshoo.activity.registration.LoginActivity;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
 import com.android.shooshoo.models.Challenge;
@@ -139,7 +141,7 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(MyChallengesActivity.this,HomeActivity.class);
+            Intent intent=new Intent(MyChallengesActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
                 case R.id.navigation_home:
@@ -271,7 +273,7 @@ Challenge challenge;
             break;
 
         case R.id.brand:
-            Intent intentBrand=new Intent(this,CompanyDetailsActivity.class);
+            Intent intentBrand=new Intent(this, CompanyDetailsActivity.class);
             intentBrand.putExtra("companyId",challenge.getBrands());
             startActivity(intentBrand);
             break;
@@ -560,7 +562,7 @@ switch (requestCode){
                             showAlert();
                     }
                     else
-                        startActivity(new Intent(this,LoginActivity.class));
+                        startActivity(new Intent(this, LoginActivity.class));
                 }
                 else
                     requestMultiplePermission();
@@ -603,7 +605,7 @@ switch (requestCode){
     private void startCamera(boolean image) {
 
 
-        Intent intent = new Intent(this,CameraActivity.class);
+        Intent intent = new Intent(this, CameraActivity.class);
 //        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         intent.putExtra("post", videoUri);
         intent.putExtra("challenge", challenge);

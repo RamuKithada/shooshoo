@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:id="@+id/activity_main"
-    tools:context=".activity.ProfileFillingFormActivity"
+    tools:context=".activity.registration.ProfileFillingFormActivity"
 
     >
     <ScrollView

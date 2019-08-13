@@ -9,27 +9,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.ChallengeListResponse;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.RecyclerTouchListener;
-import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.BaseView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /***
  * Challenges list to show Challenges in gridview in ViewPager of the {@link ChallengersFragment}

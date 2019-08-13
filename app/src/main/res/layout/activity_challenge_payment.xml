@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".sponsor.ChallengePaymentActivity"
+    tools:context=".activity.sponsor.ChallengePaymentActivity"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
 

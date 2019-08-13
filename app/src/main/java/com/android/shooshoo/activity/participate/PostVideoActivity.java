@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.participate;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +12,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.HomeActivity;
+import com.android.shooshoo.activity.SingleVideoViewActivity;
 import com.android.shooshoo.adapter.InviteFriendsAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
@@ -20,7 +23,6 @@ import com.android.shooshoo.presenters.InviteFriendsPresenter;
 import com.android.shooshoo.presenters.PostChallengePresenter;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
-import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.InviteFriendsView;
 import com.android.shooshoo.views.PostChallengeView;
@@ -117,7 +119,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
 
                 break;*/
             case R.id.video_post_layout:
-                intent=new Intent(this,SingleVideoViewActivity.class);
+                intent=new Intent(this, SingleVideoViewActivity.class);
                 intent.putExtra("uri",getIntent().getParcelableExtra("mpost"));
                 startActivity(intent);
                 break;
@@ -140,7 +142,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onSuccessfulUpload(String msg) {
         showMessage(msg);
-        Intent intent=new Intent(this,HomeActivity.class);
+        Intent intent=new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -195,7 +197,7 @@ public class PostVideoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this,MyChallengesActivity.class));
+        startActivity(new Intent(this, MyChallengesActivity.class));
         finish();
     }
 }

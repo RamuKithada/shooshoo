@@ -1,4 +1,4 @@
-package com.android.shooshoo.chat;
+package com.android.shooshoo.activity.chat;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

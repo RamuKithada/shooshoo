@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.chat.ChattingActivity;
+import com.android.shooshoo.activity.chat.ChattingActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

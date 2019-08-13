@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    tools:context=".sponsor.SponsorChallenge">
+    tools:context=".activity.sponsor.SponsorChallenge">
     <RelativeLayout
         android:id="@+id/top_lay"
         android:layout_width="match_parent"

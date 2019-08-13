@@ -10,7 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.chat.ChatSearchActivity;
+import com.android.shooshoo.activity.feeds.FeedsActivity;
+import com.android.shooshoo.activity.chat.ChatSearchActivity;
 import com.android.shooshoo.fragment.ChallengersFragment;
 import com.android.shooshoo.fragment.ChatsFragment;
 import com.android.shooshoo.fragment.HomeFragment;
@@ -120,7 +121,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.VISIBLE);
                 iv_edit_profile.setVisibility(View.GONE);
                 iv_profile.setVisibility(View.VISIBLE);
-                startActivity(new Intent(HomeActivity.this,FeedsActivity.class));
+                startActivity(new Intent(HomeActivity.this, FeedsActivity.class));
               break;
             case R.id.navigation_winners:
                 mTextMessage.setText(R.string.title_winners);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".jackpot.JackpotChallengeFormActivity">
+    tools:context=".activity.jackpot.JackpotChallengeFormActivity">
     <include layout="@layout/jackpot_stagebar_layout"
         />
     <ScrollView

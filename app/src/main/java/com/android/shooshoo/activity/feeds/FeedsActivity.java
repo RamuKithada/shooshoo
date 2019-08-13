@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.feeds;
 
 import android.animation.Animator;
 import android.app.Dialog;
@@ -27,8 +27,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +35,10 @@ import android.widget.Toast;
 
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.HomeActivity;
+import com.android.shooshoo.activity.registration.LoginActivity;
+import com.android.shooshoo.activity.UserProfileActivity;
 import com.android.shooshoo.adapter.FullVideoAdapter;
 import com.android.shooshoo.adapter.ImageListAdapter;
 import com.android.shooshoo.adapter.UserTadAdapter;
@@ -249,7 +251,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         @Override
         public void onClick(View v) {
             view=v;
-            Intent intent=new Intent(FeedsActivity.this,HomeActivity.class);
+            Intent intent=new Intent(FeedsActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
                 case R.id.navigation_home:
@@ -273,7 +275,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
             }
             if(!userSession.isLogin())
             {
-                Intent loginIntent=new Intent(FeedsActivity.this,LoginActivity.class);
+                Intent loginIntent=new Intent(FeedsActivity.this, LoginActivity.class);
                 startActivityForResult(loginIntent,150);
             }
             else
@@ -924,7 +926,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
                 }
                 break;
             case R.id.profile_lay:
-                Intent userProfileIntent=new Intent(FeedsActivity.this,UserProfileActivity.class);
+                Intent userProfileIntent=new Intent(FeedsActivity.this, UserProfileActivity.class);
                 userProfileIntent.putExtra("userId",feed.getUserId());
                 userProfileIntent.putExtra("follow",feed.getFollwerstatus());
 

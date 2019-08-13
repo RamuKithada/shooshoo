@@ -12,28 +12,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ChallengeListResponse;
-import com.android.shooshoo.models.ChallengeResponse;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.BaseView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.adapter.SponsorChallengersAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;

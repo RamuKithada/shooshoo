@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.registration;
 import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.shooshoo.BuildConfig;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.Language;
 import com.android.shooshoo.models.Region;
@@ -1041,7 +1042,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
                       Gson gson=new Gson();
                      LoginSuccess loginSuccess= gson.fromJson(result,LoginSuccess.class);
                      if(loginSuccess.getStatus()==1){
-                         Intent intent=new Intent(this,CategoryChooseActivity.class);
+                         Intent intent=new Intent(this, CategoryChooseActivity.class);
                          startActivity(intent);
                      }
 

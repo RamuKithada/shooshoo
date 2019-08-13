@@ -6,17 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.adapter.ViewallChallengesAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.ViewAllChallengesResponse;
-import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RecyclerTouchListener;

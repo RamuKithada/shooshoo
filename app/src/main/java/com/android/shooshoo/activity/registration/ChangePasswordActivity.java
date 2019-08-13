@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.registration;
 
 import android.content.Intent;
 import android.graphics.Color;

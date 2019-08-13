@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.participate;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.widget.SampleGLView;
@@ -46,8 +47,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.android.shooshoo.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
-import static com.android.shooshoo.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
+import static com.android.shooshoo.activity.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_IMAGE;
+import static com.android.shooshoo.activity.jackpot.JackpotChallengeFormActivity.RESULT_LOAD_VIDEO;
 
 public class CameraActivity extends BaseActivity implements View.OnClickListener {
 

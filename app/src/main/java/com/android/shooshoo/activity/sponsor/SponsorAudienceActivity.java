@@ -1,4 +1,4 @@
-package com.android.shooshoo.sponsor;
+package com.android.shooshoo.activity.sponsor;
 
 import android.content.DialogInterface;
 import android.content.Intent;

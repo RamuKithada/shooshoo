@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.feeds.FeedsActivity;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
 import com.google.android.gms.tasks.OnCompleteListener;

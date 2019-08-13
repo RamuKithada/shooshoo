@@ -8,13 +8,13 @@ import android.text.method.PasswordTransformationMethod;
 import android.text.method.SingleLineTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.registration.LoginActivity;
+import com.android.shooshoo.activity.registration.ProfileFillingFormActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.presenters.LoginPresenter;
@@ -118,7 +118,7 @@ public class SignupActivity extends BaseActivity implements LoginView,View.OnCli
 
                 break;
             case R.id.sign_in_layout:
-                Intent loginIntent=new Intent(this,LoginActivity.class);
+                Intent loginIntent=new Intent(this, LoginActivity.class);
                 startActivity(loginIntent);
                 break;
         }

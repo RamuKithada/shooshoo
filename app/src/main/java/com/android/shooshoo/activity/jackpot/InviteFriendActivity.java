@@ -1,4 +1,4 @@
-package com.android.shooshoo.jackpot;
+package com.android.shooshoo.activity.jackpot;
 
 import android.content.Intent;
 import android.os.Bundle;

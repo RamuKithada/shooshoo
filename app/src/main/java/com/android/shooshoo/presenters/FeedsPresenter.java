@@ -2,7 +2,6 @@ package com.android.shooshoo.presenters;
 
 import android.util.Log;
 
-import com.android.shooshoo.activity.FeedsActivity;
 import com.android.shooshoo.models.ChallengeFeeds;
 import com.android.shooshoo.models.FeedsResponse;
 import com.android.shooshoo.utils.RetrofitApis;

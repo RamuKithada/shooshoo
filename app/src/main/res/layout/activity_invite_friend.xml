@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@drawable/gradiant_home"
-    tools:context=".jackpot.InviteFriendActivity">
+    tools:context=".activity.jackpot.InviteFriendActivity">
     <include layout="@layout/jackpot_stagebar_layout"/>
 
 

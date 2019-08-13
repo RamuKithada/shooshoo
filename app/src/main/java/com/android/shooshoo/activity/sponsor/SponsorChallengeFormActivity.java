@@ -1,4 +1,4 @@
-package com.android.shooshoo.sponsor;
+package com.android.shooshoo.activity.sponsor;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -30,7 +30,6 @@ import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.presenters.SponsorChallengePresenter;
-import com.android.shooshoo.sponsor.SponsorAudienceActivity;
 import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.FragmentListDialogListener;

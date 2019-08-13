@@ -39,7 +39,7 @@
             android:name=".activity.CreatedChallengeViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".sponsor.SponsorChallenge"
+            android:name=".activity.sponsor.SponsorChallenge"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.UserProfileActivity"
@@ -57,7 +57,7 @@
             android:name=".activity.RadarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.PostVideoActivity"
+            android:name=".activity.participate.PostVideoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -65,20 +65,20 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.CameraActivity"
+            android:name=".activity.participate.CameraActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.MyChallengesActivity"
+            android:name=".activity.participate.MyChallengesActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.ChangePasswordActivity"
+            android:name=".activity.registration.ChangePasswordActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.FeedsActivity"
+            android:name=".activity.feeds.FeedsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -90,31 +90,31 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".jackpot.JackpotOverviewActivity"
+            android:name=".activity.jackpot.JackpotOverviewActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".jackpot.InviteFriendActivity"
+            android:name=".activity.jackpot.InviteFriendActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".sponsor.ChallengePaymentActivity"
+            android:name=".activity.sponsor.ChallengePaymentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".chat.ChatSearchActivity"
+            android:name=".activity.chat.ChatSearchActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".sponsor.CampaignActivity"
+            android:name=".activity.sponsor.CampaignActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".sponsor.SponsorChallengeFormActivity"
+            android:name=".activity.sponsor.SponsorChallengeFormActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".sponsor.CompanyProfileActivity"
+            android:name=".activity.sponsor.CompanyProfileActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 
@@ -161,15 +161,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.CategoryChooseActivity"
+            android:name=".activity.registration.CategoryChooseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
-            android:name=".activity.ProfileFillingFormActivity"
+            android:name=".activity.registration.ProfileFillingFormActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
-            android:name=".activity.BrandChooseActivity"
+            android:name=".activity.registration.BrandChooseActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
@@ -177,7 +177,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.registration.LoginActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -194,15 +194,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".jackpot.JackpotChallengeFormActivity"
+            android:name=".activity.jackpot.JackpotChallengeFormActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".jackpot.JackpotAudienceActivity"
+            android:name=".activity.jackpot.JackpotAudienceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
-            android:name=".sponsor.SponsorAudienceActivity"
+            android:name=".activity.sponsor.SponsorAudienceActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"></activity>
         <activity
@@ -210,11 +210,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
-            android:name=".chat.ChattingActivity"
+            android:name=".activity.chat.ChattingActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".activity.FeedCommentsActivity"
+            android:name=".activity.feeds.FeedCommentsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <!--android:theme="@style/MyDialog"-->

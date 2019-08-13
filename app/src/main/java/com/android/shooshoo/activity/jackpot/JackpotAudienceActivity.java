@@ -1,4 +1,4 @@
-package com.android.shooshoo.jackpot;
+package com.android.shooshoo.activity.jackpot;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -629,9 +629,6 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
                    showMessage("Select Challenge Region");
                 return false;
             }
-
-
-
         }
         if(categorySelectionAdapter.getItemCount()<3){
             showMessage("Please select at least 3 categories");

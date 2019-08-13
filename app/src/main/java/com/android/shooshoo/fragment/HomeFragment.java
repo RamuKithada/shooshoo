@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.CategoryWiseChallengerActivity;
-import com.android.shooshoo.activity.MyChallengesActivity;
+import com.android.shooshoo.activity.participate.MyChallengesActivity;
 import com.android.shooshoo.activity.ViewAllChallengesActivity;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.HomeCategoryAdapter;
