@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@color/bg_color"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/message_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            >
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                >
+            <TextView
+                android:id="@+id/message_receive"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hai Sample Mesage text two dsu dhij hisd  sdji jisd jijsda isdan ijsdio sd jiisd kiisd ankn sida"
+                android:textColor="@color/white_text"
+                android:padding="8dp"
+                android:background="@drawable/chat_msg_left_bg"
+                />
+            </RelativeLayout>
+        </LinearLayout>
+
+    <TextView
+        android:id="@+id/time_receive"
+        android:layout_below="@id/message_layout"
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_text"
+        android:text="9:00 Am"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:textSize="10sp"
+        />
+    </RelativeLayout>
+</LinearLayout>

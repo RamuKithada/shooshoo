@@ -468,10 +468,10 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
 
     private void setStage(int i) {
         for(int index=0;index<buttons.size();index++){
-            if(index==i){
+            if(index<=i){
                 {
                     buttons.get(index).setBackgroundResource(R.drawable.selected);
-                    buttons.get(index).setText(String.valueOf(i+1));
+//                    buttons.get(index).setText(String.valueOf(i+1));
                 }
             }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
 

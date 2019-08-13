@@ -164,7 +164,7 @@ public class ChallengePaymentActivity extends BaseActivity implements View.OnCli
         for(int index=0;index<buttons.size();index++){
             if(index<=step){
                 buttons.get(index).setBackgroundResource(R.drawable.selected);
-                buttons.get(index).setText(String.valueOf(step+1));
+//                buttons.get(index).setText(String.valueOf(step+1));
             }
             else
                 buttons.get(index).setBackgroundResource(R.drawable.unselected);

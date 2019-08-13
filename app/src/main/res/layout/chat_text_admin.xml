@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="@color/bg_color"
+    >
+    <TextView
+        android:id="@+id/admin_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white_text"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="Sunday,9.12.2019"
+        android:textSize="10sp"
+        />
+
+</RelativeLayout>

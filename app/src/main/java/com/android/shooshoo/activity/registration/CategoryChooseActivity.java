@@ -24,7 +24,10 @@ import com.android.shooshoo.views.UpdateUserInfoView;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -63,14 +66,8 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
     /***
      * button1,button2,button3,button3,button4 are used to show step of the registration. and tv_skip,iv_back are to represent back and skip buttons of layout.
      */
-    @BindView(R.id.button1)
-    Button button1;
-
-    @BindView(R.id.button2)
-    Button button2;
-
-    @BindView(R.id.button3)
-    Button button3;
+    @BindViews({R.id.button1,R.id.button2,R.id.button3})
+    List<Button> buttons;
 
 
 
@@ -101,7 +98,7 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         recyclerView.setAdapter(chooseAdapter);
         tv_title.setText("YOUR Categories");
         next_lay.setOnClickListener(this);
-        setState();
+        setStage(1);
         iv_back.setOnClickListener(this);
         recyclerView.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
             @Override
@@ -109,7 +106,6 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
                 isLoading = true;
                 if(connectionDetector.isConnectingToInternet()){
                       loadNextPage();
-
                 }else
                     showMessage("Please Check Internet connection ");
             }
@@ -191,12 +187,21 @@ public class CategoryChooseActivity extends BaseActivity implements UpdateUserIn
         }
 
     }
-    //To set the step of the registration process
-    private void setState() {
-        button1.setBackgroundResource(R.drawable.unselected);
-        button2.setBackgroundResource(R.drawable.selected);
-        button3.setBackgroundResource(R.drawable.unselected);
+    /**
+     * setStage is for selection one of registration step
+     * @param step is step of registration process of a challenge
+     */
 
+    private void setStage(int step) {
+        for(int index=0;index<buttons.size();index++){
+            if(index<=step){
+                buttons.get(index).setBackgroundResource(R.drawable.selected);
+//                buttons.get(index).setText(String.valueOf(step+1));
+            }
+            else
+                buttons.get(index).setBackgroundResource(R.drawable.unselected);
+
+        }
     }
 
     @Override

@@ -63,6 +63,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
@@ -79,15 +80,9 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
     private static final String TAG = ProfileFillingFormActivity.class.getSimpleName();
 
-    @BindView(R.id.button1)
-    Button button1;
 
-    @BindView(R.id.button2)
-    Button button2;
-
-    @BindView(R.id.button3)
-    Button button3;
-
+    @BindViews({R.id.button1,R.id.button2,R.id.button3})
+    List<Button> buttons;
     @BindView(R.id.edt_user_name)
     AppCompatEditText edt_user_name;
 
@@ -209,7 +204,7 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
         updateUserInfoPresenter=new UpdateUserInfoPresenter();
         updateUserInfoPresenter.attachView(this);
         tv_title.setText("Personal Info");
-        setState();
+        setStage(1);
         next_lay.setOnClickListener(this);
         iv_back.setOnClickListener(this);
         ll_upload_photo_layout.setOnClickListener(this);
@@ -372,10 +367,16 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
 
 
-    private void setState() {
-        button1.setBackgroundResource(R.drawable.selected);
-        button2.setBackgroundResource(R.drawable.unselected);
-        button3.setBackgroundResource(R.drawable.unselected);
+    private void setStage(int i) {
+        for(int index=0;index<buttons.size();index++){
+            if(index<=i){
+                {
+                    buttons.get(index).setBackgroundResource(R.drawable.selected);
+//                    buttons.get(index).setText(String.valueOf(i+1));
+                }
+            }else buttons.get(index).setBackgroundResource(R.drawable.unselected);
+
+        }
     }
 
 

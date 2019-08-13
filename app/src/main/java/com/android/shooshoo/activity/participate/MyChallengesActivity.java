@@ -24,13 +24,16 @@ import com.android.shooshoo.R;
 import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.activity.CompanyDetailsActivity;
 import com.android.shooshoo.activity.HomeActivity;
+import com.android.shooshoo.activity.SingleVideoViewActivity;
 import com.android.shooshoo.activity.registration.LoginActivity;
 import com.android.shooshoo.adapter.HomeBrandAdapter;
 import com.android.shooshoo.adapter.RecentPostAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Feed;
 import com.android.shooshoo.presenters.PostChallengePresenter;
+import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.RuleListFragmentDialog;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.PostChallengeView;
@@ -182,6 +185,21 @@ public class MyChallengesActivity extends BaseActivity implements View.OnClickLi
         recentPostAdapter=new RecentPostAdapter(this,feeds);
         rv_recent_posts.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
         rv_recent_posts.setAdapter(recentPostAdapter);
+        rv_recent_posts.addOnItemTouchListener(new RecyclerTouchListener(this, rv_recent_posts, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Feed feed=feeds.get(position);
+                Intent intent=new Intent(MyChallengesActivity.this, SingleVideoViewActivity.class);
+                intent.putExtra("uri", Uri.parse(feed.baseUrl()+feed.getUrl()));
+                startActivity(intent);
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         userSession=new UserSession(this);
         save_challenge.setOnClickListener(this);
         if(getIntent().hasExtra("challenge")){
@@ -507,7 +525,9 @@ Challenge challenge;
 
         if(feeds.size()>0)
         {
-            rv_recent_posts.setAdapter(new RecentPostAdapter(this,feeds));
+            this.feeds.clear();
+            this.feeds.addAll(feeds);
+           recentPostAdapter.notifyDataSetChanged();
             tv_no_data.setVisibility(View.GONE);
         }
         else
