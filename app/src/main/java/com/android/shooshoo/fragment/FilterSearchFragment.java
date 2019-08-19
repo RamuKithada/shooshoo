@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  * Use the {@link FilterSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * Here we write code for filter screen for search action
  */
 public class FilterSearchFragment extends Fragment implements TextWatcher {
     // TODO: Rename parameter arguments, choose names that match

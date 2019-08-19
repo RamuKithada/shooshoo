@@ -35,6 +35,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import okhttp3.ResponseBody;
 
+/**
+ *  {@link CreatedChallengeViewActivity } is used to show the detailed View of the challenge user created challenge.
+ */
+
 public class CreatedChallengeViewActivity extends  BaseActivity implements PostChallengeView {
 
     @BindView(R.id.navigation_home)
@@ -188,6 +192,10 @@ public class CreatedChallengeViewActivity extends  BaseActivity implements PostC
 
     }
 
+    /**
+     *
+     * @param responseBody is the response of the service call we have parse the  response to show the total data.
+     */
     @Override
     public void onChallengeInfo(ResponseBody responseBody) {
         try {

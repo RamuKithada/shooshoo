@@ -27,8 +27,26 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
         }
     }
 
+    /**
+     * Load more item here i.e, service call
+     */
     protected abstract void loadMoreItems();
+
+    /**
+     *
+     * @return total pages count 
+      */
     public abstract int getTotalPageCount();
+
+    /** Set the item is last one or not
+     *
+     * @return true if it is last item
+     */
     public abstract boolean isLastPage();
+
+    /**  used to check service is started or not for next page
+     *
+     * @return true if data is loading for next item
+     */
     public abstract boolean isLoading();
 }

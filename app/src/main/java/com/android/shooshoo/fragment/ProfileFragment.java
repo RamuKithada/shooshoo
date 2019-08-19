@@ -16,12 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.adapter.FeedProfileGridFragmentPagerAdapter;
-import com.android.shooshoo.adapter.ImageListAdapter;
 import com.android.shooshoo.models.Company;
-import com.android.shooshoo.models.ImagesModel;
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.ProfileBrandAdapter;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.UserInfo;
 import com.android.shooshoo.presenters.ProfilePresenter;
 import com.android.shooshoo.utils.ConnectionDetector;
@@ -60,8 +57,8 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     RecyclerView brandRecyclerView;
 
 
-    private ImageListAdapter imageListAdapter;
-    private ArrayList<ImagesModel> imagesModelArrayList=new ArrayList<>();
+//    private ImageListAdapter imageListAdapter;
+//    private ArrayList<ImagesModel> imagesModelArrayList=new ArrayList<>();
     ProfileBrandAdapter profileBrandAdapter;
 
     ConnectionDetector connectionDetector;
@@ -100,7 +97,9 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
     UserSession userSession;
 
 
-
+    /**
+     *  New and Best Tab click action
+     */
     View.OnClickListener tabsOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -256,6 +255,10 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
         }
     }
 
+    /**
+     * User selected brands
+     * @param brands list of brands
+     */
     @Override
     public void onBrands(List<Company> brands) {
         if(brands!=null)
@@ -272,9 +275,13 @@ public class ProfileFragment extends Fragment implements ProfileView,View.OnClic
 
     }
 
+    /***
+     * Change colors of selected tab
+     * @param position is selected tab position
+     */
     @Override
-    public void onPageSelected(int i) {
-        switch (i){
+    public void onPageSelected(int position) {
+        switch (position){
             case 0:
                 ((TextView) new_tab.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
                 new_tab.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));

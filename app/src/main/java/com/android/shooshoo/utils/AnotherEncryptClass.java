@@ -11,9 +11,9 @@ import javax.crypto.spec.SecretKeySpec;
 public class AnotherEncryptClass {
     /**
      * used to encrypt the data to sote in preferences
-     * @param ivStr STring i.e, encrypted
-     * @param keyStr is key to encript
-     * @param bytes  Charecter set
+     * @param ivStr String i.e, encrypted
+     * @param keyStr is key to encrypt
+     * @param bytes  Character set
      * @return  result bytes of the string
      * @throws Exception
      */

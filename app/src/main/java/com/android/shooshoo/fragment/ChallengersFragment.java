@@ -52,8 +52,8 @@ public class ChallengersFragment extends Fragment implements View.OnClickListene
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    RecyclerView list_entered,list_created,list_saved;
-    RelativeLayout entered_lay,created_lay,saved_lay;
+    RecyclerView list_entered,list_created,list_saved;  /** list_created , list_entered,list_saved are used to show lists of user created,entered,saved list  */
+    RelativeLayout entered_lay,created_lay,saved_lay;/** these are used to show the details of one category if they are available */
     NestedScrollView nested_scroll_view;
     LinearLayout bottom_navi_view;
     SponsorChallengersAdapter enteredListAdapter,createdListAdapter,savedListAdapter;

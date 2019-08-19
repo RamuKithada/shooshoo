@@ -42,7 +42,16 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
 
     String comapnyId=null;
 
-
+    /**  { bottomNavigationOnClickListener } is Click listener to Click events of bottom view to navigate
+     *    Major Five Screens
+     *    1.   Home ,
+     *    2.   Challenges ,
+     *    3.   Feeds ,
+     *    4.   Winners ,
+     *    5.   Radar .
+     *  icon is a key used to select a fragment for the about listed screens and we pass to intent
+     *
+     */
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -71,6 +80,7 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
         }
     };
 
+
     ConnectionDetector connectionDetector;
     BrandDetailsPresenter brandDetailsPresenter;
     BrandProfilePagerAdapter brandProfilePagerAdapter;
@@ -86,7 +96,7 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
         brandDetailsPresenter.attachView(this);
           tabLayout=findViewById(R.id.tab_layout);
           viewPager=findViewById(R.id.view_pager);
-          comapnyId=getIntent().getStringExtra("companyId");
+          comapnyId=getIntent().getStringExtra("companyId");// we get brand id from intent to get the details of the brand .
         TextView tv_categories=findViewById(R.id.tv_categories);
         TextView tv_follow=findViewById(R.id.tv_follow);
         tv_categories.setOnClickListener(this);
@@ -104,6 +114,11 @@ public class BrandProfileActivity extends BaseActivity implements BrandProfileVi
          }
 
     }
+
+    /**
+     * This is onClick listener for category selection click functionality
+     *
+     */
 
     @Override
     public void onClick(View v) {

@@ -27,9 +27,9 @@ public class Category {
     @Expose
     private String status;
 
-    @SerializedName("brands")
-    @Expose
-    private List<Brand> brands = null;
+//    @SerializedName("brands")
+//    @Expose
+//    private List<Brand> brands = null;
 
     private int brandPosition;
     private int selected=0;
@@ -97,7 +97,7 @@ public class Category {
     public void setStatus(String status) {
         this.status = status;
     }
-
+/*
     public List<Brand> getBrands() {
         return brands;
     }
@@ -111,5 +111,5 @@ public class Category {
 
     public void setBrands(List<Brand> brands) {
         this.brands = brands;
-    }
+    }*/
 }

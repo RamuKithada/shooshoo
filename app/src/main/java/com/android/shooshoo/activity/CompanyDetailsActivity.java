@@ -133,7 +133,7 @@ public class CompanyDetailsActivity extends BaseActivity implements BrandProfile
 
     }
 
-    private void setDetails( Company company) {
+    private void setDetails(Company company) {
         if(connectionDetector.isConnectingToInternet()){
             brandDetailsPresenter.getBrandDetails(company.getCompanyId());
         }

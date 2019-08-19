@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.LoginSuccess;
 import com.android.shooshoo.models.NotificationSettings;
-import com.android.shooshoo.models.Visibility;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.utils.UserSession;
@@ -120,8 +119,10 @@ public class NotificationSettingFragment extends Fragment  implements  CompoundB
         userSession=new UserSession(getContext());
         connectionDetector=new ConnectionDetector(getActivity());
         NotificationSettings visibility=userSession.getNotification();
-        setVisibility(visibility);
+        setVisibility(visibility);// setting the previous values that set by a user are restoring here.
     }
+
+
 
     private void setVisibility(NotificationSettings visibility) {
 
@@ -160,7 +161,7 @@ public class NotificationSettingFragment extends Fragment  implements  CompoundB
 
 
     }
-    private void serviceCall(){
+    private void storeChangesInServer(){
         if(retrofitApis==null)
             retrofitApis=RetrofitApis.Factory.create(getContext());
         showProgressIndicator(true);
@@ -192,7 +193,7 @@ public class NotificationSettingFragment extends Fragment  implements  CompoundB
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
         if(connectionDetector.isConnectingToInternet())
-            serviceCall();
+            storeChangesInServer();
         else
             showMessage("Please check your internet connection");
 

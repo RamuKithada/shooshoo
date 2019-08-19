@@ -32,6 +32,8 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  * Use the {@link ProfileGridFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ *  This is used to show the user posts list .
  */
 public class ProfileGridFragment extends Fragment implements ProfileGridView {
 

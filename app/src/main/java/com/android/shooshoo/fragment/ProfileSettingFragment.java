@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.android.shooshoo.R;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.City;
@@ -262,7 +261,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                if(validateSave()){
                    showMessage("Saved successfully");
                    updateUserInfoPresenter.updateProfile(newsImage,userSession.getUserId(),edt_first_name.getText().toString(),
-                           edt_last_name.getText().toString(),country.getCountryId(),city.getCityId(),edt_zipcode.getText().toString()
+                           edt_last_name.getText().toString(),edt_dob.getText().toString(),country.getCountryId(),city.getCityId(),edt_zipcode.getText().toString()
                    ,edt_street_name.getText().toString(),edt_street_number.getText().toString(),edt_mobile_number.getText().toString()
                    ,gender,ApiUrls.DEVICE_TOKEN);
                    StringBuilder cats=new StringBuilder();
@@ -387,9 +386,13 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
         return true;
     }
 
+    /***
+     *  validating each and every field before save the values in server.
+     * @return if all fields are proper way then return true.Here we can write own validations
+     */
     private boolean validateSave() {
 
-        if(!ApiUrls.validateString(edt_user_name.getText().toString())){
+      /*  if(!ApiUrls.validateString(edt_user_name.getText().toString())){
             showMessage("Enter User Name");
             edt_user_name.requestFocus();
             return false;
@@ -405,7 +408,7 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             edt_user_name.requestFocus();
             return false;
 
-        }
+        }*/
             String email=edt_user_email.getText().toString();
         if(!ApiUrls.validateString(email))
         {
@@ -469,6 +472,14 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
 
             showMessage("Last Name have maximum 70 letters");
             edt_last_name.requestFocus();
+            return false;
+
+        }
+
+        if(!ApiUrls.validateString(edt_dob.getText().toString())){
+
+            showMessage("Please Fill Date of Birth");
+            edt_dob.requestFocus();
             return false;
 
         }
@@ -604,11 +615,11 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
             return;
         Category category = new Category();
         category.setCategoryName("Category");
-        Brand brand = new Brand();
+    /*    Brand brand = new Brand();
         brand.setBrandName("Subcategory");
         List<Brand> brands = new ArrayList();
-        brands.add(brand);
-        category.setBrands(brands);
+        brands.add(brand);*/
+//        category.setBrands(brands);
         categories.add(0, category);
         this.categoryArrayList = categories;
         this.categorySelectionAdapter = new CategorySelectionAdapter(getContext(), this.categoryArrayList);
@@ -629,30 +640,6 @@ public class ProfileSettingFragment extends Fragment implements View.OnClickList
                               categorySelectionAdapter.getCategoryModels().add(0,new CategoryModel(index,0));
                           }
                       }
-                 /*     if(userInfo.getBrands()!=null) {
-                          int noOfBrands=0;
-                          String brandss = userInfo.getBrands();
-                          String[] brandsList = brandss.split(",");
-                          List<Brand> list = categories.get(index).getBrands();
-                          for (int brand_pos = 0; brand_pos < list.size(); brand_pos++) {
-                              if (brandss.toLowerCase().contains(list.get(brand_pos).getBrandId().toLowerCase())) {
-                                  for (String id : brandsList) {
-                                      if (id.equalsIgnoreCase(list.get(brand_pos).getBrandId())) {
-                                         if(noOfBrands==0)
-                                         {
-                                             categorySelectionAdapter.getCategoryModels().get(0).setSubcategory(brand_pos);
-                                             noOfBrands++;
-                                         }else {
-                                             categorySelectionAdapter.getCategoryModels().add(new CategoryModel(index,brand_pos));
-                                             noOfBrands++;
-                                         }
-
-                                      }
-                                  }
-                              }
-                          }
-                      }*/
-
                    }
 
                }

@@ -23,7 +23,6 @@ import com.android.shooshoo.activity.BaseActivity;
 import com.android.shooshoo.adapter.CategorySelectionAdapter;
 import com.android.shooshoo.adapter.LanguagesAdapter;
 import com.android.shooshoo.adapter.RegionsAdapter;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Category;
 import com.android.shooshoo.models.CategoryModel;
 import com.android.shooshoo.models.Challenge;
@@ -724,11 +723,11 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
     public void onAllCategories(List<Category> categories) {
         Category category = new Category();
         category.setCategoryName("Category");
-        Brand brand = new Brand();
-        brand.setBrandName("Subcategory");
-        List<Brand> brands = new ArrayList();
-        brands.add(brand);
-        category.setBrands(brands);
+      /*  Brand brand = new Brand();
+        brand.setBrandName("Subcategory");*/
+//        List<Brand> brands = new ArrayList();
+//        brands.add(brand);
+//        category.setBrands(brands);
         categories.add(0, category);
         this.categoryArrayList = categories;
         this.categorySelectionAdapter = new CategorySelectionAdapter(this, this.categoryArrayList);

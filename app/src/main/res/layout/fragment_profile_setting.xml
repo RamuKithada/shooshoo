@@ -71,6 +71,7 @@
             android:layout_gravity="center_vertical"
             android:hint="User Name"
             android:layout_weight="1"
+            android:enabled="false"
             android:fontFamily="@font/raleway_medium"
             android:inputType="textPersonName"
             android:textColorHint="@color/white_text"

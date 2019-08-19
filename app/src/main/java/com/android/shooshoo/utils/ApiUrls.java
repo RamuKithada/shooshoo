@@ -207,7 +207,7 @@ public class ApiUrls {
         return s.indexOf(".") < 0 ? s : s.replaceAll("0*$", "").replaceAll("\\.$", "");
     }
 
-    public static String ChangeDateFormate(String date) {
+    public static String ChangeDateFormat(String date) {
         Log.i("date before",date);
         SimpleDateFormat inFormat=new SimpleDateFormat("dd-MM-yyyy");
         try

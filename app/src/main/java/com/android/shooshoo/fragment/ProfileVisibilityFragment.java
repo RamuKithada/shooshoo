@@ -114,7 +114,7 @@ public class ProfileVisibilityFragment extends Fragment implements  CompoundButt
         userSession=new UserSession(getContext());
         connectionDetector=new ConnectionDetector(getActivity());
           Visibility visibility=userSession.getVisibility();
-           setVisibility(visibility);
+           setVisibility(visibility);// setting the previous values that set by a user are restoring here.
     }
     private void serviceCall(){
         if(retrofitApis==null)
@@ -145,6 +145,10 @@ public class ProfileVisibilityFragment extends Fragment implements  CompoundButt
 
     }
 
+    /**
+     * Set the  values to all toggle buttons
+     * @param visibility setting values
+     */
     private void setVisibility(Visibility visibility) {
         if(visibility!=null){
             if(visibility.getProfileVisits()!=null&&!visibility.getProfileVisits().isEmpty())
@@ -180,25 +184,6 @@ public class ProfileVisibilityFragment extends Fragment implements  CompoundButt
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        switch (buttonView.getId()){
-            case R.id.switch_profile_visits:
-
-                break;
-            case R.id.switch_show_me_radar:
-                break;
-            case R.id.switch_rewards:
-                break;
-            case R.id.switch_friends:
-                break;
-            case R.id.switch_age:
-                break;
-            case R.id.switch_cat:
-                break;
-            case R.id.switch_country:
-                break;
-            case R.id.switch_city:
-                break;
-        }
         if(connectionDetector.isConnectingToInternet())
               serviceCall();
         else

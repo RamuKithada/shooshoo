@@ -7,6 +7,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.android.shooshoo.fragment.ChallengeListFragment;
 
+/***
+ * @Link ChallengerViewPagerAdapter is not used now It is  used at beginning   of the application
+ *
+ *
+ *
+ */
 public class ChallengerViewPagerAdapter  extends FragmentPagerAdapter {
 
     private Context myContext;

@@ -167,6 +167,9 @@ public class GridFragment extends Fragment implements FeedsView {
     @Override
     public void onFeedsLoaded(List<Feed> feeds,int count) {
         if(feeds!=null) {
+            /**
+             * newly loading feeds added old list
+             */
             this.feeds.addAll(feeds);
             adapter.notifyDataSetChanged();
         }

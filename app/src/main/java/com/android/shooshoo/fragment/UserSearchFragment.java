@@ -42,6 +42,8 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  * Use the {@link UserSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ * This is user to search the user by sending user query to server
+ *
  */
 public class UserSearchFragment extends Fragment implements TextWatcher,UserFollowAdapter.FollowUserListner{
     // TODO: Rename parameter arguments, choose names that match
@@ -185,11 +187,12 @@ public class UserSearchFragment extends Fragment implements TextWatcher,UserFoll
     }
 
     /**
-     * Follow the user watch
-     * @param userId,profileId
+     * Follow the user which
+     * @param userId is id of the user who follow a user,
+     * @param profileId is userId of the whom we are following.
      */
     public void followUser(String userId,String profileId){
-        Log.e("userid :"+userId,"feedId : "+profileId);
+//        Log.e("userid :"+userId,"feedId : "+profileId);
         if(homeSearchActivity!=null){
             homeSearchActivity.showProgressIndicator(true);
             RetrofitApis.Factory.create(getContext()).followUser(userId,profileId).enqueue(new Callback<ResponseBody>() {

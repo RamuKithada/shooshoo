@@ -4,10 +4,8 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import com.android.shooshoo.fragment.BrandListFragment;
-import com.android.shooshoo.fragment.ChallengeListFragment;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.CompanyDetails;
 

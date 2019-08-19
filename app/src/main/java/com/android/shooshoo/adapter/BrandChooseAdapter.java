@@ -8,12 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import com.android.shooshoo.R;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
-import com.android.shooshoo.models.Brand;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

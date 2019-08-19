@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  * Use the {@link ChallengeSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *  {@Link ChallengeSearchFragment } is used to show the list on challenges related to user query
+ *
  */
 public class ChallengeSearchFragment extends Fragment implements TextWatcher {
     // TODO: Rename parameter arguments, choose names that match
@@ -40,6 +42,10 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    /**
+     * rv_list is the list to show the result.
+     */
 
     @BindView(R.id.rv_list)
     RecyclerView rv_list;
@@ -64,6 +70,9 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
      */
     // TODO: Rename and change types and number of parameters
     public static ChallengeSearchFragment newInstance(String param1, String param2) {
+        /***
+         *  Here we avoiding the duplicates ChallengeSearchFragment
+         */
         if(fragment==null) {
             fragment = new ChallengeSearchFragment();
             Bundle args = new Bundle();
@@ -103,6 +112,10 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
         rv_list.addOnItemTouchListener(new RecyclerTouchListener(getContext(), rv_list, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                /**
+                 *  Here we redirect to challenge screen to show deatios of the challenge.
+                 */
+
                 Intent intent=new Intent(getContext(), MyChallengesActivity.class);
                 intent.putExtra("challenge",arrayList.get(position));
                 startActivity(intent);
@@ -116,6 +129,7 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
         if(homeSearchActivity!=null)
             if(arrayList.isEmpty())
             homeSearchActivity.getHomeSearchPresenter().searchChallenges("a");
+            // Initially we call the challenge list contains a in its name.  To show some list here
     }
 
     @Override
@@ -140,6 +154,12 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
                 viewallChallengesAdapter.notifyDataSetChanged();
         super.setUserVisibleHint(isVisibleToUser);
     }
+
+    /***
+     *   Here we get the search result
+     * @param challenges is the list of challenges
+     */
+
     public void onChallengeSearchResult(List<Challenge> challenges){
         arrayList.clear();
         if(challenges!=null)
@@ -157,7 +177,7 @@ public class ChallengeSearchFragment extends Fragment implements TextWatcher {
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         if(homeSearchActivity!=null)
-             homeSearchActivity.getHomeSearchPresenter().searchChallenges(s.toString());
+             homeSearchActivity.getHomeSearchPresenter().searchChallenges(s.toString());/** Here we fetch data from server **/
 
     }
 

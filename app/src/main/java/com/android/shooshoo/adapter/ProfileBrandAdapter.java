@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.android.shooshoo.R;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;

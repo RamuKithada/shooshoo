@@ -19,12 +19,10 @@ import com.android.shooshoo.fragment.BrandSearchFragment;
 import com.android.shooshoo.fragment.ChallengeSearchFragment;
 import com.android.shooshoo.fragment.FilterSearchFragment;
 import com.android.shooshoo.fragment.UserSearchFragment;
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.User;
 import com.android.shooshoo.presenters.HomeSearchPresenter;
-import com.android.shooshoo.utils.ApiUrls;
 import com.android.shooshoo.views.SearchView;
 import com.squareup.picasso.Picasso;
 
@@ -33,6 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/** Here , We show the search functionality to brand,challenge,user.
+ *
+ */
 public class HomeSearchActivity extends BaseActivity implements SearchView ,TextWatcher {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
@@ -47,7 +48,11 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
 
     HomeSearchPagerAdapter homeSearchPagerAdapter;
 
+    /**
+     * images are the icons  for the viewpager tabs.
+     */
     int[] images=new int[]{R.drawable.ic_filter_icon,R.drawable.lastname_normal,R.mipmap.challenges_normal,R.drawable.save_icon};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +64,7 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
         view_pager.setAdapter(homeSearchPagerAdapter);
         tabLayout.setupWithViewPager(view_pager);
         search_view.addTextChangedListener(this);
+        /** Loading the images into tabs */
         for(int i=0;i<tabLayout.getTabCount();i++){
             View view= LayoutInflater.from(this).inflate(R.layout.custome_tab,null);
             ImageView image=view.findViewById(R.id.tab_image);
@@ -69,6 +75,10 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
 
     }
 
+    /**
+     *
+     * @param users list of users related to the user query.
+     */
     @Override
     public void onUserSearchResult(List<User> users) {
         if(homeSearchPagerAdapter.getItem(1)!=null) {
@@ -77,6 +87,11 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
         }
     }
 
+
+    /**
+     *
+     * @param challenges list of challenges related to the user query
+     */
     @Override
     public void onChallengeSearchResult(List<Challenge> challenges) {
         if(homeSearchPagerAdapter.getItem(2)!=null) {
@@ -93,6 +108,11 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
         }
     }
 
+    /**
+     *
+     * @param users list of the user related to the user query
+       */
+    // TODO  We need to implement the functionality for filters .User,Brands,Challenges  have separate Screens.in filters also we used same.
     @Override
     public void onFilterSearchResult(List<User> users) {
         if(homeSearchPagerAdapter.getItem(0)!=null) {

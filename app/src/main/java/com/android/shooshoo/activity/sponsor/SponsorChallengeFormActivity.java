@@ -190,7 +190,7 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
                             return;
                         }
                         sponsorChallengePresenter.createChallenge(userSession.getUserId(),sponsorIds,privateSponsor,edt_challenge_name.getText().toString(),
-                                ApiUrls.ChangeDateFormate(edt_startdate.getText().toString()),edt_start_time.getText().toString(),ApiUrls.ChangeDateFormate(edt_enddate.getText().toString())
+                                ApiUrls.ChangeDateFormat(edt_startdate.getText().toString()),edt_start_time.getText().toString(),ApiUrls.ChangeDateFormat(edt_enddate.getText().toString())
                                 ,edt_end_time.getText().toString(), edt_challenge_des.getText().toString(), photos,
                                 videos, lables[sizePos], challengeImageUri, challengeVideoUri);
 

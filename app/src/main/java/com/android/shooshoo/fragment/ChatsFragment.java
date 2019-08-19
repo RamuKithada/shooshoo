@@ -30,7 +30,7 @@ import java.util.List;
  *
  * Use the {@link ChatsFragment#newInstance} factory method to
  * create an instance of this fragment.
- * this is Chats screen to show chat list when use click in chat icon in top menu
+ * this is Chats screen to show notifications list when use click in chat icon in top menu
  */
 public class ChatsFragment extends Fragment implements NotificationView {
 
@@ -60,8 +60,18 @@ public class ChatsFragment extends Fragment implements NotificationView {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    /**
+     * contact_list is used to show the frind of the challenge.
+     * and
+     * getNotificationList is used to show the list recent notifications received on his application.
+     */
     private RecyclerView contactList,notificatonList;
     private HomeView mListener;
+
+    /**
+     * this fetch data from server .
+     */
     private NotificationPresenter notificationPresenter;
     private ConnectionDetector connectionDetector;
     private UserSession userSession;
@@ -114,6 +124,9 @@ public class ChatsFragment extends Fragment implements NotificationView {
         contactList.setAdapter(new ChatContactAdapter(getActivity()));
         recentChatMsgAdapter=new RecentChatMsgAdapter(notifications,getContext());
         notificatonList.setAdapter(recentChatMsgAdapter);
+        /***
+         *  here we one the pagination for the load more items when scroll is come to end of the list.
+         */
         notificatonList.addOnScrollListener(new PaginationScrollListener((LinearLayoutManager) notificatonList.getLayoutManager()) {
             @Override
             protected void loadMoreItems() {

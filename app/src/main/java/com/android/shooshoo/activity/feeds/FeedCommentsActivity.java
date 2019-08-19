@@ -48,13 +48,16 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     FeedCommentsPresenter presenter;
     ConnectionDetector connectionDetector;
     LinearLayoutManager linearLayoutManager;
-    boolean isComment =true;
+    /***
+     *  This isComment is used to hold the comment or a reply click decision on ui.isComment true means it is a comment .isComment is false it is a reply for comment
+     */
+        boolean isComment =true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_comments);
         setFinishOnTouchOutside(true);
-        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);// Full view fpr  the screen
         commentList=findViewById(R.id.comment_list);
         iv_back=findViewById(R.id.iv_back);
         iv_send_cmnt =findViewById(R.id.iv_send_msg);
@@ -108,6 +111,9 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
+            /**
+             *  send icon action performed
+             */
             case R.id.iv_send_msg:
 
                 if(edt_comment.getText().toString().length()>0) {
@@ -133,12 +139,21 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
                 }
                 break;
             case R.id.iv_back:
+                /**
+                 *  back icon action performed
+                 */
                 finish();
                 break;
 
         }
 
     }
+
+    /***
+     * After comment is posted  successfully we update the input box and load the comment to the list
+     * @param status service response status
+     * @param msg status message
+     */
 
     @Override
     public void onCommentPosted(int status, String msg) {
@@ -150,6 +165,12 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
      }
     }
 
+
+    /***
+     * Reply  service executed successfully we update the input box
+     * @param status service response status
+     * @param msg status message
+     */
     @Override
     public void onReplyPosted(int status, String msg) {
         if(status==1){
@@ -163,6 +184,11 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * Here we get the all comments from server
+     * @param comments next list of comments
+     * @param totalPages count of the comments
+     */
     @Override
     public void onAllComments(List<Comment> comments,int totalPages) {
         TOTAL_PAGES=totalPages;
@@ -174,7 +200,10 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
 //        feedCommentsAdapter.removeLoadingFooter();
     }
 
-    Comment comment;
+    Comment comment;/**
+     used to store comment for reply
+     @param comment is a comment to witch user want to reply .
+     */
     @Override
     public void onReply(Comment comment) {
         this.comment=comment;
@@ -184,6 +213,10 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
         edt_comment.setHint("Type your reply here");
     }
 
+    /** To click action for the like symbol of a comment
+     *
+     * @param comment liked comment
+     */
     @Override
     public void onLike(Comment comment) {
 
@@ -191,9 +224,15 @@ public class FeedCommentsActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
+        /**
+         *  if user is on comments action then we close the screen
+         */
         if(isComment)
-        super.onBackPressed();
+         super.onBackPressed();
         else {
+            /**
+             *  if user on reply for comments first we move him to comment action
+             */
             edt_comment.setHint("Type your comment here");
             edt_comment.setText(null);
             isComment =true;

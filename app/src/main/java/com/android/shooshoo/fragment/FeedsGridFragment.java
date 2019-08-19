@@ -22,7 +22,11 @@ import com.android.shooshoo.adapter.FeedGridFragmentPagerAdapter;
  * to handle interaction events.
  * Use the {@link FeedsGridFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * This is used
  */
+
+
 public class FeedsGridFragment extends Fragment implements ViewPager.OnPageChangeListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -115,7 +119,7 @@ public class FeedsGridFragment extends Fragment implements ViewPager.OnPageChang
     @Override
     public void onPageSelected(int i) {
         if (mListener!=null)
-         mListener.onGridPageChange(i);
+         mListener.onGridPageChange(i);// sending the position Feeds activity when the viewpager is changed by using swipe left or right
     }
 
     @Override
@@ -136,6 +140,6 @@ public class FeedsGridFragment extends Fragment implements ViewPager.OnPageChang
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-        void onGridPageChange(int pos);
+        void onGridPageChange(int pos);// to notify the activity on change of the page
     }
 }

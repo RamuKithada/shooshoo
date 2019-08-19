@@ -47,8 +47,8 @@ public class WinnersFragment extends Fragment implements HomeView {
 
     RecyclerView myChallengesList;
     WinnersMyChallengersAdapter myChallengersAdapter;
-    List<Challenge> challenges=new ArrayList<Challenge>();
-    ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
+//    List<Challenge> challenges=new ArrayList<Challenge>();
+//    ArrayList<ChallengeModel> schallengeModels=new ArrayList<ChallengeModel>();
 
     HomePresenter homePresenter;
     ConnectionDetector connectionDetector;
@@ -59,6 +59,7 @@ public class WinnersFragment extends Fragment implements HomeView {
 
 
     public WinnersFragment() {
+/*
         // Required empty public constructor
         String[] stitles=new String[]{"BlackFly ","Closeup smile ","Dance music ","Drink Challenge","Holiday Challenge",
                 "Hotel Challenge","Ice Bucket Challenge","Swimming Challenge","World music Contest","Young Challenge"};
@@ -67,14 +68,15 @@ public class WinnersFragment extends Fragment implements HomeView {
                 ,R.drawable.young_challange};
         String[] sdes=new String[]{"BlackFly bird capture","Closeup smile ads","Dance music to Puma","Drink  Coke ads","Holiday Trip flight",
                 "Hotel Banjara","Ice Bucket Challenge","World Swimming Day","World music Day","Young India "};
+*/
 
-        for (int index=0;index<sdes.length;index++){
+      /*  for (int index=0;index<sdes.length;index++){
             ChallengeModel model=new ChallengeModel();
             model.setDescription(sdes[index]);
             model.setTitle(stitles[index]);
             model.setImage(simages[index]);
             schallengeModels.add(model);
-        }
+        }*/
     }
 
     /**

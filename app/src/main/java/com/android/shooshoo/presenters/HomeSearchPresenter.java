@@ -9,6 +9,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/***
+ *    {@link HomeSearchPresenter } is used to search  query to server and get the resultant list to SearchView
+ */
+
 public class HomeSearchPresenter implements BasePresenter<SearchView>{
     private SearchView view;
     private RetrofitApis retrofitApis;
@@ -25,6 +29,11 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
         view=null;
         retrofitApis=null;
     }
+
+    /** This is used to search user by their Username,first name and last name.
+     *
+     * @param searchKey is user query value
+     */
     public void searchUsers(String searchKey){
         if(searchKey.isEmpty())
             searchKey="a";
@@ -54,6 +63,10 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
 
     }
 
+    /** This is used to search Challenge by their challenge name
+     *
+     * @param searchKey is user query value
+     */
   public void searchChallenges(String searchKey){
       if(searchKey.isEmpty())
           searchKey="a";
@@ -81,6 +94,11 @@ public class HomeSearchPresenter implements BasePresenter<SearchView>{
         });
 
     }
+
+    /** This is used to search Brand  by their brand  name
+     *
+     * @param searchKey is user query value
+     */
   public void searchCompany(String searchKey){
       if(searchKey.isEmpty())
           searchKey="a";

@@ -1,6 +1,5 @@
 package com.android.shooshoo.views;
 
-import com.android.shooshoo.models.Brand;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.UserInfo;
 

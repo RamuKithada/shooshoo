@@ -85,7 +85,7 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
 
     }
 
- public void updateProfile( Uri newsImage, String userId, String firstName, String lastName,String countryId,
+ public void updateProfile( Uri newsImage, String userId, String firstName, String lastName, String dob,String countryId,
                             String cityId, String zipcode, String streetName, String streetNumber,
                             String mobile, String gender, String token){
 
@@ -121,13 +121,14 @@ public class UpdateUserInfoPresenter implements BasePresenter<UpdateUserInfoView
          body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
      }
           if(newsImage==null)
-           retrofitApis.updateProfile(userId,firstName,lastName,countryId,cityId,zipcode,streetName,streetNumber,mobile,gender,token)
+           retrofitApis.updateProfile(userId,firstName,lastName,dob,countryId,cityId,zipcode,streetName,streetNumber,mobile,gender,token)
                 .enqueue(bodyCallback);
           else {
               retrofitApis.updateProfileImage(body,
                       getTextPart(userId),
                       getTextPart(firstName),
-                      getTextPart(lastName), getTextPart(countryId),
+                      getTextPart(lastName), getTextPart(dob),
+                      getTextPart(countryId),
                       getTextPart(cityId), getTextPart(zipcode),
                       getTextPart(streetName), getTextPart(streetNumber),
                       getTextPart(mobile),

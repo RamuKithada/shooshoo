@@ -56,6 +56,7 @@ import com.android.shooshoo.utils.BottomNavigationBehavior;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.RetrofitApis;
 import com.android.shooshoo.views.FeedsView;
+import com.android.shooshoo.views.SearchView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -79,13 +80,13 @@ import static com.android.shooshoo.utils.ApiUrls.SPONSOR_FEEDS_VIDEO_URL;
  * Feed activity is used to show the list new feeds
  * container is used to show list of videos,it is subclass if RecyclerView,it is imported  from Toro player
  * please check Toro player library
- * adapter is recyclerview adapter for container
+ * adapter is recycler view adapter for container
  *
  *
  *
  */
 
-public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView,UserTadAdapter.TagUserListener , FeedsListFragment.OnFragmentInteractionListener, FeedsGridFragment.OnFragmentInteractionListener,View.OnClickListener, com.android.shooshoo.views.SearchView {
+public class FeedsActivity extends BaseActivity implements FullVideoAdapter.FeedClickListener, FeedsView,UserTadAdapter.TagUserListener , FeedsListFragment.OnFragmentInteractionListener, FeedsGridFragment.OnFragmentInteractionListener,View.OnClickListener,SearchView {
 
 
     @BindView(R.id.navigation_home)
@@ -937,7 +938,9 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
         }
     }
-
+    /***
+     *  open the window of the tag user dialog
+     */
     private void openTagView() {
         if(tag_friend_lay.getVisibility()==View.GONE)
             tag_friend_lay.animate().translationY(0).setListener(new Animator.AnimatorListener() {
@@ -974,6 +977,10 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
            return false;
        }
    };
+
+    /***
+     *  closing window of the tag user dialog
+     */
     private void closeTagView() {
         search_friends.setText(null);
         if(tag_friend_lay.getVisibility()==View.VISIBLE)
@@ -1004,17 +1011,26 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         });
     }
 
-
+    /***
+     *
+     * @param feed is current Post that is use watching
+     */
     @Override
     public void onView(Feed feed) {
         if(userSession.isLogin()){
         this.feed=feed;
             if(detector.isConnectingToInternet())
-                feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());
+                feedsPresenter.viewFeed(userSession.getUserId(),feed.getId());  // service call to server to update view of a post
             else showMessage(R.string.internet_msg);
 
         }
     }
+
+    /**
+     * Feed  Like  service call response
+     * @param status is status  response
+     * @param message message of response
+     */
     @Override
     public void onFeedLike(int status,String message){
    /*     if(status==1) {
@@ -1037,7 +1053,11 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         }*/
 
     }
-
+    /**
+     *  User tag service call response
+     * @param status is status  response
+     * @param message message of response
+     */
     @Override
     public void onUserTag(int status, String message) {
     if(status==1) {
@@ -1062,6 +1082,11 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
         }
     }*/
 
+    /**
+     *
+     * @param status is status  response
+     * @param message message of response
+     */
     @Override
     public void onFollowed(int status, String message) {
         if(status==1)
@@ -1103,6 +1128,11 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
     }
 
     User user;
+
+    /**
+     * This is used to tag the user to a feed
+     * @param user is which user is used to add to post
+     */
     @Override
     public void onTag(User user) {
         this.user=user;

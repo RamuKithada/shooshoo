@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***
- * Challenges list to show Challenges in gridview in ViewPager of the {@link ChallengersFragment}
+ * Challenges list to show Challenges in grid view in ViewPager of the {@link BrandListFragment}
  */
 
 public class BrandListFragment extends Fragment implements View.OnClickListener{

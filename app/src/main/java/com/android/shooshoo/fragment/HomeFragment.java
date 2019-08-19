@@ -131,7 +131,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,HomeV
     //  sponsor challengeModels is used to hold jackpot challenges list
     ArrayList<Challenge> sponsorChallenges=new ArrayList<Challenge>();
 
-    //  jackpoy challengeModels is used to hold Sponsor challenges list
+    //  jackpot challengeModels is used to hold Sponsor challenges list
     ArrayList<Challenge> jackpotChallenges=new ArrayList<Challenge>();
     ArrayList<Challenge> privateChallenges=new ArrayList<Challenge>();
     ArrayList<Challenge> finalCallChallenges=new ArrayList<Challenge>();

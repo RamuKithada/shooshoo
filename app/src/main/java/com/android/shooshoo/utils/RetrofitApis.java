@@ -137,6 +137,8 @@ public interface RetrofitApis {
     Call<ResponseBody> updateProfile(@Field("userId") String userId,
                                      @Field("firstName") String firstName,
                                      @Field("lastName") String lastName,
+                                     @Field("dob") String dob,
+
                                      @Field("country") String country,
                                      @Field("city") String city,
                                      @Field("zipcode") String zipcode,
@@ -158,6 +160,7 @@ public interface RetrofitApis {
                                      @Part("lastName") RequestBody lastName,
                                      @Part("country") RequestBody country,
                                      @Part("city") RequestBody city,
+                                     @Part("dob") RequestBody dob,
                                      @Part("zipcode") RequestBody zipcode,
                                      @Part("street") RequestBody street,
                                      @Part("streetNum") RequestBody streetNum,
