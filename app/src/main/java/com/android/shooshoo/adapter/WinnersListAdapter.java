@@ -62,6 +62,13 @@ List<Winner> winners;
         return winners.size();
     }
 
+    public Winner getItem(int position){
+        if(winners==null)
+            return null;
+        else
+            return winners.get(position);
+    }
+
     class WinnerViewHolder extends RecyclerView.ViewHolder{
 
         TextView name,rank,prizeMoney;

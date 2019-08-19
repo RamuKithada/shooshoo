@@ -12,7 +12,9 @@ import com.android.shooshoo.adapter.WinnersListAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Winner;
 import com.android.shooshoo.presenters.WinnersPresenter;
+import com.android.shooshoo.utils.ClickListener;
 import com.android.shooshoo.utils.ConnectionDetector;
+import com.android.shooshoo.utils.RecyclerTouchListener;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.WinnersListView;
 import com.squareup.picasso.Picasso;
@@ -122,6 +124,19 @@ TextView third_winner_prize;
         });
         listAdapter=new WinnersListAdapter(this,winners);
         winnersList.setAdapter(listAdapter);
+        winnersList.addOnItemTouchListener(new RecyclerTouchListener(this, winnersList, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+
+                openProfile(listAdapter.getItem(position).getUserId(),"0");
+
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
@@ -157,30 +172,65 @@ TextView third_winner_prize;
             }
 
             if(topWinners.size()>=1){
-                Winner first=topWinners.get(0);
+                final Winner first=topWinners.get(0);
                 first_winner.setVisibility(View.VISIBLE);
                 first_winner_name.setText(first.getUserName());
                 first_winner_prize.setText(first.getViews()+" Views ");
                 Picasso.with(this).load(PROFILE_IMAGE_URL+first.getImage()).error(R.drawable.error).into(first_winner_image);
 
+                first_winner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        openProfile(first.getUserId(),"0");
+
+                    }
+                });
+
             }  if(topWinners.size()>=2){
-                Winner second=topWinners.get(1);
+                final Winner second=topWinners.get(1);
                 second_winner.setVisibility(View.VISIBLE);
                 second_winner_name.setText(second.getUserName());
                 second_winner_prize.setText(second.getViews()+" Views ");
                 Picasso.with(this).load(PROFILE_IMAGE_URL+second.getImage()).error(R.drawable.error).into(second_winner_image);
 
+                second_winner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        openProfile(second.getUserId(),"0");
+
+                    }
+                });
+
             }  if(topWinners.size()>=3){
-                Winner third=topWinners.get(2);
+                final Winner third=topWinners.get(2);
                 third_winner.setVisibility(View.VISIBLE);
                 third_winner_name.setText(third.getUserName());
                 third_winner_prize.setText(third.getViews()+" Views ");
                 Picasso.with(this).load(PROFILE_IMAGE_URL+third.getImage()).error(R.drawable.error).into(third_winner_image);
+
+                third_winner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        openProfile(third.getUserId(),"0");
+
+                    }
+                });
 
             }
 
         }
 
 
+    }
+
+    public void openProfile(String userId,String status)
+    {
+        Intent userProfileIntent=new Intent(this, UserProfileActivity.class);
+        userProfileIntent.putExtra("userId",userId);
+        userProfileIntent.putExtra("follow",status);
+        startActivity(userProfileIntent);
     }
 }

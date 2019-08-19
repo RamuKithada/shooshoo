@@ -20,8 +20,8 @@ public class RadarView extends View {
     Paint paint;
     Paint marker;
     List<CircleEntity> circleEntities=new ArrayList<CircleEntity>();
-    int markerSize=25;
-    int lines=5;
+    int markerSize=18;
+    int lines=6;
     OnRadarListener onRadarListener=null;
     public RadarView(Context context) {
         super(context);

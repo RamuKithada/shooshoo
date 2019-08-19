@@ -16,6 +16,30 @@
     android:orientation="vertical"
     >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="8dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_filter_icon"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            android:background="#6B6969"
+            android:textColorHint="@color/white_text"
+            android:hint="Say something"
+            android:textColor="@color/white_text"
+            android:textSize="14sp"
+            android:gravity="center"
+            />
 
         <android.support.v7.widget.SwitchCompat
             android:id="@+id/switch1"
@@ -23,13 +47,16 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white_text"
             android:checked="true"
-            android:layout_gravity="right"
+            android:layout_alignParentRight="true"
             android:layout_margin="10dp"
             app:switchPadding="5dp"
             android:fontFamily="@font/raleway_extrabold"
-            android:text="@string/radar_switch_text"
             android:theme="@style/SCBSwitch"
             />
+            <!--android:text="@string/radar_switch_text"
+
+            />-->
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,8 +65,8 @@
         >
         <com.android.shooshoo.utils.RadarView
             android:id="@+id/radarView"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_centerInParent="true"
             />
     </RelativeLayout>
@@ -137,19 +164,135 @@
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title_local_challenges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Local Challenges"
+            android:textColor="@color/white_text"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/raleway_extrabold"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/title_local_challenges"
+            >
 
 <android.support.v7.widget.RecyclerView
     android:id="@+id/challenge_list"
+    android:layout_below="@+id/title_local_challenges"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
     android:orientation="horizontal"
+    android:layout_weight="1"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
     tools:listitem="@layout/challengers_item"
     app:spanCount="2"
     >
 
 </android.support.v7.widget.RecyclerView>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/white_text"
+                />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/view_all_challenges"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/white_text"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/raleway_extrabold"
+
+
+                    />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/title_follow_suggestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="follow suggestions"
+            android:textColor="@color/white_text"
+            android:textAllCaps="true"
+            android:textSize="14sp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/raleway_extrabold"
+
+            />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/title_follow_suggestions"
+    >
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/suggestions_list"
+   android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:orientation="horizontal"
+    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+    tools:listitem="@layout/invite_friends_item"
+    app:spanCount="2"
+    >
+
+
+</android.support.v7.widget.RecyclerView>
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/white_text"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/view_all_suggestions"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white_text"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/raleway_extrabold"
+
+
+            />
+
+    </RelativeLayout>
+</LinearLayout>
+
+
+    </RelativeLayout>
 </LinearLayout>
     </ScrollView>
 </FrameLayout>
