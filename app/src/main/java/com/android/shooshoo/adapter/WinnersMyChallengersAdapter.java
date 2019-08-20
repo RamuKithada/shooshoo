@@ -12,9 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
-import com.android.shooshoo.activity.WinnersListActivity;
+import com.android.shooshoo.activity.winners.WinnersListActivity;
 import com.android.shooshoo.models.Challenge;
-import com.android.shooshoo.models.ChallengeModel;
 import com.android.shooshoo.utils.ApiUrls;
 import com.squareup.picasso.Picasso;
 

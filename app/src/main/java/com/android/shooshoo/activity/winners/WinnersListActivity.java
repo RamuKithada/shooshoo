@@ -1,4 +1,4 @@
-package com.android.shooshoo.activity;
+package com.android.shooshoo.activity.winners;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.BaseActivity;
+import com.android.shooshoo.activity.HomeActivity;
+import com.android.shooshoo.activity.UserProfileActivity;
 import com.android.shooshoo.adapter.WinnersListAdapter;
 import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Winner;
@@ -83,7 +86,7 @@ TextView third_winner_prize;
     private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(WinnersListActivity.this,HomeActivity.class);
+            Intent intent=new Intent(WinnersListActivity.this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             switch (v.getId()) {
                 case R.id.navigation_home:

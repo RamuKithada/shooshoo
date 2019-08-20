@@ -2,6 +2,7 @@ package com.android.shooshoo.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -21,6 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.android.shooshoo.R;
+import com.android.shooshoo.activity.RadarActivity;
 import com.android.shooshoo.adapter.InviteFriendsAdapter;
 import com.android.shooshoo.adapter.ViewAllChallengersAdapter;
 import com.android.shooshoo.models.ChallengeModel;
@@ -30,6 +32,9 @@ import com.android.shooshoo.utils.OnRadarListener;
 import com.android.shooshoo.utils.RadarView;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,10 +48,29 @@ public class RadarFragment extends Fragment implements OnRadarListener {
     private String mParam1;
     private String mParam2;
     ViewAllChallengersAdapter viewAllChallengersAdapter;
+    @BindView(R.id.radarView)
     RadarView radarView;
+    @BindView(R.id.seekbar)
     AppCompatSeekBar seekBar;
+
+    @BindView(R.id.miles_lable)
     TextView milesLabel;
+
+    @BindView(R.id.local_user_list)
     RecyclerView local_user_list;
+
+    @BindView(R.id.suggestions_list)
+    RecyclerView suggestions_list;
+
+    @BindView(R.id.view_all_challenges)
+    RelativeLayout view_all_challenges;
+
+    @BindView(R.id.view_all_suggestions)
+    RelativeLayout view_all_suggestions;
+
+    @BindView(R.id.challenge_list)
+    RecyclerView challenge_list;
+
     InviteFriendsAdapter inviteFriendsAdapter;
     private ArrayList<Follower> contactsModelArrayList=new ArrayList<Follower>();
     public RadarFragment() {
@@ -90,14 +114,26 @@ public class RadarFragment extends Fragment implements OnRadarListener {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RecyclerView challenge_list=view.findViewById(R.id.challenge_list);
-        radarView=view.findViewById(R.id.radarView);
+        ButterKnife.bind(this,view);
         radarView.setOnRadarListener(this);
-        seekBar=view.findViewById(R.id.seekbar);
-        milesLabel=view.findViewById(R.id.miles_lable);
-        local_user_list=view.findViewById(R.id.local_user_list);
         inviteFriendsAdapter=new InviteFriendsAdapter(getContext(),contactsModelArrayList);
         local_user_list.setAdapter(inviteFriendsAdapter);
+        suggestions_list.setAdapter(inviteFriendsAdapter);
+        view_all_challenges.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), RadarActivity.class));
+
+            }
+        });
+        view_all_suggestions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -151,8 +187,14 @@ public class RadarFragment extends Fragment implements OnRadarListener {
             model.setTitle(titles[index]);
             model.setImage(images[index]);
             challengeModels.add(model);
-        }
 
+            Follower follower=new Follower();
+            follower.setUserName("Dummy");
+            follower.setImage("");
+            follower.setFromId("");
+            contactsModelArrayList.add(follower);
+
+        }
         viewAllChallengersAdapter=new ViewAllChallengersAdapter(getActivity(),challengeModels);
         challenge_list.setAdapter(viewAllChallengersAdapter);
     }
@@ -165,13 +207,7 @@ public class RadarFragment extends Fragment implements OnRadarListener {
                     popupWindow.dismiss();
             showDialog((int) x, (int) y);
         }else if(entity.getType()==1){
-            local_user_list.setVisibility(View.VISIBLE);
-            Follower follower=new Follower();
-            follower.setUserName("Dummy");
-            follower.setImage("");
-            follower.setFromId("");
-            contactsModelArrayList.add(follower);
-            inviteFriendsAdapter.notifyDataSetChanged();
+          local_user_list.setVisibility(View.VISIBLE);
         }
     }
 

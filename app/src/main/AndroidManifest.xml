@@ -219,7 +219,7 @@
             android:windowSoftInputMode="stateHidden" />
         <!--android:theme="@style/MyDialog"-->
         <activity
-            android:name=".activity.WinnersListActivity"
+            android:name=".activity.winners.WinnersListActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 

@@ -10,6 +10,8 @@ import java.util.List;
 import okhttp3.internal.Util;
 
 public class Challenge implements Parcelable{
+    public Challenge() {
+    }
 
     @SerializedName("challengeId")
     @Expose
@@ -201,6 +203,8 @@ public class Challenge implements Parcelable{
 
     @SerializedName("currency")
     private String currency;
+
+
 
 
     protected Challenge(Parcel in) {

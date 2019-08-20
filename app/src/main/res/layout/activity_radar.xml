@@ -8,7 +8,7 @@
     android:background="@drawable/gradiant_home"
     tools:context=".activity.RadarActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,19 +24,24 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#00FFFFFF"
-            android:padding="5dp"
+            android:padding="10dp"
+            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            app:srcCompat="@drawable/ic_back_left_black_24dp"
+            app:srcCompat="@drawable/back_arrow"
             />
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:padding="10dp"
             android:text="@string/title_radar"
             android:layout_gravity="center_vertical"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="22sp"
+            android:maxLines="1"
             android:fontFamily="@font/futura_medium_bt"
             android:textColor="#ffffff"
             />
@@ -44,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_weight="1"
+            android:visibility="gone"
             android:layout_gravity="center_vertical"
             />
         <ImageView
@@ -53,36 +59,101 @@
             android:background="#00FFFFFF"
             android:padding="5dp"
             android:layout_gravity="center_vertical"
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_help_notification_icon"
             />
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#FFF"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="35 challenges in your area"
-        android:textColor="@color/gray_text"
-        android:padding="5dp"
-        />
+    </RelativeLayout>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
+
+    <LinearLayout
+        android:id="@+id/full_view_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:weightSum="3"
+        >
+        <LinearLayout
+            android:id="@+id/distance_lay"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:layout_height="wrap_content">
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@color/colorAccent"
-                app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-                android:layout_gravity="center_horizontal"
-                >
+                android:text="Distance"
+                android:textAllCaps="true"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:fontFamily="@font/raleway_medium"
+                android:textColor="@color/pink_drak"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/pink_drak"
+                android:layout_margin="2dp"
+                />
 
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/start_lay"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start"
+                android:textAllCaps="true"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+                android:fontFamily="@font/raleway_medium"
+                android:textColor="@color/white_text"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#85868A"
+                android:layout_margin="2dp"
+                />
 
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/end_lay"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_margin="2dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="End"
+                android:textAllCaps="true"
+                android:textSize="14sp"
+                android:fontFamily="@font/raleway_medium"
+                android:textColor="@color/white_text"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#85868A"
+                android:layout_margin="2dp"
+                />
 
-            </android.support.design.widget.TabLayout>
+        </LinearLayout>
+
+    </LinearLayout>
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
