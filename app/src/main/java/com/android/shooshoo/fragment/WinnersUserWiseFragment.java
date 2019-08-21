@@ -1,4 +1,6 @@
 package com.android.shooshoo.fragment;
+
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,19 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.android.shooshoo.R;
-import com.android.shooshoo.adapter.WinnersPagerAdapter;
+import com.android.shooshoo.adapter.WinnersListFragmentPagerAdapter;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WinnersFragment#newInstance} factory method to
+ * Use the {@link WinnersUserWiseFragment#newInstance} factory method to
  * create an instance of this fragment.
  * This is used to show the List Challenges that are completed
  */
-public class WinnersFragment extends Fragment implements ViewPager.OnPageChangeListener{
+public class WinnersUserWiseFragment extends Fragment implements ViewPager.OnPageChangeListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,35 +41,43 @@ public class WinnersFragment extends Fragment implements ViewPager.OnPageChangeL
     UserSession userSession;
 
 
-    @BindView(R.id.challenges_lay)
-    LinearLayout challenges_lay;
+    @BindView(R.id.best_lay)
+    LinearLayout best_lay;
 
+    @BindView(R.id.me_lay)
+    LinearLayout me_lay;
 
-
-    @BindView(R.id.users_lay)
-    LinearLayout users_lay;
+    @BindView(R.id.friends_lay)
+    LinearLayout friends_lay;
 
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    public WinnersFragment() {
+    public WinnersUserWiseFragment() {
 
     }
     View.OnClickListener winnersListListener =new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
                 switch (v.getId()){
-                    case R.id.challenges_lay:
+                    case R.id.best_lay:
                         if (viewPager != null) {
                             viewPager.setCurrentItem(0,true);
                         }
                         break;
-                    case R.id.users_lay:
+                    case R.id.friends_lay:
                         if (viewPager != null) {
                             viewPager.setCurrentItem(1,true);
                         }
                         break;
+                    case R.id.me_lay:
+                        if (viewPager != null) {
+                            viewPager.setCurrentItem(2,true);
+                        }
+                        break;
+
                 }
 
         }
@@ -78,8 +92,8 @@ public class WinnersFragment extends Fragment implements ViewPager.OnPageChangeL
      * @return A new instance of fragment WinnersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WinnersFragment newInstance(String param1, String param2) {
-        WinnersFragment fragment = new WinnersFragment();
+    public static WinnersUserWiseFragment newInstance(String param1, String param2) {
+        WinnersUserWiseFragment fragment = new WinnersUserWiseFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -100,16 +114,17 @@ public class WinnersFragment extends Fragment implements ViewPager.OnPageChangeL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_winners, container, false);
+        return inflater.inflate(R.layout.fragment_winners_user_wise, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this,view);
-        challenges_lay.setOnClickListener(winnersListListener);
-        users_lay.setOnClickListener(winnersListListener);
-        WinnersPagerAdapter pagerAdapter=new WinnersPagerAdapter(getActivity(),getChildFragmentManager());
+        best_lay.setOnClickListener(winnersListListener);
+        me_lay.setOnClickListener(winnersListListener);
+        friends_lay.setOnClickListener(winnersListListener);
+        WinnersListFragmentPagerAdapter pagerAdapter=new WinnersListFragmentPagerAdapter(getActivity(),getChildFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(this);
 
@@ -131,16 +146,32 @@ public class WinnersFragment extends Fragment implements ViewPager.OnPageChangeL
 
     }
     public void onListPageSelected(int pos) {
+        ((TextView) best_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        best_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+        ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
+
+
+        ((TextView) me_lay.getChildAt(0)).setTextColor(Color.parseColor("#FFFFFF"));
+        me_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#85868A"));
 
         switch (pos){
             case 0:
-                challenges_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
-                users_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#0085868A"));
+                ((TextView) best_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                best_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+
                 break;
             case 1:
-                challenges_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#0085868A"));
-                users_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                ((TextView) friends_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                friends_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
                 break;
+            case 2:
+                ((TextView) me_lay.getChildAt(0)).setTextColor(Color.parseColor("#F31F68"));
+                me_lay.getChildAt(1).setBackgroundColor(Color.parseColor("#F31F68"));
+                break;
+
+
         }
     }
 
