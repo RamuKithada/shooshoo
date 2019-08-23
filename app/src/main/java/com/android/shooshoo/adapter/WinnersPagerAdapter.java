@@ -9,6 +9,7 @@ import com.android.shooshoo.fragment.WinnerChallengeFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
 import com.android.shooshoo.fragment.WinnersListFragment;
 import com.android.shooshoo.fragment.WinnersUserWiseFragment;
+import com.android.shooshoo.utils.ApiUrls;
 
 public class WinnersPagerAdapter extends FragmentPagerAdapter {
 
@@ -25,12 +26,11 @@ public class WinnersPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment=null;
         switch (position){
             case 0:
-                 fragment= WinnerChallengeFragment.newInstance("Best","winners");
+                 fragment= WinnerChallengeFragment.newInstance(ApiUrls.FINISHED);
                 break;
             case 1:
                  fragment= WinnersUserWiseFragment.newInstance("User","wise");
                 break;
-
 
         }
         return fragment;

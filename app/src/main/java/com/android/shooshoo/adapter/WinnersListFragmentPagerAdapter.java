@@ -26,10 +26,10 @@ public class WinnersListFragmentPagerAdapter extends FragmentPagerAdapter {
                 fragment= WinnersListFragment.newInstance("Best","winners");
                 break;
             case 1:
-                fragment=WinnersListFragment.newInstance("Friends","winners");
+                fragment=WinnersListFragment.newInstance("Followed","winners");
                 break;
             case 2:
-                fragment=WinnersListFragment.newInstance("Me","winners");
+                fragment=WinnersListFragment.newInstance("Sponsor","winners");
                 break;
 
         }

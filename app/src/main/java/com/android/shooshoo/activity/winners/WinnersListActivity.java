@@ -71,6 +71,8 @@ LinearLayout third_winner;
     TextView third_winner_name;
 @BindView(R.id.third_winner_prize)
 TextView third_winner_prize;
+@BindView(R.id.challenge_name)
+TextView challenge_name;
 
 
     @BindView(R.id.navigation_home)
@@ -148,9 +150,13 @@ TextView third_winner_prize;
         winnersPresenter=new WinnersPresenter();
         winnersPresenter.attachView(this);
         connectionDetector=new ConnectionDetector(this);
-        if(connectionDetector.isConnectingToInternet()){
-            winnersPresenter.getWinnersListForTheChallenge((Challenge) getIntent().getParcelableExtra("challenge"));
+        if(connectionDetector.isConnectingToInternet()) {
+            Challenge challenge = getIntent().getParcelableExtra("challenge");
+            if (challenge != null) {
+                winnersPresenter.getWinnersListForTheChallenge(challenge);
+                challenge_name.setText(challenge.getChallengeName());
 
+            }
         }
 
     }
@@ -178,8 +184,8 @@ TextView third_winner_prize;
                 final Winner first=topWinners.get(0);
                 first_winner.setVisibility(View.VISIBLE);
                 first_winner_name.setText(first.getUserName());
-                first_winner_prize.setText(first.getViews()+" Views ");
-                Picasso.with(this).load(PROFILE_IMAGE_URL+first.getImage()).error(R.drawable.error).into(first_winner_image);
+                first_winner_prize.setText(first.getMoney());
+                Picasso.with(this).load(PROFILE_IMAGE_URL+first.getUserImage()).error(R.drawable.error).into(first_winner_image);
 
                 first_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -194,8 +200,8 @@ TextView third_winner_prize;
                 final Winner second=topWinners.get(1);
                 second_winner.setVisibility(View.VISIBLE);
                 second_winner_name.setText(second.getUserName());
-                second_winner_prize.setText(second.getViews()+" Views ");
-                Picasso.with(this).load(PROFILE_IMAGE_URL+second.getImage()).error(R.drawable.error).into(second_winner_image);
+                second_winner_prize.setText(second.getMoney());
+                Picasso.with(this).load(PROFILE_IMAGE_URL+second.getUserImage()).error(R.drawable.error).into(second_winner_image);
 
                 second_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -210,15 +216,13 @@ TextView third_winner_prize;
                 final Winner third=topWinners.get(2);
                 third_winner.setVisibility(View.VISIBLE);
                 third_winner_name.setText(third.getUserName());
-                third_winner_prize.setText(third.getViews()+" Views ");
-                Picasso.with(this).load(PROFILE_IMAGE_URL+third.getImage()).error(R.drawable.error).into(third_winner_image);
+                third_winner_prize.setText(third.getMoney());
+                Picasso.with(this).load(PROFILE_IMAGE_URL+third.getUserImage()).error(R.drawable.error).into(third_winner_image);
 
                 third_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         openProfile(third.getUserId(),"0");
-
                     }
                 });
 

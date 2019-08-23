@@ -1,6 +1,7 @@
 package com.android.shooshoo.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,7 +20,14 @@ import com.android.shooshoo.adapter.ProfileViewPagerAdapter;
 import com.android.shooshoo.fragment.NotificationSettingFragment;
 import com.android.shooshoo.fragment.ProfileSettingFragment;
 import com.android.shooshoo.fragment.ProfileVisibilityFragment;
+import com.android.shooshoo.utils.FirebaseService;
 import com.android.shooshoo.utils.FragmentListDialogListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -224,6 +232,10 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.logout_item:
                 userSession.logout();
+
+            new SignOutTask().execute();
+
+
                 Intent intent=new Intent(this,SplashActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -272,4 +284,19 @@ public class EditProfileActivity extends BaseActivity implements View.OnClickLis
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    class SignOutTask extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                FirebaseInstanceId.getInstance().deleteInstanceId();
+                } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            return null;
+        }
+    }
+
 }

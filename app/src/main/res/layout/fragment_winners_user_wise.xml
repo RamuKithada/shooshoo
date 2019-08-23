@@ -50,7 +50,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Friends"
+                android:text="Followed"
                 android:textSize="14sp"
                 android:fontFamily="@font/raleway_medium"
                 android:textColor="@color/white_text"
@@ -75,7 +75,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Me"
+                android:text="Sponsor"
                 android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
                 android:fontFamily="@font/raleway_medium"
                 android:textColor="@color/white_text"

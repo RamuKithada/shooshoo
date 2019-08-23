@@ -18,18 +18,18 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white_text"
         android:text="rank "
+        android:maxWidth="80dp"
+        android:fontFamily="@font/raleway_bold"
         android:layout_centerVertical="true"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="20sp"
 
         />
 <de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/profile_pic"
     android:layout_width="40dp"
     android:layout_height="40dp"
-    app:civ_border_width="1dp"
     android:layout_marginLeft="5dp"
     android:layout_toRightOf="@+id/rank"
-    app:civ_border_color="@color/white_text"
     android:src="@drawable/portrait"
     />
     <TextView
@@ -42,6 +42,8 @@
         android:layout_toLeftOf="@+id/prize_money"
         android:layout_marginLeft="5dp"
         android:layout_centerVertical="true"
+        android:fontFamily="@font/raleway_medium"
+
         android:textAppearance="?android:attr/textAppearanceSmall"
 
         />
@@ -54,6 +56,13 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="5dp"
         android:layout_centerVertical="true"
+        android:textSize="18sp"
+        android:layout_margin="2dp"
+        android:fontFamily="@font/raleway_medium"
+        android:background="@color/pink_lite"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
 
         />

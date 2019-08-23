@@ -17,7 +17,7 @@ public class ViewAllChallengesResponse {
     private List<Challenge> challenges = null;
     @SerializedName("count")
     @Expose
-    private Integer count;
+    private Integer count=0;
 
     public Integer getStatus() {
         return status;

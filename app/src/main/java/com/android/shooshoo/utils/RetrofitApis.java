@@ -353,11 +353,11 @@ public interface RetrofitApis {
 
     @FormUrlEncoded
     @POST("bestposts")
-    Call<BestPostsResponse>   getBestPosts(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
+    Call<BestPostsResponse> getBestPosts(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("newposts")
-    Call<NewPostsResponse>    getNewPosts(@Field("userId") String userId, @Field("limit") String limit, @Field("offset") String offset);
+    Call<NewPostsResponse> getNewPosts(@Field("userId") String userId, @Field("limit") String limit, @Field("offset") String offset);
 
     @FormUrlEncoded
     @POST("savechallenge")

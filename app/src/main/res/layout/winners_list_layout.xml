@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:id="@+id/home_fragment_container"
@@ -13,7 +14,7 @@
         android:orientation="vertical"
         android:layout_marginTop="1dp"
         >
-        <TextView
+   <!--     <TextView
             android:id="@+id/challenge_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,50 +26,76 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:fontFamily="@font/futura_book_font"
             android:textColor="#ffffff"
-            />
+            />-->
         <LinearLayout
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:padding="5dp"
+            android:orientation="horizontal"
 
             >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+                <TextView
+                    android:id="@+id/challenge_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Challenge"
+                    android:textColor="@color/white_text"
+                    android:gravity="center_horizontal"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/raleway_medium"
+                    android:singleLine="true"
+                    />
+                <View
+                    android:layout_below="@+id/challenge_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="1dp"
+                    android:background="@color/white_text"
+                    />
             <LinearLayout
                 android:id="@+id/second_winner"
-                android:layout_width="0dp"
+                android:layout_below="@+id/challenge_name"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:layout_gravity="bottom"
                 android:visibility="invisible"
-                android:gravity="bottom|center_horizontal"
+                android:layout_alignParentBottom="true"
                 >
+
                 <RelativeLayout
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="1dp"
                     >
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/second_winner_image"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_centerInParent="true"
                         android:src="@drawable/portrait"
-                        app:civ_border_color="@color/white_text"
-                        app:civ_border_width="1dp" />
+                        />
                 </RelativeLayout>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text="2nd"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/raleway_light"
                     />
 
                 <TextView
@@ -77,10 +104,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text=""
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                   android:textSize="16sp"
+                    android:fontFamily="@font/raleway_medium"
                     />
 
                 <TextView
@@ -88,33 +116,38 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="2dp"
+                    android:background="@color/pink_lite"
+                    android:fontFamily="@font/raleway_medium"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
-                    android:text="5000E Cash"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
-                    />
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+                    android:text=""
+                    android:textColor="@color/white_text"
+                    android:textSize="18sp" />
             </LinearLayout>
+            </RelativeLayout>
             <LinearLayout
                 android:id="@+id/first_winner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingTop="10dp"
                 android:orientation="vertical"
                 android:visibility="invisible"
                 android:gravity="bottom|center_horizontal"
                 >
                 <RelativeLayout
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="1dp"
                     >
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/first_winner_image"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:civ_border_color="@color/white_text"
-                        app:civ_border_width="1dp"
                         android:src="@drawable/portrait"
                         android:layout_centerInParent="true"
 
@@ -125,10 +158,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text="1st"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/raleway_light"
                     />
 
                 <TextView
@@ -137,10 +171,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text=""
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/raleway_medium"
                     />
 
                 <TextView
@@ -148,35 +183,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/gray_text"
-                    android:text="7500E Cash"
-                    android:paddingTop="10dp"
-                    android:gravity="bottom|center_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:gravity="center"
+                    android:textColor="@color/white_text"
+                    android:text=""
+                    android:layout_margin="2dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/raleway_medium"
+                    android:background="@color/pink_lite"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
                     />
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/third_winner"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:visibility="invisible"
                 android:layout_gravity="bottom"
-                android:gravity="bottom|center_horizontal"
+                android:gravity="center"
+                android:paddingTop="40dp"
                 >
                 <RelativeLayout
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_margin="1dp"
                     >
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/third_winner_image"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        app:civ_border_color="@color/white_text"
-                        app:civ_border_width="1dp"
                         android:src="@drawable/portrait"
                         android:layout_centerInParent="true"
                         />
@@ -186,10 +225,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text="3rd"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/raleway_light"
                     />
 
                 <TextView
@@ -198,10 +238,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
+                    android:textColor="@color/white_text"
                     android:text=""
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:layout_margin="2dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/raleway_medium"
                     />
 
                 <TextView
@@ -210,10 +251,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="@color/gray_text"
-                    android:text="2500E Cash"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:fontFamily="@font/futura_book_font"
+                    android:textColor="@color/white_text"
+                    android:text=""
+                    android:layout_margin="2dp"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/raleway_medium"
+                    android:background="@color/pink_lite"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
                     />
             </LinearLayout>
 

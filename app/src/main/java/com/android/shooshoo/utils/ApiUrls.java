@@ -33,6 +33,7 @@ public class ApiUrls {
     public static final String JACKPOTS="jackpots";
     public static final String PRIVATE="privates";
     public static final String ENTERED="entered";
+    public static final String FINISHED="finished";
     public static final String SAVED="saved";
     public static final String FINAL="finals";
     public static final String CREATED="created";

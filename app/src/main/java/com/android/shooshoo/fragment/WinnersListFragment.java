@@ -83,6 +83,12 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
     @BindView(R.id.third_winner_prize)
     TextView third_winner_prize;
 
+
+    @BindView(R.id.challenge_name)
+    TextView challenge_name;
+
+
+
     ConnectionDetector connectionDetector;
     UserSession userSession;
     WinnersPresenter winnersPresenter;
@@ -133,6 +139,7 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
         super.onViewCreated(view, savedInstanceState);
         listAdapter=new WinnersListAdapter(getContext(),winners);
         winnersList.setAdapter(listAdapter);
+        challenge_name.setText(mParam1);
         winnersList.addOnItemTouchListener(new RecyclerTouchListener(getContext(), winnersList, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -151,8 +158,8 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
             topWinners.clear();
             winners.clear();
             Challenge challenge=new Challenge();
-            challenge.setType("jackpot");
-            challenge.setChallengeId("97");
+            challenge.setType("sponsor");
+            challenge.setChallengeId("98");
             winnersPresenter.getWinnersListForTheChallenge(challenge);
             topWinners.clear();
             winners.clear();
@@ -182,8 +189,8 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
                 final Winner first=topWinners.get(0);
                 first_winner.setVisibility(View.VISIBLE);
                 first_winner_name.setText(first.getUserName());
-                first_winner_prize.setText(first.getViews()+" Views ");
-                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+first.getImage()).error(R.drawable.error).into(first_winner_image);
+                first_winner_prize.setText(first.getMoney()+"");
+                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+first.getUserImage()).error(R.drawable.error).into(first_winner_image);
 
                 first_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -198,8 +205,8 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
                 final Winner second=topWinners.get(1);
                 second_winner.setVisibility(View.VISIBLE);
                 second_winner_name.setText(second.getUserName());
-                second_winner_prize.setText(second.getViews()+" Views ");
-                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+second.getImage()).error(R.drawable.error).into(second_winner_image);
+                second_winner_prize.setText(second.getMoney()+" ");
+                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+second.getUserImage()).error(R.drawable.error).into(second_winner_image);
 
                 second_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -214,8 +221,8 @@ public class WinnersListFragment extends Fragment implements WinnersListView {
                 final Winner third=topWinners.get(2);
                 third_winner.setVisibility(View.VISIBLE);
                 third_winner_name.setText(third.getUserName());
-                third_winner_prize.setText(third.getViews()+" Views ");
-                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+third.getImage()).error(R.drawable.error).into(third_winner_image);
+                third_winner_prize.setText(third.getMoney()+"");
+                Picasso.with(getContext()).load(PROFILE_IMAGE_URL+third.getUserImage()).error(R.drawable.error).into(third_winner_image);
 
                 third_winner.setOnClickListener(new View.OnClickListener() {
                     @Override
