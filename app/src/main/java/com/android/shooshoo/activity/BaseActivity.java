@@ -3,9 +3,11 @@ package com.android.shooshoo.activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 import com.android.shooshoo.R;
+import com.android.shooshoo.tutorials.HomeHelpFragment;
 import com.android.shooshoo.utils.UserSession;
 import com.android.shooshoo.views.BaseView;
 /**
@@ -75,6 +77,35 @@ public class BaseActivity extends AppCompatActivity implements BaseView {
 
         }
 
+
+    }
+    HomeHelpFragment homeHelpFragment;
+    public void showHelp(int layout,int inner) {
+        if(homeHelpFragment==null){
+            homeHelpFragment=HomeHelpFragment.newInstance(layout,inner);
+        }
+
+        if(!homeHelpFragment.isAdded())
+        {
+            FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(R.anim.show,R.anim.hide);
+            fragmentTransaction.add(R.id.help_container,homeHelpFragment,"help");
+            fragmentTransaction.commit();
+
+        }
+
+
+    }
+    public void hideHelp(){
+        if(homeHelpFragment!=null){
+            if(homeHelpFragment.isAdded()) {
+                FragmentTransaction  fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(R.anim.show,R.anim.hide);
+                fragmentTransaction.remove(homeHelpFragment);
+                fragmentTransaction.commit();
+                homeHelpFragment=null;
+            }
+        }
 
     }
 }

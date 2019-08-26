@@ -633,7 +633,7 @@ public class FeedsActivity extends BaseActivity implements FullVideoAdapter.Feed
 
         switch (v.getId()){
             case R.id.iv_help:
-
+           showHelp(R.layout.home_help_layout,4);
             break;
             case R.id.iv_chat:
                 if(!userSession.isLogin())

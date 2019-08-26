@@ -28,7 +28,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.HomeSearchActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"
+            ></activity>
         <activity
             android:name=".activity.CompanyDetailsActivity"
             android:screenOrientation="portrait" />

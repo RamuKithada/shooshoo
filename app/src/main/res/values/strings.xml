@@ -177,4 +177,37 @@
     <string name="default_notification_channel_id">user follow</string>
     <string name="notifications_admin_channel_name">User followers</string>
     <string name="admission">Admission</string>
+
+    <!-- TODO: Here tutorial screens text is declared -->
+    <string name="dont_show">Don\'t show again</string>
+    <string name="help_home">Welcome to the Home-Page! \n\nHere you can find your favorite Challenges.\nYou can use the pre Selection to search for Challenges or use the search filter in top left corner
+    \n\nHave fun!</string>
+    <string name="discover">Discover challenges</string>
+
+    <!--search screen help text-->
+    <string name="search_home_help_title">Look for what you need</string>
+    <string name="search_help_text">With the search filter you can find search for every Challenge.User and Brand Simply type in the name.\n\n
+        You can also use the detailed search
+    </string>
+    <!--Challenge help-->
+    <string name="challenge_help_title">your dashboard</string>
+    <string name="challenge_help_text">Follow your actions. See all challenges that you entered,created or saved\n\nNothing to see?
+    \n\nGo ahead and design your own Challenge with the \nChallenge Creator.
+    </string>
+    <!--Winners help-->
+    <string name="winners_help_title">Keep track</string>
+    <string name="winners_help_text">Keep track of your created jackpot Challenge\n\nDid you know that you can profit from jackpot Challenge
+    \n\nDiscover the <font  fgcolor="#F7076F">ShooShoo Suite</font>.
+    </string>
+    <!--Feed help-->
+    <string name="feed_help_title">Tutorial</string>
+    <string name="feed_help_text">This is the Feed.\n\nYou can discover Videos and Photos of random \nSponsor and Jackpot Challenges.Or you take a look at \nthe activities of the people you follow.
+    </string>
+   <!--Radar help-->
+    <string name="radar_help_title">everything local</string>
+    <string name="radar_help_text">You can see all local Challenges and Users on
+        the Radar\nWrite a message in the field above to share your
+        interests with others.
+    </string>
+
 </resources>

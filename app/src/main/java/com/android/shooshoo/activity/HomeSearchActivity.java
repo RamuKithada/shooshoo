@@ -1,6 +1,7 @@
 package com.android.shooshoo.activity;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.android.shooshoo.models.Challenge;
 import com.android.shooshoo.models.Company;
 import com.android.shooshoo.models.User;
 import com.android.shooshoo.presenters.HomeSearchPresenter;
+import com.android.shooshoo.tutorials.HomeHelpFragment;
 import com.android.shooshoo.views.SearchView;
 import com.squareup.picasso.Picasso;
 
@@ -34,12 +36,15 @@ import butterknife.ButterKnife;
 /** Here , We show the search functionality to brand,challenge,user.
  *
  */
-public class HomeSearchActivity extends BaseActivity implements SearchView ,TextWatcher {
+public class HomeSearchActivity extends BaseActivity implements SearchView ,TextWatcher,View.OnClickListener {
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
     @BindView(R.id.view_pager)
     ViewPager view_pager;
+
+    @BindView(R.id.iv_help)
+    ImageView iv_help;
 
     @BindView(R.id.search_view)
     EditText search_view;
@@ -64,6 +69,7 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
         view_pager.setAdapter(homeSearchPagerAdapter);
         tabLayout.setupWithViewPager(view_pager);
         search_view.addTextChangedListener(this);
+        iv_help.setOnClickListener(this);
         /** Loading the images into tabs */
         for(int i=0;i<tabLayout.getTabCount();i++){
             View view= LayoutInflater.from(this).inflate(R.layout.custome_tab,null);
@@ -156,4 +162,10 @@ public class HomeSearchActivity extends BaseActivity implements SearchView ,Text
             ((TextWatcher) homeSearchPagerAdapter.getItem(view_pager.getCurrentItem())).afterTextChanged(s);
         }
     }
+
+    @Override
+    public void onClick(View v) {
+        showHelp(R.layout.home_help_layout,1);
+    }
+
 }

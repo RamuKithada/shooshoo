@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    >
+  <RelativeLayout
+      android:id="@+id/full_lay"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:padding="5dp"
+
+      >
+      <android.support.v7.widget.CardView
+
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardBackgroundColor="@android:color/white"
+          app:cardCornerRadius="0dp"
+          >
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="230dp"
+          android:paddingRight="10dp"
+          android:paddingLeft="10dp"
+          >
+          <LinearLayout
+              android:id="@+id/top_lay"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              >
+              <ImageView
+                  android:id="@+id/close"
+                  android:layout_width="40dp"
+                  android:layout_height="40dp"
+                  android:src="@drawable/ic_help_active"
+                  android:layout_marginTop="5dp"
+                  android:layout_marginBottom="5dp"
+                  android:padding="5dp"
+                  android:layout_alignParentLeft="true"
+                  />
+              <TextView
+                  android:id="@+id/title"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:text="@string/discover"
+                  android:textAllCaps="true"
+                  android:textColor="#F7076F"
+                  android:textSize="18sp"
+                  android:layout_weight="1"
+                  android:gravity="center_horizontal"
+                  android:layout_marginRight="50dp"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:textStyle="bold"
+                  android:layout_gravity="center_vertical"
+
+                  />
+
+          </LinearLayout>
+
+          <TextView
+              android:id="@+id/tutorial_text_1"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:maxHeight="200dp"
+              android:minHeight="100dp"
+              android:layout_below="@+id/top_lay"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:paddingLeft="5dp"
+              android:paddingRight="5dp"
+              android:text="@string/help_home"
+              android:textColor="@android:color/secondary_text_light"
+              />
+          <CheckBox
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true"
+              android:layout_alignParentRight="true"
+              android:text="@string/dont_show"
+              />
+      </RelativeLayout>
+
+
+
+
+      </android.support.v7.widget.CardView>
+
+      <android.support.v7.widget.CardView
+          android:id="@+id/bottom_card"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:cardBackgroundColor="@android:color/white"
+          app:cardCornerRadius="0dp"
+          android:layout_marginLeft="15dp"
+          android:layout_marginRight="15dp"
+          android:visibility="gone"
+          android:layout_alignParentBottom="true"
+          >
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              >
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  >
+                  <ImageButton
+                      android:layout_width="40dp"
+                      android:layout_height="40dp"
+                      android:src="@drawable/ic_close_black_24dp"
+                      android:layout_alignParentRight="true"
+                      android:background="@android:color/transparent"
+                      />
+                  <TextView
+                      android:id="@+id/title_bottom"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_centerHorizontal="true"
+                      android:text="you need an account \n to continue"
+                      android:textAllCaps="true"
+                      android:textColor="#F7076F"
+                      android:textSize="18sp"
+                      android:layout_weight="1"
+                      android:gravity="center"
+                      android:layout_marginRight="50dp"
+                      android:layout_marginLeft="50dp"
+                      android:paddingTop="5dp"
+                      android:paddingBottom="5dp"
+                      android:textStyle="bold"
+                      android:layout_gravity="center"
+
+                      />
+
+
+              </RelativeLayout>
+              <android.support.v7.widget.AppCompatTextView
+                  android:id="@+id/register"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingRight="30dp"
+                  android:paddingLeft="30dp"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:text="Register"
+                  android:fontFamily="@font/raleway_black"
+                  android:textSize="18sp"
+                  android:textColor="#FFF"
+                  android:layout_gravity="center"
+                  android:gravity="center"
+                  android:layout_marginTop="25dp"
+                  android:layout_marginBottom="25dp"
+                  android:background="@drawable/submit_button"
+                  />
+
+              <RelativeLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="#88000000"
+                  android:paddingTop="5dp"
+                  android:paddingBottom="5dp"
+                  android:layout_marginTop="15dp"
+                  android:layout_marginBottom="20dp"
+                  >
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_centerHorizontal="true"
+                      android:paddingTop="5dp"
+                      android:layout_centerInParent="true"
+                      android:paddingBottom="5dp"
+                      >
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="You already have an account?"
+                          android:textColor="@android:color/white"
+                          />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Login"
+                          android:textAllCaps="true"
+                          android:textColor="#F7076F"
+                          android:layout_marginLeft="2dp"
+                          android:gravity="center"
+                          />
+
+                  </LinearLayout>
+
+
+              </RelativeLayout>
+
+
+
+          </LinearLayout>
+
+
+      </android.support.v7.widget.CardView>
+
+
+  </RelativeLayout>
+
+</FrameLayout>

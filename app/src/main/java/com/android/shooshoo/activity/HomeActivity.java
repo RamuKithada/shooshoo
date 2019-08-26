@@ -3,6 +3,7 @@ package com.android.shooshoo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.android.shooshoo.fragment.ProfileFragment;
 import com.android.shooshoo.fragment.RadarFragment;
 import com.android.shooshoo.fragment.WinnersFragment;
 import com.android.shooshoo.models.HomeResponse;
+import com.android.shooshoo.tutorials.HomeHelpFragment;
 import com.android.shooshoo.views.HomeView;
 
 
@@ -137,7 +139,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
             case R.id.navigation_radar:
                 mTextMessage.setText(R.string.title_radar);
                 iv_chat.setVisibility(View.GONE);
-                iv_help.setVisibility(View.GONE);
+                iv_help.setVisibility(View.VISIBLE);
                 iv_search.setVisibility(View.GONE);
 //                iv_wallet.setVisibility(View.GONE);
                 iv_filters.setVisibility(View.GONE);
@@ -218,6 +220,7 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
         iv_edit_profile.setOnClickListener(this);
         iv_chat.setOnClickListener(this);
         iv_search.setOnClickListener(this);
+        iv_help.setOnClickListener(this);
         navigation_home.setOnClickListener(bottomNavigationOnClickListener);
         navigation_challengers.setOnClickListener(bottomNavigationOnClickListener);
         navigation_feed.setOnClickListener(bottomNavigationOnClickListener);
@@ -287,6 +290,17 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
                 iv_filters.setVisibility(View.GONE);
                 getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment_container, ChatsFragment.newInstance("Hi","Ram"),"chat").commit();
                 break;
+            case R.id.iv_help:
+                if (getSupportFragmentManager().findFragmentByTag("home") != null && getSupportFragmentManager().findFragmentByTag("home").isVisible()) {
+                    showHelp(R.layout.home_help_layout, 0);
+                }else if(getSupportFragmentManager().findFragmentByTag("challenges") != null && getSupportFragmentManager().findFragmentByTag("challenges").isVisible()){
+                    showHelp(R.layout.home_help_layout, 2);
+                }else if(getSupportFragmentManager().findFragmentByTag("winners") != null && getSupportFragmentManager().findFragmentByTag("winners").isVisible()){
+                    showHelp(R.layout.home_help_layout, 3);
+                }else if(getSupportFragmentManager().findFragmentByTag("radar") != null && getSupportFragmentManager().findFragmentByTag("radar").isVisible()){
+                    showHelp(R.layout.home_help_layout, 5);
+                }
+                break;
             case R.id.iv_search:
                 /**
                  * calling Chatting search friends activity
@@ -310,8 +324,10 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
 
     }
 
+
     @Override
     public void onLoadService(HomeResponse response) {
 
     }
+
 }
