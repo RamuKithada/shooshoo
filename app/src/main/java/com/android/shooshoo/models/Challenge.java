@@ -134,6 +134,10 @@ public class Challenge implements Parcelable{
     @Expose
     private String userLast;
 
+    @SerializedName("declaredWinners")
+    @Expose
+    private String declaredWinners;
+
 
     /***
      *   These are related to jackpot challenges parameters
@@ -850,8 +854,14 @@ public class Challenge implements Parcelable{
     }
 
     public void setCurrency(String currency) {
-
-
         this.currency = currency;
+    }
+
+    public String getDeclaredWinners() {
+        return declaredWinners;
+    }
+
+    public void setDeclaredWinners(String declaredWinners) {
+        this.declaredWinners = declaredWinners;
     }
 }

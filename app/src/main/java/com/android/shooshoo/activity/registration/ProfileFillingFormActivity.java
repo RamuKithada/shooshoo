@@ -843,14 +843,23 @@ public class ProfileFillingFormActivity extends BaseActivity implements UpdateUs
 
        }
        if(ApiUrls.validateString(edt_street_number.getText().toString())){
+           showMessage("Enter Number");
+           edt_street_number.requestFocus();
+           return false;
 
-           if(edt_street_number.getText().toString().length()>255){
+       }
+       if(edt_street_number.getText().toString().length()<3){
 
-               showMessage("  Number have maximum 255 characters");
-               edt_street_number.requestFocus();
-               return false;
+           showMessage(" Number  have at least 3 characters");
+           edt_street_number.requestFocus();
+           return false;
 
-           }
+       }
+       if(edt_street_number.getText().toString().length()>255){
+
+           showMessage("Number have maximum 255 characters");
+           edt_street_number.requestFocus();
+           return false;
        }
 
 

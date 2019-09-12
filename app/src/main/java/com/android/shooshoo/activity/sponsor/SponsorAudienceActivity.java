@@ -827,11 +827,11 @@ StringBuilder languageBuilder=new StringBuilder();
 
     private boolean validate() {
             if(priceWorthAdapter.getItemCount()<=0){
-                 if(addPrize()==null) {
-                     showMessage("Please Prizes Description to winners");
-                     return false;
-                 }
-                }
+                showMessage("Please Provide Prizes Description to winners");
+                }else {
+                if(addPrize()==null)
+                    return false;
+            }
 
           if(!ApiUrls.validateString(no_of_winners.getText().toString())){
               showMessage("Enter number of winners");
@@ -856,6 +856,21 @@ StringBuilder languageBuilder=new StringBuilder();
                   return false;
               }
 
+              if(edt_zipcode.getText().toString().length()<3){
+
+                  showMessage("Zip code have at least 3 characters");
+                  edt_zipcode.requestFocus();
+                  return false;
+
+              }
+              if(edt_zipcode.getText().toString().length()>10){
+
+                  showMessage("Zip code have maximum 10 characters");
+                  edt_zipcode.requestFocus();
+                  return false;
+
+              }
+
 
 
 
@@ -871,7 +886,7 @@ StringBuilder languageBuilder=new StringBuilder();
                   return false;
               }
               try {
-                  if(Integer.parseInt(edt_miles.getText().toString())==0) {
+                  if(Integer.parseInt(edt_miles.getText().toString())<=0) {
                       showMessage("Enter miles for challenge range");
                       edt_miles.requestFocus();
                       return false;

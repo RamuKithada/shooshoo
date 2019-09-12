@@ -15,13 +15,7 @@ import android.util.Log;
 import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import static android.text.format.DateUtils.DAY_IN_MILLIS;
-import static android.text.format.DateUtils.WEEK_IN_MILLIS;
-import static android.text.format.DateUtils.YEAR_IN_MILLIS;
 
 /**
  * Api call related constants i.e, end points of the urls

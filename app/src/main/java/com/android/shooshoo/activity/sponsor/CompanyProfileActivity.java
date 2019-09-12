@@ -289,12 +289,12 @@ public class CompanyProfileActivity extends BaseActivity implements View.OnClick
         }
         if(edt_company_name.getText().toString().length()<2)
         {
-            showMessage("Company Name contain at least 2 characters and maximum 70 characters");
+            showMessage("Company Name contains at least 2 characters and maximum 70 characters");
             return false;
         }
         if(edt_company_name.getText().toString().length()>70)
         {
-            showMessage("Company Name contain at least 2 characters and maximum 70 characters");
+            showMessage("Company Name contains at least 2 characters and maximum 70 characters");
             return false;
         }
 
@@ -758,7 +758,7 @@ isclicked=true;
                     dataLoadPresenter.loadCites(countries.get(position).getCountryId());
                     edt_country_code.setText("+"+countries.get(position).getPhoneCode());
                     edt_country.setText(countries.get(position).getCountryName());
-//                    edt_city.setError(null);
+                    edt_country.setError(null);
                     country_pos=position;
                     country=countries.get(position);
                 }
@@ -767,7 +767,7 @@ isclicked=true;
                 if(cities!=null)
                 {
                     edt_city.setText(cities.get(position).getCityName());
-//                    edt_city.setError(null);
+                    edt_city.setError(null);
                     city=cities.get(position);
                     city_pos=position;
                 }
@@ -776,7 +776,7 @@ isclicked=true;
                 if(categories!=null)
                 {
                     edt_category.setText(categories.get(position).getCategoryName());
-//                    edt_category.setError(null);
+                    edt_category.setError(null);
                     category_pos=position;
                 }
                 break;

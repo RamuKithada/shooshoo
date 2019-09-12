@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import com.android.shooshoo.R;
 import com.android.shooshoo.activity.feeds.FeedsActivity;
+import com.android.shooshoo.utils.BGService;
 import com.android.shooshoo.utils.ConnectionDetector;
 import com.android.shooshoo.utils.UserSession;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +47,7 @@ Runnable runnable=new Runnable() {
          * */
         detector=new ConnectionDetector(this);
         userSession=new UserSession(this);
+        BGService.startActionCheck(this,"ramu","kithada");
         if(detector.isConnectingToInternet())
         new Handler().postDelayed(runnable,2000);
         else{

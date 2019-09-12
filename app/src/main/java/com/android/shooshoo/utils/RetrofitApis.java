@@ -424,5 +424,8 @@ public interface RetrofitApis {
     @POST("notificationList")
     Call<NotificationResult>  getMyNotifications(@Field("userId") String userId,@Field("limit") String limit,@Field("offset") String offset);
 
+    @FormUrlEncoded
+    @POST("declareWinners")
+     Call<ResponseBody> declareWinners(@Field("challengeId") String challengeId,@Field("type") String type );
 }
 

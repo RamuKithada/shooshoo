@@ -573,8 +573,8 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
             return false;
         }
         try {
-            if(Integer.valueOf(no_of_winners.getText().toString())<=0){
-                showMessage("Enter number of winners    ");
+            if(Integer.valueOf(no_of_winners.getText().toString())<0){
+                showMessage("Enter number of winners");
                 no_of_winners.requestFocus();
                 return false;
             }
@@ -584,14 +584,14 @@ public class JackpotAudienceActivity extends BaseActivity implements DataLoadVie
         }
 
         if(!ApiUrls.validateString(edt_limited_access.getText().toString())) {
-            showMessage("Enter Limited access");
+            showMessage("Enter valid number at Limited access");
             edt_limited_access.requestFocus();
             return false;
         }
 
         try {
             if(Integer.valueOf(edt_limited_access.getText().toString())<=0){
-                showMessage("Enter Limited access");
+                showMessage("Enter valid number at Limited access");
                 edt_limited_access.requestFocus();
                 return false;
             }

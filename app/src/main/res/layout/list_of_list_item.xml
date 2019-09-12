@@ -13,7 +13,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textColor="@color/white_text"
-        android:text="Challenge Title"
+        android:text="Challenge"
         android:layout_margin="5dp"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
         app:textAllCaps="true"

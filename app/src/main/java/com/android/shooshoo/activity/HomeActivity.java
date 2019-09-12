@@ -2,9 +2,11 @@ package com.android.shooshoo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -254,8 +256,28 @@ private View.OnClickListener bottomNavigationOnClickListener=new View.OnClickLis
 
     }
 
+    @Override
+    protected void onPause() {
+        Log.e("onPause","onPause");
+        super.onPause();
 
-/**
+    }
+
+    @Override
+    protected void onStop() {
+        Log.e("onStop","onStop");
+        super.onStop();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        Log.e("onSaveInstanceState","onSaveInstanceState");
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+
+
+    /**
 *  onClick is used to handling top menu icon click actions
  *  like search ,profile,Chat
 *

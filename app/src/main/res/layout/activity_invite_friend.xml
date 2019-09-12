@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
            android:layout_centerInParent="true"
-            android:text="You Don't have Followers"
+            android:text="No search data"
             android:textColor="@color/white_text"
             android:fontFamily="@font/raleway_bold"
             android:visibility="gone"

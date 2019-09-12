@@ -272,22 +272,22 @@ public class SponsorChallengeFormActivity extends BaseActivity implements View.O
 
 
         if(!ApiUrls.validateString(edt_startdate.getText().toString())){
-            showMessage("Select  Date");
+            showMessage("Select Start Date");
             edt_startdate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_start_time.getText().toString())){
-            showMessage("Select Time");
+            showMessage("Select Start Time");
             edt_start_time.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_enddate.getText().toString())){
-            showMessage("Select Date");
+            showMessage("Select End Date");
             edt_enddate.requestFocus();
             return false;
         }
         if(!ApiUrls.validateString(edt_end_time.getText().toString())){
-            showMessage("Select Time");
+            showMessage("Select End Time");
             edt_end_time.requestFocus();
             return false;
         }
